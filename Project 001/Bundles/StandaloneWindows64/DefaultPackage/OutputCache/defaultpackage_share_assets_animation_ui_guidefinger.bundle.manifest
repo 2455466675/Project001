@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 2829441713
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 77d12488ab6f9ec86f2582141bda80cc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 816d1e00896f8adcab61256734fbd84f
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 77d12488ab6f9ec86f2582141bda80cc
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Animation/UI/GuideFinger/GuideFinger.anim
+- Assets/Animation/UI/GuideFinger/GuideFinger.controller
+Dependencies:
+- D:/Unity/Project/Project 001/Bundles/StandaloneWindows64/DefaultPackage/OutputCache/defaultpackage_share_assets_artres_ui_common.bundle

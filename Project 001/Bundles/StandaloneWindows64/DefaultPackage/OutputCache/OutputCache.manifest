@@ -1,0 +1,52 @@
+ManifestFileVersion: 0
+CRC: 3659437293
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: defaultpackage_assets_bundles_ui_atlas.bundle
+      Dependencies:
+        Dependency_0: defaultpackage_share_assets_artres_ui_common.bundle
+        Dependency_1: defaultpackage_share_assets_artres_ui_icon.bundle
+    Info_1:
+      Name: defaultpackage_assets_bundles_ui_window_guide.bundle
+      Dependencies:
+        Dependency_0: defaultpackage_share_assets_artres_ui_common.bundle
+        Dependency_1: defaultpackage_share_assets_animation_ui_guidefinger.bundle
+    Info_2:
+      Name: defaultpackage_assets_bundles_ui_window_login.bundle
+      Dependencies:
+        Dependency_0: defaultpackage_share_assets_textmesh pro_examples & extras_resources_sprite
+          assets.bundle
+        Dependency_1: defaultpackage_share_assets_resources_font.bundle
+    Info_3:
+      Name: defaultpackage_assets_bundles_ui_window.bundle
+      Dependencies: {}
+    Info_4:
+      Name: defaultpackage_share_assets_artres_ui_common.bundle
+      Dependencies: {}
+    Info_5:
+      Name: defaultpackage_share_assets_artres_ui_icon.bundle
+      Dependencies: {}
+    Info_6:
+      Name: defaultpackage_share_assets_animation_ui_guidefinger.bundle
+      Dependencies:
+        Dependency_0: defaultpackage_share_assets_artres_ui_common.bundle
+    Info_7:
+      Name: defaultpackage_share_assets_textmesh pro_examples & extras_sprites.bundle
+      Dependencies: {}
+    Info_8:
+      Name: defaultpackage_share_assets_textmesh pro_examples & extras_resources_sprite
+        assets.bundle
+      Dependencies:
+        Dependency_0: defaultpackage_share_assets_textmesh pro_examples & extras_sprites.bundle
+        Dependency_1: defaultpackage_unityshaders.bundle
+    Info_9:
+      Name: defaultpackage_unityshaders.bundle
+      Dependencies: {}
+    Info_10:
+      Name: defaultpackage_share_packages_com_unity_textmeshpro_editor resources_gizmos.bundle
+      Dependencies: {}
+    Info_11:
+      Name: defaultpackage_share_assets_resources_font.bundle
+      Dependencies:
+        Dependency_0: defaultpackage_unityshaders.bundle

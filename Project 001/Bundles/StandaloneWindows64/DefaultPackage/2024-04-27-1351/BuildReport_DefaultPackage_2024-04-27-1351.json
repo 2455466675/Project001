@@ -1,0 +1,294 @@
+{
+    "Summary": {
+        "YooVersion": "2.1.1",
+        "UnityVersion": "2022.3.23f1",
+        "BuildDate": "2024/4/27 22:31:42",
+        "BuildSeconds": 8,
+        "BuildTarget": 19,
+        "BuildMode": 0,
+        "BuildPipeline": "BuiltinBuildPipeline",
+        "BuildPackageName": "DefaultPackage",
+        "BuildPackageVersion": "2024-04-27-1351",
+        "UniqueBundleName": true,
+        "EnableAddressable": true,
+        "LocationToLower": false,
+        "IncludeAssetGUID": false,
+        "IgnoreDefaultType": true,
+        "AutoCollectShaders": true,
+        "EnableSharePackRule": true,
+        "EncryptionClassName": "null",
+        "FileNameStyle": 0,
+        "CompressOption": 2,
+        "DisableWriteTypeTree": false,
+        "IgnoreTypeTreeChanges": true,
+        "AssetFileTotalCount": 19,
+        "MainAssetTotalCount": 6,
+        "AllBundleTotalCount": 12,
+        "AllBundleTotalSize": 13118466,
+        "EncryptedBundleTotalCount": 0,
+        "EncryptedBundleTotalSize": 0
+    },
+    "AssetInfos": [
+        {
+            "Address": "atlas_common",
+            "AssetPath": "Assets/Bundles/UI/Atlas/atlas_common.spriteatlas",
+            "AssetGUID": "779a12c357347d94997ef15ababc72a6",
+            "AssetTags": [],
+            "MainBundleName": "defaultpackage_assets_bundles_ui_atlas.bundle",
+            "MainBundleSize": 123801,
+            "DependAssets": [
+                "Assets/ArtRes/ui/Common/guideFinger.png"
+            ]
+        },
+        {
+            "Address": "icon_001",
+            "AssetPath": "Assets/Bundles/UI/Atlas/icon_001.spriteatlas",
+            "AssetGUID": "ed1a43f1bb93b5745a5ab315d65aad25",
+            "AssetTags": [],
+            "MainBundleName": "defaultpackage_assets_bundles_ui_atlas.bundle",
+            "MainBundleSize": 123801,
+            "DependAssets": [
+                "Assets/ArtRes/ui/Icon/icon_001.png"
+            ]
+        },
+        {
+            "Address": "GuideFinger",
+            "AssetPath": "Assets/Bundles/UI/Window/Guide/GuideFinger.prefab",
+            "AssetGUID": "e550bd511ba87aa4f93dd773345a4cea",
+            "AssetTags": [],
+            "MainBundleName": "defaultpackage_assets_bundles_ui_window_guide.bundle",
+            "MainBundleSize": 4851,
+            "DependAssets": [
+                "Assets/Animation/UI/GuideFinger/GuideFinger.anim",
+                "Assets/Animation/UI/GuideFinger/GuideFinger.controller",
+                "Assets/ArtRes/ui/Common/guideFinger.png"
+            ]
+        },
+        {
+            "Address": "WinGuide",
+            "AssetPath": "Assets/Bundles/UI/Window/Guide/WinGuide.prefab",
+            "AssetGUID": "27b0978ac47e6c34a9d3aff587b26738",
+            "AssetTags": [],
+            "MainBundleName": "defaultpackage_assets_bundles_ui_window_guide.bundle",
+            "MainBundleSize": 4851,
+            "DependAssets": [
+                "Assets/Animation/UI/GuideFinger/GuideFinger.anim",
+                "Assets/Bundles/UI/Window/Guide/GuideFinger.prefab",
+                "Assets/Animation/UI/GuideFinger/GuideFinger.controller",
+                "Assets/ArtRes/ui/Common/guideFinger.png"
+            ]
+        },
+        {
+            "Address": "WinLogin",
+            "AssetPath": "Assets/Bundles/UI/Window/Login/WinLogin.prefab",
+            "AssetGUID": "8654ff0d31033e44e81b6ec80a5ffc83",
+            "AssetTags": [],
+            "MainBundleName": "defaultpackage_assets_bundles_ui_window_login.bundle",
+            "MainBundleSize": 13910,
+            "DependAssets": [
+                "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png",
+                "Assets/TextMesh Pro/Examples & Extras/Resources/Sprite Assets/Default Sprite Asset.asset",
+                "Assets/TextMesh Pro/Shaders/TMP_SDF.shader",
+                "Packages/com.unity.textmeshpro/Editor Resources/Gizmos/TMP - Font Asset Icon.psd",
+                "Assets/TextMesh Pro/Shaders/TMP_Sprite.shader",
+                "Packages/com.unity.textmeshpro/Editor Resources/Gizmos/TMP - Text Component Icon.psd",
+                "Assets/Resources/Font/siYuanHeiTi SDF.asset",
+                "Assets/Resources/Font/siYuanHeiTi.ttf",
+                "Packages/com.unity.textmeshpro/Editor Resources/Gizmos/TMP - Sprite Asset Icon.psd"
+            ]
+        },
+        {
+            "Address": "UIRoot",
+            "AssetPath": "Assets/Bundles/UI/Window/UIRoot.prefab",
+            "AssetGUID": "c6e14272f7d9d1f49aede882b70b2e1a",
+            "AssetTags": [],
+            "MainBundleName": "defaultpackage_assets_bundles_ui_window.bundle",
+            "MainBundleSize": 5988,
+            "DependAssets": []
+        }
+    ],
+    "BundleInfos": [
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_atlas.bundle",
+            "FileName": "cddb59630d8e7a7d98a0368f7e5ccac4.bundle",
+            "FileHash": "cddb59630d8e7a7d98a0368f7e5ccac4",
+            "FileCRC": "4156b644",
+            "FileSize": 123801,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "defaultpackage_share_assets_artres_ui_common.bundle",
+                "defaultpackage_share_assets_artres_ui_icon.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/Bundles/UI/Atlas/atlas_common.spriteatlas",
+                "Assets/Bundles/UI/Atlas/icon_001.spriteatlas"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window_guide.bundle",
+            "FileName": "d1b56b0a481fcb5d18e172a634233c37.bundle",
+            "FileHash": "d1b56b0a481fcb5d18e172a634233c37",
+            "FileCRC": "3bb5816e",
+            "FileSize": 4851,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "defaultpackage_share_assets_animation_ui_guidefinger.bundle",
+                "defaultpackage_share_assets_artres_ui_common.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/Bundles/UI/Window/Guide/GuideFinger.prefab",
+                "Assets/Bundles/UI/Window/Guide/WinGuide.prefab"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window_login.bundle",
+            "FileName": "424bb6c4220ef066de2d8d7ff23be19f.bundle",
+            "FileHash": "424bb6c4220ef066de2d8d7ff23be19f",
+            "FileCRC": "1685370e",
+            "FileSize": 13910,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "defaultpackage_share_assets_resources_font.bundle",
+                "defaultpackage_share_assets_textmesh pro_examples & extras_resources_sprite assets.bundle",
+                "defaultpackage_share_assets_textmesh pro_examples & extras_sprites.bundle",
+                "defaultpackage_unityshaders.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/Bundles/UI/Window/Login/WinLogin.prefab"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window.bundle",
+            "FileName": "a04cfe2b85e91f6109094fc59718d341.bundle",
+            "FileHash": "a04cfe2b85e91f6109094fc59718d341",
+            "FileCRC": "58dd71e6",
+            "FileSize": 5988,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Assets/Bundles/UI/Window/UIRoot.prefab"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_artres_ui_common.bundle",
+            "FileName": "534df52c28fa1d7b7ea22803fda17e7c.bundle",
+            "FileHash": "534df52c28fa1d7b7ea22803fda17e7c",
+            "FileCRC": "b6f80beb",
+            "FileSize": 3750,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Assets/ArtRes/ui/Common/guideFinger.png"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_artres_ui_icon.bundle",
+            "FileName": "74869408ce5d1aaae1cdca16960c5677.bundle",
+            "FileHash": "74869408ce5d1aaae1cdca16960c5677",
+            "FileCRC": "3f84e984",
+            "FileSize": 19354,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Assets/ArtRes/ui/Icon/icon_001.png"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_animation_ui_guidefinger.bundle",
+            "FileName": "46feba5fcdb4487f2cdc9b5fa0de9dfb.bundle",
+            "FileHash": "46feba5fcdb4487f2cdc9b5fa0de9dfb",
+            "FileCRC": "6d15736d",
+            "FileSize": 9977,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "defaultpackage_share_assets_artres_ui_common.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/Animation/UI/GuideFinger/GuideFinger.anim",
+                "Assets/Animation/UI/GuideFinger/GuideFinger.controller"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_textmesh pro_examples & extras_sprites.bundle",
+            "FileName": "2e9df65ba5d2199a31caaf6f9568495a.bundle",
+            "FileHash": "2e9df65ba5d2199a31caaf6f9568495a",
+            "FileCRC": "204f69a1",
+            "FileSize": 139878,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_textmesh pro_examples & extras_resources_sprite assets.bundle",
+            "FileName": "f794a56f648d60094d88a8096dd21cf6.bundle",
+            "FileHash": "f794a56f648d60094d88a8096dd21cf6",
+            "FileCRC": "c57a8f05",
+            "FileSize": 5003,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "defaultpackage_share_assets_textmesh pro_examples & extras_sprites.bundle",
+                "defaultpackage_unityshaders.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/TextMesh Pro/Examples & Extras/Resources/Sprite Assets/Default Sprite Asset.asset"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_unityshaders.bundle",
+            "FileName": "9722edc31a0dbd8088dc79bf26aadd8b.bundle",
+            "FileHash": "9722edc31a0dbd8088dc79bf26aadd8b",
+            "FileCRC": "3f9ea1a4",
+            "FileSize": 25076,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Assets/TextMesh Pro/Shaders/TMP_SDF.shader",
+                "Assets/TextMesh Pro/Shaders/TMP_Sprite.shader"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_packages_com_unity_textmeshpro_editor resources_gizmos.bundle",
+            "FileName": "728a43c7f603a3a2b1c770963de389af.bundle",
+            "FileHash": "728a43c7f603a3a2b1c770963de389af",
+            "FileCRC": "af8a1266",
+            "FileSize": 4511,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Packages/com.unity.textmeshpro/Editor Resources/Gizmos/TMP - Font Asset Icon.psd",
+                "Packages/com.unity.textmeshpro/Editor Resources/Gizmos/TMP - Text Component Icon.psd",
+                "Packages/com.unity.textmeshpro/Editor Resources/Gizmos/TMP - Sprite Asset Icon.psd"
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_resources_font.bundle",
+            "FileName": "b1a7fbcf92d33da6cda2a035cb795b81.bundle",
+            "FileHash": "b1a7fbcf92d33da6cda2a035cb795b81",
+            "FileCRC": "da94f725",
+            "FileSize": 12762367,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "defaultpackage_unityshaders.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/Resources/Font/siYuanHeiTi SDF.asset",
+                "Assets/Resources/Font/siYuanHeiTi.ttf"
+            ]
+        }
+    ],
+    "IndependAssets": []
+}

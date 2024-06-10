@@ -1,0 +1,113 @@
+{
+    "FileVersion": "2.0.0",
+    "EnableAddressable": true,
+    "LocationToLower": false,
+    "IncludeAssetGUID": false,
+    "OutputNameStyle": 0,
+    "BuildPipeline": "BuiltinBuildPipeline",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "Simulate",
+    "AssetList": [
+        {
+            "Address": "atlas_common",
+            "AssetPath": "Assets/Bundles/UI/Atlas/atlas_common.spriteatlas",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "icon_001",
+            "AssetPath": "Assets/Bundles/UI/Atlas/icon_001.spriteatlas",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "GuideFinger",
+            "AssetPath": "Assets/Bundles/UI/Window/Guide/GuideFinger.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "WinGuide",
+            "AssetPath": "Assets/Bundles/UI/Window/Guide/WinGuide.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "WinLogin",
+            "AssetPath": "Assets/Bundles/UI/Window/Login/WinLogin.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "WinOverview",
+            "AssetPath": "Assets/Bundles/UI/Window/Overview/WinOverview.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 3
+        },
+        {
+            "Address": "UIRoot",
+            "AssetPath": "Assets/Bundles/UI/Window/UIRoot.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 4
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_atlas.bundle",
+            "UnityCRC": 0,
+            "FileHash": "55a1030322c3ddded3c03916a2cc376d",
+            "FileCRC": "00000000",
+            "FileSize": 41383,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window_guide.bundle",
+            "UnityCRC": 0,
+            "FileHash": "3d1787e03692d640c9b42d52b4a650e3",
+            "FileCRC": "00000000",
+            "FileSize": 10946,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window_login.bundle",
+            "UnityCRC": 0,
+            "FileHash": "aab41848d4e6866a4f4fef0f5133964b",
+            "FileCRC": "00000000",
+            "FileSize": 40988,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window_overview.bundle",
+            "UnityCRC": 0,
+            "FileHash": "9948a5e1c206e9b4df34c97fc3619f63",
+            "FileCRC": "00000000",
+            "FileSize": 52828,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window.bundle",
+            "UnityCRC": 0,
+            "FileHash": "f144b4e9dadb077682cec1875dd74779",
+            "FileCRC": "00000000",
+            "FileSize": 12832,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        }
+    ]
+}

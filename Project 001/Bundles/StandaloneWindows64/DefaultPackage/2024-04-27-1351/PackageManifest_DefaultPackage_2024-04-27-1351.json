@@ -1,0 +1,194 @@
+{
+    "FileVersion": "2.0.0",
+    "EnableAddressable": true,
+    "LocationToLower": false,
+    "IncludeAssetGUID": false,
+    "OutputNameStyle": 0,
+    "BuildPipeline": "BuiltinBuildPipeline",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "2024-04-27-1351",
+    "AssetList": [
+        {
+            "Address": "atlas_common",
+            "AssetPath": "Assets/Bundles/UI/Atlas/atlas_common.spriteatlas",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "icon_001",
+            "AssetPath": "Assets/Bundles/UI/Atlas/icon_001.spriteatlas",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "GuideFinger",
+            "AssetPath": "Assets/Bundles/UI/Window/Guide/GuideFinger.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "WinGuide",
+            "AssetPath": "Assets/Bundles/UI/Window/Guide/WinGuide.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "WinLogin",
+            "AssetPath": "Assets/Bundles/UI/Window/Login/WinLogin.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "UIRoot",
+            "AssetPath": "Assets/Bundles/UI/Window/UIRoot.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 3
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_atlas.bundle",
+            "UnityCRC": 2785761058,
+            "FileHash": "cddb59630d8e7a7d98a0368f7e5ccac4",
+            "FileCRC": "4156b644",
+            "FileSize": 123801,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                4,
+                5
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window_guide.bundle",
+            "UnityCRC": 1494290502,
+            "FileHash": "d1b56b0a481fcb5d18e172a634233c37",
+            "FileCRC": "3bb5816e",
+            "FileSize": 4851,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                6,
+                4
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window_login.bundle",
+            "UnityCRC": 292057335,
+            "FileHash": "424bb6c4220ef066de2d8d7ff23be19f",
+            "FileCRC": "1685370e",
+            "FileSize": 13910,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                11,
+                8,
+                7,
+                9
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_assets_bundles_ui_window.bundle",
+            "UnityCRC": 963712393,
+            "FileHash": "a04cfe2b85e91f6109094fc59718d341",
+            "FileCRC": "58dd71e6",
+            "FileSize": 5988,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_artres_ui_common.bundle",
+            "UnityCRC": 1804562980,
+            "FileHash": "534df52c28fa1d7b7ea22803fda17e7c",
+            "FileCRC": "b6f80beb",
+            "FileSize": 3750,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_artres_ui_icon.bundle",
+            "UnityCRC": 1698516981,
+            "FileHash": "74869408ce5d1aaae1cdca16960c5677",
+            "FileCRC": "3f84e984",
+            "FileSize": 19354,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_animation_ui_guidefinger.bundle",
+            "UnityCRC": 2829441713,
+            "FileHash": "46feba5fcdb4487f2cdc9b5fa0de9dfb",
+            "FileCRC": "6d15736d",
+            "FileSize": 9977,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                4
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_textmesh pro_examples & extras_sprites.bundle",
+            "UnityCRC": 1796657099,
+            "FileHash": "2e9df65ba5d2199a31caaf6f9568495a",
+            "FileCRC": "204f69a1",
+            "FileSize": 139878,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_textmesh pro_examples & extras_resources_sprite assets.bundle",
+            "UnityCRC": 2230540689,
+            "FileHash": "f794a56f648d60094d88a8096dd21cf6",
+            "FileCRC": "c57a8f05",
+            "FileSize": 5003,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                7,
+                9
+            ]
+        },
+        {
+            "BundleName": "defaultpackage_unityshaders.bundle",
+            "UnityCRC": 1859164966,
+            "FileHash": "9722edc31a0dbd8088dc79bf26aadd8b",
+            "FileCRC": "3f9ea1a4",
+            "FileSize": 25076,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_share_packages_com_unity_textmeshpro_editor resources_gizmos.bundle",
+            "UnityCRC": 1029705697,
+            "FileHash": "728a43c7f603a3a2b1c770963de389af",
+            "FileCRC": "af8a1266",
+            "FileSize": 4511,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_share_assets_resources_font.bundle",
+            "UnityCRC": 2078007013,
+            "FileHash": "b1a7fbcf92d33da6cda2a035cb795b81",
+            "FileCRC": "da94f725",
+            "FileSize": 12762367,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                9
+            ]
+        }
+    ]
+}

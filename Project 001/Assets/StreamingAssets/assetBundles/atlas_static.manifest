@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 499507382
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e58862bfb7236a49ce70c004af9795d5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0d677c6dec2405a43fe6dd294cca7c3e
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Atlas/static/icon_001.spriteatlas
+- Assets/Atlas/static/atlas_common.spriteatlas
+Dependencies: []

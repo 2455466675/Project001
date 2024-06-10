@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 2425565234
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a4764d961e9c62d3b277b3c1ee74b840
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7cd4f54b43d57480ca63e61e9d00cab1
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Animation/UI/GuideFinger/GuideFinger.anim
+- Assets/Animation/UI/GuideFinger/GuideFinger.controller
+Dependencies: []

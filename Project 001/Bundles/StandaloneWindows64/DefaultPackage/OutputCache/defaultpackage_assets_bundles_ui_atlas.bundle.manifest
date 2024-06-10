@@ -1,0 +1,27 @@
+ManifestFileVersion: 0
+CRC: 2785761058
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0ec05e5a97ebafe31c4935906b898d2f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 033fafe2c9f6c610c3a734393882fd4c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 0ec05e5a97ebafe31c4935906b898d2f
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Bundles/UI/Atlas/icon_001.spriteatlas
+- Assets/Bundles/UI/Atlas/atlas_common.spriteatlas
+Dependencies:
+- D:/Unity/Project/Project 001/Bundles/StandaloneWindows64/DefaultPackage/OutputCache/defaultpackage_share_assets_artres_ui_common.bundle
+- D:/Unity/Project/Project 001/Bundles/StandaloneWindows64/DefaultPackage/OutputCache/defaultpackage_share_assets_artres_ui_icon.bundle

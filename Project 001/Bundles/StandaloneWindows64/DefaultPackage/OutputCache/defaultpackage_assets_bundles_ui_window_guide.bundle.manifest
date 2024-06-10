@@ -1,0 +1,45 @@
+ManifestFileVersion: 0
+CRC: 1494290502
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 44813f0dcda9b4abef003383c071e307
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a426d58f3b8e66bf085df375fc888b5b
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 44813f0dcda9b4abef003383c071e307
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7271cea22abca204ea539af6415af67d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8ebc0b3ad3cef32448fb017818a5a67e, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+Assets:
+- Assets/Bundles/UI/Window/Guide/WinGuide.prefab
+- Assets/Bundles/UI/Window/Guide/GuideFinger.prefab
+Dependencies:
+- D:/Unity/Project/Project 001/Bundles/StandaloneWindows64/DefaultPackage/OutputCache/defaultpackage_share_assets_animation_ui_guidefinger.bundle
+- D:/Unity/Project/Project 001/Bundles/StandaloneWindows64/DefaultPackage/OutputCache/defaultpackage_share_assets_artres_ui_common.bundle

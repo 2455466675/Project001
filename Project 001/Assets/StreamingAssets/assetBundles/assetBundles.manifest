@@ -1,0 +1,14 @@
+ManifestFileVersion: 0
+CRC: 3295677522
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: uiprefab
+      Dependencies:
+        Dependency_0: anim
+    Info_1:
+      Name: anim
+      Dependencies: {}
+    Info_2:
+      Name: atlas_static
+      Dependencies: {}
