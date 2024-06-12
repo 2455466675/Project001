@@ -15,7 +15,8 @@ namespace Game.UI
         public UIRoot UIRoot {get; private set;}
         public Camera UICamera => UIRoot != null ? UIRoot.UICamera : null;
 
-        private Stack<Window> windows;
+        private Dictionary<int, Window> windows;
+        private Stack<Window> openWinStack;
 
         public IEnumerator Init()
         {
@@ -23,7 +24,8 @@ namespace Game.UI
             GameObject uiRootGo = Instantiate(obj);
             UIRoot = uiRootGo.GetComponent<UIRoot>();
 
-            windows = new Stack<Window>();
+            windows = new Dictionary<int, Window>();
+            openWinStack = new Stack<Window>();
             yield return UIRoot;
         }
    
@@ -59,13 +61,28 @@ namespace Game.UI
 
         public void OpenWin(int id)
         {
-            Window window = UIRoot.OpenWin(id);
-            if (window == null) 
+            if (!windows.TryGetValue(id, out Window win))
+            {
+                win = UIRoot.OpenWin(id);
+                if (win == null)
+                {
+                    return;
+                }
+                windows.Add(id, win);
+            }
+            if (win == null)
             {
                 return;
             }
-            window.OnOpen();
-            windows.Push(window);
+
+            if (openWinStack.TryPeek(out Window topWin))
+            {
+                topWin.Exit();
+            } 
+
+            win.Show();
+            win.Enter();
+            openWinStack.Push(win);
         }
 
         public void OpenWinAsync(int id, int frame)
@@ -75,7 +92,24 @@ namespace Game.UI
 
         public void CloseWin(int id)
         {
-                     
+            Debug.Log($"CloseWin:{id}");
+            if (openWinStack.Count <= 0)
+            {
+                return;
+            }
+            Window window = openWinStack.Pop();
+            if (window.Id != id)
+            {
+                Debug.LogWarning($"要关闭的窗口不是顶层窗口：{id}");
+                return;
+            }
+            window.Exit();
+            window.Hide();
+
+            if (openWinStack.TryPeek(out Window topWin))
+            {
+                topWin.Enter();
+            }
         }
 
         public void SelectListView(ListView listView)
@@ -85,7 +119,7 @@ namespace Game.UI
 
         public void TestH(float h)
         {
-            if (windows.Count <= 0)
+            if (openWinStack.Count <= 0)
             {
                 return;
             }
@@ -105,7 +139,7 @@ namespace Game.UI
         }
         public void TestV(float v) 
         {
-            if (windows.Count <= 0)
+            if (openWinStack.Count <= 0)
             {
                 return;
             }

@@ -23,7 +23,7 @@ namespace Game.UI
             }
         }
 
-        public void OnOpen()
+        public void OnEnter()
         {
             if (defaultListView == null) 
             {

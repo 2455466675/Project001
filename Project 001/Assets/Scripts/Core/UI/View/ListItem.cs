@@ -61,6 +61,7 @@ namespace Game.UI
         {
             Index = index;
             this.listItem = listItem;
+            OnDatumChange();
         }
 
         public T GetListItem<T>() where T : ItemDB
@@ -122,6 +123,11 @@ namespace Game.UI
             {
                 uiNotify.OnMoveToRight(this);
             }
+        }
+
+        protected virtual void OnDatumChange()
+        {
+
         }
     }
 }

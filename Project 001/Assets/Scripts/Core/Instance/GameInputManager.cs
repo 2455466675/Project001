@@ -60,6 +60,7 @@ namespace Game
                 {
                     Debug.Log($"c:{c}");
                     CommandInvoker.UndoCommand();
+                    t = 0.2f;
                 }
             }
 

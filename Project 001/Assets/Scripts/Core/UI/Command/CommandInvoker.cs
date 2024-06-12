@@ -16,7 +16,6 @@ namespace Game
         {
             command.Execute();
             commands.Push(command);
-            Debug.Log($"Execute:{commands.Count}");
         }
 
         public static void UndoCommand()
@@ -27,7 +26,6 @@ namespace Game
             }
             ICommand command = commands.Pop();
             command.Undo();
-            Debug.Log($"Undo:{commands.Count}");
         }
 	}
 }

@@ -27,7 +27,7 @@ namespace Game.UI
         }
 
         public void Undo()
-        {
+        {            
             GameCore.UI.SelectListView(listView1);
         }
     }

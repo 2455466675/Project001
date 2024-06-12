@@ -13,17 +13,24 @@ namespace Game.UI
     /// </summary>
 	public class WinOverviewController : UIController
 	{
-        public LoopListView loopListView;
-
-        public TextView textView;
+        public StaticListView itemTypeList;
+        public LoopListView itemList;
 
         TeamSystem teamSystem;
         
-
         private void Start()
         {
             teamSystem = new TeamSystem();
-            loopListView.SetDatum(teamSystem.roles[0].items);
+            ListDB items = teamSystem.roles[0].items;
+
+            itemList.SetDatum(items);
+
+            ListDB menuList = new ListDB();
+            menuList.Add(new MenuItem(1, "道具"));
+            menuList.Add(new MenuItem(2, "属性"));
+            menuList.Add(new MenuItem(3, "技能"));
+
+            defaultListView.SetDatum(menuList);
         }
 
         public void Update()
@@ -59,7 +66,7 @@ namespace Game.UI
         public void OnTest(UINotification notification)
         {
             Debug.Log("OnTest");
-            CommandInvoker.ExecuteCommand(new SelectListViewCmd(loopListView));
+            CommandInvoker.ExecuteCommand(new SelectListViewCmd(itemList));
         }
 
         public void OnSubmit(UINotification notification) 
@@ -117,6 +124,18 @@ namespace Game.UI
 
                 roles.Add(role);
             }
+        }
+    }
+
+    public class MenuItem : ItemDB
+    {
+        public IntDB id = new IntDB();
+        public StringDB name = new StringDB();
+
+        public MenuItem(int id, string name)
+        {
+            this.id.Value = id;
+            this.name.Value = name;
         }
     }
 
