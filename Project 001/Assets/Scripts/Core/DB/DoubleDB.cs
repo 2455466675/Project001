@@ -1,9 +1,11 @@
+using System;
+
 namespace Game
 {
     /// <summary>
     /// 
     /// </summary>
-    public class DoubleDB : DataBase
+    public class DoubleDB : DataBase, IComparable<DoubleDB>
     {
         public static implicit operator double(DoubleDB db)
         {
@@ -38,6 +40,11 @@ namespace Game
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public int CompareTo(DoubleDB db)
+        {
+            return Value.CompareTo(db.Value);
         }
     }
 }

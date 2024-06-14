@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Game.UI
 {
     /// <summary>
@@ -9,11 +5,11 @@ namespace Game.UI
     /// </summary>
     public class UINotification
     {
-        public IGuidable guidable;
+        public ListItem ListItem {get; private set;}
 
-        public UINotification(IGuidable guidable)
+        public UINotification(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.ListItem = listItem;
         }
     }
 }

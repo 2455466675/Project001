@@ -27,16 +27,16 @@ namespace Game.UI
 
         public override void UpdateView()
         {
+            base.UpdateView();
             if (StaticBox == null) return;
-            if (!IsValid) return;
-            if (ListDB == null) return;
+            if (Count <= 0) return;
             
-            for (int i = 0; i < ListDB.Count; i++) 
+            for (int i = 0; i < items.Count; i++) 
             {
                 ListItem listItem = StaticBox.GetListItem(i);
                 if (listItem != null)
                 {
-                    listItem.SetListItem(ListDB[i], i);
+                    listItem.SetListItem(items[i], i);
                 }
             }
         }

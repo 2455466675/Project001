@@ -1,9 +1,11 @@
+using System;
+
 namespace Game
 {
     /// <summary>
     /// 
     /// </summary>
-    public class FloatDB : DataBase
+    public class FloatDB : DataBase, IComparable<FloatDB>
     {
         public static implicit operator float(FloatDB db)
         {
@@ -40,6 +42,11 @@ namespace Game
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public int CompareTo(FloatDB db)
+        {
+            return Value.CompareTo(db.Value);
         }
     }
 }

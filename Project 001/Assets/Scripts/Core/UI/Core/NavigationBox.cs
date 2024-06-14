@@ -24,11 +24,18 @@ namespace Game.UI
     /// </summary>
     public class NavigationBox : MonoBehaviour
     {
+        public bool IsBeSelected => view != null && view.IsBeSelected;
         public NavigationType navigationType;
 
         public int defaultIndex;
         public int currIndex;
         public ListItem current;
+
+        private ListView view;
+        public void SetView(ListView view)
+        {
+            this.view = view;
+        }
 
         public void SelectDefault()
         {

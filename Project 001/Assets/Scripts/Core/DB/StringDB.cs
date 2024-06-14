@@ -1,9 +1,11 @@
+using System;
+
 namespace Game
 {
     /// <summary>
     /// 
     /// </summary>
-    public class StringDB : DataBase
+    public class StringDB : DataBase, IComparable<StringDB>
     {
         public static implicit operator string(StringDB db)
         {
@@ -37,6 +39,11 @@ namespace Game
         public override string ToString()
         {
             return Value;
+        }
+
+        public int CompareTo(StringDB db)
+        {
+            return Value.CompareTo(db.Value);
         }
     }
 }

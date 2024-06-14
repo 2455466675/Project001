@@ -20,47 +20,47 @@ namespace Game.UI
         public string onMoveToLeftFunName;
         public string onMoveToRightFunName;
 
-        private IGuidable guidable;
+        private ListItem listItem;
 
-        public void OnSubmit(IGuidable guidable)
+        public void OnSubmit(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.listItem = listItem;
             DoExecute(onSubmitFunName);
         }
 
-        public void OnSelect(IGuidable guidable)
+        public void OnSelect(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.listItem = listItem;
             DoExecute(onSelectFunName);
         }
 
-        public void OnDeselect(IGuidable guidable)
+        public void OnDeselect(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.listItem = listItem;
             DoExecute(onDeselectFunName);
         }
 
-        public void OnMoveToUp(IGuidable guidable)
+        public void OnMoveToUp(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.listItem = listItem;
             DoExecute(onMoveToUpFunName);
         }
 
-        public void OnMoveToDown(IGuidable guidable)
+        public void OnMoveToDown(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.listItem = listItem;
             DoExecute(onMoveToDownFunName);
         }
 
-        public void OnMoveToLeft(IGuidable guidable)
+        public void OnMoveToLeft(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.listItem = listItem;
             DoExecute(onMoveToLeftFunName);
         }
 
-        public void OnMoveToRight(IGuidable guidable)
+        public void OnMoveToRight(ListItem listItem)
         {
-            this.guidable = guidable;
+            this.listItem = listItem;
             DoExecute(onMoveToRightFunName);
         }
 
@@ -80,7 +80,7 @@ namespace Game.UI
                 Debug.Log($"{controller.GetType().FullName}没有实现的函数：{funName}");
                 return;
             }
-            methodInfo.Invoke(controller, new object[] { new UINotification(this.guidable)});
+            methodInfo.Invoke(controller, new object[] { new UINotification(this.listItem)});
         }
     }
 }

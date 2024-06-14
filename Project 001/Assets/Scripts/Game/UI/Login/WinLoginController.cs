@@ -13,12 +13,11 @@ namespace Game.UI
 
         public void OnSelect(UINotification notification)
         {
-            Debug.Log($"OnSelect:{notification.guidable.CurrentGameObject.name}");
+
         }
 
         public void OnStartNewGame(UINotification notification)
         {
-            Debug.Log($"OnStartNewGame:{notification.guidable.CurrentGameObject.name}");
             GameCore.UI.OpenWinCommond(100003);
         }
 

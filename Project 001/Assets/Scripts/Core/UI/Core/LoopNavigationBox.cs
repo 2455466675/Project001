@@ -64,7 +64,17 @@ namespace Game.UI
             {
                 return;
             }
-            if (this.totalCount == totalCount)             
+            if (totalCount == 0)             
+            {
+                max = 0;
+                point = 0;
+                offest = 0;
+                this.totalCount = 0;
+                IndexChange(0, 0);
+                return;
+            }
+
+            if (this.totalCount == totalCount)
             {
                 return;
             }
@@ -95,7 +105,7 @@ namespace Game.UI
             }
 
             IndexChange(min + offest, max + offest);
-            if (changePoint) 
+            if (changePoint && IsBeSelected) 
             {
                 Select(point + offest);
             }
@@ -215,13 +225,15 @@ namespace Game.UI
             prefab.gameObject.SetActive(false);
 
             RectTransform tf = prefab.GetComponent<RectTransform>();
+            tf.anchorMin = new Vector2(0.5f, 1);
+            tf.anchorMax = new Vector2(0.5f, 1);
+            tf.pivot = new Vector2(0.5f, 0.5f);
             float prfabHeight = tf.rect.size.y;
             float vHeight = viewport.rect.size.y;
-
-            int c = Mathf.CeilToInt((vHeight - topPadding - bottomPadding) / (prfabHeight + spacing / 2));
+            int c = Mathf.FloorToInt((vHeight - topPadding - bottomPadding) / (prfabHeight + spacing / 2));
 
             float height = (c - 1) * spacing + c * prfabHeight + topPadding + bottomPadding;
-            content.sizeDelta = new Vector2(0, height);
+            content.sizeDelta = new Vector2(tf.rect.size.x, height);
 
             for (int i = 0; i < c; i++)
             {
@@ -244,18 +256,28 @@ namespace Game.UI
             {
                 return;
             }
-            ListItem[] gameObjects = new ListItem[extent + 1];
-            foreach (var item in items)
+            if (extent == 0)
             {
-                if (item.Key > extent)
+                foreach (var item in items)
                 {
                     item.Value.gameObject.SetActive(false);
-                    continue;
-                }           
-                item.Value.gameObject.SetActive(true);
-                gameObjects[item.Key] = item.Value;
+                }
             }
-            OnIndexChangeHandler?.Invoke(beginIndex, endIndex, gameObjects);
+            else
+            {
+                ListItem[] gameObjects = new ListItem[extent + 1];
+                foreach (var item in items)
+                {
+                    if (item.Key > extent)
+                    {
+                        item.Value.gameObject.SetActive(false);
+                        continue;
+                    }
+                    item.Value.gameObject.SetActive(true);
+                    gameObjects[item.Key] = item.Value;
+                }
+                OnIndexChangeHandler?.Invoke(beginIndex, endIndex, gameObjects);
+            }
         }
 
         private ListItem FindOrGreateItem(int index) 
@@ -286,7 +308,6 @@ namespace Game.UI
             Vector2 v1 = RectTransformUtility.WorldToScreenPoint(GameCore.UI.UICamera, corners[1]);
             return v1.y;
         }
-
 
         private void SelectInner(ListItem listItem)
         {

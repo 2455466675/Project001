@@ -1,6 +1,7 @@
 using Game.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -33,15 +34,10 @@ namespace Game
 
         public override void UpdateView()
         {
-            if (box == null) return;
-            if (ListDB == null)
-            {
-                LoopBox.UpdateTotalCount(0);
-            }
-            else
-            {
-                LoopBox.UpdateTotalCount(ListDB.Count);
-            }
+            base.UpdateView();
+            if (LoopBox == null) return;
+            Debug.Log($"UpdateView:{Count}");
+            LoopBox.UpdateTotalCount(Count);
         }
 
         private void InitBox()
@@ -50,13 +46,15 @@ namespace Game
             LoopBox.Init(OnBoxChange);
         }
 
-        private void OnBoxChange(int min, int max, ListItem[] items)
+        private void OnBoxChange(int min, int max, ListItem[] listItems)
         {
-            if (items == null || items.Length <= 0) return;
-            if (ListDB == null || ListDB.Count <= 0) return;
-            for (int i = 0; i < items.Length; i++)
+            Debug.Log($"Count:{Count}");
+            if (listItems == null || listItems.Length <= 0) return;
+            if (Count <= 0) return;
+            
+            for (int i = 0; i < listItems.Length; i++)
             {
-                items[i].SetListItem(ListDB[min + i], min + i);
+                listItems[i].SetListItem(items[min + i], min + i);
             }
         }
     }

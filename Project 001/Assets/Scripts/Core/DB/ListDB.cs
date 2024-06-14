@@ -1,13 +1,14 @@
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ListDB : DataBase
+    public class ListDB : DataBase, IEnumerable<ItemDB>
     {
         private List<ItemDB> value;
 
@@ -82,6 +83,16 @@ namespace Game
         public override string ToString()
         {
             return Count.ToString();
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return value.GetEnumerator();
+        }
+
+        IEnumerator<ItemDB> IEnumerable<ItemDB>.GetEnumerator()
+        {
+            return value.GetEnumerator();
         }
     }
 }
