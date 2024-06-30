@@ -1,9 +1,7 @@
-using Game.UI;
-using System.Collections;
+using Game.Core;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Game
+namespace Game.UI
 {
     /// <summary>
     /// 
@@ -11,6 +9,11 @@ namespace Game
 	public class CommandInvoker
 	{
         public static Stack<ICommand> commands = new Stack<ICommand>();
+
+        public static void ClearCommands()
+        {
+            commands?.Clear();
+        }
 
         public static void ExecuteCommand(ICommand command)
         {
@@ -24,8 +27,14 @@ namespace Game
             {
                 return;
             }
-            ICommand command = commands.Pop();
+            ICommand command = commands.Peek();
+            if (!command.Undoable) 
+            {
+                MLog.Log($"此操作不可撤销:{command}");
+                return;
+            }
             command.Undo();
+            commands.Pop();
         }
 	}
 }

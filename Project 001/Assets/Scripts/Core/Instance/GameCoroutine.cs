@@ -1,18 +1,14 @@
-using Game.Core;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 
     /// </summary>
     public class GameCoroutine : MonoBehaviour, ICore
     {
-
-
         public void Awake()
         {
 

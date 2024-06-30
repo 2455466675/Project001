@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Game.UI
 {
     /// <summary>
@@ -9,10 +5,13 @@ namespace Game.UI
     /// </summary>
 	public class OpenWindowCmd : ICommand
     {
+        public bool Undoable => undoable;
         private readonly int windowId;
-        public OpenWindowCmd(int windowId)
+        private readonly bool undoable;
+        public OpenWindowCmd(int windowId, bool undoable)
         {
             this.windowId = windowId;
+            this.undoable = undoable;
         }
 
         public void Execute()
@@ -23,6 +22,11 @@ namespace Game.UI
         public void Undo()
         {
             GameCore.UI.CloseWin(windowId);
+        }
+
+        public override string ToString()
+        {
+            return windowId.ToString();
         }
     }
 }

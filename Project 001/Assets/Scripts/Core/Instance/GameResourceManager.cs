@@ -1,25 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 using System;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
-using UnityEditor;
 using YooAsset;
-using Game.Core;
-using Unity.VisualScripting;
 using System.Linq;
 
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 
     /// </summary>
     public class GameResourceManager : MonoBehaviour, ICore
     {
- 
         private ResourcePackage package;
 
         public IEnumerator Init()
@@ -81,7 +73,7 @@ namespace Game
 
         public Sprite GetSprite(string spriteName)
         {
-            Debug.Log($"spriteName:{spriteName}");
+            MLog.Log($"spriteName:{spriteName}");
             return null;
         }
     }

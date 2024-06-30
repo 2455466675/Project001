@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-
 namespace Game.UI
 {
     /// <summary>
@@ -10,7 +5,7 @@ namespace Game.UI
     /// </summary>
     public class TextView : View
     {
-        public TextMeshProUGUI target;
+        public ExtendText target;
         public int textId;
 
         public override void UpdateView()
@@ -36,7 +31,7 @@ namespace Game.UI
 #if UNITY_EDITOR
         public void OnValidate()
         {
-            target = GetComponent<TextMeshProUGUI>();
+            target = GetComponent<ExtendText>();
         }
 #endif
     }

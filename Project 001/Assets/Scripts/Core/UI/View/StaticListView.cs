@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.UI
 {
@@ -36,7 +33,7 @@ namespace Game.UI
                 ListItem listItem = StaticBox.GetListItem(i);
                 if (listItem != null)
                 {
-                    listItem.SetListItem(items[i], i);
+                    listItem.Register(items[i], i);
                 }
             }
         }

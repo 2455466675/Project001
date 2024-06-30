@@ -1,9 +1,14 @@
 using System;
 
-namespace Game
+namespace Game.Core
 {
     public interface IDataBase
     {
+        public int IntValue {get;}
+        public float FloatValue {get;}
+        public double DoubleValue {get;}
+        public bool BoolValue {get;}
+        public string StringValue {get;}
         void AddEvent(Action action);
         void RemoveEvent(Action action);
         void NotifyChange();
@@ -16,7 +21,6 @@ namespace Game
         public double DoubleValue { get; protected set; }
         public bool BoolValue { get; protected set; }
         public string StringValue { get; protected set; }
-
         protected Action Evts;
         public void NotifyChange()
         {
@@ -38,7 +42,7 @@ namespace Game
             {
                 return;
             }
-            Evts -= action;
+            Evts -= action;          
         }
     }
 }

@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Game.Core;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Windows;
 
 namespace Game.UI
 {
@@ -15,9 +12,9 @@ namespace Game.UI
         public string vUid;
         public bool IsDirty { get; private set;}
 
-        public DataBase[] DBs {get; private set;}
+        public IDataBase[] DBs {get; private set;}
 
-        public DataBase MainDB => (DBs != null && DBs.Length > 0) ? DBs[0] : null;
+        public IDataBase MainDB => (DBs != null && DBs.Length > 0) ? DBs[0] : null;
 
         public bool IsValid => DBs != null && DBs.Length > 0 && MainDB != null;
 
@@ -39,7 +36,7 @@ namespace Game.UI
             ClearDBs();
         }
 
-        public void SetDatum(params DataBase[] datums)
+        public void SetDatum(params IDataBase[] datums)
         {
             ClearDBs();
             if(datums == null || datums.Length <= 0)
@@ -82,7 +79,7 @@ namespace Game.UI
             for (int i = 0; i < DBs.Length; i++) 
             {
                 DBs[i].RemoveEvent(OnDatumChange);
-                DBs[i] = null;
+                DBs[i] = null;               
             }
             DBs = null;
         }
@@ -97,7 +94,7 @@ namespace Game.UI
         {
             if (DBs == null || DBs.Length <= 0)
             {
-                Debug.Log("null"); 
+                MLog.Log("null"); 
                 return;
             }
 
@@ -108,7 +105,7 @@ namespace Game.UI
                 stringBuilder.AppendLine($" DB_{i} : {DBs[i]} ");
             }
 
-            Debug.Log(stringBuilder);
+            MLog.Log(stringBuilder.ToString());
         }
     }
 }

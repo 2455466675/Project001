@@ -1,9 +1,6 @@
 using Game.Cfg;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
-using System;
-using System.Collections;
+using Game.Core;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -47,15 +44,20 @@ namespace Game.UI
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                Debug.Log("KeyCode.R");
+                MLog.Log("KeyCode.R");
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                Debug.Log("KeyCode.R");
+                MLog.Log("KeyCode.Q");
+                ListDB items = teamSystem.roles[0].items;
+                int index = UnityEngine.Random.Range(0, items.Count);
+                ItemDB itemDB = items[index];
+                (itemDB as PackageItemDB).count.Value = 0;
+                items.NotifyChange();
             }
             if (Input.GetKeyDown(KeyCode.T))
             {
-                Debug.Log("KeyCode.T");
+                MLog.Log("KeyCode.T");
                 List<Role> roleList = teamSystem.roles;
                 for (int i = 0; i < roleList.Count; i++)
                 {
@@ -64,7 +66,7 @@ namespace Game.UI
             }
             if (Input.GetKeyDown(KeyCode.U))
             {
-                Debug.Log("KeyCode.T");
+                MLog.Log("KeyCode.T");
                 List<Role> roleList = teamSystem.roles;
                 for (int i = 0; i < roleList.Count; i++)
                 {
@@ -75,63 +77,49 @@ namespace Game.UI
 
         public void OnTest(UINotification notification)
         {
-            Debug.Log("OnTest");
+            MLog.Log("OnTest");
             CommandInvoker.ExecuteCommand(new SelectListViewCmd(itemTypeList));
         }
 
         public void OnTest2(UINotification notification)
         {
-            Debug.Log("OnTest2");
+            MLog.Log("OnTest2");
             CommandInvoker.ExecuteCommand(new SelectListViewCmd(itemList));
         }
 
         public void OnTest3(UINotification notification)
         {
             ItemTypeItemDB db = notification.ListItem.GetListItem<ItemTypeItemDB>();
-            Debug.Log($"OnTest3:{db.name}, {db.id}");
-                        
-            ListDB items = teamSystem.roles[0].items;
-            if (db.id.Value == 0)
-            {
-                foreach (var item in items)
-                {
-                    (item as PackageItemDB).filter = true;
-                }
-            }
-            else
-            {
-                PakageItemType itemType = (PakageItemType)db.id.Value;
-                foreach (var item in items)
-                {
-                    PackageItemDB i = item as PackageItemDB;
-                    i.filter = i.itemType == itemType;
-                }
-            }
+            MLog.Log($"OnTest3:{db.name}, {db.id}");
+
+            ListDB items = teamSystem.roles[0].items;            
+            PackageItemDB.select = (PakageItemType)db.id.Value;
+
             items.NotifyChange();
         }
 
         public void OnSubmit(UINotification notification) 
         {
             string text = notification.ListItem.CurrentGameObject.GetComponentInChildren<TextMeshProUGUI>().text;
-            Debug.Log($"OnSubmit:{text}");
+            MLog.Log($"OnSubmit:{text}");
         }
 
         public void OnSelect(UINotification notification)
         {
             string text = notification.ListItem.CurrentGameObject.GetComponentInChildren<TextMeshProUGUI>().text;
-            Debug.Log($"OnSelect:{text}");
+            MLog.Log($"OnSelect:{text}");
         }
 
         public void OnMoveLeft(UINotification notification)
         {
             string text = notification.ListItem.CurrentGameObject.GetComponentInChildren<TextMeshProUGUI>().text;
-            Debug.Log($"OnMoveLeft:{text}");
+            MLog.Log($"OnMoveLeft:{text}");
         }
 
         public void OnMoveRight(UINotification notification)
         {
             string text = notification.ListItem.CurrentGameObject.GetComponentInChildren<TextMeshProUGUI>().text;
-            Debug.Log($"OnMoveRight:{text}");
+            MLog.Log($"OnMoveRight:{text}");
         }    
     }
 
@@ -220,6 +208,7 @@ namespace Game.UI
 
     public enum PakageItemType
     {
+        None    = 0,
         Drug    = 1,
         Weapon  = 2,
         Armor   = 3,
@@ -228,15 +217,15 @@ namespace Game.UI
 
     public class PackageItemDB : ItemDB
     {
-        public bool filter;
+        public static PakageItemType select;
 
         public int id;
         public PakageItemType itemType;
         public StringDB name = new StringDB();
-
+        public IntDB count = new IntDB();
         public override bool Filter()
         {
-            return filter;
+            return (count.IntValue > 0) && (select == PakageItemType.None || itemType == select);
         }
 
         public PackageItemDB(int id, string name, PakageItemType itemType)
@@ -244,6 +233,7 @@ namespace Game.UI
             this.id = id;
             this.name.Value = name;
             this.itemType = itemType;
+            count.Value = 1;
         }
 
         public override int CompareTo(ItemDB db)
@@ -272,13 +262,6 @@ namespace Game.UI
             hp = new IntDB(2);
             name = new StringDB("sgew");
             items = new ListDB();
-        }
-
-        public void Log()
-        {            
-            Debug.Log(hp + 2);
-            string s = name;
-            Debug.Log(s);
         }
     }
 }

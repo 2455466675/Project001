@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 
@@ -18,7 +14,7 @@ namespace Game
 
         public void OnEnter(GameState preGameState)
         {
-            Debug.Log("游戏状态：运行");
+            MLog.Log("游戏状态：运行");
         }
 
         public void OnExit(GameState nextGameState)

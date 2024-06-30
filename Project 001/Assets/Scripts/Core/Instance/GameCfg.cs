@@ -64,10 +64,10 @@ namespace Game.Cfg
             }
 
             List<CfgDataBase> list = DataMap[t];
-            return list.ConvertAll(a=>a as T);
+            return list.ConvertAll(a => a as T);
         }
 
-        public List<T> FindAll<T>(Func<T,bool> func) where T : CfgDataBase
+        public List<T> FindAll<T>(Func<T, bool> func) where T : CfgDataBase
         {
             List<T> list = FindAll<T>();
             return list.FindAll(a => func(a));

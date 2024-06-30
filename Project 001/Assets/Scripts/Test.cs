@@ -1,5 +1,5 @@
 using DG.Tweening;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Game
 {
-    [System.Serializable]
+    [Serializable]
     public class MyTest
     {
         [SerializeField]

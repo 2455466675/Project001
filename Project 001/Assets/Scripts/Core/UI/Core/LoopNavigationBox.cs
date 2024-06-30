@@ -3,6 +3,7 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -70,7 +71,16 @@ namespace Game.UI
                 point = 0;
                 offest = 0;
                 this.totalCount = 0;
-                IndexChange(0, 0);
+
+                foreach (var item in items)
+                {
+                    item.Value.gameObject.SetActive(false);
+                }
+
+                if (IsBeSelected)
+                {
+                    CommandInvoker.UndoCommand();
+                }
                 return;
             }
 
@@ -104,7 +114,7 @@ namespace Game.UI
                 }
             }
 
-            IndexChange(min + offest, max + offest);
+            IndexChange();
             if (changePoint && IsBeSelected) 
             {
                 Select(point + offest);
@@ -132,7 +142,7 @@ namespace Game.UI
                 point = max - (maxIndex - index);
                 AlignAtBottom();
             }       
-            IndexChange(min + offest, max + offest);
+            IndexChange();
             SelectInner(FindOrGreateItem(point));
         }
 
@@ -145,7 +155,7 @@ namespace Game.UI
                     return;
                 }
                 offest -= 1;
-                IndexChange(min + offest, max + offest);                
+                IndexChange();                
             }
             else
             {
@@ -175,7 +185,7 @@ namespace Game.UI
                 else
                 {
                     offest += 1;
-                    IndexChange(min + offest, max + offest);                    
+                    IndexChange();                    
                 }          
             }
             else
@@ -245,8 +255,10 @@ namespace Game.UI
             itemCount = c;
         }
 
-        private void IndexChange(int beginIndex, int endIndex)
-        {        
+        private void IndexChange()
+        {
+            int beginIndex = min + offest;
+            int endIndex = max + offest;
             if (beginIndex < 0 || endIndex < 0)
             {
                 return;
@@ -255,13 +267,6 @@ namespace Game.UI
             if (extent < 0)
             {
                 return;
-            }
-            if (extent == 0)
-            {
-                foreach (var item in items)
-                {
-                    item.Value.gameObject.SetActive(false);
-                }
             }
             else
             {
@@ -311,6 +316,7 @@ namespace Game.UI
 
         private void SelectInner(ListItem listItem)
         {
+            currIndex = point + offest;
             current = listItem;
             GameCore.UI.SelectUI(current);
         }

@@ -1,9 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace Game.UI
 {
     /// <summary>
@@ -11,7 +5,7 @@ namespace Game.UI
     /// </summary>
     public class ImageView : View
     {
-        public Image target;
+        public ExtendImage target;
         public string spriteName;
 
         public void SetSpriteByName(string spriteName)
@@ -36,7 +30,7 @@ namespace Game.UI
 #if UNITY_EDITOR
         public void OnValidate()
         {
-            target = GetComponent<Image>();
+            target = GetComponent<ExtendImage>();
         }
 #endif
     }

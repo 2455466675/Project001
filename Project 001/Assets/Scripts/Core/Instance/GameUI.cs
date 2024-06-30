@@ -54,9 +54,15 @@ namespace Game.UI
             UIRoot.DeselectUI(guidableItem);
         }
 
-        public void OpenWinCommond(int id)
+        public void OpenWinCommond(int id, bool undoable = true)
         {         
-            CommandInvoker.ExecuteCommand(new OpenWindowCmd(id));
+            if (!GameCore.StateController.IsUIModel)
+            {
+                CommandInvoker.ClearCommands();
+                GameCore.StateController.SwitchModel(GameModel.UI);
+                OpenWin(100001); //引导界面
+            }
+            CommandInvoker.ExecuteCommand(new OpenWindowCmd(id, undoable));
         }
 
         public void OpenWin(int id)
@@ -85,14 +91,8 @@ namespace Game.UI
             openWinStack.Push(win);
         }
 
-        public void OpenWinAsync(int id, int frame)
-        {
-            GameCore.Co.WaitForFrames(() => OpenWin(id), frame);
-        }
-
         public void CloseWin(int id)
         {
-            Debug.Log($"CloseWin:{id}");
             if (openWinStack.Count <= 0)
             {
                 return;
@@ -112,9 +112,9 @@ namespace Game.UI
             }
         }
 
-        public void SelectListView(ListView listView)
+        public void SelectGuidableGroup(IGuidableGroup guidableGroup)
         {
-            UIRoot.SelectListView(listView);
+            UIRoot.SelectGuidableGroup(guidableGroup);
         }
 
         public void TestH(float h)
@@ -123,17 +123,17 @@ namespace Game.UI
             {
                 return;
             }
-            if (UIRoot.ListView == null)
+            if (UIRoot.GuidableGroup == null)
             {
                 return;
             }
             if (h < 0)
             {
-                UIRoot.ListView.OnMoveToLeft();    
+                UIRoot.GuidableGroup.OnMoveToLeft();    
             }
             else
             {
-                UIRoot.ListView.OnMoveToRight();
+                UIRoot.GuidableGroup.OnMoveToRight();
             }
                 
         }
@@ -143,17 +143,17 @@ namespace Game.UI
             {
                 return;
             }
-            if (UIRoot.ListView == null)
+            if (UIRoot.GuidableGroup == null)
             {
                 return;
             }
             if (v < 0)
             {
-                UIRoot.ListView.OnMoveToDown();                
+                UIRoot.GuidableGroup.OnMoveToDown();                
             }
             else
             {
-                UIRoot.ListView.OnMoveToUp();
+                UIRoot.GuidableGroup.OnMoveToUp();
             }
         }
     }

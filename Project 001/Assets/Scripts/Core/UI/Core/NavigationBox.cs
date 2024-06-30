@@ -24,7 +24,7 @@ namespace Game.UI
     /// </summary>
     public class NavigationBox : MonoBehaviour
     {
-        public bool IsBeSelected => view != null && view.IsBeSelected;
+        public bool IsBeSelected => view != null && view.IsFocus;
         public NavigationType navigationType;
 
         public int defaultIndex;

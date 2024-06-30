@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 1190135479
+    locked: 0
+  - name: Ornamental
+    uniqueID: 3164371239
+    locked: 0
+  - name: Actor
+    uniqueID: 1381365239
+    locked: 0
+  - name: Hud
+    uniqueID: 2232172773
+    locked: 0
+  - name: Mystery
+    uniqueID: 4141298345
+    locked: 0

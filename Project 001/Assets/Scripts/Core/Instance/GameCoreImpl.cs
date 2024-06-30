@@ -1,11 +1,10 @@
 using Game.Cfg;
-using Game.Core;
+using Game.System;
 using Game.UI;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 

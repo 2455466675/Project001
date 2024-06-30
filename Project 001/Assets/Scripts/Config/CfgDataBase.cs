@@ -14,7 +14,7 @@ namespace Game.Cfg
         public readonly int id;
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
             foreach (FieldInfo property in fields)
             {

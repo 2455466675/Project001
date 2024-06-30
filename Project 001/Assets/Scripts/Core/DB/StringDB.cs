@@ -1,6 +1,6 @@
 using System;
 
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 

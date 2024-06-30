@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 
@@ -18,11 +15,8 @@ namespace Game
 
         public void OnEnter(GameState preGameState)
         {
-            Debug.Log("ÓÎÏ·×´Ì¬£ºµÇÂ¼");
-            GameCore.StateController.SwitchModel(GameModel.UI);
-            GameCore.UI.OpenWinCommond(100001);
-            GameCore.UI.OpenWinCommond(100002);
-            //GameCore.UI.OpenWinAsync(100002, 1);
+            MLog.Log("ÓÎÏ·×´Ì¬£ºµÇÂ¼");
+            GameCore.UI.OpenWinCommond(100002, false); //µÇÂ¼½çÃæ
         }
 
         public void OnExit(GameState nextGameState)

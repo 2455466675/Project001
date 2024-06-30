@@ -1,8 +1,5 @@
-using TMPro;
-using Unity.VisualScripting;
+using Game.Core;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Game.UI
 {
@@ -57,7 +54,7 @@ namespace Game.UI
             ParentBox = box;
         }
 
-        public void SetListItem(ItemDB listItem, int index)
+        public void Register(ItemDB listItem, int index)
         {
             Index = index;
             this.listItem = listItem;

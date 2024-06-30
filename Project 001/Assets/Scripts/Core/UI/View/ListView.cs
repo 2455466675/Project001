@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
+using Game.Core;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
-using UnityEngine;
 
 namespace Game.UI
 {
@@ -18,27 +15,26 @@ namespace Game.UI
         /// </summary>
         OutFocus = 2,
         /// <summary>
-        /// 隐藏
+        /// 退出
         /// </summary>
-        Hidden   = 3,
+        Exit   = 3,
     }
 
     /// <summary>
     /// 
     /// </summary>
-	public class ListView : View, IGuidable
-	{
+	public class ListView : View, IGuidableGroup
+    {
         public NavigationBox box;     
-        public bool IsBeSelected {get; private set;}
+        public int Layer { get; set;}
+        public bool IsFocus {get; private set;}
         public ListViewState ViewState {get; private set;}
-        public GameObject CurrentGameObject => gameObject;
-        public RectTransform TargetTransform => transform as RectTransform;
         public ListDB ListDB => IsValid ? MainDB as ListDB : null;
         public int Count => items != null ? items.Count : 0;
 
         protected List<ItemDB> items;
 
-        private void Awake()
+        public virtual void Awake()
         {
             if(box == null)
             {
@@ -48,13 +44,13 @@ namespace Game.UI
             {
                 box.SetView(this);
             }
+            ViewState = ListViewState.Exit;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            ViewState = ListViewState.Hidden;
-            IsBeSelected = false;
+            Exit();
         }
 
         public override void UpdateView()
@@ -72,31 +68,32 @@ namespace Game.UI
             items = ListDB.Where(a => a.Filter()).OrderBy(a => a).ToList();
         }
 
-        public void OnSubmit()
+        public void InFocus()
         {
-
-        }
-
-        public void OnSelect()
-        {
-            if (ViewState == ListViewState.Hidden)
+            if (ViewState == ListViewState.Exit)
             {
                 box.SelectDefault();
             }
             else
             {
                 //TODO 选择失焦之前选择的
-                Debug.Log("选择失焦之前选择的");
-                box.SelectDefault();
+                MLog.Log("选择失焦之前选择的");
+                box.Select(box.currIndex);
             }
             ViewState = ListViewState.InFocus;
-            IsBeSelected = true;
+            IsFocus = true;
         }
 
-        public void OnDeselect()
+        public void OutFocus()
         {
             ViewState = ListViewState.OutFocus;
-            IsBeSelected = false;
+            IsFocus = false;
+        }
+
+        public void Exit()
+        {
+            ViewState = ListViewState.Exit;
+            IsFocus = false;
         }
 
         public void OnMoveToUp()

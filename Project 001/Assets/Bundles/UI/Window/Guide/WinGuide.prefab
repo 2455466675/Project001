@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4180560480167682387}
   - component: {fileID: -4696681671341616762}
   - component: {fileID: 7415933134306070130}
+  - component: {fileID: 3743481420278241401}
   m_Layer: 5
   m_Name: WinGuide
   m_TagString: Untagged
@@ -32,7 +33,6 @@ RectTransform:
   m_Children:
   - {fileID: 6553735640448067118}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -52,8 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   group: 2
-  id: 0
-  path: 
+  canvasGroup: {fileID: 3743481420278241401}
 --- !u!114 &7415933134306070130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,13 +65,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ebc0b3ad3cef32448fb017818a5a67e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  views: []
   guideFinger: {fileID: 1567978274143334836}
+--- !u!225 &3743481420278241401
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8787859381512956508}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &2895799603458233807
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 4180560480167682387}
     m_Modifications:
     - target: {fileID: 4462330056983684219, guid: e550bd511ba87aa4f93dd773345a4cea, type: 3}
@@ -168,6 +179,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e550bd511ba87aa4f93dd773345a4cea, type: 3}
 --- !u!1 &1567978274143334836 stripped
 GameObject:

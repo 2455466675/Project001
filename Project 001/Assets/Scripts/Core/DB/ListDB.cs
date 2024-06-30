@@ -1,16 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 
     /// </summary>
     public class ListDB : DataBase, IEnumerable<ItemDB>
     {
-        private List<ItemDB> value;
+        private readonly List<ItemDB> value;
 
         public ListDB()
         {
@@ -50,7 +49,7 @@ namespace Game
         public void RemoveAt(int index)
         {
             if (index < 0 || index >= value.Count) return;
-            value.RemoveAt(index);
+            value.RemoveAt(index);            
             NotifyChange();
         }
 

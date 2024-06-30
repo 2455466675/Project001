@@ -1,9 +1,8 @@
-using Game.Core;
+using Game.UI;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game
+namespace Game.Core
 {
     public class GameInputManager : MonoBehaviour, ICore
     {
@@ -49,7 +48,7 @@ namespace Game
             {
                 if (t <= 0f) 
                 {
-                    Debug.Log($"s:{s}");
+                    MLog.Log($"s:{s}");
                     GameCore.UI.Submit();
                     t = 0.2f;
                 }
@@ -58,7 +57,7 @@ namespace Game
             {
                 if (t <= 0f)
                 {
-                    Debug.Log($"c:{c}");
+                    MLog.Log($"c:{c}");
                     CommandInvoker.UndoCommand();
                     t = 0.2f;
                 }

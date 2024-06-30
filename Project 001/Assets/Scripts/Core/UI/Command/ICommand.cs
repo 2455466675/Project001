@@ -1,5 +1,3 @@
-
-
 namespace Game.UI
 {
     /// <summary>
@@ -7,28 +5,32 @@ namespace Game.UI
     /// </summary>
 	public interface ICommand
 	{
+        bool Undoable {get;}
         void Execute();
         void Undo();
 	}
 
     public class SelectListViewCmd : ICommand
     {
-        private readonly ListView listView1;
-        private readonly ListView listView2;
-        public SelectListViewCmd(ListView listView)
+        public bool Undoable => true;
+
+        private readonly IGuidableGroup group1;
+        private readonly IGuidableGroup group2;
+        public SelectListViewCmd(IGuidableGroup group)
         {
-            listView1 = GameCore.UI.UIRoot.ListView;
-            listView2 = listView;
+            group1 = GameCore.UI.UIRoot.GuidableGroup;
+            group2 = group;
+            group2.Layer = group1.Layer + 1;
         }
 
         public void Execute()
         {
-            GameCore.UI.SelectListView(listView2);
+            GameCore.UI.SelectGuidableGroup(group2);
         }
 
         public void Undo()
         {            
-            GameCore.UI.SelectListView(listView1);
+            GameCore.UI.SelectGuidableGroup(group1);
         }
     }
 }

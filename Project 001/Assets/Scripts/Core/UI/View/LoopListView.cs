@@ -1,10 +1,6 @@
-using Game.UI;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+using Game.Core;
 
-namespace Game
+namespace Game.UI
 {
     /// <summary>
     /// 
@@ -27,8 +23,9 @@ namespace Game
             }
         }
 
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
             InitBox();
         }
 
@@ -36,7 +33,7 @@ namespace Game
         {
             base.UpdateView();
             if (LoopBox == null) return;
-            Debug.Log($"UpdateView:{Count}");
+            MLog.Log($"UpdateView:{Count}");
             LoopBox.UpdateTotalCount(Count);
         }
 
@@ -48,13 +45,13 @@ namespace Game
 
         private void OnBoxChange(int min, int max, ListItem[] listItems)
         {
-            Debug.Log($"Count:{Count}");
+            MLog.Log($"Count:{Count}");
             if (listItems == null || listItems.Length <= 0) return;
             if (Count <= 0) return;
             
             for (int i = 0; i < listItems.Length; i++)
             {
-                listItems[i].SetListItem(items[min + i], min + i);
+                listItems[i].Register(items[min + i], min + i);
             }
         }
     }

@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.Core;
 using UnityEngine;
-using YooAsset.Editor;
 
 namespace Game.UI
 {
@@ -29,7 +27,7 @@ namespace Game.UI
             {
                 return;
             }
-            GameCore.UI.SelectListView(defaultListView);
+            GameCore.UI.SelectGuidableGroup(defaultListView);
         }
     }
 }

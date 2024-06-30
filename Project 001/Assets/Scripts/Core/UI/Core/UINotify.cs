@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.Core;
 using System.Reflection;
 using UnityEngine;
 
@@ -77,7 +76,7 @@ namespace Game.UI
             MethodInfo methodInfo = controller.GetType().GetMethod(funName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             if (methodInfo == null)
             {
-                Debug.Log($"{controller.GetType().FullName}没有实现的函数：{funName}");
+                MLog.Log($"{controller.GetType().FullName}没有实现的函数：{funName}");
                 return;
             }
             methodInfo.Invoke(controller, new object[] { new UINotification(this.listItem)});

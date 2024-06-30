@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using Game.Cfg;
 using Game.UI;
+using Game.System;
+using Game.Core;
 
 namespace Game
 {

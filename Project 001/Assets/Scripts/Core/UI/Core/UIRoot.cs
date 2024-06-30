@@ -22,7 +22,7 @@ namespace Game.UI
         public Camera UICamera;
         public WinGroupItem[] groups;
 
-        public ListView ListView { get; private set;}
+        public IGuidableGroup GuidableGroup { get; private set;}
         public IGuidable LastSelectUI { get; private set; }
         public IGuidable CurrSelectUI { get; private set; }
         
@@ -80,17 +80,21 @@ namespace Game.UI
             DeselectUIEventHandler?.Invoke(LastSelectUI);
         }
 
-        public void SelectListView(ListView listView) 
+        public void SelectGuidableGroup(IGuidableGroup guidableGroup) 
         {
-            if (ListView != null)
+            if (GuidableGroup != null) 
             {
-                ListView.OnDeselect();
+                if (guidableGroup.Layer > GuidableGroup.Layer)
+                {
+                    GuidableGroup.OutFocus();
+                }
+                else
+                {
+                    GuidableGroup.Exit();
+                }
             }
-            ListView = listView;
-            if (ListView != null)
-            {
-                ListView.OnSelect();
-            }
+            GuidableGroup = guidableGroup;
+            GuidableGroup?.InFocus();
         }
 
         public Window OpenWin(int id)

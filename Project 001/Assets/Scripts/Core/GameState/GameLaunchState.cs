@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace Game
+namespace Game.Core
 {
     /// <summary>
     /// 
@@ -18,7 +15,7 @@ namespace Game
 
         public void OnEnter(GameState preGameState)
         {
-            Debug.Log("ÓÎÏ·×´Ì¬£ºÆô¶¯");
+            MLog.Log("ÓÎÏ·×´Ì¬£ºÆô¶¯");
             GameCore.ResourceManager.LoadScene("scene001", UnityEngine.SceneManagement.LoadSceneMode.Single);
             GameCore.StateController.SwitchState(GameState.LOGIN);
         }

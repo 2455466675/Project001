@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.Core;
 using UnityEngine;
-using UnityEngine.U2D;
 
 namespace Game.UI
 {
@@ -26,7 +24,7 @@ namespace Game.UI
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #endif
-            Debug.Log("OnExit");
+            MLog.Log("OnExit");
             Application.Quit();
         }
     }
