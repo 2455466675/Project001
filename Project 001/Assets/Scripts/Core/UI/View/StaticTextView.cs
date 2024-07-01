@@ -1,3 +1,6 @@
+using Game.Core;
+using UnityEngine;
+
 namespace Game.UI
 {
     /// <summary>
@@ -7,7 +10,7 @@ namespace Game.UI
 	{
         public void Start()
         {
-            SetTextByTd(textId);
+            SetTextByTd(textId);           
         }
     }
 }

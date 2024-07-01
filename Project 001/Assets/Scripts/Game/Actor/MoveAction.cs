@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// ÒÆ¶¯RigidBody2D
     /// </summary>
 	public class MoveAction : BaseAction
     {

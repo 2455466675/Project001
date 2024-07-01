@@ -52,7 +52,7 @@ namespace Game.Core
         public SceneInfo LoadScene(string sceneName, LoadSceneMode mode)
         {
             Scene scene = SceneManager.LoadScene(sceneName, new LoadSceneParameters(mode));
-            SceneInfo sceneInfo = new SceneInfo();
+            SceneInfo sceneInfo = new();
             sceneInfo.SetScene(scene);
             return sceneInfo;
         }
@@ -66,7 +66,7 @@ namespace Game.Core
                 yield return null;
             }
 
-            SceneInfo sceneInfo = new SceneInfo();
+            SceneInfo sceneInfo = new();
             sceneInfo.SetScene(SceneManager.GetSceneAt(SceneManager.sceneCount - 1));
             loadEndEvt?.Invoke(sceneInfo);
         }

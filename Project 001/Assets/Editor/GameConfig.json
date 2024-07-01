@@ -16,6 +16,11 @@
             "excel":"item.xlsx",
             "type":"ItemCfg",
             "sheet":1
+        },
+        {
+            "excel":"color.xlsx",
+            "type":"ColorCfg",
+            "sheet":1
         }
     ]
 }

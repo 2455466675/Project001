@@ -16,6 +16,11 @@ namespace Game.UI
 
         public void OnStartNewGame(UINotification notification)
         {
+            GameCore.StateController.SwitchState(GameState.PLAYING);
+        }
+
+        public void OnTest(UINotification notification) 
+        {
             GameCore.UI.OpenWinCommond(100003);
         }
 

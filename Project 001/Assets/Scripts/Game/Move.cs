@@ -11,8 +11,8 @@ namespace Game
 	public class Move : MonoBehaviour
 	{
         public Actor actor;
- 
-        private void Update()
+
+        private void FixedUpdate()
         {
             float x, y;
             bool isRun = Input.GetKey(KeyCode.LeftShift);

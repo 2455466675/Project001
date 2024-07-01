@@ -7,32 +7,6 @@ namespace Game.Core
     /// <summary>
     /// 
     /// </summary>
-    public enum GameState
-    {
-        None    = 0,
-        /// <summary>
-        /// 启动
-        /// </summary>
-        LAUNCH  = 1,
-        /// <summary>
-        /// 登录
-        /// </summary>
-        LOGIN   = 2,
-        /// <summary>
-        /// 运行
-        /// </summary>
-        PLAYING = 3,
-    }
-
-    public enum GameModel 
-    { 
-        SCENE = 1,
-        UI    = 2,
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class GameStateController : MonoBehaviour, ICore
     {
         /// <summary>
@@ -42,7 +16,7 @@ namespace Game.Core
         /// <summary>
         /// 游戏当前操作模式
         /// </summary>
-        public GameModel GameModel {  get; private set; }
+        public GameModel GameModel => currModelInst != null ? currModelInst.Model : GameModel.SCENE;
         /// <summary>
         /// 是否是场景模式
         /// </summary>
@@ -56,6 +30,10 @@ namespace Game.Core
 
         private Dictionary<GameState, IGameState> states;
 
+        private IGameModel currModelInst;
+
+        private Dictionary<GameModel, IGameModel> models;
+
         public IEnumerator Init()
         {
             states = new Dictionary<GameState, IGameState>
@@ -63,6 +41,12 @@ namespace Game.Core
                 {GameState.LAUNCH, new GameLaunchState()},
                 {GameState.LOGIN, new GameLoginState()},
                 {GameState.PLAYING, new GamePlayingState()},
+            };
+
+            models = new Dictionary<GameModel, IGameModel>
+            {
+                {GameModel.UI, new GameUIModel()},
+                {GameModel.SCENE, new GameSceneModel()},
             };
             yield return null;
         }
@@ -90,10 +74,7 @@ namespace Game.Core
             {
                 return;
             }
-            if (currStateInst != null)
-            {
-                currStateInst.OnExit(state);
-            }
+            currStateInst?.OnExit(state);
             IGameState gameState = states[state];
             gameState.OnEnter(GameState);
             currStateInst = gameState;
@@ -105,7 +86,18 @@ namespace Game.Core
         /// <param name="model"></param>
         public void SwitchModel(GameModel model)
         {
-            this.GameModel = model;
+            if (!models.ContainsKey(model))
+            {
+                return;
+            }
+            if (model == GameModel)
+            {
+                return;
+            }
+            currModelInst?.OnExit();
+            IGameModel gameModel = models[model];
+            gameModel.OnEnter();
+            currModelInst = gameModel;
         }
     }
 }

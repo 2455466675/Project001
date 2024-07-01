@@ -1,3 +1,6 @@
+using Game.Core;
+using UnityEngine;
+
 namespace Game.UI
 {
     /// <summary>
@@ -14,18 +17,25 @@ namespace Game.UI
 
         public void SetTextByTd(int textId)
         {
-            SetText(GameCore.Language.GetTextById(textId));     
+            LanguageItem item = GameCore.Language.GetLanguageItem(textId);
+            if (item == null)
+            {
+                return;
+            }
+
+            SetText(item.text, item.color);     
         }
 
         public void SetTextByStr(string str)
         {
-            SetText(str);
+            SetText(str, Color.black);
         }
 
-        private void SetText(string text)
+        private void SetText(string text, Color color)
         {
             if (target == null) return;
             target.text = text;
+            target.color = color;
         }
 
 #if UNITY_EDITOR

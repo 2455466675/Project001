@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Game.Core;
+using UnityEditor.PackageManager.UI;
 
 namespace Game.UI
 {
@@ -58,9 +59,7 @@ namespace Game.UI
         {         
             if (!GameCore.StateController.IsUIModel)
             {
-                CommandInvoker.ClearCommands();
                 GameCore.StateController.SwitchModel(GameModel.UI);
-                OpenWin(100001); //引导界面
             }
             CommandInvoker.ExecuteCommand(new OpenWindowCmd(id, undoable));
         }
@@ -93,6 +92,10 @@ namespace Game.UI
 
         public void CloseWin(int id)
         {
+            if (openWinStack == null)
+            {
+                return;
+            }
             if (openWinStack.Count <= 0)
             {
                 return;
@@ -110,6 +113,24 @@ namespace Game.UI
             {
                 topWin.Enter();
             }
+        }
+
+        public void CloseAllWin()
+        {
+            if (openWinStack == null)
+            {
+                return;
+            }
+            if (openWinStack.Count <= 0)
+            {
+                return;
+            }
+            foreach (var item in openWinStack)
+            {
+                item.Exit();
+                item.Hide();
+            }
+            openWinStack.Clear();
         }
 
         public void SelectGuidableGroup(IGuidableGroup guidableGroup)

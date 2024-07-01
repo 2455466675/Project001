@@ -1,3 +1,5 @@
+using Game.UI;
+
 namespace Game.Core
 {
     /// <summary>
@@ -15,6 +17,8 @@ namespace Game.Core
         public void OnEnter(GameState preGameState)
         {
             MLog.Log("ÓÎÏ·×´Ì¬£ºÔËÐÐ");
+            GameCore.ResourceManager.LoadScene("scene002", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            GameCore.StateController.SwitchModel(GameModel.SCENE);
         }
 
         public void OnExit(GameState nextGameState)

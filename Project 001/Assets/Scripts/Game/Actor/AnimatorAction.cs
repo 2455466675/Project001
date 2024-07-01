@@ -1,30 +1,23 @@
-using P = UnityEngine.AnimatorControllerParameter;
 using P_Type = UnityEngine.AnimatorControllerParameterType;
 
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// ÇÐ»»¶¯»­
     /// </summary>
 	public class AnimatorAction : BaseAction
     {
         public string ParameterName;
         public string value;
 
-        private P_Type pType;
+        public P_Type pt;
         private int intValue;
         private float floatValue;
         private bool boolValue;
 
         private void Start()
         {
-            var p = FindParameter(ParameterName);
-            if (p == null)
-            {
-                return;
-            }
-            pType = p.type;
-            switch (pType)
+            switch (pt)
             {
                 case P_Type.Int:
                     int.TryParse(value, out intValue);
@@ -39,8 +32,8 @@ namespace Game.Core
         }
 
         public override void Execute()
-        {            
-            switch (pType)
+        {
+            switch (pt)
             {
                 case P_Type.Float:
                     actor.animator.SetFloat(ParameterName, floatValue);
@@ -57,17 +50,6 @@ namespace Game.Core
         public override void Exit()
         {
             
-        }
-
-        public P FindParameter(string name)
-        {
-            foreach (var item in actor.animator.parameters)
-            {
-                if (item.name == name)
-                    return item;
-            }
-            
-            return null;
         }
     }
 }

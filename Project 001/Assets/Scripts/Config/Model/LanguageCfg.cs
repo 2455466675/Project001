@@ -5,5 +5,6 @@ namespace Game.Cfg
    public class LanguageCfg : CfgDataBase
    {
        public readonly string text;
+       public readonly int color;
    }
 }

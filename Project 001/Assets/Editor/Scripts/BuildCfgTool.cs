@@ -107,7 +107,8 @@ public class BuildCfgTool
         List<(string, string)> properyList = new List<(string, string)>
         {
             ("string", "id"),
-            ("string", "text")
+            ("string", "text"),
+            ("int", "color")
         };
         CreateCSFile("LanguageCfg", properyList);
     }
@@ -123,7 +124,11 @@ public class BuildCfgTool
         int column = worksheet.Dimension.End.Column;
 
         for (int i = 1; i <= column; i++)
-        {
+        {       
+            if (worksheet.Cells[2, i].Value.ToString() != "c")
+            {
+                continue;
+            }
             string propertyType = worksheet.Cells[3, i].Value.ToString();
             string propertyName = worksheet.Cells[1, i].Value.ToString();
             properyList.Add((propertyType, propertyName));
