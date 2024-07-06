@@ -21,7 +21,7 @@ namespace Game.UI
 
         public void OnTest(UINotification notification) 
         {
-            GameCore.UI.OpenWinCommond(100003);
+            GameCore.UI.OpenWin(100003);
         }
 
         public void OnExit(UINotification notification)

@@ -15,6 +15,12 @@ namespace Game.UI
             GameCore.UI.AddDeselectUIEventListener(OnDeselectItem);
         }
 
+        public void OnDestroy()
+        {
+            GameCore.UI.RemoveSelectUIEventListener(OnSelectItem);
+            GameCore.UI.RemoveDeselectUIEventListener(OnDeselectItem);
+        }
+
         private void OnSelectItem(IGuidable guidableItem)
         {
             guideFinger.SetActive(true);

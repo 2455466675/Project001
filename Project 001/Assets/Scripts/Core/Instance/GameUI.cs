@@ -16,17 +16,12 @@ namespace Game.UI
         public UIRoot UIRoot {get; private set;}
         public Camera UICamera => UIRoot != null ? UIRoot.UICamera : null;
 
-        private Dictionary<int, Window> windows;
-        private Stack<Window> openWinStack;
-
         public IEnumerator Init()
         {
             GameObject obj = GameCore.ResourceManager.LoadAsset<GameObject>("Assets/Bundles/UI/Window/UIRoot.prefab");
             GameObject uiRootGo = Instantiate(obj);
             UIRoot = uiRootGo.GetComponent<UIRoot>();
 
-            windows = new Dictionary<int, Window>();
-            openWinStack = new Stack<Window>();
             yield return UIRoot;
         }
    
@@ -38,6 +33,16 @@ namespace Game.UI
         public void AddDeselectUIEventListener(UnityAction<IGuidable> action)
         {
             UIRoot.AddDeselectUIEventListener(action);
+        }
+
+        public void RemoveSelectUIEventListener(UnityAction<IGuidable> action)
+        {
+            UIRoot.RemoveSelectUIEventListener(action);
+        }
+
+        public void RemoveDeselectUIEventListener(UnityAction<IGuidable> action)
+        {
+            UIRoot.RemoveDeselectUIEventListener(action);
         }
 
         public void Submit()
@@ -55,95 +60,33 @@ namespace Game.UI
             UIRoot.DeselectUI(guidableItem);
         }
 
-        public void OpenWinCommond(int id, bool undoable = true)
-        {         
-            if (!GameCore.StateController.IsUIModel)
-            {
-                GameCore.StateController.SwitchModel(GameModel.UI);
-            }
-            CommandInvoker.ExecuteCommand(new OpenWindowCmd(id, undoable));
+        public void SelectListView(IGuidableGroup guidableGroup)
+        {
+            UIRoot.SelectListView(guidableGroup);
         }
 
         public void OpenWin(int id)
         {
-            if (!windows.TryGetValue(id, out Window win))
-            {
-                win = UIRoot.OpenWin(id);
-                if (win == null)
-                {
-                    return;
-                }
-                windows.Add(id, win);
-            }
-            if (win == null)
-            {
-                return;
-            }
-
-            if (openWinStack.TryPeek(out Window topWin))
-            {
-                topWin.Exit();
-            } 
-
-            win.Show();
-            win.Enter();
-            openWinStack.Push(win);
+            UIRoot.OpenWin(id);
         }
 
         public void CloseWin(int id)
         {
-            if (openWinStack == null)
-            {
-                return;
-            }
-            if (openWinStack.Count <= 0)
-            {
-                return;
-            }
-            Window window = openWinStack.Pop();
-            if (window.Id != id)
-            {
-                Debug.LogWarning($"要关闭的窗口不是顶层窗口：{id}");
-                return;
-            }
-            window.Exit();
-            window.Hide();
-
-            if (openWinStack.TryPeek(out Window topWin))
-            {
-                topWin.Enter();
-            }
+            UIRoot.CloseWin(id);
         }
 
         public void CloseAllWin()
         {
-            if (openWinStack == null)
-            {
-                return;
-            }
-            if (openWinStack.Count <= 0)
-            {
-                return;
-            }
-            foreach (var item in openWinStack)
-            {
-                item.Exit();
-                item.Hide();
-            }
-            openWinStack.Clear();
+            UIRoot.CloseAllWin();
         }
 
-        public void SelectGuidableGroup(IGuidableGroup guidableGroup)
+        public void UndoCommand()
         {
-            UIRoot.SelectGuidableGroup(guidableGroup);
+            UIRoot.UndoCommand();
         }
 
         public void TestH(float h)
         {
-            if (openWinStack.Count <= 0)
-            {
-                return;
-            }
             if (UIRoot.GuidableGroup == null)
             {
                 return;
@@ -160,10 +103,6 @@ namespace Game.UI
         }
         public void TestV(float v) 
         {
-            if (openWinStack.Count <= 0)
-            {
-                return;
-            }
             if (UIRoot.GuidableGroup == null)
             {
                 return;

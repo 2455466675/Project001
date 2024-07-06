@@ -14,6 +14,10 @@ namespace Game
 
         private void FixedUpdate()
         {
+            if (GameCore.StateController.IsUIModel) 
+            {
+                return;
+            }
             float x, y;
             bool isRun = Input.GetKey(KeyCode.LeftShift);
 

@@ -1,11 +1,10 @@
 using Game.Cfg;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Game.Core
 {
-    public class LanguageItem 
+    public struct LanguageItem 
     {
         public int id;
         public string text;
@@ -38,7 +37,7 @@ namespace Game.Core
             return cfg.text;
         }
 
-        public LanguageItem GetLanguageItem(int id)
+        public LanguageItem? GetLanguageItem(int id)
         {            
             LanguageCfg cfg = GameCore.GameCfgData.FindById<LanguageCfg>(id);            
             if(cfg == null)

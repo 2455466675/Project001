@@ -78,13 +78,13 @@ namespace Game.UI
         public void OnTest(UINotification notification)
         {
             MLog.Log("OnTest");
-            CommandInvoker.ExecuteCommand(new SelectListViewCmd(itemTypeList));
+            GameCore.UI.SelectListView(itemTypeList);            
         }
 
         public void OnTest2(UINotification notification)
         {
             MLog.Log("OnTest2");
-            CommandInvoker.ExecuteCommand(new SelectListViewCmd(itemList));
+            GameCore.UI.SelectListView(itemList);            
         }
 
         public void OnTest3(UINotification notification)

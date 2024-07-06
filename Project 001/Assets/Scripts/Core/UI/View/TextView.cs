@@ -17,13 +17,13 @@ namespace Game.UI
 
         public void SetTextByTd(int textId)
         {
-            LanguageItem item = GameCore.Language.GetLanguageItem(textId);
-            if (item == null)
+            LanguageItem? item = GameCore.Language.GetLanguageItem(textId);
+            if (!item.HasValue)
             {
                 return;
             }
-
-            SetText(item.text, item.color);     
+            Color color = item.Value.color;
+            SetText(item.Value.text, color);     
         }
 
         public void SetTextByStr(string str)

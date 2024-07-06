@@ -34,6 +34,9 @@ MonoBehaviour:
     - YooAsset.Editor
     - YooAsset
     - PsdPlugin
+    - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - Sirenix.OdinInspector.CompatibilityLayer
+    - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

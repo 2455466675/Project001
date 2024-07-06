@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   group: 2
+  winType: 2
   canvasGroup: {fileID: 3743481420278241401}
 --- !u!114 &7415933134306070130
 MonoBehaviour:

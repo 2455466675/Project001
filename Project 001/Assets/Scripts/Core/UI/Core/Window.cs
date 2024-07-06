@@ -1,24 +1,30 @@
 using Game.Cfg;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
-using Unity.VisualScripting;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.UI
 {
+    public enum WindType 
+    {
+        Base    = 0,
+        Normal  = 1,
+        Guide   = 2,
+    }
+
     /// <summary>
     /// 
     /// </summary>
     public class Window : MonoBehaviour
     {
         public UIGroupEnum group;
+        public WindType winType;
         public CanvasGroup canvasGroup;
-        public WindowCfg Cfg { get; private set;}
-        public UIController Controller { get; private set; }
-
+        public WindowCfg Cfg {get; private set;}
+        [ShowInInspector]
+        public UIController Controller {get; private set;}
+        [ShowInInspector]
         public int Id => Cfg != null ? Cfg.id : -1;
-        
+        [ShowInInspector]
         public string Path => Cfg != null ? Cfg.path : string.Empty;
 
         public void Awake()

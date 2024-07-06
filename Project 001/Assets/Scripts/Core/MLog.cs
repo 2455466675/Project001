@@ -1,4 +1,3 @@
-using System.Text;
 using UnityEngine;
 
 namespace Game.Core
@@ -8,7 +7,7 @@ namespace Game.Core
     /// </summary>
 	public static class MLog
 	{
-        public static void Log(params string[] logs)
+        public static void Log(params object[] logs)
         {
             if (logs == null || logs.Length <= 0)
             {
@@ -17,12 +16,12 @@ namespace Game.Core
             Debug.Log(string.Join(" ", logs));
         }
 
-        public static void Error(string error)
+        public static void Error(object error)
         {
             Debug.LogError(error);  
         }
 
-        public static void Warn(string warn)
+        public static void Warn(object warn)
         {
             Debug.LogWarning(warn);
         }

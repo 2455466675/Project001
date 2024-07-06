@@ -79,7 +79,7 @@ namespace Game.UI
 
                 if (IsBeSelected)
                 {
-                    CommandInvoker.UndoCommand();
+                    GameCore.UI.UndoCommand();
                 }
                 return;
             }

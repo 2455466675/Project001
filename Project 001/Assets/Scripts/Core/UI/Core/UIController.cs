@@ -27,7 +27,7 @@ namespace Game.UI
             {
                 return;
             }
-            GameCore.UI.SelectGuidableGroup(defaultListView);
+            GameCore.UI.SelectListView(defaultListView);
         }
     }
 }

@@ -58,7 +58,14 @@ namespace Game.Core
                 if (t <= 0f)
                 {
                     MLog.Log($"c:{c}");
-                    CommandInvoker.UndoCommand();
+                    if (GameCore.StateController.IsUIModel)
+                    {
+                        GameCore.UI.UndoCommand();
+                    }
+                    else
+                    {
+                        GameCore.UI.OpenWin(100003);
+                    }
                     t = 0.2f;
                 }
             }

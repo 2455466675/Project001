@@ -16,7 +16,7 @@ namespace Game.Core
         public void OnEnter(GameState preGameState)
         {
             MLog.Log("游戏状态：登录");
-            GameCore.UI.OpenWinCommond(100002, false); //登录界面
+            GameCore.UI.OpenWin(100002); //登录界面
         }
 
         public void OnExit(GameState nextGameState)

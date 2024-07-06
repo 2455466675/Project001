@@ -741,7 +741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 1257044827485176369}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &1698014455945860834
 GameObject:
@@ -891,7 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 7520113152073460612}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &1854411755587866774
 GameObject:
@@ -1081,7 +1081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 8009470197009591244}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &2916425149639391370
 GameObject:
@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 3072264735114837534}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &2953148287665818058
 GameObject:
@@ -1615,7 +1615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 853030088830466181}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &3288359899077558191
 GameObject:
@@ -1879,7 +1879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 5699990508690583143}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &4118628452246627605
 GameObject:
@@ -2213,7 +2213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 4387084247763847889}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &4776832173454203565
 GameObject:
@@ -2273,7 +2273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.43584904, g: 0.59146297, b: 0.6226415, a: 1}
+  m_Color: {r: 0.43584904, g: 0.59146297, b: 0.6226415, a: 0.5058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2513,7 +2513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 9186117906650439206}
+  target: {fileID: 0}
   textId: 910001
 --- !u!1 &5417928757607723250
 GameObject:
@@ -2663,7 +2663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  target: {fileID: 9060805204675325295}
+  target: {fileID: 0}
   textId: 0
 --- !u!1 &5512802583381880680
 GameObject:
