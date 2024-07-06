@@ -1,0 +1,14 @@
+D:\workspace\ExecelTool\bin\Debug\net8.0\ExecelTool.exe
+D:\workspace\ExecelTool\bin\Debug\net8.0\ExecelTool.deps.json
+D:\workspace\ExecelTool\bin\Debug\net8.0\ExecelTool.runtimeconfig.json
+D:\workspace\ExecelTool\bin\Debug\net8.0\ExecelTool.dll
+D:\workspace\ExecelTool\bin\Debug\net8.0\ExecelTool.pdb
+D:\workspace\ExecelTool\obj\Debug\net8.0\ExecelTool.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\ExecelTool\obj\Debug\net8.0\ExecelTool.AssemblyInfoInputs.cache
+D:\workspace\ExecelTool\obj\Debug\net8.0\ExecelTool.AssemblyInfo.cs
+D:\workspace\ExecelTool\obj\Debug\net8.0\ExecelTool.csproj.CoreCompileInputs.cache
+D:\workspace\ExecelTool\obj\Debug\net8.0\ExecelTool.dll
+D:\workspace\ExecelTool\obj\Debug\net8.0\refint\ExecelTool.dll
+D:\workspace\ExecelTool\obj\Debug\net8.0\ExecelTool.pdb
+D:\workspace\ExecelTool\obj\Debug\net8.0\ExecelTool.genruntimeconfig.cache
+D:\workspace\ExecelTool\obj\Debug\net8.0\ref\ExecelTool.dll

@@ -1,0 +1,28 @@
+{
+    "excelPath":"../Excel/",
+    "outputPaht":"../Output",
+    "language":"language/",
+    "cfgList":
+    [ 
+        {
+            "excel":"window.xlsx",
+            "type":"WindowCfg",
+            "sheet":1
+        },  
+        {
+            "excel":"role.xlsx",
+            "type":"RoleCfg",
+            "sheet":1
+        },
+        {
+            "excel":"item.xlsx",
+            "type":"ItemCfg",
+            "sheet":1
+        },
+        {
+            "excel":"color.xlsx",
+            "type":"ColorCfg",
+            "sheet":1
+        }
+    ]
+}

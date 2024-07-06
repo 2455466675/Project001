@@ -34,7 +34,7 @@ namespace Game.Core
             {
                 return id.ToString();
             }
-            return cfg.text;
+            return cfg.Text;
         }
 
         public LanguageItem? GetLanguageItem(int id)
@@ -45,21 +45,21 @@ namespace Game.Core
                 return null;
             }
 
-            ColorCfg colorCfg = GameCore.GameCfgData.FindById<ColorCfg>(cfg.color);
+            ColorCfg colorCfg = GameCore.GameCfgData.FindById<ColorCfg>(cfg.Color);
             if (colorCfg == null)
             {
-                MLog.Error($"没有此文本颜色:{cfg.color}");
+                MLog.Error($"没有此文本颜色:{cfg.Color}");
                 return null; 
             }
 
             LanguageItem item = new()
             {
                 id = id,
-                text = cfg.text,
-                colorId = cfg.color
+                text = cfg.Text,
+                colorId = cfg.Color
             };
 
-            if (ColorUtility.TryParseHtmlString($"#{colorCfg.color}", out Color color))
+            if (ColorUtility.TryParseHtmlString($"#{colorCfg.Color}", out Color color))
             {
                 item.color = color;
             }

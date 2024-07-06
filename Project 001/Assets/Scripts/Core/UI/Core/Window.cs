@@ -23,9 +23,9 @@ namespace Game.UI
         [ShowInInspector]
         public UIController Controller {get; private set;}
         [ShowInInspector]
-        public int Id => Cfg != null ? Cfg.id : -1;
+        public int Id => Cfg != null ? Cfg.Id : -1;
         [ShowInInspector]
-        public string Path => Cfg != null ? Cfg.path : string.Empty;
+        public string Path => Cfg != null ? Cfg.Path : string.Empty;
 
         public void Awake()
         {

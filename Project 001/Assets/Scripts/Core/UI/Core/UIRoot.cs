@@ -254,10 +254,10 @@ namespace Game.UI
                 MLog.Error($"没有窗体配置:{id}");
                 return null;
             }
-            GameObject prefab = GameCore.ResourceManager.LoadAsset<GameObject>(cfg.path);
+            GameObject prefab = GameCore.ResourceManager.LoadAsset<GameObject>(cfg.Path);
             if (prefab == null)
             {
-                MLog.Error($"没有窗体资源:{cfg.path}");
+                MLog.Error($"没有窗体资源:{cfg.Path}");
                 return null;
             }
             Window win = prefab.GetComponent<Window>();

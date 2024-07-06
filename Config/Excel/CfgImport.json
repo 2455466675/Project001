@@ -1,6 +1,7 @@
 {
     "excelPath":"./Excel/",
-    "outputPaht":"./Output",
+    "csFileOutputPaht":"../Project 001/Assets/Scripts/Config/Model",
+    "cfgFileOutputPaht":"../Project 001/Assets/StreamingAssets",
     "language":"language/",
     "cfgList":
     [ 

@@ -1,5 +1,5 @@
 @echo off
 set jsonFilePath=".\Excel\CfgImport.json"
-set exePath=".\net8.0\ExcelTool.exe"
+set exePath=".\ExcelTool\ExcelTool.exe"
 %exePath% %jsonFilePath%
 pause
