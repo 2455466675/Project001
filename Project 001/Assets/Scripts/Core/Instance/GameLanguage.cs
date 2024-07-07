@@ -29,7 +29,7 @@ namespace Game.Core
                 return string.Empty;
             }
 
-            LanguageCfg cfg = GameCore.GameCfgData.FindById<LanguageCfg>(id);
+            LanguageCfg cfg = GameCore.GameCfgData.Find<LanguageCfg>(id);
             if (cfg == null)
             {
                 return id.ToString();
@@ -39,13 +39,13 @@ namespace Game.Core
 
         public LanguageItem? GetLanguageItem(int id)
         {            
-            LanguageCfg cfg = GameCore.GameCfgData.FindById<LanguageCfg>(id);            
+            LanguageCfg cfg = GameCore.GameCfgData.Find<LanguageCfg>(id);            
             if(cfg == null)
             {
                 return null;
             }
 
-            ColorCfg colorCfg = GameCore.GameCfgData.FindById<ColorCfg>(cfg.Color);
+            ColorCfg colorCfg = GameCore.GameCfgData.Find<ColorCfg>(cfg.Color);
             if (colorCfg == null)
             {
                 MLog.Error($"没有此文本颜色:{cfg.Color}");

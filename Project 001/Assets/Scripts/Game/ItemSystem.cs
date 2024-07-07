@@ -13,7 +13,7 @@ namespace Game
         public Item(int id) 
         { 
             Id = id;
-            Cfg = GameCore.GameCfgData.FindById<ItemCfg>(id);
+            Cfg = GameCore.GameCfgData.Find<ItemCfg>(id);
         }
     }
 

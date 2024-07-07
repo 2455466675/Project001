@@ -340,20 +340,20 @@ namespace ExecelTool
             sb.Append("\t}\n");
 
             sb.Append("\t[Serializable]\n");
-            sb.Append($"\tpublic partial class {excelName}List : CfgListBase<{excelName}>\n");  //配置对应的集合类
+            sb.Append($"\tpublic partial class {excelName}Container : CfgContainerBase<{excelName}>\n");  //配置对应的容器类
             sb.Append("\t{\n");
            
             sb.Append("\t\tpublic override void Deserialize(BinaryReader reader)\n");
             sb.Append("\t\t{\n");
 
             sb.Append($"\t\t\tint count = reader.ReadInt32();\n");
-            sb.Append($"\t\t\tCfgList = new List<{excelName}>(count);\n");
+            sb.Append($"\t\t\tCfgMap = new Dictionary<int, {excelName}>(count);\n");
             sb.Append($"\t\t\tfor (int i = 0; i < count; i++)\n");
             sb.Append("\t\t\t{\n");
 
             sb.Append($"\t\t\t\tvar item = new {excelName}();\n");
             sb.Append($"\t\t\t\titem.Deserialize(reader);\n");
-            sb.Append($"\t\t\t\tCfgList.Add(item);\n");
+            sb.Append($"\t\t\t\tCfgMap.Add(item.Id, item);\n");
 
             sb.Append("\t\t\t}\n");
             sb.Append("\t\t}\n");
@@ -361,7 +361,8 @@ namespace ExecelTool
             sb.Append("\t\tpublic override void Serialize(BinaryWriter writer)\n");
             sb.Append("\t\t{\n");
 
-            sb.Append($"\t\t\tforeach (var item in CfgList)\n");
+            sb.Append($"\t\t\twriter.Write(CfgMap.Count);\n");
+            sb.Append($"\t\t\tforeach (var item in CfgMap.Values)\n");
             sb.Append("\t\t\t{\n");
 
             sb.Append($"\t\t\t\titem.Serialize(writer);\n");
@@ -385,7 +386,7 @@ namespace ExecelTool
         }
 
         /// <summary>
-        /// 生成集合类对应的字典类
+        /// 生成容器类对应的字典类
         /// </summary>
         /// <param name="model"></param>
         public static void GenerateCfgMap(CfgModel model)
@@ -404,22 +405,22 @@ namespace ExecelTool
             sb.Append($"\tpublic partial class {name} : IBinarySerialize\n");
             sb.Append("\t{\n");
 
-            sb.Append("\t\tpublic Dictionary<Type, ICfgList> CfgDatas {get; private set;}\n");
+            sb.Append("\t\tpublic Dictionary<Type, ICfgContainer> CfgDatas {get; private set;}\n");
 
             sb.Append("\t\tpublic void Deserialize(BinaryReader reader)\n");
             sb.Append("\t\t{\n");
-            sb.Append("\t\t\tCfgDatas = new Dictionary<Type, ICfgList>();\n");
+            sb.Append("\t\t\tCfgDatas = new Dictionary<Type, ICfgContainer>();\n");
 
-            sb.Append("\t\t\tvar _LanguageCfgList = new LanguageCfgList();\n");     //语言配置总是第一个
-            sb.Append("\t\t\t_LanguageCfgList.Deserialize(reader);\n");
-            sb.Append("\t\t\tCfgDatas.Add(typeof(LanguageCfg), _LanguageCfgList);\n");
+            sb.Append("\t\t\tvar _LanguageCfgContainer = new LanguageCfgContainer();\n");     //语言配置总是第一个
+            sb.Append("\t\t\t_LanguageCfgContainer.Deserialize(reader);\n");
+            sb.Append("\t\t\tCfgDatas.Add(typeof(LanguageCfg), _LanguageCfgContainer);\n");
             
             for (int i = 0; i < model.cfgList.Count; i++) 
             {
                 string typeName = model.cfgList[i].type;
-                sb.Append($"\t\t\tvar _{typeName}List = new {typeName}List();\n");
-                sb.Append($"\t\t\t_{typeName}List.Deserialize(reader);\n");
-                sb.Append($"\t\t\tCfgDatas.Add(typeof({typeName}), _{typeName}List);\n");
+                sb.Append($"\t\t\tvar _{typeName}Container = new {typeName}Container();\n");
+                sb.Append($"\t\t\t_{typeName}Container.Deserialize(reader);\n");
+                sb.Append($"\t\t\tCfgDatas.Add(typeof({typeName}), _{typeName}Container);\n");
             }
             sb.Append("\t\t}\n");
 

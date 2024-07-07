@@ -27,22 +27,23 @@ namespace Game.Cfg
 		}
 	}
 	[Serializable]
-	public partial class WindowCfgList : CfgListBase<WindowCfg>
+	public partial class WindowCfgContainer : CfgContainerBase<WindowCfg>
 	{
 		public override void Deserialize(BinaryReader reader)
 		{
 			int count = reader.ReadInt32();
-			CfgList = new List<WindowCfg>(count);
+			CfgMap = new Dictionary<int, WindowCfg>(count);
 			for (int i = 0; i < count; i++)
 			{
 				var item = new WindowCfg();
 				item.Deserialize(reader);
-				CfgList.Add(item);
+				CfgMap.Add(item.Id, item);
 			}
 		}
 		public override void Serialize(BinaryWriter writer)
 		{
-			foreach (var item in CfgList)
+			writer.Write(CfgMap.Count);
+			foreach (var item in CfgMap.Values)
 			{
 				item.Serialize(writer);
 			}

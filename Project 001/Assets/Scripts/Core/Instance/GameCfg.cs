@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Game.Core;
 using System.IO.Pipes;
+using Unity.VisualScripting;
 
 namespace Game.Cfg
 {
@@ -32,9 +33,15 @@ namespace Game.Cfg
             yield return null;
         }
 
-        public T FindById<T>(int id) where T : class, ICfg
+        public T Find<T>(int id) where T : class, ICfg
         {
-            return Find<T>(c => c.Id == id);
+            Type t = typeof(T);
+            if (!data.CfgDatas.ContainsKey(t))
+            {
+                return null;
+            }
+            var container = data.CfgDatas[t] as CfgContainerBase<T>;
+            return container.Find(id);
         }
 
         public T Find<T>(Func<T, bool> func) where T : class, ICfg
@@ -44,8 +51,8 @@ namespace Game.Cfg
             {
                 return null;
             }
-            var list = data.CfgDatas[t] as CfgListBase<T>;
-            return list.Find(func);
+            var container = data.CfgDatas[t] as CfgContainerBase<T>;
+            return container.Find(func);
         }
 
         public List<T> FindAll<T>() where T : class, ICfg
@@ -56,8 +63,8 @@ namespace Game.Cfg
                 return null;
             }
 
-            var list = data.CfgDatas[t] as CfgListBase<T>;
-            return list.CfgList;
+            var container = data.CfgDatas[t] as CfgContainerBase<T>;
+            return container.FindAll();
         }
 
         public List<T> FindAll<T>(Func<T, bool> func) where T : class, ICfg
@@ -68,8 +75,8 @@ namespace Game.Cfg
                 return null;
             }
 
-            var list = data.CfgDatas[t] as CfgListBase<T>;
-            return list.FindAll(func);
+            var container = data.CfgDatas[t] as CfgContainerBase<T>;
+            return container.FindAll(func);
         }
     }
 }

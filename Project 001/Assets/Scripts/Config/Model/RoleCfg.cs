@@ -36,22 +36,23 @@ namespace Game.Cfg
 		}
 	}
 	[Serializable]
-	public partial class RoleCfgList : CfgListBase<RoleCfg>
+	public partial class RoleCfgContainer : CfgContainerBase<RoleCfg>
 	{
 		public override void Deserialize(BinaryReader reader)
 		{
 			int count = reader.ReadInt32();
-			CfgList = new List<RoleCfg>(count);
+			CfgMap = new Dictionary<int, RoleCfg>(count);
 			for (int i = 0; i < count; i++)
 			{
 				var item = new RoleCfg();
 				item.Deserialize(reader);
-				CfgList.Add(item);
+				CfgMap.Add(item.Id, item);
 			}
 		}
 		public override void Serialize(BinaryWriter writer)
 		{
-			foreach (var item in CfgList)
+			writer.Write(CfgMap.Count);
+			foreach (var item in CfgMap.Values)
 			{
 				item.Serialize(writer);
 			}

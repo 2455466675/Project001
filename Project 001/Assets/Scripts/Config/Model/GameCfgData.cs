@@ -13,25 +13,25 @@ namespace Game.Cfg
 	[Serializable]
 	public partial class GameCfgData : IBinarySerialize
 	{
-		public Dictionary<Type, ICfgList> CfgDatas {get; private set;}
+		public Dictionary<Type, ICfgContainer> CfgDatas {get; private set;}
 		public void Deserialize(BinaryReader reader)
 		{
-			CfgDatas = new Dictionary<Type, ICfgList>();
-			var _LanguageCfgList = new LanguageCfgList();
-			_LanguageCfgList.Deserialize(reader);
-			CfgDatas.Add(typeof(LanguageCfg), _LanguageCfgList);
-			var _WindowCfgList = new WindowCfgList();
-			_WindowCfgList.Deserialize(reader);
-			CfgDatas.Add(typeof(WindowCfg), _WindowCfgList);
-			var _RoleCfgList = new RoleCfgList();
-			_RoleCfgList.Deserialize(reader);
-			CfgDatas.Add(typeof(RoleCfg), _RoleCfgList);
-			var _ItemCfgList = new ItemCfgList();
-			_ItemCfgList.Deserialize(reader);
-			CfgDatas.Add(typeof(ItemCfg), _ItemCfgList);
-			var _ColorCfgList = new ColorCfgList();
-			_ColorCfgList.Deserialize(reader);
-			CfgDatas.Add(typeof(ColorCfg), _ColorCfgList);
+			CfgDatas = new Dictionary<Type, ICfgContainer>();
+			var _LanguageCfgContainer = new LanguageCfgContainer();
+			_LanguageCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(LanguageCfg), _LanguageCfgContainer);
+			var _WindowCfgContainer = new WindowCfgContainer();
+			_WindowCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(WindowCfg), _WindowCfgContainer);
+			var _RoleCfgContainer = new RoleCfgContainer();
+			_RoleCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(RoleCfg), _RoleCfgContainer);
+			var _ItemCfgContainer = new ItemCfgContainer();
+			_ItemCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(ItemCfg), _ItemCfgContainer);
+			var _ColorCfgContainer = new ColorCfgContainer();
+			_ColorCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(ColorCfg), _ColorCfgContainer);
 		}
 		public void Serialize(BinaryWriter writer)
 		{

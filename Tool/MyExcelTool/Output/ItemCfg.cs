@@ -35,21 +35,23 @@ namespace ExecelTool
 	[Serializable]
 	public partial class ItemCfgList : ICfgList
 	{
-		public List<ItemCfg> CfgList {get; private set;}
+		public Dictionary<int, ItemCfg> CfgMap { get; private set; }
 		public void Deserialize(BinaryReader reader)
 		{
 			int count = reader.ReadInt32();
-			CfgList = new List<ItemCfg>(count);
+			CfgMap = new Dictionary<int, ItemCfg>(count);
+			
 			for (int i = 0; i < count; i++)
 			{
 				var item = new ItemCfg();
-				item.Deserialize(reader);
-				CfgList.Add(item);
+				item.Deserialize(reader);				
+				CfgMap.Add(item.Id, item);
 			}
 		}
 		public void Serialize(BinaryWriter writer)
 		{
-			foreach (var item in CfgList)
+			writer.Write(CfgMap.Count);
+			foreach (var item in CfgMap.Values)
 			{
 				item.Serialize(writer);
 			}
