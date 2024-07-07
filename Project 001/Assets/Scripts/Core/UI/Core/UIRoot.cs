@@ -248,7 +248,7 @@ namespace Game.UI
                 return windows[id];
             }
 
-            WindowCfg cfg = GameCore.GameCfgData.Find<WindowCfg>(id);
+            WindowCfg cfg = GameCore.GameCfg.Find<WindowCfg>(id);
             if (cfg == null)
             {
                 MLog.Error($"√ª”–¥∞ÃÂ≈‰÷√:{id}");

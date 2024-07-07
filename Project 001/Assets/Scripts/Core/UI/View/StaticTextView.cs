@@ -10,7 +10,7 @@ namespace Game.UI
 	{
         public void Start()
         {
-            SetTextByTd(textId);           
+            SetTextById(textId);           
         }
     }
 }

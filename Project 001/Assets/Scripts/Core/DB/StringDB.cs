@@ -25,6 +25,7 @@ namespace Game.Core
                     return;
                 }
                 this.value = value;
+                StringValue = value;
                 NotifyChange();
             }
         }

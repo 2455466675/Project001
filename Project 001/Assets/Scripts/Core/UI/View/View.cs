@@ -1,4 +1,5 @@
 using Game.Core;
+using Sirenix.OdinInspector;
 using System.Text;
 using UnityEngine;
 
@@ -10,12 +11,19 @@ namespace Game.UI
     public class View : MonoBehaviour
     {
         public string vUid;
+
+        /// <summary>
+        /// 延迟刷新脏标记
+        /// </summary>
         public bool IsDirty { get; private set;}
 
         public IDataBase[] DBs {get; private set;}
 
         public IDataBase MainDB => (DBs != null && DBs.Length > 0) ? DBs[0] : null;
 
+        /// <summary>
+        /// 视图组件是否有效
+        /// </summary>
         public bool IsValid => DBs != null && DBs.Length > 0 && MainDB != null;
 
         public virtual void OnEnable()
@@ -54,9 +62,11 @@ namespace Game.UI
             }
         }
 
+        /// <summary>
+        /// 更新视图
+        /// </summary>
         public virtual void UpdateView()
-        {
-            
+        {       
         }
 
         private void OnDatumChange()
@@ -84,7 +94,7 @@ namespace Game.UI
             DBs = null;
         }
 
-        [ContextMenu("Print Data")]
+        [Button("Print Data")]
         private void PrintData()
         {
             PrintDataInner();

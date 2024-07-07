@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Game.UI
 {
     /// <summary>
@@ -19,7 +15,8 @@ namespace Game.UI
             {
                 if (textView != null)
                 {
-                    textView.SetTextByStr(db.name);
+                    MLog.Log("ItemTypeListItem", db.name.StringValue);
+                    textView.SetDatum(db.name);
                 }
             }
         }

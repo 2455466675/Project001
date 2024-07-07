@@ -5,8 +5,6 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 namespace Game.Cfg
 {
@@ -35,6 +33,8 @@ namespace Game.Cfg
 			writer.Write(HeadIcon);
 		}
 	}
+
+
 	[Serializable]
 	public partial class RoleCfgContainer : CfgContainerBase<RoleCfg>
 	{

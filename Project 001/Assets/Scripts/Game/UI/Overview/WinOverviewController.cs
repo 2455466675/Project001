@@ -129,7 +129,7 @@ namespace Game.UI
 
         public TeamSystem() 
         {
-            List<RoleCfg> r = GameCore.GameCfgData.FindAll<RoleCfg>();
+            List<RoleCfg> r = GameCore.GameCfg.FindAll<RoleCfg>();
             if (r == null || r.Count <= 0) 
             { 
                 return;

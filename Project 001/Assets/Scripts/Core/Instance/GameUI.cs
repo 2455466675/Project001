@@ -18,7 +18,7 @@ namespace Game.UI
 
         public IEnumerator Init()
         {
-            GameObject obj = GameCore.ResourceManager.LoadAsset<GameObject>("Assets/Bundles/UI/Window/UIRoot.prefab");
+            GameObject obj = GameCore.ResourceManager.LoadAsset<GameObject>(GameCore.GameInitCfg.UIRootPath);
             GameObject uiRootGo = Instantiate(obj);
             UIRoot = uiRootGo.GetComponent<UIRoot>();
 

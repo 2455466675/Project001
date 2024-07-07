@@ -12,7 +12,6 @@ namespace Game.UI
         public bool IsBeSelected {get; private set;}
         public GameObject CurrentGameObject => gameObject;
         public NavigationBox ParentBox {get; private set;}
-
         public RectTransform RectTransform
         {
             get
@@ -24,7 +23,6 @@ namespace Game.UI
                 return rectTransform;
             }
         }
-
         public RectTransform TargetTransform
         {
             get

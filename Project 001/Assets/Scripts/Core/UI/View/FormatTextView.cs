@@ -9,17 +9,30 @@ namespace Game.UI
         {
             if (!IsValid) return;
 
-            string lang = GameCore.Language.GetTextById(textId);
-            if (string.IsNullOrEmpty(lang)) return;
+            bool isValidId = textId > 0;       
+            int id = isValidId ? textId : DBs[0].IntValue;
 
-            string[] args = new string[DBs.Length];
-            for (int i = 0; i < DBs.Length; i++)
+            string text = GameCore.GameCfg.GetTextById(id);
+            if (string.IsNullOrEmpty(text))
             {
-                args[i] = GameCore.Language.GetTextById(DBs[i].IntValue);
+                MLog.Log("isValidId", isValidId ? id.ToString() : DBs[0].StringValue);
+                SetTextByStr(isValidId ? id.ToString() : DBs[0].StringValue);
+                return;
             }
 
-            string text = string.Format(lang, args);
-            SetTextByStr(text);
+            if (!isValidId && DBs.Length == 1) 
+            {
+                SetTextByStr(text);
+            }
+            else
+            {
+                string[] args = new string[DBs.Length - 1];
+                for (int i = 1; i < DBs.Length; i++)
+                {
+                    args[i] = GameCore.GameCfg.GetTextById(DBs[i].IntValue);
+                }
+                SetTextByStr(string.Format(text, args));
+            }
         }
     }
 }

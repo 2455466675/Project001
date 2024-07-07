@@ -5,8 +5,6 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 namespace Game.Cfg
 {
@@ -29,6 +27,8 @@ namespace Game.Cfg
 			writer.Write(Color);
 		}
 	}
+
+
 	[Serializable]
 	public partial class LanguageCfgContainer : CfgContainerBase<LanguageCfg>
 	{

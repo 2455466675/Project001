@@ -12,26 +12,38 @@ namespace Game.UI
         public int textId;
 
         public override void UpdateView()
-        {          
+        {           
         }
 
-        public void SetTextByTd(int textId)
+        public void SetTextById(int textId)
         {
-            LanguageItem? item = GameCore.Language.GetLanguageItem(textId);
-            if (!item.HasValue)
+            LanguageItem item = GameCore.GameCfg.GetLanguageItem(textId);
+            if (item == null)
             {
-                return;
+                SetTextInner(string.Empty, default);
             }
-            Color color = item.Value.color;
-            SetText(item.Value.text, color);     
+            else
+            {                
+                SetTextInner(item.TextValue, item.ColorValue);     
+            }
         }
 
         public void SetTextByStr(string str)
         {
-            SetText(str, Color.black);
+            SetTextInner(str, GameCore.GameCfg.Language.DefaultTextColor);
         }
 
-        private void SetText(string text, Color color)
+        public void SetTextByStr(string str, int colorId)
+        {
+            SetTextInner(str, GameCore.GameCfg.GetColorById(colorId));
+        }
+
+        public void SetTextByStr(string str, Color color)
+        {
+            SetTextInner(str, color);
+        }
+
+        private void SetTextInner(string text, Color color)
         {
             if (target == null) return;
             target.text = text;
