@@ -8,20 +8,21 @@ namespace Game.UI
     /// 
     /// </summary>
 	public class MenuListItem : ListItem
-	{
-        public TextView textView;
-
+	{   
         protected override void OnDatumChange()
         {
             base.OnDatumChange();
             MenuItem menu = GetListItem<MenuItem>();
-            if (menu != null) 
+            if (menu == null) 
             { 
-                if (textView != null)
-                {
-                    textView.SetTextByStr(menu.name);
-                }
+                return;
             }
+            TextView textView = GetView<TextView>("buttonName");
+            if (textView == null)
+            {
+                return;
+            }
+            textView.SetTextByStr(menu.name);
         }
     }
 }

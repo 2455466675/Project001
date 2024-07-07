@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 7034172179243419011}
   - component: {fileID: 869786257591850834}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 869786257591850834}
   textId: 0
 --- !u!114 &869786257591850834
@@ -437,9 +437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe1b2335851a674184971e33d2210f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 1708866066681908634}
+  UINotify: {fileID: 1708866066681908634}
   targetTransform: {fileID: 5180448747446863309}
-  textView: {fileID: 9189678276226164844}
 --- !u!1 &1122795539406559233
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9d3053d37a846e4b9c9cf472c066ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 5718742848106673724}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 4270854858306281819}
   textView: {fileID: 9174737425605043967}
 --- !u!1 &1854411755587866774
@@ -753,7 +752,7 @@ GameObject:
   - component: {fileID: 6353906201064825993}
   - component: {fileID: 4943266782565845713}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -798,7 +797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 4943266782565845713}
   textId: 0
 --- !u!114 &4943266782565845713
@@ -1036,9 +1035,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be937e4a6c21c0c42a88247555550325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 755506750065679760}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 736597190734908846}
-  textView: {fileID: 8152987984710745563}
 --- !u!1 &2916425149639391370
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1050,7 @@ GameObject:
   - component: {fileID: 9189678276226164844}
   - component: {fileID: 7727493160885907322}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1097,7 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 7727493160885907322}
   textId: 0
 --- !u!114 &7727493160885907322
@@ -1455,9 +1453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe1b2335851a674184971e33d2210f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 7143496151427559171}
+  UINotify: {fileID: 7143496151427559171}
   targetTransform: {fileID: 1494218214478479856}
-  textView: {fileID: 4403949259254515352}
 --- !u!1 &4623029497049442548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1471,7 +1468,7 @@ GameObject:
   - component: {fileID: 4411080287044000497}
   - component: {fileID: 6506945690992804368}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1516,7 +1513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 6506945690992804368}
   textId: 0
 --- !u!114 &6506945690992804368
@@ -1719,9 +1716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be937e4a6c21c0c42a88247555550325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 7814298090403744069}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 5900506375086191975}
-  textView: {fileID: 4411080287044000497}
 --- !u!1 &4776832173454203565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,7 +1843,7 @@ GameObject:
   - component: {fileID: 5622617211550142125}
   - component: {fileID: 3732289570192731301}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1892,7 +1888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 3732289570192731301}
   textId: 0
 --- !u!114 &3732289570192731301
@@ -2035,7 +2031,7 @@ GameObject:
   - component: {fileID: 4403949259254515352}
   - component: {fileID: 6383459714798358029}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2080,7 +2076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 6383459714798358029}
   textId: 0
 --- !u!114 &6383459714798358029
@@ -2468,9 +2464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be937e4a6c21c0c42a88247555550325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 6929221478587807507}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 4579556778694673579}
-  textView: {fileID: 6353906201064825993}
 --- !u!1 &6367623038294961271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2484,7 +2479,7 @@ GameObject:
   - component: {fileID: 7320201745293377890}
   - component: {fileID: 3490690386473811414}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2529,7 +2524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 3490690386473811414}
   textId: 0
 --- !u!114 &3490690386473811414
@@ -2732,9 +2727,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be937e4a6c21c0c42a88247555550325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 277417970429631440}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 2263788403881889347}
-  textView: {fileID: 5622617211550142125}
 --- !u!1 &6573585362048592181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,9 +2913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe1b2335851a674184971e33d2210f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 3632653771220558834}
+  UINotify: {fileID: 3632653771220558834}
   targetTransform: {fileID: 5067635953286708819}
-  textView: {fileID: 7034172179243419011}
 --- !u!1 &7565924948282924588
 GameObject:
   m_ObjectHideFlags: 0
@@ -3033,9 +3026,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be937e4a6c21c0c42a88247555550325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 2999809173340809671}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 6360270393388278826}
-  textView: {fileID: 7320201745293377890}
 --- !u!1 &7853131874661270087
 GameObject:
   m_ObjectHideFlags: 0
@@ -3049,7 +3041,7 @@ GameObject:
   - component: {fileID: 8152987984710745563}
   - component: {fileID: 8371559053631595476}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3094,7 +3086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4d6f336ada02f44adf5d25841930e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vUid: 
+  vUid: buttonName
   target: {fileID: 8371559053631595476}
   textId: 0
 --- !u!114 &8371559053631595476

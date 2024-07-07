@@ -1,12 +1,20 @@
 using Game.Core;
+using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.UI
 {
+    public interface IViewContainer
+    {
+        View GetView(string vUid);
+        T GetView<T>(string vUid) where T : View;
+    }
+
     /// <summary>
     /// 
     /// </summary>
-	public class ListItem : MonoBehaviour, IGuidable
+	public class ListItem : MonoBehaviour, IGuidable, IViewContainer
     {        
         public int Index {get; private set;}
         public bool IsBeSelected {get; private set;}
@@ -36,15 +44,19 @@ namespace Game.UI
         }
 
         [SerializeField]
-        private UINotify uiNotify;
+        private UINotify UINotify;
         [SerializeField]
         private RectTransform targetTransform;
         private RectTransform rectTransform;
         private ItemDB listItem;
 
+        [ReadOnly]
+        [ShowInInspector]
+        private List<View> views;
+
         public void Start()
         {
-            uiNotify = GetComponent<UINotify>();
+            UINotify = GetComponent<UINotify>();            
         }
 
         public void SetParentBox(NavigationBox box)
@@ -66,63 +78,116 @@ namespace Game.UI
 
         public void OnSubmit()
         {
-            if (uiNotify != null)
+            if (UINotify != null)
             {
-                uiNotify.OnSubmit(this);
+                UINotify.OnSubmit(this);
             }
         }
 
         public void OnSelect()
         {
-            if (uiNotify != null)
+            if (UINotify != null)
             {
-                uiNotify.OnSelect(this);
+                UINotify.OnSelect(this);
             }
         }
 
         public void OnDeselect()
         {
-            if (uiNotify != null)
+            if (UINotify != null)
             {
-                uiNotify.OnDeselect(this);
+                UINotify.OnDeselect(this);
             }
         }
 
         public void OnMoveToUp()
         {
-            if (uiNotify != null)
+            if (UINotify != null)
             {
-                uiNotify.OnMoveToUp(this);
+                UINotify.OnMoveToUp(this);
             }
         }
 
         public void OnMoveToDown()
         {
-            if (uiNotify != null)
+            if (UINotify != null)
             {
-                uiNotify.OnMoveToDown(this);
+                UINotify.OnMoveToDown(this);
             }
         }
 
         public void OnMoveToLeft()
         {
-            if (uiNotify != null)
+            if (UINotify != null)
             {
-                uiNotify.OnMoveToLeft(this);
+                UINotify.OnMoveToLeft(this);
             }
         }
 
         public void OnMoveToRight()
         {
-            if (uiNotify != null)
+            if (UINotify != null)
             {
-                uiNotify.OnMoveToRight(this);
+                UINotify.OnMoveToRight(this);
             }
         }
 
         protected virtual void OnDatumChange()
         {
 
+        }
+
+        public View GetView(string vUid)
+        {
+            if (views == null)
+            {
+                InitViews();
+            }
+            if (views == null || views.Count <= 0)
+            {
+                return null;
+            }            
+            return views.Find(v => v.vUid == vUid);
+        }
+
+        public T GetView<T>(string vUid) where T : View
+        {
+            if (views == null)
+            {
+                InitViews();
+            }
+            if (views == null || views.Count <= 0)
+            {
+                return null;
+            }
+            return views.Find(v => v.vUid == vUid) as T;
+        }
+
+        [Button("InitViews")]
+        private void InitViews()
+        {
+            views ??= new List<View>();        
+            views.Clear();
+            View[] cViews = GetComponentsInChildren<View>();
+            if (cViews == null || cViews.Length <= 0)
+            {
+                return;
+            }
+            foreach (View view in cViews) 
+            {
+                if (string.IsNullOrEmpty(view.vUid))
+                {
+                    MLog.Warn($"对应视图没有填写vUid,游戏物体:{view.gameObject.name}");
+                    continue;
+                }
+
+                if (views.Find(v => v.vUid == view.vUid))
+                {
+                    MLog.Warn($"重复的vUid:{view.vUid}");
+                    continue;
+                }
+                views.Add(view);
+            }
         }
     }
 }
