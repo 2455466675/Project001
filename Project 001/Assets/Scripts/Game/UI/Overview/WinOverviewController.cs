@@ -42,37 +42,37 @@ namespace Game.UI
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                MLog.Log("KeyCode.R");
-            }
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                MLog.Log("KeyCode.Q");
-                ListDB items = teamSystem.roles[0].items;
-                int index = UnityEngine.Random.Range(0, items.Count);
-                ItemDB itemDB = items[index];
-                (itemDB as PackageItemDB).count.Value = 0;
-                items.NotifyChange();
-            }
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                MLog.Log("KeyCode.T");
-                List<Role> roleList = teamSystem.roles;
-                for (int i = 0; i < roleList.Count; i++)
-                {
-                    roleList[i].hp.Value = 111;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                MLog.Log("KeyCode.T");
-                List<Role> roleList = teamSystem.roles;
-                for (int i = 0; i < roleList.Count; i++)
-                {
-                    roleList[i].name.Value = "vsews";
-                }
-            }
+            //if (Input.GetKeyDown(KeyCode.R))
+            //{
+            //    MLog.Log("KeyCode.R");
+            //}
+            //if (Input.GetKeyDown(KeyCode.Q))
+            //{
+            //    MLog.Log("KeyCode.Q");
+            //    ListDB items = teamSystem.roles[0].items;
+            //    int index = UnityEngine.Random.Range(0, items.Count);
+            //    ItemDB itemDB = items[index];
+            //    (itemDB as PackageItemDB).count.Value = 0;
+            //    items.NotifyChange();
+            //}
+            //if (Input.GetKeyDown(KeyCode.T))
+            //{
+            //    MLog.Log("KeyCode.T");
+            //    List<Role> roleList = teamSystem.roles;
+            //    for (int i = 0; i < roleList.Count; i++)
+            //    {
+            //        roleList[i].hp.Value = 111;
+            //    }
+            //}
+            //if (Input.GetKeyDown(KeyCode.U))
+            //{
+            //    MLog.Log("KeyCode.T");
+            //    List<Role> roleList = teamSystem.roles;
+            //    for (int i = 0; i < roleList.Count; i++)
+            //    {
+            //        roleList[i].name.Value = "vsews";
+            //    }
+            //}
         }
 
         public void OnTest(UINotification notification)

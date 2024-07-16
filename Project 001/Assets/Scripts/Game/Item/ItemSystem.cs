@@ -1,7 +1,6 @@
 using Game.Cfg;
-using Game.Core;
 
-namespace Game
+namespace Game.System
 {
     public class Item 
     { 
@@ -20,7 +19,7 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public class ItemSystem
+    public class ItemSystem : IGameSystem
     {
         public ItemSystem() 
         { 

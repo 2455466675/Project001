@@ -9,11 +9,14 @@ namespace Game.Core
 
         public void OnEnter()
         {
+            GameCore.InputManager.DisableRoleAction();
+            GameCore.InputManager.EnableUIAction();
             GameCore.UI.OpenWin(100001); //引导界面
         }
 
         public void OnExit()
         {
+            GameCore.InputManager.DisableUIAction();
             GameCore.UI.CloseAllWin();
         }
 

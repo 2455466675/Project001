@@ -133,7 +133,6 @@ namespace Game.UI
      
             GuidableGroup = guidableGroup;
             GuidableGroup.InFocus();
-            MLog.Log("SelectListView", (guidableGroup as ListView).name, guidableGroups.Count);
         }
 
         public void OpenWin(int id)
@@ -157,7 +156,7 @@ namespace Game.UI
             {
                 ExecuteCommand(new OpenNormalWinCmd(id));
             }
-            //inst.transform.SetAsLastSibling();
+
             inst.Show();
             inst.Enter();
             winStack.Push(inst);
@@ -195,7 +194,6 @@ namespace Game.UI
         /// </summary>
         public void CloseAllWin()
         {
-            MLog.Log("CloseAllWin");
             foreach (var item in winStack)
             {
                 item.Exit();

@@ -10,10 +10,13 @@ namespace Game.System
 
         public ItemSystem ItemSystem { get; private set; }
 
+        public RoleSystem RoleSystem { get; private set; }
+
         public GameSystem()
         {
             Inst = this;
             ItemSystem = new ItemSystem();
+            RoleSystem = new RoleSystem();
         }
     }
 }
