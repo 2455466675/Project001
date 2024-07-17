@@ -12,7 +12,7 @@ namespace Game.Core
         }
 
         public override void OnStarted(InputAction.CallbackContext obj)
-        {
+        {          
             Execute();
         }
 

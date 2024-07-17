@@ -29,7 +29,8 @@ namespace Game.UI
         public int Layer { get; set;}
         public bool IsFocus {get; private set;}
         public ListViewState ViewState {get; private set;}
-        public ListDB ListDB => IsValid ? MainDB as ListDB : null;
+        public ListDataBase ListDB => IsValid ? MainDB as ListDataBase : null;
+
         public int Count => items != null ? items.Count : 0;
 
         protected List<ItemDB> items;
@@ -60,11 +61,12 @@ namespace Game.UI
 
         private void Query()
         {
-            if (ListDB == null || ListDB.Count <= 0)
+            if (ListDB == null || ListDB.Count() <= 0)
             {
                 items?.Clear();
                 return;
             }
+
             items = ListDB.Where(a => a.Filter()).OrderBy(a => a).ToList();
         }
 

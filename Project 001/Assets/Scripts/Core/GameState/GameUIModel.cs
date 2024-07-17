@@ -17,7 +17,7 @@ namespace Game.Core
         public void OnExit()
         {
             GameCore.InputManager.DisableUIAction();
-            GameCore.UI.CloseAllWin();
+            GameCore.UI.ExitUI();
         }
 
         public void OnStay()

@@ -16,6 +16,7 @@ namespace Game.Cfg
 		public string PrefabPath {get; private set;} 
 		public int RoleType {get; private set;} 
 		public string HeadIcon {get; private set;} 
+		public string Container {get; private set;} 
 		public void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
@@ -23,6 +24,7 @@ namespace Game.Cfg
 			PrefabPath = reader.ReadString();
 			RoleType = reader.ReadInt32();
 			HeadIcon = reader.ReadString();
+			Container = reader.ReadString();
 		}
 		public void Serialize(BinaryWriter writer)
 		{
@@ -31,6 +33,7 @@ namespace Game.Cfg
 			writer.Write(PrefabPath);
 			writer.Write(RoleType);
 			writer.Write(HeadIcon);
+			writer.Write(Container);
 		}
 	}
 

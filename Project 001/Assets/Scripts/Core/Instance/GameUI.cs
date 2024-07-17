@@ -75,9 +75,9 @@ namespace Game.UI
             UIRoot.CloseWin(id);
         }
 
-        public void CloseAllWin()
+        public void ExitUI()
         {
-            UIRoot.CloseAllWin();
+            UIRoot.ClearUI();
         }
 
         public void UndoCommand()

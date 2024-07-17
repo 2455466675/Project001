@@ -41,7 +41,10 @@ namespace Game.Core
             GameCore.InputManager = gameObject.AddComponent<GameInputManager>();
             yield return GameCore.InputManager.Init();
 
-            GameCore.system = new GameSystem();
+            GameCore.Scene = gameObject.AddComponent<GameScene>();
+            yield return GameCore.Scene.Init();
+
+            GameCore.System = new GameSystem();
         }
     }
 }

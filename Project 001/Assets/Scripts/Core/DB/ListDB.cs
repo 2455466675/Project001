@@ -1,27 +1,42 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 namespace Game.Core
 {
+
+    public abstract class ListDataBase : DataBase, IEnumerable<ItemDB>
+    {
+
+        public abstract int Count();
+
+        public abstract IEnumerator<ItemDB> GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
-    public class ListDB : DataBase, IEnumerable<ItemDB>
+    public class ListDB<T> : ListDataBase where T : ItemDB
     {
-        private readonly List<ItemDB> value;
+        private readonly List<T> value;
 
         public ListDB()
         {
-            value = new List<ItemDB>();
+            value = new List<T>();
         }
 
-        public ListDB(IEnumerable<ItemDB> v)
+        public ListDB(IEnumerable<T> v)
         {
-            value = new List<ItemDB>(v);
+            value = new List<T>(v);
         }
 
-        public ItemDB this[int index]
+        public T this[int index]
         {
             get
             {
@@ -37,9 +52,12 @@ namespace Game.Core
             }
         }
 
-        public int Count => value.Count;
+        public override int Count()
+        {
+            return value.Count;
+        }
 
-        public void Add(ItemDB v)
+        public void Add(T v)
         {
             if (v == null) return;
             value.Add(v);
@@ -59,37 +77,32 @@ namespace Game.Core
             NotifyChange();
         }
 
-        public T Find<T>(Predicate<ItemDB> predicate) where T : ItemDB
+        public T Find(Predicate<T> predicate) 
         {
             return (T)value.Find(predicate);
         }
 
-        public List<ItemDB> FindAll(Predicate<ItemDB> predicate)
+        public List<T> FindAll(Predicate<T> predicate)
         {
             return value.FindAll(predicate);
         }
 
-        public ItemDB[] ToArray()
+        public T[] ToArray()
         {
             return value.ToArray();
         }
 
-        public List<ItemDB> ToList()
+        public List<T> ToList()
         {
-            return new List<ItemDB>(value);
+            return new List<T>(value);
         }
 
         public override string ToString()
         {
-            return Count.ToString();
+            return Count().ToString();
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            return value.GetEnumerator();
-        }
-
-        IEnumerator<ItemDB> IEnumerable<ItemDB>.GetEnumerator()
+        public override IEnumerator<ItemDB> GetEnumerator()
         {
             return value.GetEnumerator();
         }

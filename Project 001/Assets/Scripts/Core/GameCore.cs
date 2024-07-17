@@ -20,8 +20,8 @@ namespace Game
         public static GameResourceManager ResourceManager;
         public static GameStateController StateController;
         public static GameInputManager InputManager;
-
-        public static GameSystem system;
+        public static GameScene Scene;
+        public static GameSystem System;
         private GameCore() { }
 
         static GameCore() 

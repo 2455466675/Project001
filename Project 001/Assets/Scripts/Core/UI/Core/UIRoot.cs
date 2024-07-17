@@ -192,7 +192,7 @@ namespace Game.UI
         /// <summary>
         /// 关闭所有界面
         /// </summary>
-        public void CloseAllWin()
+        public void ClearUI()
         {
             foreach (var item in winStack)
             {

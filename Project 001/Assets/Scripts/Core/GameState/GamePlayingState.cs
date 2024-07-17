@@ -28,7 +28,7 @@ namespace Game.Core
             MLog.Log("º”‘ÿ≥°æ∞Ω· ¯");
             GameCore.StateController.SwitchModel(GameModel.SCENE);
 
-            GameCore.system.RoleSystem.Init();
+            GameCore.System.RoleSystem.Init();
         }
 
         private void Fun1(AsyncOperation operation)

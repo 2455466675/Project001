@@ -10,13 +10,12 @@ namespace Game.UI
             if (!IsValid) return;
 
             bool isValidId = textId > 0;       
-            int id = isValidId ? textId : DBs[0].IntValue;
+            int id = isValidId ? textId : MainDB.IntValue;
 
             string text = GameCore.GameCfg.GetTextById(id);
             if (string.IsNullOrEmpty(text))
             {
-                MLog.Log("isValidId", isValidId ? id.ToString() : DBs[0].StringValue);
-                SetTextByStr(isValidId ? id.ToString() : DBs[0].StringValue);
+                SetTextByStr(isValidId ? id.ToString() : MainDB.StringValue);
                 return;
             }
 

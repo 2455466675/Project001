@@ -13,8 +13,6 @@ namespace Game.Cfg
 
     public abstract class CfgContainerBase<T> : ICfgContainer where T : class, ICfg
     {
-        public List<T> CfgList { get; protected set; }
-
         public Dictionary<int, T> CfgMap { get; protected set; }
 
         public abstract void Deserialize(BinaryReader reader);

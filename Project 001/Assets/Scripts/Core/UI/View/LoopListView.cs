@@ -33,7 +33,6 @@ namespace Game.UI
         {
             base.UpdateView();
             if (LoopBox == null) return;
-            MLog.Log($"UpdateView:{Count}");
             LoopBox.UpdateTotalCount(Count);
         }
 
@@ -45,7 +44,6 @@ namespace Game.UI
 
         private void OnBoxChange(int min, int max, ListItem[] listItems)
         {
-            MLog.Log($"Count:{Count}");
             if (listItems == null || listItems.Length <= 0) return;
             if (Count <= 0) return;
             

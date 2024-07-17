@@ -19,18 +19,18 @@ namespace Game.UI
         private void Start()
         {
             teamSystem = new TeamSystem();
-            ListDB items = teamSystem.roles[0].items;
+            ListDB<PackageItemDB> items = teamSystem.roles[0].items;
             
             itemList.SetDatum(items);
 
-            ListDB menuList = new ListDB();
+            ListDB<MenuItem> menuList = new ListDB<MenuItem>();
             menuList.Add(new MenuItem(1, "道具"));
             menuList.Add(new MenuItem(2, "属性"));
             menuList.Add(new MenuItem(3, "技能"));
 
             defaultListView.SetDatum(menuList);
 
-            ListDB typeList = new ListDB();
+            ListDB<ItemTypeItemDB> typeList = new ListDB<ItemTypeItemDB>();
             typeList.Add(new ItemTypeItemDB(0, "全部"));
             typeList.Add(new ItemTypeItemDB(1, "药品"));
             typeList.Add(new ItemTypeItemDB(2, "武器"));
@@ -92,7 +92,7 @@ namespace Game.UI
             ItemTypeItemDB db = notification.ListItem.GetListItem<ItemTypeItemDB>();
             MLog.Log($"OnTest3:{db.name}, {db.id}");
 
-            ListDB items = teamSystem.roles[0].items;            
+            ListDB<PackageItemDB> items = teamSystem.roles[0].items;            
             PackageItemDB.select = (PakageItemType)db.id.Value;
 
             items.NotifyChange();
@@ -142,7 +142,7 @@ namespace Game.UI
                     id = i.ToString(),
                     state = Role.RoleState.Fight,
                     cfg = r[i],
-                    items = new ListDB()
+                    items = new ListDB<PackageItemDB>()
                 };
 
                 for (int j = 0; j < 20; j++)
@@ -256,12 +256,12 @@ namespace Game.UI
         public IntDB hp;
         public StringDB name;
 
-        public ListDB items;
+        public ListDB<PackageItemDB> items;
         public Role()
         {
             hp = new IntDB(2);
             name = new StringDB("sgew");
-            items = new ListDB();
+            items = new ListDB<PackageItemDB>();
         }
     }
 }
