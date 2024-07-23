@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Core
@@ -15,6 +15,8 @@ namespace Game.Core
         public Bones bones;
 
         public ActionAsset[] actionAssets;
+
+        public Role role;
 
         public void Awake()
         {
@@ -34,6 +36,17 @@ namespace Game.Core
                     return;
                 }
             }
+        }
+
+        public void FixedUpdate()
+        {
+            role?.Follow();
+        }
+
+        [Button("Init")]
+        private void InitActionAsset()
+        {
+            actionAssets = GetComponentsInChildren<ActionAsset>();
         }
     }
 }

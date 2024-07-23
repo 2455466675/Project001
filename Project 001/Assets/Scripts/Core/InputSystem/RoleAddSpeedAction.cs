@@ -13,12 +13,12 @@ namespace Game.Core
 
         public override void OnStarted(InputAction.CallbackContext obj)
         {
-            GameCore.System.RoleSystem.Leader.isRun = true;
+            GameCore.System.RoleSystem.AddSpeed(true);
         }
 
         public override void OnCanceled(InputAction.CallbackContext obj)
         {
-            GameCore.System.RoleSystem.Leader.isRun = false;
+            GameCore.System.RoleSystem.AddSpeed(false);
         }
 
         public override void Execute()

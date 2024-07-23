@@ -21,7 +21,6 @@ namespace Game.Core
         {
             GameCore.InputManager.PushAction(this);
             Execute();
-            GameCore.Co.StartCoroutine(GameCore.System.RoleSystem.LateUpdate());
         }
 
         public override void OnPerformed(InputAction.CallbackContext obj)
@@ -31,7 +30,7 @@ namespace Game.Core
         public override void OnCanceled(InputAction.CallbackContext obj)
         {
             GameCore.InputManager.PopAction(this);
-            GameCore.System.RoleSystem.Move(0f, 0f);
+            GameCore.System.RoleSystem.Stop();
         }
 
         public override void Execute()
