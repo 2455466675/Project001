@@ -42,8 +42,6 @@ namespace Game.System
 
         public Role Leader => roles != null && roles.Length > 0 ? roles[0] : null;
 
-        public bool IsMove => Leader != null && Leader.IsMove;
-
         public void Init()
         {
             //roles = new Role[2];
@@ -64,24 +62,29 @@ namespace Game.System
             roles[4] = new Role(1005);
 
             roles[0].NextRole = roles[1];
+            roles[0].SetIsLeader(true);
 
-            roles[1].PreviousRole = roles[0];
+            roles[1].PrevRole = roles[0];
             roles[1].NextRole = roles[2];
+            roles[1].SetIsLeader(false);
 
-            roles[2].PreviousRole = roles[1];
+            roles[2].PrevRole = roles[1];
             roles[2].NextRole = roles[3];
+            roles[2].SetIsLeader(false);
 
-            roles[3].PreviousRole = roles[2];
+            roles[3].PrevRole = roles[2];
             roles[3].NextRole = roles[4];
+            roles[3].SetIsLeader(false);
 
-            roles[4].PreviousRole = roles[3];
+            roles[4].PrevRole = roles[3];
+            roles[4].SetIsLeader(false);
         }
 
-        public void AddSpeed(bool isRun)
+        public void Run(bool isRunning)
         {
             for (int i = 0; i < roles.Length; i++)
             {
-                roles[i].IsRun = isRun;
+                roles[i].Run(isRunning);
             }
         }
 

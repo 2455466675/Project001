@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using Game.Core;
+using Game.System;
 
 namespace Game.Cfg
 {
@@ -28,7 +29,8 @@ namespace Game.Cfg
                 }              
             }
 
-            Language = new GameLanguage();
+            Language = new GameLanguage();            
+            MLog.Log("º”‘ÿcommonActionAssets");
             yield return null;
         }
 

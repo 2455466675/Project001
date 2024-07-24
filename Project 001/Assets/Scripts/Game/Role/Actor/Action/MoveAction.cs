@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Core
+namespace Game.System
 {
     /// <summary>
     /// ÒÆ¶¯RigidBody2D
@@ -11,7 +9,7 @@ namespace Game.Core
     {
         public float speed;
         public Vector2 dir;
-        public override void Execute()
+        public override void Execute(Actor actor)
         {
             actor.rb.velocity = speed * dir.normalized;
         }

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Core
+namespace Game.System
 {
     /// <summary>
     /// 
@@ -12,19 +10,16 @@ namespace Game.Core
         public string actionName;
         public BaseAction[] actions;
 
-        public void SetActor(Actor actor)
+        public void Awake()
         {
-            foreach (var item in actions)
-            {
-                item.SetActor(actor);
-            }
+            actionName = string.IsNullOrEmpty(actionName) ? name.Trim() : actionName;
         }
 
-        public void Execute()
+        public void Execute(Actor actor)
         {
             foreach (var item in actions)
             {
-                item.Execute();
+                item.Execute(actor);
             }
         }
 

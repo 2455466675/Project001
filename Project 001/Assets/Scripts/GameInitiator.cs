@@ -12,6 +12,7 @@ namespace Game.Core
 
         public IEnumerator Start()
         {
+            Application.targetFrameRate = 30;
             yield return GameCore.Create(cfg);
             yield return null;
             GameCore.StateController.SwitchState(GameState.LAUNCH);

@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using P_Type = UnityEngine.AnimatorControllerParameterType;
 
-namespace Game.Core
+namespace Game.System
 {
     /// <summary>
     /// ÇÐ»»¶¯»­
@@ -18,7 +18,7 @@ namespace Game.Core
         [ShowIf("pt", P_Type.Bool)]
         public bool boolValue;
 
-        public override void Execute()
+        public override void Execute(Actor actor)
         {
             switch (pt)
             {

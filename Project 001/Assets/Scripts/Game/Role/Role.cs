@@ -52,17 +52,13 @@ namespace Game.System
 
         public bool IsLeader;
 
-        public bool IsMove;
+        public bool IsMoving => Actor != null && Actor.IsMoving;
+        public bool IsRunning => Actor != null && Actor.IsRunning;
 
-        public bool IsRun;
-
-        public Role PreviousRole;
+        public Role PrevRole;
 
         public Role NextRole;
 
-        public List<MoveTrace> traces;
-
-        private float distance;
 
         public Role(int id)
         {
@@ -76,199 +72,36 @@ namespace Game.System
             GameObject actorObj = GoHelper.Instantiate(obj, GameCore.Scene.GetContainer(cfg.Container).container);
             Actor = actorObj.GetComponent<Actor>();
 
-            Actor.role = this;
+            Actor.SetRole(this);
 
             ID = new IntDB(cfg.Id);
             Name = new StringDB(cfg.Name);
             Cfg = cfg;
-
-            traces = new List<MoveTrace>();
         }
-
-        public void AddTrace(MoveTrace trace)
+       
+        public void SetIsLeader(bool isLeader)
         {
-            if (trace.moveType == MoveType.Idle)
-            {
-                return;
-            }
-
-            float deltaDistance = 0f;
-            if (traces.Count > 0)
-            {
-                MoveTrace last = traces[^1];
-                MoveType moveType = trace.moveType;
-
-                if (moveType == MoveType.Up || moveType == MoveType.RunUp)
-                {
-                    deltaDistance = trace.position.y - last.position.y;
-                }
-                else if (moveType == MoveType.Down || moveType == MoveType.RunDown)
-                {
-                    deltaDistance = trace.position.y - last.position.y;
-                }
-                else if (moveType == MoveType.Left || moveType == MoveType.RunLeft)
-                {
-                    deltaDistance = trace.position.x - last.position.x;
-                }
-                else if (moveType == MoveType.Right || moveType == MoveType.RunRight)
-                {
-                    deltaDistance = trace.position.x - last.position.x;
-                }
-            }            
-            deltaDistance = Mathf.Abs(deltaDistance);
-
-            trace.deltaDistance = deltaDistance;
-
-            this.distance += deltaDistance;
-
-            traces.Add(trace);
-            IsMove = true;
+            IsLeader = isLeader;
+            Actor.SetColloderEnabled(isLeader);
         }
 
-        public void Follow()
-        {
-            if (PreviousRole == null)
-            {
-                return;
-            }
-
-            if (!IsMove)
-            {
-                return;
-            }
-
-            if (distance >= 1f)
-            {              
-                MoveNextTrace();
-                IsMove = true;
-            }
-            else
-            {
-                if (PreviousRole.IsMove)
-                {
-                    return;
-                }
-                if (!IsMove)
-                {
-                    return;
-                }
-                Actor.PlayAction("Idle");
-                IsMove = false;
-            }
-        }
-
-        public void MoveNextTrace()
-        {
-            MoveTrace trace = traces[0];
-
-            string acName;
-            MoveType moveType = trace.moveType;
-            if (moveType == MoveType.Up || moveType == MoveType.RunUp)
-            {
-                acName = IsRun ? "RunUp_2" : "WalkUp_2";
-            }
-            else if (moveType == MoveType.Down || moveType == MoveType.RunDown)
-            {
-                acName = IsRun ? "RunDown_2" : "WalkDown_2";
-            }
-            else if (moveType == MoveType.Left || moveType == MoveType.RunLeft)
-            {
-                acName = IsRun ? "RunLeft_2" : "WalkLeft_2";
-            }
-            else if (moveType == MoveType.Right || moveType == MoveType.RunRight)
-            {
-                acName = IsRun ? "RunRight_2" : "WalkRight_2";
-            }
-            else
-            {
-                acName = "Idle";
-            }
-
-            Actor.PlayAction(acName);
-            Actor.transform.position = trace.position;
-
-            this.distance -= trace.deltaDistance;
-
-            traces.RemoveAt(0);
-
-            NextRole?.AddTrace(trace);
-        }
-
+        /// <summary>
+        /// ½ÇÉ«ÒÆ¶¯
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public void Move(float x, float y)
         {
-            MoveType moveType;
-            string actionName;
-
-            if (x != 0)
-            {
-                if (x > 0)
-                {
-                    if (IsRun)
-                    {
-                        actionName = "RunRight";
-                        moveType = MoveType.RunRight;
-                    }
-                    else
-                    {
-                        actionName = "WalkRight";
-                        moveType = MoveType.Right;
-                    }
-                }
-                else
-                {
-                    if (IsRun)
-                    {
-                        actionName = "RunLeft";
-                        moveType = MoveType.RunLeft;
-                    }
-                    else
-                    {
-                        actionName = "WalkLeft";
-                        moveType = MoveType.Left;
-                    }
-                }
-                IsMove = true;
-            }
-            else if (y != 0)
-            {
-                if (y > 0)
-                {
-                    if (IsRun)
-                    {
-                        actionName = "RunUp";
-                        moveType = MoveType.RunUp;
-                    }
-                    else
-                    {
-                        actionName = "WalkUp";
-                        moveType = MoveType.Up;
-                    }
-                }
-                else
-                {
-                    if (IsRun)
-                    {   
-                        actionName = "RunDown";
-                        moveType = MoveType.RunDown;
-                    }
-                    else
-                    {
-                        actionName = "WalkDown";
-                        moveType = MoveType.Down;
-                    }
-                }
-                IsMove = true;
-            }
-            else
-            {   
-                actionName = "Idle";
-                moveType = MoveType.Idle;
-                IsMove = false;
-            }
-     
-            Actor.PlayAction(actionName);
-
-            NextRole?.AddTrace(new MoveTrace() { moveType = moveType, position = Actor.transform.position });   
+            Actor.Move(x, y);     
         }     
+
+        /// <summary>
+        /// ½ÇÉ«±¼ÅÜ
+        /// </summary>
+        /// <param name="isRunning">ÊÇ·ñ±¼ÅÜ</param>
+        public void Run(bool isRunning)
+        {
+            Actor.Run(isRunning);
+        }
     }
 }

@@ -1,9 +1,6 @@
-using Game.Core;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game
+namespace Game.System
 {
     public struct ActionArgs 
     {
@@ -20,11 +17,7 @@ namespace Game
 	public abstract class BaseAction : MonoBehaviour
 	{
         protected Actor actor;
-        public void SetActor(Actor actor)
-        {
-            this.actor = actor;
-        }
-        public abstract void Execute();
+        public abstract void Execute(Actor actor);
         public abstract void Exit();
 	}
 }
