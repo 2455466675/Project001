@@ -24,6 +24,11 @@
             "excel":"color.xlsx",
             "type":"ColorCfg",
             "sheet":1
+        },
+        {
+            "excel":"overview_menu.xlsx",
+            "type":"OverviewMenuCfg",
+            "sheet":1
         }
     ]
 }

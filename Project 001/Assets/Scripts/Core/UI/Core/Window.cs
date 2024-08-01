@@ -1,6 +1,7 @@
 using Game.Cfg;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 namespace Game.UI
 {
@@ -45,6 +46,20 @@ namespace Game.UI
             Controller = controller;
         }
 
+        public void Show()
+        {
+            if (Controller != null)
+            {
+                Controller.OnShow();
+            }
+            canvasGroup.alpha = 1f;
+        }
+
+        public void Hide()
+        {
+            canvasGroup.alpha = 0f;
+        }
+
         public void Enter()
         {
             if (Controller != null)
@@ -56,16 +71,6 @@ namespace Game.UI
         public void Exit()
         {
             
-        }
-
-        public void Show()
-        {
-            canvasGroup.alpha = 1f;
-        }
-
-        public void Hide()
-        {
-            canvasGroup.alpha = 0f;
         }
     }
 }

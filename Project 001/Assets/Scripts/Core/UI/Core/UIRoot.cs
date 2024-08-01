@@ -103,35 +103,44 @@ namespace Game.UI
             DeselectUIEventHandler?.Invoke(LastSelectUI);
         }
 
-        public void SelectListView(IGuidableGroup guidableGroup)
+        public void SelectListView(IGuidableGroup guidableGroup, int windowId)
         {
+            if (guidableGroup == null) return;
 
-            if (GuidableGroup == null)
-            {
-                GuidableGroup = guidableGroup;
-                GuidableGroup.Layer = 1;
-                GuidableGroup.InFocus();
-                guidableGroups.Push(GuidableGroup);
-                return;
-            }
-            
-            if (!guidableGroups.Contains(guidableGroup))
-            {
-                guidableGroup.Layer = GuidableGroup.Layer + 1;
-                guidableGroups.Push(guidableGroup);
-            } 
+            GuidableGroup?.OutFocus();
+                      
+            guidableGroups.Push(guidableGroup);
 
-            if (guidableGroup.Layer > GuidableGroup.Layer)
+            if (windowId > 0)
             {
-                GuidableGroup.OutFocus();
-                ExecuteCommand(new SelectListViewCmd(GuidableGroup));
+                ExecuteCommand(new SelectBaseListViewCmd(windowId));
             }
             else
             {
-                GuidableGroup.Exit();
+                ExecuteCommand(new SelectListViewCmd());
             }
      
             GuidableGroup = guidableGroup;
+            GuidableGroup.InFocus();
+        }
+
+        public void UnSelectListView()
+        {
+            if (guidableGroups == null || guidableGroups.Count <= 0)
+            {
+                return;
+            }
+
+            IGuidableGroup group = guidableGroups.Pop();
+            group.Exit();
+
+            if (guidableGroups.Count <= 0)
+            {
+                return;
+            }
+
+            IGuidableGroup top = guidableGroups.Peek();
+            GuidableGroup = top;
             GuidableGroup.InFocus();
         }
 
@@ -159,11 +168,12 @@ namespace Game.UI
 
             inst.Show();
             inst.Enter();
-            winStack.Push(inst);
+            winStack.Push(inst);         
         }
 
         public void CloseWin(int id)
         {
+            MLog.Log("CloseWin", id);
             if (winStack == null || winStack.Count <= 0)
             {
                 return;
@@ -261,7 +271,7 @@ namespace Game.UI
             Window win = prefab.GetComponent<Window>();
             Window inst = Instantiate(win, groupsMap[win.group], false);
             inst.SetCfg(cfg);
-
+            windows.Add(id, inst);
             return inst;
         }
     }

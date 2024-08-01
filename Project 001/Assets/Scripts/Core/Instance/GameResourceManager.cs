@@ -21,16 +21,27 @@ namespace Game.Core
             package = YooAssets.TryGetPackage("DefaultPackage");
             package ??= YooAssets.CreatePackage("DefaultPackage");
 
-            // TODO ·ÖÆ½Ì¨
-            var initParameters = new EditorSimulateModeParameters();
-            var simulateManifestFilePath = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, "DefaultPackage");
-            initParameters.SimulateManifestFilePath = simulateManifestFilePath;
-            yield return package.InitializeAsync(initParameters);
-
             YooAssets.SetDefaultPackage(package);
-        }
 
-        
+            RuntimePlatform platform = Application.platform;
+
+            if (platform == RuntimePlatform.WindowsEditor)
+            {
+                EditorSimulateModeParameters parameters = new EditorSimulateModeParameters();
+                var smfp = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, "DefaultPackage");
+                parameters.SimulateManifestFilePath = smfp;
+
+                yield return package.InitializeAsync(parameters);
+            }
+            else if(platform == RuntimePlatform.WindowsPlayer)
+            {
+                OfflinePlayModeParameters parameters = new OfflinePlayModeParameters();
+                yield return package.InitializeAsync(parameters);
+            }
+      
+            yield return null;
+        }
+      
         public T LoadAsset<T>(string path) where T : UnityEngine.Object
         {
             return package.LoadAssetSync<T>(path).AssetObject as T;

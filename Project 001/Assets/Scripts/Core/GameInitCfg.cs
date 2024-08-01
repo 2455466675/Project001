@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game
 {
@@ -10,6 +8,11 @@ namespace Game
     [Serializable]
     public class GameInitCfg
     {
+        /// <summary>
+        /// Formula路径
+        /// </summary>
+        public string FormulaFilePath;
+
         /// <summary>
         /// 游戏配置文件
         /// </summary>

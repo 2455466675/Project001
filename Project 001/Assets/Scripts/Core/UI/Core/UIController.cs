@@ -21,13 +21,31 @@ namespace Game.UI
             }
         }
 
+        private void Start()
+        {
+            Register();
+        }
+
+        public void OnShow()
+        {
+
+        }
+       
         public void OnEnter()
         {
             if (defaultListView == null) 
             {
                 return;
             }
-            GameCore.UI.SelectListView(defaultListView);
+            GameCore.UI.SelectListView(defaultListView, window.Id);
+        }
+
+        /// <summary>
+        /// ‘⁄’‚¿Ô◊¢≤·DB
+        /// </summary>
+        protected virtual void Register()
+        {
+
         }
     }
 }

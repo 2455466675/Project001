@@ -15,7 +15,7 @@ namespace ExecelTool
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");      
+            Console.WriteLine("Hello, World!");
             if (args == null || args.Length <= 0)
             {
                 Console.WriteLine("请指定json文件");
@@ -47,8 +47,8 @@ namespace ExecelTool
                 Console.WriteLine($"excel路径不存在");
                 return;
             }
-            
-            Stopwatch stopwatch = new Stopwatch();       
+
+            Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
             try
@@ -118,79 +118,84 @@ namespace ExecelTool
 
             for (int i = 0; i < paths.Length; i++)
             {
-                FileInfo fileInfo = new FileInfo(Path.GetFullPath(paths[i]));
-                using (ExcelPackage package = new ExcelPackage(fileInfo))
+                //FileInfo fileInfo = new FileInfo(Path.GetFullPath(paths[i]));
+
+                using (FileStream stream = new FileStream(Path.GetFullPath(paths[i]), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-
-                    int rowCount = worksheet.Dimension.Rows;
-                    int colCount = worksheet.Dimension.Columns;
-
-                    List<(string, string)> head = new List<(string, string)>();
-
-                    count += (int)MathF.Max(0, rowCount - 4);
-
-                    for (int row = 1; row <= rowCount; row++)
+                    using (ExcelPackage package = new ExcelPackage(stream))
                     {
-                        for (int col = 1; col <= colCount; col++)
-                        {
-                            if (worksheet.Cells[1, col].Value == null)
-                            {
-                                continue;
-                            }
 
-                            if (row == 3)
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                        int rowCount = worksheet.Dimension.Rows;
+                        int colCount = worksheet.Dimension.Columns;
+
+                        List<(string, string)> head = new List<(string, string)>();
+
+                        count += (int)MathF.Max(0, rowCount - 4);
+
+                        for (int row = 1; row <= rowCount; row++)
+                        {
+                            for (int col = 1; col <= colCount; col++)
                             {
-                                if (worksheet.Cells[row, col].Value == null)
+                                if (worksheet.Cells[1, col].Value == null)
                                 {
                                     continue;
                                 }
 
-                                string propName = worksheet.Cells[1, col].Value.ToString();
-                                propName = char.ToUpper(propName[0]) + propName[1..];
-
-                                string valueType = worksheet.Cells[row, col].Value.ToString().ToLower();
-                                head.Add((propName, valueType));
-                            }
-
-                            if (row > 4)
-                            {
-                                string valueType = worksheet.Cells[3, col].Value.ToString().ToLower();
-                                string value;
-                                if (worksheet.Cells[row, col].Value == null)
+                                if (row == 3)
                                 {
-                                    if (valueType == "int")
+                                    if (worksheet.Cells[row, col].Value == null)
                                     {
-                                        value = "0";
+                                        continue;
                                     }
-                                    else if (valueType == "bool")
+
+                                    string propName = worksheet.Cells[1, col].Value.ToString();
+                                    propName = char.ToUpper(propName[0]) + propName[1..];
+
+                                    string valueType = worksheet.Cells[row, col].Value.ToString().ToLower();
+                                    head.Add((propName, valueType));
+                                }
+
+                                if (row > 4)
+                                {
+                                    string valueType = worksheet.Cells[3, col].Value.ToString().ToLower();
+                                    string value;
+                                    if (worksheet.Cells[row, col].Value == null)
                                     {
-                                        value = "0";
+                                        if (valueType == "int")
+                                        {
+                                            value = "0";
+                                        }
+                                        else if (valueType == "bool")
+                                        {
+                                            value = "0";
+                                        }
+                                        else
+                                        {
+                                            value = string.Empty;
+                                        }
                                     }
                                     else
                                     {
-                                        value = string.Empty;
+                                        value = worksheet.Cells[row, col].Value.ToString();
+                                        if (valueType == "bool")
+                                        {
+                                            value = value == "0" ? "false" : "true";
+                                        }
                                     }
+                                    values.Add((valueType, value));
                                 }
-                                else
-                                {
-                                    value = worksheet.Cells[row, col].Value.ToString();
-                                    if (valueType == "bool")
-                                    {
-                                        value = value == "0" ? "false" : "true";
-                                    }
-                                }
-                                values.Add((valueType, value));
                             }
                         }
-                    }
-                    if (i == 0)
-                    {
-                        GenerateCfgCs("LanguageCfg", model.csFileOutputPaht, head);
-                        Console.WriteLine("生成成功{0}", "LanguageCfg");
+                        if (i == 0)
+                        {
+                            GenerateCfgCs("LanguageCfg", model.csFileOutputPaht, head);
+                            Console.WriteLine("生成成功{0}", "LanguageCfg");
+                        }
                     }
                 }
+
             }
 
             values.Insert(0, ("int", count.ToString()));
@@ -208,75 +213,78 @@ namespace ExecelTool
 
             foreach (var item in model.cfgList)
             {
-                FileInfo fileInfo = new FileInfo(Path.Combine(model.excelPath, item.excel));
-                using (ExcelPackage package = new ExcelPackage(fileInfo))
+                //FileInfo fileInfo = new FileInfo(Path.Combine(model.excelPath, item.excel));
+                using (FileStream stream = new FileStream(Path.Combine(model.excelPath, item.excel), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-
-                    int rowCount = worksheet.Dimension.Rows;
-                    int colCount = worksheet.Dimension.Columns;
-
-                    List<(string, string)> head = new List<(string, string)>();
-
-                    values.Add(("int", (MathF.Max(0, rowCount - 4).ToString())));
-
-                    for (int row = 1; row <= rowCount; row++)
+                    using (ExcelPackage package = new ExcelPackage(stream))
                     {
-                        for (int col = 1; col <= colCount; col++)
-                        {
-                            if (worksheet.Cells[1, col].Value == null)
-                            {
-                                continue;
-                            }
 
-                            if (row == 3)
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                        int rowCount = worksheet.Dimension.Rows;
+                        int colCount = worksheet.Dimension.Columns;
+
+                        List<(string, string)> head = new List<(string, string)>();
+
+                        values.Add(("int", (MathF.Max(0, rowCount - 4).ToString())));
+
+                        for (int row = 1; row <= rowCount; row++)
+                        {
+                            for (int col = 1; col <= colCount; col++)
                             {
-                                if (worksheet.Cells[row, col].Value == null)
+                                if (worksheet.Cells[1, col].Value == null)
                                 {
                                     continue;
                                 }
 
-                                string propName = worksheet.Cells[1, col].Value.ToString();
-                                propName = char.ToUpper(propName[0]) + propName[1..];
-
-                                string valueType = worksheet.Cells[row, col].Value.ToString().ToLower();
-                                head.Add((propName, valueType));
-                            }
-
-                            if (row > 4)
-                            {
-                                string valueType = worksheet.Cells[3, col].Value.ToString().ToLower();
-                                string value;
-                                if (worksheet.Cells[row, col].Value == null)
+                                if (row == 3)
                                 {
-                                    if (valueType == "int")
+                                    if (worksheet.Cells[row, col].Value == null)
                                     {
-                                        value = "0";
+                                        continue;
                                     }
-                                    else if (valueType == "bool")
+
+                                    string propName = worksheet.Cells[1, col].Value.ToString();
+                                    propName = char.ToUpper(propName[0]) + propName[1..];
+
+                                    string valueType = worksheet.Cells[row, col].Value.ToString().ToLower();
+                                    head.Add((propName, valueType));
+                                }
+
+                                if (row > 4)
+                                {
+                                    string valueType = worksheet.Cells[3, col].Value.ToString().ToLower();
+                                    string value;
+                                    if (worksheet.Cells[row, col].Value == null)
                                     {
-                                        value = "0";
+                                        if (valueType == "int")
+                                        {
+                                            value = "0";
+                                        }
+                                        else if (valueType == "bool")
+                                        {
+                                            value = "0";
+                                        }
+                                        else
+                                        {
+                                            value = string.Empty;
+                                        }
                                     }
                                     else
                                     {
-                                        value = string.Empty;
+                                        value = worksheet.Cells[row, col].Value.ToString();
+                                        if (valueType == "bool")
+                                        {
+                                            value = value == "0" ? "false" : "true";
+                                        }
                                     }
+                                    values.Add((valueType, value));
                                 }
-                                else
-                                {
-                                    value = worksheet.Cells[row, col].Value.ToString();
-                                    if (valueType == "bool")
-                                    {
-                                        value = value == "0" ? "false" : "true";
-                                    }
-                                }
-                                values.Add((valueType, value));
                             }
                         }
+                        GenerateCfgCs(item.type, model.csFileOutputPaht, head);
+                        Console.WriteLine("生成成功{0}", item.type);
                     }
-                    GenerateCfgCs(item.type, model.csFileOutputPaht, head);
-                    Console.WriteLine("生成成功{0}", item.type);
                 }
             }
 
@@ -307,7 +315,7 @@ namespace ExecelTool
 
             foreach (var item in head)
             {
-                sb.Append(string.Format("\t\tpublic {0} {1} {{get; private set;}} \n", item.Item2, item.Item1));                
+                sb.Append(string.Format("\t\tpublic {0} {1} {{get; private set;}} \n", item.Item2, item.Item1));
             }
 
             sb.Append("\t\tpublic void Deserialize(BinaryReader reader)\n");
@@ -322,7 +330,7 @@ namespace ExecelTool
                 {
                     sb.Append($"\t\t\t{item.Item1} = reader.ReadBoolean();\n");
                 }
-                else if (item.Item2 == "string")                
+                else if (item.Item2 == "string")
                 {
                     sb.Append($"\t\t\t{item.Item1} = reader.ReadString();\n");
                 }
@@ -333,7 +341,7 @@ namespace ExecelTool
             sb.Append("\t\t{\n");
             foreach (var item in head)
             {
-                sb.Append($"\t\t\twriter.Write({item.Item1});\n");             
+                sb.Append($"\t\t\twriter.Write({item.Item1});\n");
             }
             sb.Append("\t\t}\n");
             sb.Append("\t}\n");
@@ -343,7 +351,7 @@ namespace ExecelTool
             sb.Append("\t[Serializable]\n");
             sb.Append($"\tpublic partial class {excelName}Container : CfgContainerBase<{excelName}>\n");  //配置对应的容器类
             sb.Append("\t{\n");
-           
+
             sb.Append("\t\tpublic override void Deserialize(BinaryReader reader)\n");
             sb.Append("\t\t{\n");
 
@@ -415,8 +423,8 @@ namespace ExecelTool
             sb.Append("\t\t\tvar _LanguageCfgContainer = new LanguageCfgContainer();\n");     //语言配置总是第一个
             sb.Append("\t\t\t_LanguageCfgContainer.Deserialize(reader);\n");
             sb.Append("\t\t\tCfgDatas.Add(typeof(LanguageCfg), _LanguageCfgContainer);\n");
-            
-            for (int i = 0; i < model.cfgList.Count; i++) 
+
+            for (int i = 0; i < model.cfgList.Count; i++)
             {
                 string typeName = model.cfgList[i].type;
                 sb.Append($"\t\t\tvar _{typeName}Container = new {typeName}Container();\n");
@@ -451,7 +459,7 @@ namespace ExecelTool
         /// <param name="values"></param>
         /// <param name="filePath"></param>
         public static void Witer(List<(string, string)> values, string filePath)
-        {            
+        {
             using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 using (BinaryWriter writer = new BinaryWriter(fileStream))
@@ -463,11 +471,11 @@ namespace ExecelTool
                         {
                             writer.Write(Convert.ToInt32(item.Item2));
                         }
-                        else if(type == "bool")
+                        else if (type == "bool")
                         {
                             writer.Write(Convert.ToBoolean(item.Item2));
                         }
-                        else if(type == "string") 
+                        else if (type == "string")
                         {
                             writer.Write(item.Item2);
                         }
@@ -487,14 +495,14 @@ namespace ExecelTool
                 Directory.CreateDirectory(outputPath);
                 Console.WriteLine($"创建文件夹:{outputPath}");
             }
-           
+
             //GenerateInterface(outputPath);
             GenerateCfgMap(model);
 
             List<(string, string)> values = GenerateLanguageCfg(model);
 
             List<(string, string)> values1 = GenerateNarmalCfg(model);
-            
+
             values.AddRange(values1);
             Witer(values, Path.Combine(model.cfgFileOutputPaht, "cfg.bytes"));
         }

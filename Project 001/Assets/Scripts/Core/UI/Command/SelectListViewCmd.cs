@@ -8,11 +8,8 @@ namespace Game.UI
     {
         public bool Undoable => true;
 
-        private readonly IGuidableGroup group;
-
-        public SelectListViewCmd(IGuidableGroup group)
+        public SelectListViewCmd()
         {
-            this.group = group;
         }
 
         public bool Execute()
@@ -22,7 +19,7 @@ namespace Game.UI
 
         public bool Undo()
         {
-            GameCore.UI.SelectListView(group);
+            GameCore.UI.UnSelectListView();
             return true;
         }
     }

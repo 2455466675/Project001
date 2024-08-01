@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Game.Core;
-using UnityEditor.PackageManager.UI;
 
 namespace Game.UI
 {
@@ -60,9 +58,14 @@ namespace Game.UI
             UIRoot.DeselectUI(guidableItem);
         }
 
-        public void SelectListView(IGuidableGroup guidableGroup)
+        public void SelectListView(IGuidableGroup guidableGroup, int windowId = 0)
         {
-            UIRoot.SelectListView(guidableGroup);
+            UIRoot.SelectListView(guidableGroup, windowId);
+        }
+
+        public void UnSelectListView()
+        {
+            UIRoot.UnSelectListView();
         }
 
         public void OpenWin(int id)

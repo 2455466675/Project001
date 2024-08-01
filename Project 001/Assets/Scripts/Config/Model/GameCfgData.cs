@@ -30,6 +30,9 @@ namespace Game.Cfg
 			var _ColorCfgContainer = new ColorCfgContainer();
 			_ColorCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(ColorCfg), _ColorCfgContainer);
+			var _OverviewMenuCfgContainer = new OverviewMenuCfgContainer();
+			_OverviewMenuCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(OverviewMenuCfg), _OverviewMenuCfgContainer);
 		}
 		public void Serialize(BinaryWriter writer)
 		{

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExcelTool")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1212f3b7e94a6279e786bce600d047b46c8ca052")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+262dee8dc8c5e8f69d91860c2e44e3047f0fd28a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExcelTool")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExcelTool")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

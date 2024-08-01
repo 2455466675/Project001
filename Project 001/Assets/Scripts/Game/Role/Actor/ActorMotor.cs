@@ -183,7 +183,7 @@ namespace Game.System
                 return;
             }
 
-            if (distance >= 1f) //距离前置角色一定距离时，开始跟随
+            if (distance >= GameCore.GameCfg.Formula.TEAM_GAP) //距离前置角色一定距离时，开始跟随
             {
                 MoveNextTrace();
                 IsMoving = true;

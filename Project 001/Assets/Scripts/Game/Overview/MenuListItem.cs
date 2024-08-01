@@ -1,3 +1,4 @@
+using Game.System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Game.UI
         protected override void OnDatumChange()
         {
             base.OnDatumChange();
-            MenuItem menu = GetListItem<MenuItem>();
+            OverviewMainMenuItem menu = GetListItem<OverviewMainMenuItem>();
             if (menu == null) 
             { 
                 return;
@@ -22,7 +23,7 @@ namespace Game.UI
             {
                 return;
             }
-            textView.SetTextByStr(menu.name);
+            textView.SetDatum(menu.name);
         }
     }
 }

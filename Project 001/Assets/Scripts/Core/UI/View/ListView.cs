@@ -78,10 +78,9 @@ namespace Game.UI
             }
             else
             {
-                //TODO 选择失焦之前选择的
-                MLog.Log("选择失焦之前选择的");
                 box.Select(box.currIndex);
             }
+
             ViewState = ListViewState.InFocus;
             IsFocus = true;
         }

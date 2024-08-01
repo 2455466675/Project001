@@ -1,8 +1,6 @@
-using Game.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Core
 {
@@ -30,6 +28,8 @@ namespace Game.Core
             actions.Add(new RoleMoveAction(inputActions.Role.Move));
             actions.Add(new RoleMenuAction(inputActions.Role.Menu));
             actions.Add(new RoleAddSpeedAction(inputActions.Role.AddSpeed));
+
+            actions.Add(new TestInput(inputActions.Test.I_Test));
         }
 
         public void EnableUIAction()

@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using System.IO;
 using Game.Core;
-using Game.System;
 
 namespace Game.Cfg
 {
@@ -15,10 +14,14 @@ namespace Game.Cfg
     {
         public GameLanguage Language {get; private set;}
 
+        public Formula Formula { get; private set;}
+
         private GameCfgData data;
 
         public IEnumerator Init()
         {
+            Formula = GameCore.ResourceManager.LoadAsset<Formula>(GameCore.GameInitCfg.FormulaFilePath);
+
             string filePath = Path.Combine(Application.streamingAssetsPath, GameCore.GameInitCfg.GameCfgFile);
             using (FileStream stream = new FileStream(filePath, FileMode.Open))
             {
@@ -28,9 +31,8 @@ namespace Game.Cfg
                     data.Deserialize(br);
                 }              
             }
+            Language = new GameLanguage();
 
-            Language = new GameLanguage();            
-            MLog.Log("º”‘ÿcommonActionAssets");
             yield return null;
         }
 

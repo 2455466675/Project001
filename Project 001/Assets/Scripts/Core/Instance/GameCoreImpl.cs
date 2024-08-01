@@ -23,11 +23,11 @@ namespace Game.Core
 
         public IEnumerator Init()
         {
-            GameCore.GameCfg = gameObject.AddComponent<GameCfg>();
-            yield return GameCore.GameCfg.Init();
-
             GameCore.ResourceManager = gameObject.AddComponent<GameResourceManager>();
             yield return GameCore.ResourceManager.Init();
+
+            GameCore.GameCfg = gameObject.AddComponent<GameCfg>();
+            yield return GameCore.GameCfg.Init();
 
             GameCore.UI = gameObject.AddComponent<GameUI>();
             yield return GameCore.UI.Init();

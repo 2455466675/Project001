@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cfg:
+    FormulaFilePath: Assets/Bundles/Common/Formula
     GameCfgFile: cfg.bytes
     UIRootPath: Assets/Bundles/UI/Window/UIRoot
 --- !u!4 &404166798

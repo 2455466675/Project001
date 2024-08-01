@@ -411,6 +411,34 @@ namespace Game.Core
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Test"",
+            ""id"": ""7ab84d76-ee76-425b-8f0a-856c42c471b5"",
+            ""actions"": [
+                {
+                    ""name"": ""I_Test"",
+                    ""type"": ""Button"",
+                    ""id"": ""41cfa213-ad72-414b-8807-d550bf3b01ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2895cfd6-1c80-43d2-b6f7-370e64c388a0"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""I_Test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -426,6 +454,9 @@ namespace Game.Core
             m_Role_Move = m_Role.FindAction("Move", throwIfNotFound: true);
             m_Role_Menu = m_Role.FindAction("Menu", throwIfNotFound: true);
             m_Role_AddSpeed = m_Role.FindAction("AddSpeed", throwIfNotFound: true);
+            // Test
+            m_Test = asset.FindActionMap("Test", throwIfNotFound: true);
+            m_Test_I_Test = m_Test.FindAction("I_Test", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -615,6 +646,52 @@ namespace Game.Core
             }
         }
         public RoleActions @Role => new RoleActions(this);
+
+        // Test
+        private readonly InputActionMap m_Test;
+        private List<ITestActions> m_TestActionsCallbackInterfaces = new List<ITestActions>();
+        private readonly InputAction m_Test_I_Test;
+        public struct TestActions
+        {
+            private @MyInput m_Wrapper;
+            public TestActions(@MyInput wrapper) { m_Wrapper = wrapper; }
+            public InputAction @I_Test => m_Wrapper.m_Test_I_Test;
+            public InputActionMap Get() { return m_Wrapper.m_Test; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(TestActions set) { return set.Get(); }
+            public void AddCallbacks(ITestActions instance)
+            {
+                if (instance == null || m_Wrapper.m_TestActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_TestActionsCallbackInterfaces.Add(instance);
+                @I_Test.started += instance.OnI_Test;
+                @I_Test.performed += instance.OnI_Test;
+                @I_Test.canceled += instance.OnI_Test;
+            }
+
+            private void UnregisterCallbacks(ITestActions instance)
+            {
+                @I_Test.started -= instance.OnI_Test;
+                @I_Test.performed -= instance.OnI_Test;
+                @I_Test.canceled -= instance.OnI_Test;
+            }
+
+            public void RemoveCallbacks(ITestActions instance)
+            {
+                if (m_Wrapper.m_TestActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(ITestActions instance)
+            {
+                foreach (var item in m_Wrapper.m_TestActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_TestActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public TestActions @Test => new TestActions(this);
         public interface IUIActions
         {
             void OnMove(InputAction.CallbackContext context);
@@ -627,6 +704,10 @@ namespace Game.Core
             void OnMove(InputAction.CallbackContext context);
             void OnMenu(InputAction.CallbackContext context);
             void OnAddSpeed(InputAction.CallbackContext context);
+        }
+        public interface ITestActions
+        {
+            void OnI_Test(InputAction.CallbackContext context);
         }
     }
 }
