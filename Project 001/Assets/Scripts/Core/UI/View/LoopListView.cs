@@ -1,4 +1,3 @@
-using Game.Core;
 
 namespace Game.UI
 {

@@ -1,6 +1,5 @@
 using Game.Core;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.UI
 {
@@ -29,7 +28,6 @@ namespace Game.UI
         public int Layer { get; set;}
         public bool IsFocus {get; private set;}
         public ListViewState ViewState {get; private set;}
-        public ListDataBase ListDB => IsValid ? MainDB as ListDataBase : null;
 
         public int Count => items != null ? items.Count : 0;
 
@@ -61,13 +59,13 @@ namespace Game.UI
 
         private void Query()
         {
-            if (ListDB == null || ListDB.Count() <= 0)
+            if (!IsValid)
             {
                 items?.Clear();
                 return;
             }
 
-            items = ListDB.Where(a => a.Filter()).OrderBy(a => a).ToList();
+            items = MainField.ListValue;
         }
 
         public void InFocus()

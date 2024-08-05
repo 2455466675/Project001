@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 
 namespace Game.Core
 {
@@ -24,6 +24,7 @@ namespace Game.Core
     /// </summary>
     public class ListDB<T> : ListDataBase where T : ItemDB
     {
+        
         private readonly List<T> value;
 
         public ListDB()
@@ -50,6 +51,11 @@ namespace Game.Core
                 }
                 this.value[index] = value;
             }
+        }
+
+        public override List<ItemDB> ListValue()
+        {
+            return this.Where(a => a.Filter()).OrderBy(a => a).ToList();
         }
 
         public override int Count()

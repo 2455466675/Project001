@@ -10,25 +10,25 @@ namespace Game.UI
             if (!IsValid) return;
 
             bool isValidId = textId > 0;       
-            int id = isValidId ? textId : MainDB.IntValue;
+            int id = isValidId ? textId : MainField.IntValue;
 
             string text = GameCore.GameCfg.GetTextById(id);
             if (string.IsNullOrEmpty(text))
             {
-                SetTextByStr(isValidId ? id.ToString() : MainDB.StringValue);
+                SetTextByStr(isValidId ? id.ToString() : MainField.StringValue);
                 return;
             }
 
-            if (!isValidId && DBs.Length == 1) 
+            if (!isValidId && FieldCount == 1) 
             {
                 SetTextByStr(text);
             }
             else
             {
-                string[] args = new string[DBs.Length - 1];
-                for (int i = 1; i < DBs.Length; i++)
+                string[] args = new string[FieldCount - 1];
+                for (int i = 1; i < FieldCount; i++)
                 {
-                    args[i] = GameCore.GameCfg.GetTextById(DBs[i].IntValue);
+                    args[i] = GameCore.GameCfg.GetTextById(this[i].IntValue);
                 }
                 SetTextByStr(string.Format(text, args));
             }

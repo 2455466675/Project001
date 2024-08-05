@@ -1,14 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 namespace Game.Core
 {
+
     public interface IDataBase
     {
-        public int IntValue {get;}
-        public float FloatValue {get;}
-        public double DoubleValue {get;}
-        public bool BoolValue {get;}
-        public string StringValue {get;}
+        public int IntValue { get; }
+        public float FloatValue { get; }
+        public double DoubleValue { get; }
+        public bool BoolValue { get; }
+        public string StringValue { get; }
+
+        List<ItemDB> ListValue();
+
         void AddEvent(Action action);
         void RemoveEvent(Action action);
         void NotifyChange();
@@ -21,7 +26,10 @@ namespace Game.Core
         public double DoubleValue { get; protected set; }
         public bool BoolValue { get; protected set; }
         public string StringValue { get; protected set; }
-        protected Action Evts;
+
+        public virtual List<ItemDB> ListValue() => null;
+
+        private Action Evts;
         public void NotifyChange()
         {
             Evts?.Invoke();
