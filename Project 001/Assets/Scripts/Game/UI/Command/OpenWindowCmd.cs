@@ -8,7 +8,7 @@ namespace Game.UI
         {
             get
             {
-                if (window.Id == (int)WindowId.WinLogin || window.Id == (int)WindowId.WinOverview)
+                if (window.Id == (int)WindowId.WinLogin)
                 {
                     return subCommand != null && subCommand.Count > 1;
                 }
