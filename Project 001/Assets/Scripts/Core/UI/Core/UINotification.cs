@@ -5,9 +5,9 @@ namespace Game.UI
     /// </summary>
     public class UINotification
     {
-        public ListItem ListItem {get; private set;}
+        public GuidableItemBase ListItem {get; private set;}
 
-        public UINotification(ListItem listItem)
+        public UINotification(GuidableItemBase listItem)
         {
             this.ListItem = listItem;
         }

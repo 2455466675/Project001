@@ -1,14 +1,16 @@
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+
 namespace Game.UI
 {
     /// <summary>
     /// 
     /// </summary>
-	public class ItemTypeListItem : ListItem
-	{       
+	public class ItemTypeListItem : GuidableItemBase
+    {       
         protected override void OnDatumChange()
         {
             base.OnDatumChange();
-            ItemTypeItemDB db = GetListItem<ItemTypeItemDB>();
+            ItemTypeItemDB db = GetItemDB<ItemTypeItemDB>();
             if (db == null)
             {
                 return;
@@ -19,7 +21,7 @@ namespace Game.UI
             {
                 return;
             }
-            MLog.Log("ItemTypeListItem", db.name.StringValue);
+
             textView.SetDatum(db.name);
         }
     }

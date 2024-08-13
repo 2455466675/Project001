@@ -1,85 +1,99 @@
 using Game.Core;
+using System;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.UI
 {
+    [Serializable]
+    public class OnSubmitEvent : UnityEvent<UINotification>
+    {       
+    }
+
+    [Serializable]
+    public class OnSelectEvent : UnityEvent<UINotification>
+    {
+    }
+
+    [Serializable]
+    public class OnDeselectEvent : UnityEvent<UINotification>
+    {
+    }
+
+    [Serializable]
+    public class OnMoveUpEvent : UnityEvent<UINotification>
+    {
+    }
+
+    [Serializable]
+    public class OnMoveDownEvent : UnityEvent<UINotification>
+    {
+    }
+
+    [Serializable]
+    public class OnMoveLeftEvent : UnityEvent<UINotification>
+    {
+    }
+
+    [Serializable]
+    public class OnMoveRightEvent : UnityEvent<UINotification>
+    {
+    }
+
     /// <summary>
     /// 
     /// </summary>
     public class UINotify : MonoBehaviour
     {
-        public UIController controller;
+        [SerializeField]
+        private OnSubmitEvent onSubmitEvent;
+        [SerializeField]
+        private OnSubmitEvent onSelectEvent;
+        [SerializeField]
+        private OnSubmitEvent onDeselectEvent;
+        [SerializeField]
+        private OnSubmitEvent onMoveUpEvent;
+        [SerializeField]
+        private OnSubmitEvent onMoveDownEvent;
+        [SerializeField]
+        private OnSubmitEvent onMoveLeftEvent;
+        [SerializeField]
+        private OnSubmitEvent onMoveRightEvent;
 
-        public string onSubmitFunName;
-        public string onSelectFunName;
-        public string onDeselectFunName;
-        public string onMoveToUpFunName;
-        public string onMoveToDownFunName;
-        public string onMoveToLeftFunName;
-        public string onMoveToRightFunName;
-
-        private ListItem listItem;
-
-        public void OnSubmit(ListItem listItem)
+        public void OnSubmit(GuidableItemBase listItem)
         {
-            this.listItem = listItem;
-            DoExecute(onSubmitFunName);
+            onSubmitEvent?.Invoke(new UINotification(listItem));
         }
 
-        public void OnSelect(ListItem listItem)
+        public void OnSelect(GuidableItemBase listItem)
         {
-            this.listItem = listItem;
-            DoExecute(onSelectFunName);
+            onSelectEvent?.Invoke(new UINotification(listItem));
         }
 
-        public void OnDeselect(ListItem listItem)
+        public void OnDeselect(GuidableItemBase listItem)
         {
-            this.listItem = listItem;
-            DoExecute(onDeselectFunName);
+            onDeselectEvent?.Invoke(new UINotification(listItem));
         }
 
-        public void OnMoveToUp(ListItem listItem)
+        public void OnMoveUp(GuidableItemBase listItem)
         {
-            this.listItem = listItem;
-            DoExecute(onMoveToUpFunName);
+            onMoveUpEvent?.Invoke(new UINotification(listItem));
         }
 
-        public void OnMoveToDown(ListItem listItem)
+        public void OnMoveDown(GuidableItemBase listItem)
         {
-            this.listItem = listItem;
-            DoExecute(onMoveToDownFunName);
+            onMoveDownEvent?.Invoke(new UINotification(listItem));
         }
 
-        public void OnMoveToLeft(ListItem listItem)
+        public void OnMoveLeft(GuidableItemBase listItem)
         {
-            this.listItem = listItem;
-            DoExecute(onMoveToLeftFunName);
+            onMoveLeftEvent?.Invoke(new UINotification(listItem));  
         }
 
-        public void OnMoveToRight(ListItem listItem)
+        public void OnMoveRight(GuidableItemBase listItem)
         {
-            this.listItem = listItem;
-            DoExecute(onMoveToRightFunName);
-        }
-
-        public void DoExecute(string funName)
-        {
-            if(string.IsNullOrEmpty(funName))
-            {
-                return;
-            }
-            if (controller == null)
-            {
-                return;
-            }
-            MethodInfo methodInfo = controller.GetType().GetMethod(funName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (methodInfo == null)
-            {
-                MLog.Log($"{controller.GetType().FullName}没有实现的函数：{funName}");
-                return;
-            }
-            methodInfo.Invoke(controller, new object[] { new UINotification(this.listItem)});
-        }
+            onMoveRightEvent?.Invoke(new UINotification(listItem));
+        }     
     }
 }

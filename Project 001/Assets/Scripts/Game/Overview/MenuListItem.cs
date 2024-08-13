@@ -8,12 +8,12 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-	public class MenuListItem : ListItem
+	public class MenuListItem : GuidableItemBase
 	{   
         protected override void OnDatumChange()
         {
             base.OnDatumChange();
-            OverviewMainMenuItem menu = GetListItem<OverviewMainMenuItem>();
+            OverviewMainMenuItem menu = GetItemDB<OverviewMainMenuItem>();
             if (menu == null) 
             { 
                 return;

@@ -7,14 +7,14 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-	public class PackageListItem : ListItem
+	public class PackageListItem : GuidableItemBase
 	{
         public TextView textView;
 
         protected override void OnDatumChange()
         {
             base.OnDatumChange();
-            PackageItemDB db = GetListItem<PackageItemDB>();        
+            PackageItemDB db = GetItemDB<PackageItemDB>();        
             if (db != null)
             {
                 if (textView != null)

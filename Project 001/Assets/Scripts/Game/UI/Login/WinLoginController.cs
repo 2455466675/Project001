@@ -16,12 +16,13 @@ namespace Game.UI
 
         public void OnStartNewGame(UINotification notification)
         {
+            GameCore.UI.Exit();
             GameCore.StateController.SwitchState(GameState.PLAYING);
         }
 
         public void OnTest(UINotification notification) 
         {
-            GameCore.UI.OpenWin(100003);
+            GameCore.UI.Enter(WindowId.WinOverview);
         }
 
         public void OnExit(UINotification notification)

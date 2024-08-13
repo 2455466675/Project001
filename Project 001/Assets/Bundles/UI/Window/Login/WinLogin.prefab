@@ -91,14 +91,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2634652236086146646}
-  onSubmitFunName: OnStartNewGame
-  onSelectFunName: OnSelect
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2634652236086146646}
+        m_TargetAssemblyTypeName: Game.UI.WinLoginController, Assembly-CSharp
+        m_MethodName: OnStartNewGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &106082040917816575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,10 +133,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 155821638054983744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606b473b1f576d04f9b597aa9dbcb45b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9078674ff9f3b8c4ab8c4150d7a02575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 856688416557554098}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 2743539733959337994}
 --- !u!1 &1676652901554621364
 GameObject:
@@ -504,14 +529,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2634652236086146646}
-  onSubmitFunName: 
-  onSelectFunName: OnSelect
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2634652236086146646}
+        m_TargetAssemblyTypeName: Game.UI.WinLoginController, Assembly-CSharp
+        m_MethodName: OnSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5462078262927695245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,10 +571,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2490064923165046098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606b473b1f576d04f9b597aa9dbcb45b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9078674ff9f3b8c4ab8c4150d7a02575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 8557285546675964274}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 5055249625592546800}
 --- !u!1 &2765327364547587758
 GameObject:
@@ -551,12 +601,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2765327364547587758}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2028501982724501748}
+  m_Father: {fileID: 3908079643920681546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -727,14 +777,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2634652236086146646}
-  onSubmitFunName: 
-  onSelectFunName: OnSelect
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2634652236086146646}
+        m_TargetAssemblyTypeName: Game.UI.WinLoginController, Assembly-CSharp
+        m_MethodName: OnTest
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2812372950715508323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,10 +819,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4344828801228451231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606b473b1f576d04f9b597aa9dbcb45b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9078674ff9f3b8c4ab8c4150d7a02575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 7118859849258289230}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 7589738086791730984}
 --- !u!1 &4648278361258578835
 GameObject:
@@ -924,7 +999,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5126421507104977415}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -933,7 +1008,7 @@ RectTransform:
   - {fileID: 82224572408678448}
   - {fileID: 368618121452941786}
   - {fileID: 6837347439567938691}
-  m_Father: {fileID: 2028501982724501748}
+  m_Father: {fileID: 3908079643920681546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -953,6 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
+  id: 1
   box: {fileID: 77410697177953457}
 --- !u!114 &77410697177953457
 MonoBehaviour:
@@ -966,10 +1042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a845e3bba2b6b0648bd8788dd2c31043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navigationType: 1
-  defaultIndex: 0
-  currIndex: 0
-  current: {fileID: 0}
   items:
   - {fileID: 106082040917816575}
   - {fileID: 5462078262927695245}
@@ -1056,6 +1128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2028501982724501748}
   - component: {fileID: 2842483903327050610}
+  - component: {fileID: 4414816962690189924}
   - component: {fileID: 2634652236086146646}
   m_Layer: 5
   m_Name: WinLogin
@@ -1076,8 +1149,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5666215670111470987}
-  - {fileID: 8056677630369114367}
+  - {fileID: 3908079643920681546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1098,7 +1170,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   group: 1
-  canvasGroup: {fileID: 0}
+  winType: 1
+  canvasGroup: {fileID: 4414816962690189924}
+--- !u!225 &4414816962690189924
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6552007790115428480}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &2634652236086146646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,8 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277cc93c03459d94487e46a71b3b7a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 0}
-  defaultListView: {fileID: 2514425860679163625}
+  window: {fileID: 2842483903327050610}
 --- !u!1 &7049753107737486869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,14 +1288,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2634652236086146646}
-  onSubmitFunName: OnExit
-  onSelectFunName: OnSelect
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2634652236086146646}
+        m_TargetAssemblyTypeName: Game.UI.WinLoginController, Assembly-CSharp
+        m_MethodName: OnExit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7271106024479429991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1221,10 +1330,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7049753107737486869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606b473b1f576d04f9b597aa9dbcb45b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9078674ff9f3b8c4ab8c4150d7a02575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiNotify: {fileID: 5198450653319537898}
+  UINotify: {fileID: 0}
   targetTransform: {fileID: 785059754022500385}
 --- !u!1 &7238835528578209808
 GameObject:
@@ -1261,6 +1370,59 @@ RectTransform:
   m_AnchoredPosition: {x: -100, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &7892848169178566292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3908079643920681546}
+  - component: {fileID: 2188734249519628119}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3908079643920681546
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892848169178566292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5666215670111470987}
+  - {fileID: 8056677630369114367}
+  m_Father: {fileID: 2028501982724501748}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2188734249519628119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892848169178566292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c66004d5658949438f9aadfc5df97fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  window: {fileID: 2842483903327050610}
+  views:
+  - {fileID: 2514425860679163625}
 --- !u!1 &8613568715125009179
 GameObject:
   m_ObjectHideFlags: 0

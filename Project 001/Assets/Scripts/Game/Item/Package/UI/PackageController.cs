@@ -1,6 +1,8 @@
 using Game.Cfg;
 using Game.Core;
+using Game.System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.UI
 {
@@ -9,7 +11,6 @@ namespace Game.UI
     /// </summary>
 	public class PackageController : UIController
 	{
-        public LoopListView packageList;
 
         TeamSystem teamSystem;
 
@@ -22,29 +23,50 @@ namespace Game.UI
             typeList.Add(new ItemTypeItemDB(3, "防具"));
             typeList.Add(new ItemTypeItemDB(4, "任务"));
 
-            defaultListView.SetDatum(typeList);
+            ListView.Register(ListViewId.PackageMenuList, typeList);
 
             teamSystem = new TeamSystem();
             ListDB<PackageItemDB> items = teamSystem.roles[0].items;
-
-            packageList.SetDatum(items);
+            ListView.Register(ListViewId.PackageItemList, items);       
         }
 
         public void OnTest2(UINotification notification)
         {
-            GameCore.UI.SelectListView(packageList);
-            MLog.Log($"OnTest2");
+            GameCore.UI.SelectGuidableGroup(ListViewId.PackageItemList);
         }
 
         public void OnTest3(UINotification notification)
         {
-            ItemTypeItemDB db = notification.ListItem.GetListItem<ItemTypeItemDB>();
+            ItemTypeItemDB db = notification.ListItem.GetItemDB<ItemTypeItemDB>();
             MLog.Log($"OnTest3:{db.name}, {db.id}");
 
             ListDB<PackageItemDB> items = teamSystem.roles[0].items;
             PackageItemDB.select = (PakageItemType)db.id.Value;
 
             items.NotifyChange();
+        }
+
+        public void OnTest4(UINotification notification)
+        {
+            PackageItemDB db = notification.ListItem.GetItemDB<PackageItemDB>();
+            MLog.Log($"OnTest4:{db.name}, {db.id}");
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                ListDB<PackageItemDB> items = teamSystem.roles[0].items;
+                items.RemoveAt(Random.Range(0, items.Count()));                
+            }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                ListDB<PackageItemDB> items = teamSystem.roles[0].items;
+                PakageItemType itemType = (PakageItemType)Random.Range(1, 5);
+                string name = $"{itemType}类道具：{items.Count() + 1}";
+                PackageItemDB item = new PackageItemDB(items.Count() + 1, name, itemType);
+                items.Add(item);
+            }
         }
     }
 

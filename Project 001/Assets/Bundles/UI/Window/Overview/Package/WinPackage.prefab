@@ -126,14 +126,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3063235174625452213}
-  onSubmitFunName: OnTest2
-  onSelectFunName: OnTest3
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &709164172737154580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 841141734142027171}
   - component: {fileID: 3781104377033819670}
+  - component: {fileID: 972346614924835832}
   - component: {fileID: 3063235174625452213}
   m_Layer: 5
   m_Name: WinPackage
@@ -390,7 +428,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   group: 1
   winType: 1
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 972346614924835832}
+--- !u!225 &972346614924835832
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014524691812096194}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &3063235174625452213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,8 +454,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 3781104377033819670}
-  defaultListView: {fileID: 7842779500928400308}
-  packageList: {fileID: 6694634448270371206}
 --- !u!1 &2110142043171023330
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +651,7 @@ GameObject:
   - component: {fileID: 4939456875050987365}
   - component: {fileID: 5935608846172354413}
   - component: {fileID: 6694634448270371206}
-  - component: {fileID: 7683468382955733721}
+  - component: {fileID: 423801036864810987}
   m_Layer: 5
   m_Name: PackageList
   m_TagString: Untagged
@@ -653,7 +701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -682,8 +730,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
-  box: {fileID: 7683468382955733721}
---- !u!114 &7683468382955733721
+  id: 4
+  box: {fileID: 423801036864810987}
+--- !u!114 &423801036864810987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -692,25 +741,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2394312058732638835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fba84b8dc9ab00648ab0a996f1986ec7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f4ea8edf3f63724ab3f91883a47a03d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navigationType: 0
-  defaultIndex: 0
-  currIndex: 0
-  current: {fileID: 0}
-  prefab: {fileID: 2885812755876061579}
-  topPadding: 3
-  bottomPadding: 0
-  spacing: 2
   viewport: {fileID: 8089832483522071269}
   content: {fileID: 319568780907087323}
-  totalCount: 0
-  min: 0
-  max: 0
-  point: 0
-  offest: 0
-  gap: 1
+  item: {fileID: 2885812755876061579}
+  topPadding: 3
+  bottomPadding: 3
+  spacing: 2
 --- !u!1 &2690840249666864303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,14 +1097,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3063235174625452213}
-  onSubmitFunName: OnTest2
-  onSelectFunName: OnTest3
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3166998994124169589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,14 +1247,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3063235174625452213}
-  onSubmitFunName: OnTest2
-  onSelectFunName: OnTest3
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6973016967363559152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,6 +1840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1741145310020856049}
+  - component: {fileID: 6989846211127564713}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1756,6 +1870,22 @@ RectTransform:
   m_AnchoredPosition: {x: 1160, y: 0}
   m_SizeDelta: {x: 1520, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6989846211127564713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5731680126290149124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c66004d5658949438f9aadfc5df97fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  window: {fileID: 3781104377033819670}
+  views:
+  - {fileID: 7842779500928400308}
+  - {fileID: 6694634448270371206}
 --- !u!1 &5750979836225793453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,14 +1977,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3063235174625452213}
-  onSubmitFunName: OnSubmit
-  onSelectFunName: OnSelect
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest4
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2885812755876061579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1996,14 +2151,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3063235174625452213}
-  onSubmitFunName: OnTest2
-  onSelectFunName: OnTest3
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3726395254179179540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2199,14 +2391,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148cab7aaea4604d8a573feb6f8b139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3063235174625452213}
-  onSubmitFunName: OnTest2
-  onSelectFunName: OnTest3
-  onDeselectFunName: 
-  onMoveToUpFunName: 
-  onMoveToDownFunName: 
-  onMoveToLeftFunName: 
-  onMoveToRightFunName: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3063235174625452213}
+        m_TargetAssemblyTypeName: Game.UI.PackageController, Assembly-CSharp
+        m_MethodName: OnTest3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3392545370053662497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2272,6 +2501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vUid: 
+  id: 3
   box: {fileID: 7004608843200753711}
 --- !u!114 &7004608843200753711
 MonoBehaviour:
@@ -2285,10 +2515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a845e3bba2b6b0648bd8788dd2c31043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navigationType: 1
-  defaultIndex: 0
-  currIndex: 0
-  current: {fileID: 0}
   items:
   - {fileID: 3726395254179179540}
   - {fileID: 709164172737154580}

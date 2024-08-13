@@ -1,13 +1,13 @@
 using Game.Cfg;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
+using System;
 
 namespace Game.UI
 {
     public enum WindType 
     {
-        Base    = 0,
+        Static  = 0,
         Normal  = 1,
         Guide   = 2,
     }
@@ -17,12 +17,16 @@ namespace Game.UI
     /// </summary>
     public class Window : MonoBehaviour
     {
-        public UIGroupEnum group;
+        public UIGroup group;
         public WindType winType;
         public CanvasGroup canvasGroup;
+
+        public event Action OnShowEvent;
+        public event Action OnHideEvent;
+        public event Action OnInFocusEvent;
+        public event Action OnOutFocusEvent;
+
         public WindowCfg Cfg {get; private set;}
-        [ShowInInspector]
-        public UIController Controller {get; private set;}
         [ShowInInspector]
         public int Id => Cfg != null ? Cfg.Id : -1;
         [ShowInInspector]
@@ -36,41 +40,34 @@ namespace Game.UI
             }
         }
 
-        public void SetCfg(WindowCfg cfg)
+        public void Init(WindowCfg cfg)
         {
             Cfg = cfg;
         }
 
-        public void SetController(UIController controller)
-        {
-            Controller = controller;
-        }
-
         public void Show()
         {
-            if (Controller != null)
-            {
-                Controller.OnShow();
-            }
             canvasGroup.alpha = 1f;
+            OnShowEvent?.Invoke();
+            GameCore.UI.AddShowWindow(this);
         }
 
         public void Hide()
         {
             canvasGroup.alpha = 0f;
+            OnHideEvent?.Invoke();
+            GameCore.UI.RemoveShowWindow(this);
         }
 
-        public void Enter()
+        public void InFocus()
         {
-            if (Controller != null)
-            {
-                Controller.OnEnter();
-            }
+            OnInFocusEvent?.Invoke();
+            GameCore.UI.InFocusWindow(this);
         }
 
-        public void Exit()
+        public void OutFocus()
         {
-            
-        }
+            OnOutFocusEvent?.Invoke();
+        }        
     }
 }

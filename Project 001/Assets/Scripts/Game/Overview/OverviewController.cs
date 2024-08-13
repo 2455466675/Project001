@@ -8,14 +8,13 @@ namespace Game.UI
 	{
         protected override void Register()
         {
-            base.Register();
-            defaultListView.SetDatum(GameCore.System.OverviewSystem.GetMenus());
+            ListView.Register(ListViewId.OverviewMenuList, GameCore.System.OverviewSystem.GetMenus());
         }
 
         public void OnTest(UINotification notification)
         {
             MLog.Log("OnTest");
-            GameCore.UI.OpenWin(100004);
+            GameCore.UI.OpenWindow(WindowId.WinPackage);
         }
     } 
 }
