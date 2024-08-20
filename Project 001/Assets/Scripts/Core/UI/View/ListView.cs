@@ -23,7 +23,7 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-	public class ListView : View, IGuidableGroup
+	public class ListView : View, INavigatable
     {
         private static Dictionary<ListViewId, ListView> views;
 
@@ -134,7 +134,6 @@ namespace Game.UI
 
         public void InFocus()
         {
-            GameCore.UI.InFocusGroup(this);
             ViewState = ListViewState.InFocus;
             box.Select(index);
         }
@@ -151,7 +150,7 @@ namespace Game.UI
             index = 0;
         }
 
-        public void OnMoveToUp()
+        public void MoveUp()
         {
             if (box == null) 
             {
@@ -160,7 +159,7 @@ namespace Game.UI
             box.Move(MoveType.Up);
         }
 
-        public void OnMoveToDown()
+        public void MoveDown()
         {
             if (box == null)
             {
@@ -169,7 +168,7 @@ namespace Game.UI
             box.Move(MoveType.Down);
         }
 
-        public void OnMoveToLeft()
+        public void MoveLeft()
         {
             if (box == null)
             {
@@ -178,7 +177,7 @@ namespace Game.UI
             box.Move(MoveType.Left);
         }
 
-        public void OnMoveToRight()
+        public void MoveRight()
         {
             if (box == null)
             {

@@ -49,20 +49,19 @@ namespace Game.UI
         {
             canvasGroup.alpha = 1f;
             OnShowEvent?.Invoke();
-            GameCore.UI.AddShowWindow(this);
+            GameCore.UI.ShowWindow(this);
         }
 
         public void Hide()
         {
             canvasGroup.alpha = 0f;
             OnHideEvent?.Invoke();
-            GameCore.UI.RemoveShowWindow(this);
+            GameCore.UI.HideWindow(this);
         }
 
         public void InFocus()
         {
             OnInFocusEvent?.Invoke();
-            GameCore.UI.InFocusWindow(this);
         }
 
         public void OutFocus()

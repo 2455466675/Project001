@@ -18,9 +18,7 @@ namespace Game.UI
         }
 
         public bool IsEmpty => subCommand == null || subCommand.Count == 0;
-
         private Window window;
-
         private Stack<IUICommand> subCommand;
 
         public OpenWindowCmd(Window window)
@@ -56,6 +54,7 @@ namespace Game.UI
             {
                 return;
             }
+            GameCore.UI.InFocusWindow(window);
             window.Show();
             window.InFocus();
         }

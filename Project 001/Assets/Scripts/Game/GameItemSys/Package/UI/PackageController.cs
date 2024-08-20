@@ -32,7 +32,7 @@ namespace Game.UI
 
         public void OnTest2(UINotification notification)
         {
-            GameCore.UI.SelectGuidableGroup(ListViewId.PackageItemList);
+            GameCore.UI.SelectNavigatable(ListViewId.PackageItemList);
         }
 
         public void OnTest3(UINotification notification)

@@ -6,33 +6,6 @@ using UnityEngine;
 
 namespace Game.System
 {
-
-    public enum MoveDir
-    {
-        Up       = 1,
-        RunUp    = 9,
-
-        Down     = 2,
-        RunDown  = 8,
-
-        Left     = 3,
-        RunLeft  = 7,
-
-        Right    = 4,
-        RunRight = 6,
-
-        Idle     = 5,
-    }
-
-    public struct MovePoint
-    {
-        public string acName;
-        public MoveDir dir;
-        public Vector2 pos;
-        public bool isTurn;
-        public float deltaDis;
-    }
-
     /// <summary>
     /// 
     /// </summary>

@@ -1,7 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Game.UI
 {
@@ -11,9 +8,7 @@ namespace Game.UI
     public interface IGuidable
     {
         bool IsBeSelected { get; }
-        GameObject CurrentGameObject { get; }
-        RectTransform GuidePoint { get; }
-
+        Vector3 GuidePoint();
         void OnSubmit();
         void OnSelected();
         void OnDeselected();

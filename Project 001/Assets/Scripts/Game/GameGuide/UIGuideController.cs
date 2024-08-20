@@ -12,7 +12,7 @@ namespace Game.UI
         public void Awake()
         {
             guideFinger.SetActive(false);
-            GameCore.UI.UIGuideController = this;
+            GameCore.UI.SetUIGuideController(this);
             GameCore.UI.OnSelectGuidableChanged += OnSelectGuidableChangedHandler;
         }
 
@@ -41,7 +41,7 @@ namespace Game.UI
 
             guideFinger.SetActive(true);
             Camera camera = GameCore.UI.UICamera;
-            Vector2 screenV2 = RectTransformUtility.WorldToScreenPoint(camera, guidableItem.GuidePoint.position);
+            Vector2 screenV2 = RectTransformUtility.WorldToScreenPoint(camera, guidableItem.GuidePoint());
             RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, screenV2, camera, out Vector2 targetV2);
             guideFinger.transform.localPosition = targetV2;
         }

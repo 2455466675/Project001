@@ -14,7 +14,7 @@ namespace Game.UI
         {
             if (DefaultView != null)
             {
-                GameCore.UI.SelectGuidableGroup(DefaultView);
+                GameCore.UI.SelectNavigatable(DefaultView);
             }
         }
         protected override void OnHide() 

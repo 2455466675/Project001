@@ -3,6 +3,30 @@ using UnityEngine;
 
 namespace Game.System
 {
+    public enum MoveType
+    {
+        Up = 1,
+        RunUp = 9,
+
+        Down = 2,
+        RunDown = 8,
+
+        Left = 3,
+        RunLeft = 7,
+
+        Right = 4,
+        RunRight = 6,
+
+        Idle = 5,
+    }
+
+    public struct MoveTrace
+    {
+        public MoveType moveType;
+        public Vector2 position;
+        public float deltaDistance;
+    }
+
     /// <summary>
     /// 角色移动类，负责角色的移动
     /// </summary>

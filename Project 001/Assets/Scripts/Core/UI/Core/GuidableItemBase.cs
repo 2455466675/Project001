@@ -18,7 +18,6 @@ namespace Game.UI
     {        
         public int Index {get; private set;}
         public bool IsBeSelected {get; private set;}
-        public GameObject CurrentGameObject => gameObject;
 
         private RectTransform rectTransform;
         public RectTransform RectTransform
@@ -30,17 +29,6 @@ namespace Game.UI
                     rectTransform = GetComponent<RectTransform>();
                 }
                 return rectTransform;
-            }
-        }
-        public RectTransform GuidePoint
-        {
-            get
-            {
-                if (targetTransform != null)
-                {
-                    return targetTransform;
-                }
-                return RectTransform;
             }
         }
 
@@ -59,9 +47,18 @@ namespace Game.UI
             UINotify = GetComponent<UINotify>();            
         }
 
+        public Vector3 GuidePoint()
+        {
+            if (targetTransform != null)
+            {
+                return targetTransform.position;
+            }
+            return RectTransform.position;
+        }
+
         public void SetActive(bool active)
         {
-            CurrentGameObject.SetActive(active);
+            gameObject.SetActive(active);
         }
 
         public void Register(ItemDB itemDB, int index)
