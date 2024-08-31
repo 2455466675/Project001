@@ -25,7 +25,7 @@ namespace Game.Core
     public class ListDB<T> : ListDataBase where T : ItemDB
     {
         
-        private readonly List<T> value;
+        private List<T> value;
 
         public ListDB()
         {
@@ -35,6 +35,11 @@ namespace Game.Core
         public ListDB(IEnumerable<T> v)
         {
             value = new List<T>(v);
+        }
+
+        public ListDB(int capacity)
+        {
+            value = new List<T>(capacity);
         }
 
         public T this[int index]
@@ -61,6 +66,18 @@ namespace Game.Core
         public override int Count()
         {
             return value.Count;
+        }
+
+        public void SetValue(IEnumerable<T> v) 
+        {
+            value = v.ToList();
+            NotifyChange();
+        }
+
+        public void CopyTo(ListDB<T> db)
+        {
+            value = db.ToList();
+            NotifyChange();
         }
 
         public void Add(T v)

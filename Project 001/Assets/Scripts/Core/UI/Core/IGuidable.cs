@@ -7,6 +7,7 @@ namespace Game.UI
     /// </summary>
     public interface IGuidable
     {
+        bool IsValid {  get; }
         bool IsBeSelected { get; }
         Vector3 GuidePoint();
         void OnSubmit();

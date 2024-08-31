@@ -8,22 +8,16 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-	public class MenuListItem : GuidableItemBase
+	public class MenuListItem : GuidableItem<OverviewMainMenuItemDB>
 	{   
         protected override void OnDatumChange()
         {
-            base.OnDatumChange();
-            OverviewMainMenuItem menu = GetItemDB<OverviewMainMenuItem>();
-            if (menu == null) 
-            { 
-                return;
-            }
             TextView textView = GetView<TextView>("buttonName");
             if (textView == null)
             {
                 return;
             }
-            textView.SetDatum(menu.name);
+            textView.SetDatum(Dautm.name);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Core
 {
@@ -12,11 +13,30 @@ namespace Game.Core
 
         public SceneMap CurrScene {get; private set;}
 
+        private Coroutine loadSceneCo;
+        private string loadingSceneName;
+        private Action<AsyncOperation> loadingAction;
+        private Action<SceneInfo> loadEndAction;
+
         public IEnumerator Init()
         {
             yield return null;
         }
 
+        public void LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<AsyncOperation> loadingAction, Action<SceneInfo> loadEndAction)
+        {
+            if (loadSceneCo != null)
+            {
+                MLog.Error("有一个正在加载中的场景:" + loadingSceneName);
+                return;
+            }
+
+            loadingSceneName = sceneName;
+            this.loadingAction = loadingAction;
+            this.loadEndAction = loadEndAction;
+
+            loadSceneCo = StartCoroutine(GameCore.ResourceManager.LoadSceneAsync(sceneName, mode, LoadingHandler, LoadEndHandler));            
+        }
         public void SetScene(SceneMap scene)
         {
             CurrScene = scene;
@@ -30,6 +50,23 @@ namespace Game.Core
             }
 
             return CurrScene.GetContainer(containerName);
+        }
+
+        private void LoadingHandler(AsyncOperation operation)
+        {
+            loadingAction?.Invoke(operation);
+        }
+
+        private void LoadEndHandler(Scene scene)
+        {
+            SceneInfo sceneInfo = new();
+            sceneInfo.SetScene(scene);
+            loadEndAction?.Invoke(sceneInfo);
+
+            loadingSceneName = string.Empty;
+            loadingAction = null;
+            loadEndAction = null;
+            loadSceneCo = null;
         }
     }
 }

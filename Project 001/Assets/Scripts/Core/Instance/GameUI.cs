@@ -8,6 +8,13 @@ using System;
 
 namespace Game.UI
 {
+
+    public interface INavigationController 
+    {
+        void Move(Vector2 dir);
+        void Submit();
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -16,7 +23,7 @@ namespace Game.UI
         public UIRoot UIRoot {get; private set;}
         public Camera UICamera => UIRoot != null ? UIRoot.UICamera : null;
 
-        public event Action<IGuidable> OnSelectGuidableChanged
+        public event Action<IGuidable[]> OnSelectGuidableChanged
         {
             add
             {
@@ -59,9 +66,9 @@ namespace Game.UI
             navigationController.Move(dir);
         }
 
-        public void SelectGuidable(IGuidable guidable)
+        public void SelectGuidable(params IGuidable[] guidables)
         {
-            navigationController.SelectGuidable(guidable);
+            navigationController.SelectGuidable(guidables);
         }
         public void Submit()
         {

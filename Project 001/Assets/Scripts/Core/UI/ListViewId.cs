@@ -22,6 +22,22 @@ namespace Game.UI
         /// 背包物品列表
         /// </summary>
         PackageItemList     = 4,
+        /// <summary>
+        /// 战斗 - 敌人角色列表
+        /// </summary>
+        FightEnemyList      = 5,
+        /// <summary>
+        /// 战斗 - 玩家角色列表      
+        /// </summary>
+        FightPlayerList     = 6,
+        /// <summary>
+        /// GM菜单
+        /// </summary>
+        GmMenuList          = 99,
+        /// <summary>
+        /// GM选项
+        /// </summary>
+        GmItemList          = 100,
 	}
 }
 

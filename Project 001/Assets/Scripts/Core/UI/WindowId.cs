@@ -21,7 +21,11 @@ namespace Game.UI
         /// <summary>
         /// 背包界面
         /// </summary>
-        WinPackage = 100004,
+        WinPackage  = 100004,
+        /// <summary>
+        /// GM界面
+        /// </summary>
+        WinGM       = 100005,
     }
 }
 

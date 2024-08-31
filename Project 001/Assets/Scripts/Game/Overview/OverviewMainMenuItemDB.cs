@@ -6,23 +6,22 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-	public class OverviewMainMenuItem : ItemDB
+	public class OverviewMainMenuItemDB : ItemDB
     {
         public int id;
-        public IntDB name = new IntDB();
-
+        public IntDB name;
         public OverviewMenuCfg cfg;
 
-        public OverviewMainMenuItem(OverviewMenuCfg cfg)
+        public OverviewMainMenuItemDB(OverviewMenuCfg cfg)
         {
             id = cfg.Id;
-            name.Value = cfg.Name;
+            name = new IntDB(cfg.Name);
             this.cfg = cfg;
         }
 
         public override int CompareTo(ItemDB db)
         {
-            if (db is OverviewMainMenuItem menu)
+            if (db is OverviewMainMenuItemDB menu)
             {
                 return id.CompareTo(menu.id);
             }

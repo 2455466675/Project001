@@ -94,7 +94,7 @@ namespace Game.UI
 
                 for (int j = 0; j < 20; j++)
                 {
-                    PakageItemType itemType = (PakageItemType)UnityEngine.Random.Range(1, 5);
+                    PakageItemType itemType = (PakageItemType)Random.Range(1, 5);
                     string name = $"{itemType}ÀàµÀ¾ß£º{j}";
                     PackageItemDB item = new PackageItemDB(j, name, itemType);
                     role.items.Add(item);

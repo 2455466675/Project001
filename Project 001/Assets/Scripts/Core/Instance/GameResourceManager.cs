@@ -68,7 +68,7 @@ namespace Game.Core
             return sceneInfo;
         }
 
-        public IEnumerator LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<AsyncOperation> action, Action<SceneInfo> loadEndEvt)
+        public IEnumerator LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<AsyncOperation> action, Action<Scene> loadEndEvt)
         {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, mode);
             while (!asyncLoad.isDone)
@@ -76,10 +76,7 @@ namespace Game.Core
                 action?.Invoke(asyncLoad);
                 yield return null;
             }
-
-            SceneInfo sceneInfo = new();
-            sceneInfo.SetScene(SceneManager.GetSceneAt(SceneManager.sceneCount - 1));
-            loadEndEvt?.Invoke(sceneInfo);
+            loadEndEvt?.Invoke(SceneManager.GetSceneAt(SceneManager.sceneCount - 1));
         }
 
         public Sprite GetSprite(string spriteName)

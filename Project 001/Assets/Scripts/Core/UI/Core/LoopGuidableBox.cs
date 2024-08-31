@@ -4,37 +4,13 @@ using UnityEngine;
 
 namespace Game.UI
 {
-    public class IndexChangedEventArgs
-    {
-        public int MinIndex { get; private set; }
-        public int MaxIndex { get; private set; }
-        public GuidableItemBase[] Items { get; private set; }
-        public IndexChangedEventArgs(int minIndex, int maxIndex, GuidableItemBase[] items)
-        {
-            MinIndex = minIndex;
-            MaxIndex = maxIndex;
-            Items = items;
-        }
-    }
 
-    public class SelectChangedEventArgs
-    {
-        public bool IsSuccesss { get; private set; }
-        public int Index { get; private set; }
-        public GuidableItemBase Item { get; private set; }
-        public SelectChangedEventArgs(bool isSuccess, int index, GuidableItemBase item)
-        {
-            IsSuccesss = isSuccess;
-            Index = index;
-            Item = item;
-        }
-    }
     /// <summary>
     /// 
     /// </summary>
 	public class LoopGuidableBox : GuidableBox
     {
-        public override int CurrIndex => pointer;
+        public override int[] CurrIndex => new int[] { pointer };
 
         [SerializeField]
         private RectTransform viewport;
@@ -73,10 +49,10 @@ namespace Game.UI
             }
             OnIndexChangedEvent += indexChangeHandler;
             OnSelectChangedEvent += selectHandler;
-            totalCount = 0;
-            minIndex = 0;
-            maxIndex = 0;
-            pointer = 0;
+            totalCount = -1;
+            minIndex = -1;
+            maxIndex = -1;
+            pointer = -1;
             CreateItems();
             isInit = true;
         }
@@ -105,9 +81,12 @@ namespace Game.UI
             Select(index);
         }
 
-        public override void Select(int index)
+        public override void Select(params int[] indexs)
         {
             if (!isInit) return;
+            if (indexs == null || indexs.Length <= 0) return;
+
+            int index = indexs[0];
 
             bool isSuccess = false;
 
@@ -170,6 +149,7 @@ namespace Game.UI
 
             if (this.totalCount == totalCount)
             {
+                OnIndexChanged();
                 return;
             }
             
@@ -246,7 +226,7 @@ namespace Game.UI
 
         private void OnSelectChanged(bool isSuccess)
         {
-            OnSelectChangedEvent?.Invoke(new SelectChangedEventArgs(isSuccess, pointer, items[pointer - minIndex]));
+            OnSelectChangedEvent?.Invoke(new SelectChangedEventArgs(isSuccess, new int[] { pointer }, new GuidableItemBase[] { items[pointer - minIndex] }));
         }
     }
 }

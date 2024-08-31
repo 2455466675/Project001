@@ -16,8 +16,9 @@ namespace Game.UI
     /// </summary>
 	public class GuidableItemBase : MonoBehaviour, IGuidable, IViewContainer
     {        
-        public int Index {get; private set;}
-        public bool IsBeSelected {get; private set;}
+        public int Index { get; private set; }
+        public virtual bool IsValid { get { return true;} protected set {} }
+        public bool IsBeSelected { get; private set; }
 
         private RectTransform rectTransform;
         public RectTransform RectTransform

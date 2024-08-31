@@ -8,7 +8,8 @@ namespace Game.UI
     /// </summary>
 	public class StaticListView : ListView
 	{
-        private StaticGuidableBox StaticBox => box != null ? box as StaticGuidableBox : null;
+        protected StaticGuidableBox StaticBox => box != null ? box as StaticGuidableBox : null;
+        protected int[] index;
 
         public override void Awake()
         {
@@ -35,6 +36,25 @@ namespace Game.UI
             }
         }
 
+        public override void InFocus()
+        {
+            base.InFocus();
+            index ??= new int[] { 0 };
+            box.Select(index);
+        }
+
+        public override void OutFocus()
+        {
+            base.OutFocus();
+            index = box.CurrIndex;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            index = null;
+        }
+
         private void SelectChangedHandler(SelectChangedEventArgs args)
         {
             if (!IsFocus)
@@ -45,7 +65,7 @@ namespace Game.UI
             {
                 return;
             }
-            GameCore.UI.SelectGuidable(args.Item);
+            GameCore.UI.SelectGuidable(args.Items);
         }
     }
 }

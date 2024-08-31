@@ -6,6 +6,11 @@
     "cfgList":
     [ 
         {
+            "excel":"gm.xlsx",
+            "type":"GmCfg",
+            "sheet":1
+        }, 
+        {
             "excel":"window.xlsx",
             "type":"WindowCfg",
             "sheet":1

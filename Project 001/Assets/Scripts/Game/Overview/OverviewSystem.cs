@@ -9,16 +9,16 @@ namespace Game.System
     /// </summary>
 	public class OverviewSystem : IGameSystem
 	{
-        private ListDB<OverviewMainMenuItem> menus;
+        private ListDB<OverviewMainMenuItemDB> menus;
 
         public OverviewSystem()
         { 
-            menus = new ListDB<OverviewMainMenuItem>();
+            menus = new ListDB<OverviewMainMenuItemDB>();
 
             var list = GameCore.GameCfg.FindAll<OverviewMenuCfg>();
             for (int i = 0; i < list.Count; i++)
             {
-                menus.Add(new OverviewMainMenuItem(list[i]));
+                menus.Add(new OverviewMainMenuItemDB(list[i]));
             }
         }
 

@@ -20,20 +20,7 @@ namespace Game.Core
         {
             MLog.Log("游戏状态：运行");
 
-            GameCore.Co.StartCoroutine(GameCore.ResourceManager.LoadSceneAsync("scene002", UnityEngine.SceneManagement.LoadSceneMode.Single, Fun1, Fun2));            
-        }
-
-        private void Fun2(SceneInfo info)
-        {
-            MLog.Log("加载场景结束");
-            GameCore.StateController.SwitchModel(GameModel.SCENE);
-
-            GameCore.System.RoleSystem.Init();
-        }
-
-        private void Fun1(AsyncOperation operation)
-        {
-            MLog.Log("加载中:", operation.progress, Time.frameCount);
+            GameCore.Scene.LoadSceneAsync("scene002", UnityEngine.SceneManagement.LoadSceneMode.Single, Fun1, Fun2);
         }
 
         public void OnExit(GameState nextGameState)
@@ -44,6 +31,19 @@ namespace Game.Core
         public void OnStay()
         {
 
+        }
+
+        private void Fun1(AsyncOperation operation)
+        {
+            MLog.Log("加载中:", operation.progress, Time.frameCount);
+        }
+
+        private void Fun2(SceneInfo info)
+        {
+            MLog.Log("加载场景结束");
+            GameCore.StateController.SwitchModel(GameModel.SCENE);
+
+            GameCore.System.RoleSystem.Init();
         }
     }
 }

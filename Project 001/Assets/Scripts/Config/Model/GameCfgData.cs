@@ -18,6 +18,9 @@ namespace Game.Cfg
 			var _LanguageCfgContainer = new LanguageCfgContainer();
 			_LanguageCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(LanguageCfg), _LanguageCfgContainer);
+			var _GmCfgContainer = new GmCfgContainer();
+			_GmCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(GmCfg), _GmCfgContainer);
 			var _WindowCfgContainer = new WindowCfgContainer();
 			_WindowCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(WindowCfg), _WindowCfgContainer);

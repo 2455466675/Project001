@@ -8,6 +8,8 @@ namespace Game.UI
 	{
         private LoopGuidableBox GuidableBox => box != null ? box as LoopGuidableBox : null;
 
+        private int[] index;
+
         public override void Awake()
         {
             base.Awake();
@@ -18,6 +20,25 @@ namespace Game.UI
         {
             base.UpdateView();
             GuidableBox.UpdateTotalCount(Count);
+        }
+
+        public override void InFocus()
+        {
+            base.InFocus();
+            index ??= new int[] { 0 };
+            box.Select(index);
+        }
+
+        public override void OutFocus()
+        {
+            base.OutFocus();
+            index = box.CurrIndex;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            index = null;
         }
 
         private void IndexChangedHandler(IndexChangedEventArgs args)
@@ -45,7 +66,7 @@ namespace Game.UI
             {
                 return;
             }          
-            GameCore.UI.SelectGuidable(args.Item);
+            GameCore.UI.SelectGuidable(args.Items);
         }
     }
 }

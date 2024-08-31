@@ -28,6 +28,9 @@ namespace Game.Core
             actions.Add(new RoleMoveAction(inputActions.Role.Move));
             actions.Add(new RoleMenuAction(inputActions.Role.Menu));
             actions.Add(new RoleAddSpeedAction(inputActions.Role.AddSpeed));
+
+            actions.Add(new GMAction(inputActions.GM.GM));
+
             DisableUIAction();
             DisableRoleAction();
         }

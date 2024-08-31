@@ -152,8 +152,8 @@ namespace Game.System
                 return false;
             }
 
-            float d = trace.deltaDistance;
-
+            //计算与上一个点的距离
+            float d = 0f;
             if (traces.Count > 0)
             {
                 MoveTrace last = traces[^1];

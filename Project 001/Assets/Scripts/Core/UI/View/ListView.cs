@@ -83,14 +83,11 @@ namespace Game.UI
 
         public GuidableBox box;     
 
-        public bool IsFocus => ViewState == ListViewState.InFocus;
         public ListViewState ViewState {get; private set;}
-
+        public bool IsFocus => ViewState == ListViewState.InFocus;
         public int Count => items != null ? items.Count : 0;
 
         protected List<ItemDB> items;
-
-        private int index;
 
         public virtual void Awake()
         {
@@ -132,22 +129,19 @@ namespace Game.UI
             items = MainField.ListValue;
         }
 
-        public void InFocus()
+        public virtual void InFocus()
         {
             ViewState = ListViewState.InFocus;
-            box.Select(index);
         }
 
-        public void OutFocus()
+        public virtual void OutFocus()
         {
             ViewState = ListViewState.OutFocus;
-            index = box.CurrIndex;
         }
 
-        public void Exit()
+        public virtual void Exit()
         {
             ViewState = ListViewState.Exit;
-            index = 0;
         }
 
         public void MoveUp()
@@ -187,4 +181,3 @@ namespace Game.UI
         }
     }
 }
-

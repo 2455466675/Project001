@@ -312,8 +312,8 @@ RectTransform:
   m_Children:
   - {fileID: 4913598445745508567}
   - {fileID: 2873373220752112655}
-  - {fileID: 5608470190062600309}
   - {fileID: 7439766021231858878}
+  - {fileID: 5608470190062600309}
   m_Father: {fileID: 5614583410189841229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -383,4 +383,4 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
