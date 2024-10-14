@@ -16,10 +16,6 @@ namespace Game.System
 
         public RoleCfg Cfg { get; private set; }
 
-        public IntDB ID { get; private set; }
-
-        public StringDB Name { get; private set; }
-
         public bool IsLeader;
 
         public bool IsMoving => Actor != null && Actor.IsMoving;
@@ -43,9 +39,6 @@ namespace Game.System
             Actor = actorObj.GetComponent<Actor>();
 
             Actor.SetRole(this);
-
-            ID = new IntDB(cfg.Id);
-            Name = new StringDB(cfg.Name);
             Cfg = cfg;
         }
        

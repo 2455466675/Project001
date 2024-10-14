@@ -16,7 +16,7 @@ namespace Game.Core
         public void OnEnter(GameState preGameState)
         {
             MLog.Log("ÓÎÏ·×´Ì¬£ºµÇÂ¼");
-            GameCore.UI.Enter(UI.WindowId.WinLogin); //µÇÂ¼½çÃæ
+            GameCore.UI.Enter(UI.ListName.Login);
         }
 
         public void OnExit(GameState nextGameState)

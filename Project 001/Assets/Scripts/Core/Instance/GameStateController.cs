@@ -16,23 +16,15 @@ namespace Game.Core
         /// <summary>
         /// 游戏当前操作模式
         /// </summary>
-        public GameModel GameModel => currModelInst != null ? currModelInst.Model : GameModel.SCENE;
-        /// <summary>
-        /// 是否是场景模式
-        /// </summary>
-        public bool IsSceneModel => GameModel == GameModel.SCENE;
-        /// <summary>
-        /// 是否是UI模式
-        /// </summary>
-        public bool IsUIModel => GameModel == GameModel.UI;
+        public GameMode GameMode => currModeInst != null ? currModeInst.Mode : GameMode.SCENE;
 
         private IGameState currStateInst;
 
         private Dictionary<GameState, IGameState> states;
 
-        private IGameModel currModelInst;
+        private IGameMode currModeInst;
 
-        private Dictionary<GameModel, IGameModel> models;
+        private Dictionary<GameMode, IGameMode> modes;
 
         public IEnumerator Init()
         {
@@ -43,10 +35,10 @@ namespace Game.Core
                 {GameState.PLAYING, new GamePlayingState()},
             };
 
-            models = new Dictionary<GameModel, IGameModel>
+            modes = new Dictionary<GameMode, IGameMode>
             {
-                {GameModel.UI, new GameUIModel()},
-                {GameModel.SCENE, new GameSceneModel()},
+                {GameMode.UI, new GameUIMode()},
+                {GameMode.SCENE, new GameSceneMode()},
             };
             yield return null;
         }
@@ -84,20 +76,20 @@ namespace Game.Core
         /// 切换游戏操作模式
         /// </summary>
         /// <param name="model"></param>
-        public void SwitchModel(GameModel model)
+        public void SwitchModel(GameMode model, ModeArg arg = null)
         {
-            if (!models.ContainsKey(model))
+            if (!modes.ContainsKey(model))
             {
                 return;
             }
-            if (model == GameModel)
+            if (model == GameMode)
             {
                 return;
             }
-            currModelInst?.OnExit();
-            IGameModel gameModel = models[model];
-            gameModel.OnEnter();
-            currModelInst = gameModel;
+            currModeInst?.OnExit();
+            IGameMode gameModel = modes[model];
+            gameModel.OnEnter(arg);
+            currModeInst = gameModel;
         }
     }
 }

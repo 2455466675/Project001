@@ -36,8 +36,7 @@ namespace Game.Core
 
         public void WaitForFrames(Action action, int frame = 1)
         {
-            StartCoroutine(InnerCoroutine_2(action, frame));
-            
+            StartCoroutine(InnerCoroutine_2(action, frame));            
         }
 
         private IEnumerator InnerCoroutine_1(Action action, float seconds)

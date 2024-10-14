@@ -2,6 +2,7 @@ using Game.Cfg;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using System;
+using Navigation;
 
 namespace Game.UI
 {
@@ -9,22 +10,16 @@ namespace Game.UI
     {
         Static  = 0,
         Normal  = 1,
-        Guide   = 2,
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class Window : MonoBehaviour
+    public class Window : NavigationPanel
     {
         public UIGroup group;
         public WindType winType;
         public CanvasGroup canvasGroup;
-
-        public event Action OnShowEvent;
-        public event Action OnHideEvent;
-        public event Action OnInFocusEvent;
-        public event Action OnOutFocusEvent;
 
         public WindowCfg Cfg {get; private set;}
         [ShowInInspector]
@@ -39,7 +34,7 @@ namespace Game.UI
                 canvasGroup = gameObject.AddComponent<CanvasGroup>();
             }
         }
-
+   
         public void Init(WindowCfg cfg)
         {
             Cfg = cfg;
@@ -48,25 +43,22 @@ namespace Game.UI
         public void Show()
         {
             canvasGroup.alpha = 1f;
-            OnShowEvent?.Invoke();
-            GameCore.UI.ShowWindow(this);
+
         }
 
         public void Hide()
         {
             canvasGroup.alpha = 0f;
-            OnHideEvent?.Invoke();
-            GameCore.UI.HideWindow(this);
         }
 
         public void InFocus()
         {
-            OnInFocusEvent?.Invoke();
+            
         }
 
-        public void OutFocus()
+        public  void OutFocus()
         {
-            OnOutFocusEvent?.Invoke();
+            
         }        
     }
 }

@@ -4,6 +4,7 @@ using System;
 using UnityEngine.SceneManagement;
 using YooAsset;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 namespace Game.Core
 {
@@ -47,11 +48,11 @@ namespace Game.Core
             return package.LoadAssetSync<T>(path).AssetObject as T;
         }
 
-        public IEnumerator LoadAssetAsync<T>(string path, Action<T> action) where T : UnityEngine.Object
+        public async UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object
         {
             AssetHandle handle = package.LoadAssetAsync<T>(path);
-            yield return handle;
-            action?.Invoke(handle.AssetObject as T);
+            await handle;           
+            return handle.GetAssetObject<T>();
         }
 
         public T[] LoadAllAssets<T>(string path) where T : UnityEngine.Object

@@ -1,20 +1,18 @@
 
+using Navigation;
+using UnityEngine;
+
 namespace Game.UI
 {
     /// <summary>
     /// 
     /// </summary>
-	public class OverviewController : UIController
+	public class OverviewController : MonoBehaviour
 	{
-        protected override void Register()
+        public void OnPackage(GuidableItem item)
         {
-            ListView.Register(ListViewId.OverviewMenuList, GameCore.System.OverviewSystem.GetMenus());
-        }
-
-        public void OnTest(UINotification notification)
-        {
-            MLog.Log("OnTest");
-            GameCore.UI.OpenWindow(WindowId.WinPackage);
+            MLog.Log("OnPackage");
+            GameCore.UI.Enter(ListName.PackageMenu);
         }
     } 
 }

@@ -8,13 +8,14 @@ namespace Game.System
     /// </summary>
 	public class FightController : MonoBehaviour
 	{
-        public FightListView enemyList;
-        public FightListView playerList;
+
 
         private void Start()
         {
-            
+
         }
+
+   
     }
 }
 

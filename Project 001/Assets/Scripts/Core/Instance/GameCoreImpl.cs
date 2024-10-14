@@ -38,8 +38,8 @@ namespace Game.Core
             GameCore.StateController = gameObject.AddComponent<GameStateController>();
             yield return GameCore.StateController.Init();
 
-            GameCore.InputManager = gameObject.AddComponent<GameInputManager>();
-            yield return GameCore.InputManager.Init();
+            GameCore.InputSys = gameObject.AddComponent<InputSystem>();
+            yield return GameCore.InputSys.Init();
 
             GameCore.Scene = gameObject.AddComponent<GameScene>();
             yield return GameCore.Scene.Init();

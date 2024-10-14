@@ -55,6 +55,18 @@ namespace Game.System
             return transform.position;
         }
 
+        public Transform GetBone(string name)
+        {
+            if (bones == null)
+            {
+                return transform;
+            }
+            else
+            {
+                return bones.GetBone(name);
+            }
+        }
+
         public void SetColloderEnabled(bool enabled)
         {
             if (_collider == null) return;

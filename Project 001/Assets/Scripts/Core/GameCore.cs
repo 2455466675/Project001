@@ -19,7 +19,7 @@ namespace Game
         public static GameCoroutine Co;
         public static GameResourceManager ResourceManager;
         public static GameStateController StateController;
-        public static GameInputManager InputManager;
+        public static InputSystem InputSys;
         public static GameScene Scene;
         public static GameSystem System;
         private GameCore() { }

@@ -41,7 +41,7 @@ namespace Game.Core
         private void Fun2(SceneInfo info)
         {
             MLog.Log("º”‘ÿ≥°æ∞Ω· ¯");
-            GameCore.StateController.SwitchModel(GameModel.SCENE);
+            GameCore.StateController.SwitchModel(GameMode.SCENE);
 
             GameCore.System.RoleSystem.Init();
         }

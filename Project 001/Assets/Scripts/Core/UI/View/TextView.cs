@@ -1,4 +1,5 @@
 using Game.Core;
+using MVC;
 using UnityEngine;
 
 namespace Game.UI
@@ -6,13 +7,13 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-    public class TextView : View
-    {
+	public class TextView : DataBaseView
+	{
         public ExtendText target;
         public int textId;
 
-        public override void UpdateView()
-        {           
+        protected override void OnUpdateView()
+        {
         }
 
         public void SetTextById(int textId)
@@ -23,8 +24,8 @@ namespace Game.UI
                 SetTextInner(string.Empty, default);
             }
             else
-            {                
-                SetTextInner(item.TextValue, item.ColorValue);     
+            {
+                SetTextInner(item.TextValue, item.ColorValue);
             }
         }
 
@@ -57,4 +58,6 @@ namespace Game.UI
         }
 #endif
     }
+
 }
+

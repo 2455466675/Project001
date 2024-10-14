@@ -11,36 +11,16 @@ namespace Game.System
     /// </summary>
 	public class GameGm : IGameSystem
 	{
-        public ListDB<GmMenuItemDB> menus;
-        public ListDB<GmListItemDB> items;
-
         private Dictionary<int, Action<object>> cmds;
 
         public GameGm() 
         {
             List<GmCfg> cfgList = GameCore.GameCfg.FindAll<GmCfg>();
 
-            menus = new ListDB<GmMenuItemDB>(cfgList.Count);
-  
-            for (int i = 0; i < cfgList.Count; i++)
-            {
-                GmMenuItemDB db = new GmMenuItemDB(cfgList[i]);
-                menus.Add(db);
-            }
 
-            items = new ListDB<GmListItemDB>();
+ 
 
             InitCmds();
-        }
-
-        public void SelectMenu(GmMenuItemDB db)
-        {
-            if (db == null)
-            {
-                return;
-            }
-
-            items.CopyTo(db.items);
         }
 
         public void ExecuteCmd(int cmdId, string args)
@@ -62,6 +42,15 @@ namespace Game.System
         private void Cmd1001(object o)
         {
             MLog.Log("Execute Cmd1001");
+
+            GameCore.Scene.LoadSceneAsync("FightScene", UnityEngine.SceneManagement.LoadSceneMode.Single, null, (s) => {
+
+                MLog.Log("Execute Cmd1001 end");
+                //GameCore.UI.Exit();
+                //GameCore.UI.Enter(UI.WindowId.WinFightBg);
+                //GameCore.UI.SelectNavigatable(UI.ListViewId.FightEnemyList);
+            
+            } );
         }
 
         private void Cmd1002(object o)

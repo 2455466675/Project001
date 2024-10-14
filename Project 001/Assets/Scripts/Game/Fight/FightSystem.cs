@@ -10,11 +10,7 @@ namespace Game.System
     /// </summary>
 	public class FightSystem : IGameSystem
 	{
-        public ListDB<FightPointItemDB> EnemyPoints;
-
-        public ListDB<FightPointItemDB> PlayerPoints;
-
-        public FightPointItemDB ActionPoint;
+        
     }
 }
 

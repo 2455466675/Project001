@@ -1,0 +1,15 @@
+namespace Game.UI
+{
+    /// <summary>
+    /// 
+    /// </summary>
+	public enum ListName
+	{
+        None            = 0,
+        Login           = 1,
+        OverviewMenu    = 2,
+        PackageMenu     = 3,
+        PackageList     = 4,
+    }
+}
+

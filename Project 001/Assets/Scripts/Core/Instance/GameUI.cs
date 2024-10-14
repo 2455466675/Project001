@@ -5,6 +5,8 @@ using Game.Core;
 using Game.Cfg;
 using System.Collections.Generic;
 using System;
+using Navigation;
+using Cysharp.Threading.Tasks;
 
 namespace Game.UI
 {
@@ -19,31 +21,14 @@ namespace Game.UI
     /// 
     /// </summary>
     public class GameUI : MonoBehaviour, ICore
-    {
+    {        
         public UIRoot UIRoot {get; private set;}
         public Camera UICamera => UIRoot != null ? UIRoot.UICamera : null;
 
-        public event Action<IGuidable[]> OnSelectGuidableChanged
-        {
-            add
-            {
-                if (value != null)
-                {
-                    navigationController.OnSelectGuidableChanged += value;
-                }
-            }
-            remove
-            {
-                if (value != null)
-                {
-                    navigationController.OnSelectGuidableChanged -= value;
-                }
-            }
-        }
+        public Window TopWindow => windowSystem.Current;
 
-        private UIGuideController UIGuideController;
-        private NavigationController navigationController;
-        private WindowController windowController;
+        public NavigationSystem navigationSystem;
+        private WindowSystem windowSystem;
 
         public IEnumerator Init()
         {
@@ -51,73 +36,27 @@ namespace Game.UI
             GameObject uiRootGo = Instantiate(obj);
             UIRoot = uiRootGo.GetComponent<UIRoot>();
 
-            navigationController = new NavigationController();
-            windowController = new WindowController();
+            navigationSystem = new NavigationSystem();
+            windowSystem = new WindowSystem();
             yield return UIRoot;
         }
 
-        public void SetUIGuideController(UIGuideController controller)
-        {
-            UIGuideController = controller;
-        }
-
         public void Move(Vector2 dir)
-        {
-            navigationController.Move(dir);
+        {       
+            navigationSystem.Move(dir);
         }
 
-        public void SelectGuidable(params IGuidable[] guidables)
+        public void Select(params GuidableItem[] items)
         {
-            navigationController.SelectGuidable(guidables);
+            navigationSystem.Select(items);
         }
+
+        /// <summary>
+        /// 点击
+        /// </summary>
         public void Submit()
         {
-            navigationController.Submit();
-        }
-
-        public void InFocusGroup(INavigatable group)
-        {
-            navigationController.InFocusNavigatable(group);
-        }
-
-        public void ShowWindow(Window window)
-        {
-            windowController.ShowWindow(window);
-        }
-
-        public void HideWindow(Window window)
-        {
-            windowController.HideWindow(window);
-        }
-
-        public void InFocusWindow(Window window)
-        {
-            windowController.InFocusWindow(window);
-        }
-
-        /// <summary>
-        /// 进入UI
-        /// </summary>
-        /// <param name="id"></param>
-        public void Enter(WindowId id)
-        {
-            windowController.Enter(id);
-        }
-
-        /// <summary>
-        /// 退出UI，会强制关闭所有界面，直接退出
-        /// </summary>
-        public void Exit()
-        {
-            windowController.Exit();
-        }
-
-        /// <summary>
-        /// ESC键退出，会检测命令是否支持回退，停留在最近的一个无法回退的命令
-        /// </summary>
-        public void Close()
-        {
-            windowController.Close();
+            navigationSystem.Submit();
         }
 
         /// <summary>
@@ -125,32 +64,58 @@ namespace Game.UI
         /// </summary>
         public void Back()
         {
-            windowController.Back();
+            navigationSystem.Back();
         }
 
-        public void OpenWindow(WindowId id)
+        /// <summary>
+        /// 进入UI
+        /// </summary>
+        /// <param name="listName"></param>
+        public void Enter(ListName listName)
         {
-            windowController.OpenWindow(id);
+            navigationSystem.Enter(listName);
         }
 
-        public void SelectNavigatable(ListViewId id)
+        /// <summary>
+        /// 退出UI，会强制关闭所有界面，直接退出
+        /// </summary>
+        public void Exit()
         {
-            windowController.SelectNavigatable(ListView.GetView(id));
+            navigationSystem.Exit();
+            HideAll();
         }
 
-        public void SelectNavigatable(INavigatable navigatable)
+        /// <summary>
+        /// ESC键退出，会检测命令是否支持回退，停留在最近的一个无法回退的命令
+        /// </summary>
+        public void Close()
         {
-            windowController.SelectNavigatable(navigatable);
+
         }
 
-        public void ShowGuideWindow()
+        public Window ShowWindow(WindowId id)
         {
-            windowController.OpenWindow(WindowId.WinGuide);
+            return windowSystem.ShowWindow(id);
         }
 
-        public void HideGuideWindow()
+        public async UniTask<Window> ShowWindowAsync(WindowId id)
         {
-            UIGuideController.Hide();
-        }    
+            return await windowSystem.ShowWindowAsync(id);
+        }
+
+        public void HideWindow()
+        {
+            windowSystem.HideWindow();
+        }
+
+        public void HideAll()
+        {
+            windowSystem.HideAll();
+        }
+
+        public bool WindowIsTop(WindowId id)
+        {
+            return windowSystem.WindowIsTop(id);
+        }
     }
 }
