@@ -26,20 +26,20 @@ namespace Game.Core
             GameCore.ResourceManager = gameObject.AddComponent<GameResourceManager>();
             yield return GameCore.ResourceManager.Init();
 
-            GameCore.GameCfg = gameObject.AddComponent<GameCfg>();
-            yield return GameCore.GameCfg.Init();
+            GameCore.Cfg = gameObject.AddComponent<GameCfg>();
+            yield return GameCore.Cfg.Init();
 
             GameCore.UI = gameObject.AddComponent<GameUI>();
             yield return GameCore.UI.Init();
 
-            GameCore.Co = gameObject.AddComponent<GameCoroutine>();
-            yield return GameCore.Co.Init();
+            GameCore.Coroutine = gameObject.AddComponent<GameCoroutine>();
+            yield return GameCore.Coroutine.Init();
 
             GameCore.StateController = gameObject.AddComponent<GameStateController>();
             yield return GameCore.StateController.Init();
 
-            GameCore.InputSys = gameObject.AddComponent<InputSystem>();
-            yield return GameCore.InputSys.Init();
+            GameCore.Input = gameObject.AddComponent<GameInputSystem>();
+            yield return GameCore.Input.Init();
 
             GameCore.Scene = gameObject.AddComponent<GameScene>();
             yield return GameCore.Scene.Init();

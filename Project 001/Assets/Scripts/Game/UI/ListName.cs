@@ -10,6 +10,8 @@ namespace Game.UI
         OverviewMenu    = 2,
         PackageMenu     = 3,
         PackageList     = 4,
+        GmMenuList      = 5,
+        GmItemList      = 6,
     }
 }
 

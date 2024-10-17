@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +8,8 @@ namespace MVC
     /// </summary>
 	public class DataSet : MonoBehaviour
 	{
+        public DataContainer Datum => datum;
+
         private DataContainer datum;
 
         private List<View> views;

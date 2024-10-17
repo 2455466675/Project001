@@ -26,7 +26,7 @@ namespace Game.Core
 
         public override void OnStarted(InputAction.CallbackContext obj)
         {
-            GameCore.InputSys.PushAction(this);
+            GameCore.Input.PushAction(this);
             Execute();
             t = intervalTime;
         }
@@ -37,7 +37,7 @@ namespace Game.Core
 
         public override void OnCanceled(InputAction.CallbackContext obj)
         {
-            GameCore.InputSys.PopAction(this);
+            GameCore.Input.PopAction(this);
         }
 
         public override void Execute()

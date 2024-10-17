@@ -1,5 +1,4 @@
 using Game.Core;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Navigation;
@@ -28,6 +27,8 @@ namespace Game.UI
             proxys[ListName.OverviewMenu] = new OverviewMenuListProxy();
             proxys[ListName.PackageMenu] = new PackageMenuListProxy();
             proxys[ListName.PackageList] = new PackageListListProxy();
+            proxys[ListName.GmMenuList] = new GmMenuListProxy();
+            proxys[ListName.GmItemList] = new GmItemListProxy();
         }
 
         public void Enter(ListName listName)
@@ -44,10 +45,15 @@ namespace Game.UI
             GameCore.StateController.SwitchModel(GameMode.SCENE);
         }
 
-        public void Back()
+        public bool Back()
         {
             if (commands.TryPeek(out NavigationPanelCommand cmd))
             {
+                if (!cmd.IsUndoable)
+                {
+                    return false;
+                }
+
                 if (cmd.Pop())
                 {
                     cmd.OnPop();
@@ -58,9 +64,19 @@ namespace Game.UI
                     }
                 }
             }
+
             if (commands.Count <= 0)
             {
-                Exit();
+                Exit();       
+            }
+            return true;
+        }
+
+        public void Close()
+        {
+            while (commands.Count > 0 && Back())
+            {
+
             }
         }
 
@@ -78,7 +94,6 @@ namespace Game.UI
             {
                 foreach (var item in current)
                 {
-                    MLog.Log("OnSubmit", item.gameObject.name);
                     item.OnSubmit();
                 }
             }
@@ -105,7 +120,6 @@ namespace Game.UI
             {
                 foreach (var item in current)
                 {
-                    MLog.Log("OnSelect", item.gameObject.name);
                     item.OnSelect();
                 }
             }
@@ -128,6 +142,11 @@ namespace Game.UI
                 return;
             }
             
+            while (!proxy.IsReady)
+            {
+                await UniTask.DelayFrame(1);
+            }
+
             NavigationListCommand listCmd = new NavigationListCommand(proxy);
 
             if (commands.TryPeek(out NavigationPanelCommand popCmd) && popCmd.Id == proxy.WindowId)

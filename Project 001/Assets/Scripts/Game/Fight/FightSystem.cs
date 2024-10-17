@@ -1,16 +1,15 @@
-using Game.Core;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using MVC;
 
 namespace Game.System
 {
     /// <summary>
     /// 
     /// </summary>
-	public class FightSystem : IGameSystem
-	{
-        
+	public class FightSystem : DataProxy, IGameSystem
+    {
+        public FightSystem(DataContainer container) : base(container)
+        {
+        }
     }
 }
 

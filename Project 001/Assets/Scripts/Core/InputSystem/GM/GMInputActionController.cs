@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Game.Core
@@ -15,6 +14,7 @@ namespace Game.Core
 
             actions.Add(new GMAction(inputActions.GM.GM));
         }
+
         public override void Enable()
         {
             inputActions.GM.Enable();

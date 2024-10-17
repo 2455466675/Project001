@@ -18,7 +18,13 @@ namespace Navigation
             {
                 list.Init(SelectChangedHandler);
             }
-        }   
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            list.IsValid = IsRegistered;
+        }
 
         protected override void OnUpdateView()
         {
@@ -27,9 +33,8 @@ namespace Navigation
             {
                 return;
             }
-            if (Count <= 0) return;
 
-            for (int i = 0; i < Datas.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 GuidableItem item = list.GetItem(i);
                 if (item != null)
@@ -37,6 +42,7 @@ namespace Navigation
                     item.SetDatum(Datas[i]);
                 }
             }
+            list.UpdateTotalCount(Count);
         }
 
         private void SelectChangedHandler(SelectChangedEventArgs args)

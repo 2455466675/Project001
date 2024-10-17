@@ -1,9 +1,6 @@
 using Game;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
 
 namespace Navigation
@@ -60,8 +57,8 @@ namespace Navigation
             maxIndex = -1;
             pointer = -1;
             CreateItems();
-            isInit = true;
             State = ListState.Exited;
+            isInit = true;
         }
 
         public override bool InFocus(params int[] indexs)
@@ -103,7 +100,7 @@ namespace Navigation
             }
         }
 
-        public override void Close()
+        public override void Exit()
         {
             pointer = -1;
             State = ListState.Exited;
@@ -232,6 +229,8 @@ namespace Navigation
             {
                 OnSelectChanged(oldPointer != pointer);
             }
+
+            UpateTime++;
         }
 
         private void CreateItems()

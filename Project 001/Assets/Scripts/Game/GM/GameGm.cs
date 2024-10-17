@@ -1,6 +1,6 @@
 
 using Game.Cfg;
-using Game.Core;
+using MVC;
 using System;
 using System.Collections.Generic;
 
@@ -9,18 +9,48 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-	public class GameGm : IGameSystem
+	public class GameGm : DataProxy, IGameSystem
 	{
         private Dictionary<int, Action<object>> cmds;
 
-        public GameGm() 
+        private DataCollection menuList;
+
+        public GameGm(DataContainer container) : base(container) 
         {
-            List<GmCfg> cfgList = GameCore.GameCfg.FindAll<GmCfg>();
+            List<GmCfg> cfgList = GameCore.Cfg.FindAll<GmCfg>();
 
-
+            menuList = CreateCollection("MenuList");
  
+            for (int i = 0; i < cfgList.Count; i++) 
+            {
+                GmCfg cfg = cfgList[i];
+                DataContainer item = menuList.Append();
+                item.SetBaseValue("id", cfg.Id);
+                item.SetBaseValue("name", cfg.Name);
+                item.SetBaseValue("cmds", cfg.Cmds);
+
+                DataCollection cmdList = item.CreateCollection("CmdList");
+
+                string[] strings = cfg.Cmds.Split(';', StringSplitOptions.RemoveEmptyEntries);
+                for (int j = 0; j < strings.Length; j++)
+                {
+                    string[] strings2 = strings[j].Split(':', StringSplitOptions.RemoveEmptyEntries);
+
+                    DataContainer cmdItem = cmdList.Append();
+                    cmdItem.SetBaseValue("id", strings2[0]);
+                    cmdItem.SetBaseValue("name", strings2[1]);
+                    cmdItem.SetBaseValue("args", strings2.Length > 2 ? strings2[2] : string.Empty);
+                }    
+            }
+
+            SetContainerLinker("Current", null);
 
             InitCmds();
+        }
+
+        public void SelectMenu(DataContainer menuItem)
+        {
+            SetContainerLinker("Current", menuItem);
         }
 
         public void ExecuteCmd(int cmdId, string args)

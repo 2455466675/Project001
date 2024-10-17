@@ -1,57 +1,69 @@
 using Game.Cfg;
-using Game.Core;
-using OfficeOpenXml.ConditionalFormatting;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Game.UI
 {
-    [Serializable]
-    public class WinGroupItem 
-    {
-        public UIGroup group;
-        public Transform winGroup;
-    }
-
     /// <summary>
     /// 
     /// </summary>
     public class UIRoot : MonoBehaviour
     {
         public Camera UICamera;
-        public WinGroupItem[] groups;
-      
-        private Dictionary<UIGroup, Transform> groupsMap;
-    
+        public List<WindowGroup> groups;
+          
         public void Awake()
         {
             DontDestroyOnLoad(this);
-            UICamera = GetComponentInChildren<Camera>();
-            InitWinGroup();
         }
 
-        public Transform GetWinGroup(UIGroup group)
+        public WindowGroup GetWinGroup(UIGroup group)
         {
-            if (!groupsMap.ContainsKey(group))
+            WindowGroup g = groups.Find(g => g.group == group);
+            if (g == null)
             {
                 return null;
             }
-            return groupsMap[group];
+            else
+            {
+                return g;
+            }            
         }
 
-        private void InitWinGroup()
+        public Window InstantiateWindow(Window prefab, WindowCfg cfg)
         {
-            if (groups != null && groups.Length > 0)
+            if (prefab == null)
             {
-                groupsMap = new Dictionary<UIGroup, Transform>();
-                for (int i = 0; i < groups.Length; i++)
-                {
-                    groupsMap.Add(groups[i].group, groups[i].winGroup);
-                }
+                return null;
             }
+
+            WindowGroup group = GetWinGroup(prefab.group);
+            if (group == null)
+            {
+                return null;
+            }
+
+            return group.InstantiateWindow(prefab, cfg);
+        }
+
+        public void Show(Window window)
+        {
+            WindowGroup group = GetWinGroup(window.group);
+            if (group == null)
+            {
+                return;
+            }
+            group.Show(window.Id);
+        }
+
+        public void Hide(Window window)
+        {
+            WindowGroup group = GetWinGroup(window.group);
+            if (group == null)
+            {
+                return;
+            }
+            group.Hide(window.Id);
         }
     }
 }

@@ -1868,7 +1868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataSet: {fileID: 3947734714672917421}
-  field: menuList
+  field: MenuList
   queryIndex: 0
   linqItems:
   - where:

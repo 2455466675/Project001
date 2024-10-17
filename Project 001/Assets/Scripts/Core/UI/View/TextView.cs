@@ -18,7 +18,7 @@ namespace Game.UI
 
         public void SetTextById(int textId)
         {
-            LanguageItem item = GameCore.GameCfg.GetLanguageItem(textId);
+            LanguageItem item = GameCore.Cfg.GetLanguageItem(textId);
             if (item == null)
             {
                 SetTextInner(string.Empty, default);
@@ -31,12 +31,12 @@ namespace Game.UI
 
         public void SetTextByStr(string str)
         {
-            SetTextInner(str, GameCore.GameCfg.Language.DefaultTextColor);
+            SetTextInner(str, GameCore.Cfg.Language.DefaultTextColor);
         }
 
         public void SetTextByStr(string str, int colorId)
         {
-            SetTextInner(str, GameCore.GameCfg.GetColorById(colorId));
+            SetTextInner(str, GameCore.Cfg.GetColorById(colorId));
         }
 
         public void SetTextByStr(string str, Color color)
@@ -54,7 +54,7 @@ namespace Game.UI
 #if UNITY_EDITOR
         public void OnValidate()
         {
-            target = GetComponent<ExtendText>();
+            target = GetComponent<ExtendText>();            
         }
 #endif
     }

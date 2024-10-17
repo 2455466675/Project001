@@ -83,6 +83,11 @@ namespace Game.System
             motor.IsRunning = isRunning;
         }
 
+        /// <summary>
+        /// 将足迹传递给下一个角色
+        /// </summary>
+        /// <param name="trace"></param>
+        /// <returns>是否发生移动</returns>
         public bool AddNextRoleTrace(MoveTrace trace)
         {
             if (NextActor == null)

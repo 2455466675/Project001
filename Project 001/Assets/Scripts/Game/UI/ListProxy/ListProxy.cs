@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using Navigation;
 using Cysharp.Threading.Tasks;
@@ -14,8 +13,14 @@ namespace Game.UI
         private Window parent;
         public NavigationList List => list;
         public Window Parent => parent;
-
+        /// <summary>
+        /// 是否有效
+        /// </summary>
         public bool IsValid => list != null && parent != null;
+        /// <summary>
+        /// 列表是否已准备就绪
+        /// </summary>
+        public bool IsReady => (!list.IsValid) || (list.IsValid && list.UpateTime > 0);
 
         public abstract ListName Name { get; }
         public abstract WindowId WindowId { get; }
@@ -34,9 +39,9 @@ namespace Game.UI
             list = window.Find(Name);
         }
 
-        public void Close()
+        public void Exit()
         {
-            list.Close();
+            list.Exit();
         }
 
         public bool InFocus(params int[] indexs)
@@ -57,6 +62,15 @@ namespace Game.UI
         public bool Refocus()
         {
             return list.Refocus();
+        }
+
+        /// <summary>
+        /// 该列表的选中是否能取消
+        /// </summary>
+        /// <returns>是否能取消</returns>
+        public virtual bool IsUndoable()
+        {
+            return true;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Game.UI
     /// </summary>
 	public class NavigationListCommand : INavigationCommand
     {
-        public bool IsUndoable => throw new global::System.NotImplementedException();
+        public bool IsUndoable => Proxy.IsUndoable();
 
         public ListProxy Proxy { get; private set; }
 
@@ -16,7 +16,7 @@ namespace Game.UI
 
         public void OnPop()
         {
-            Proxy.Close();
+            Proxy.Exit();
         }
 
         public bool OnPush()

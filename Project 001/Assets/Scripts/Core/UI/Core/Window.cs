@@ -1,7 +1,6 @@
 using Game.Cfg;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using System;
 using Navigation;
 
 namespace Game.UI
@@ -42,13 +41,14 @@ namespace Game.UI
 
         public void Show()
         {
+            gameObject.SetActive(true);
             canvasGroup.alpha = 1f;
-
         }
 
         public void Hide()
         {
             canvasGroup.alpha = 0f;
+            gameObject.SetActive(false);
         }
 
         public void InFocus()

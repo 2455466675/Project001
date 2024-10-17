@@ -5,6 +5,7 @@ namespace Game.Core
         SCENE = 1,
         UI = 2,
     }
+
     /// <summary>
     /// 
     /// </summary>

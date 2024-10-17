@@ -22,8 +22,17 @@ namespace Game.System
 
     public struct MoveTrace
     {
+        /// <summary>
+        /// 移动方向
+        /// </summary>
         public MoveType moveType;
+        /// <summary>
+        /// 当前位置
+        /// </summary>
         public Vector2 position;
+        /// <summary>
+        /// 相对上一个点的距离
+        /// </summary>
         public float deltaDistance;
     }
 
@@ -51,7 +60,6 @@ namespace Game.System
         /// 前置角色的足迹路径
         /// </summary>
         private List<MoveTrace> traces;
-
 
         public void Start()
         {
@@ -183,8 +191,8 @@ namespace Game.System
                     return false;
                 }
             }
-
             trace.deltaDistance = d;
+
             traces.Add(trace);
             distance += d;
             IsMoving = true;
@@ -207,7 +215,7 @@ namespace Game.System
                 return;
             }
 
-            if (distance >= GameCore.GameCfg.Formula.TEAM_GAP) //距离前置角色一定距离时，开始跟随
+            if (distance >= GameCore.Cfg.Formula.TEAM_GAP) //距离前置角色一定距离时，开始跟随
             {
                 MoveNextTrace();
                 IsMoving = true;
@@ -268,7 +276,7 @@ namespace Game.System
             distance -= trace.deltaDistance;
             traces.RemoveAt(0);
 
-            actor.AddNextRoleTrace(trace);  //将足迹点传递给下一个角色
+            actor.AddNextRoleTrace(trace);
         }
     }
 }

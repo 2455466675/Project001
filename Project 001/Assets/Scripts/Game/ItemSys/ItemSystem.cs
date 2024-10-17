@@ -1,4 +1,5 @@
 using Game.Cfg;
+using MVC;
 
 namespace Game.System
 {
@@ -12,18 +13,20 @@ namespace Game.System
         public Item(int id) 
         { 
             Id = id;
-            Cfg = GameCore.GameCfg.Find<ItemCfg>(id);
+            Cfg = GameCore.Cfg.Find<ItemCfg>(id);
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ItemSystem : IGameSystem
+    public class ItemSystem : DataProxy, IGameSystem
     {
-        public ItemSystem() 
-        { 
-            
+        public PackageSystem Package { get; private set; }
+
+        public ItemSystem(DataContainer container) : base(container) 
+        {            
+            Package = new PackageSystem(CreateContainer("Package"));
         }
     }
 }

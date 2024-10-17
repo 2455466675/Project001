@@ -19,7 +19,7 @@ namespace Game.Core
         public override void Execute()
         {
             MLog.Log("GM");
-            //GameCore.UI.Enter(UI.WindowId.WinGM);
+            GameCore.UI.Enter(UI.ListName.GmMenuList);
         }
     }
 }

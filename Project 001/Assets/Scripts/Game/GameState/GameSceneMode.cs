@@ -9,7 +9,7 @@ namespace Game.Core
 
         public void OnEnter(ModeArg arg)
         {
-            GameCore.InputSys.SwitchInputMode(InputMode.Role);         
+            GameCore.Input.SwitchInputMode(InputMode.Role);         
         }
 
         public void OnExit()

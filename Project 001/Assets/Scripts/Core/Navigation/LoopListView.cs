@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MVC;
 using Game;
@@ -20,6 +18,12 @@ namespace Navigation
             {
                 list.Init(IndexChangedHandler, SelectChangedHandler);
             }
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            list.IsValid = IsRegistered;           
         }
 
         protected override void OnUpdateView()

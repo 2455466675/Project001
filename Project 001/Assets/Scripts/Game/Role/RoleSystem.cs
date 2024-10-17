@@ -1,19 +1,20 @@
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+using MVC;
 
 namespace Game.System
 {
     /// <summary>
     /// 
     /// </summary>
-	public class RoleSystem : IGameSystem
+	public class RoleSystem : DataProxy, IGameSystem
     {
         public Role[] roles;
-
         public Role Leader => roles != null && roles.Length > 0 ? roles[0] : null;
+
+        public RoleSystem(DataContainer container) : base(container)
+        {
+
+        }
 
         public void Init()
         {

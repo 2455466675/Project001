@@ -15,11 +15,11 @@ namespace Game
         public static GameInitCfg GameInitCfg { get; private set; }
         public static bool IsEditor { get; private set; }
         public static GameUI UI;
-        public static GameCfg GameCfg;
-        public static GameCoroutine Co;
+        public static GameCfg Cfg;
+        public static GameCoroutine Coroutine;
         public static GameResourceManager ResourceManager;
         public static GameStateController StateController;
-        public static InputSystem InputSys;
+        public static GameInputSystem Input;
         public static GameScene Scene;
         public static GameSystem System;
         private GameCore() { }

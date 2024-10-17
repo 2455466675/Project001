@@ -79,8 +79,8 @@ namespace Navigation
             pointer = 0;
             minIndex = 0;
             maxIndex = items.Count - 1;
-            isInit = true;
             State = ListState.Exited;
+            isInit = true;
         }
 
         public GuidableItem GetItem(int index)
@@ -94,6 +94,12 @@ namespace Navigation
                 return null;
             }
             return items[index];
+        }
+
+        public override void UpdateTotalCount(int totalCount)
+        {
+            base.UpdateTotalCount(totalCount);
+            UpateTime++;
         }
 
         public override bool InFocus(params int[] indexs)
@@ -138,7 +144,7 @@ namespace Navigation
             }
         }
 
-        public override void Close()
+        public override void Exit()
         {
             index = null;
             State = ListState.Exited;

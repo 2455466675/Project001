@@ -1,5 +1,3 @@
-using Navigation;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.UI

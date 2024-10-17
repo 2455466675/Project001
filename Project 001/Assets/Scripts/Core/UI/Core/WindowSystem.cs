@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Game.Cfg;
@@ -12,14 +10,28 @@ namespace Game.UI
     /// </summary>
 	public class WindowSystem
 	{
-        public Window Current => showStack.Peek();
+        public Window Current => showList.Count > 0 ? showList[^1] : null;
         private Dictionary<WindowId, Window> windows;
-        private Stack<Window> showStack;
+        private List<Window> showList;
 
         public WindowSystem()
         {
             windows = new Dictionary<WindowId, Window>();
-            showStack = new Stack<Window>();
+            showList = new List<Window>();
+        }
+
+        public bool WindowIsTop(WindowId id)
+        {
+            if (Current == null)
+            {
+                return false;
+            }
+            return Current.Id == (int)id;
+        }
+
+        public bool WindowIsShow(WindowId id)
+        {
+            return showList.Find(w => w.Id == (int)id) != null;
         }
 
         public Window ShowWindow(WindowId id)
@@ -36,34 +48,25 @@ namespace Game.UI
             return window;
         }
 
-        public void HideWindow()
+        public void HideWindow(WindowId id)
         {
-            if (showStack.TryPop(out Window window))
+            Window window = showList.Find(w => w.Id == (int)id);
+            if (window == null)
             {
-                window.Hide();
+                return;
             }
-        }
-
-        public bool WindowIsTop(WindowId id)
-        {
-            if (Current == null)
-            {
-                return false;
-            }
-            return Current.Id == (int)id;         
+            Hide(window);
+            showList.Remove(window);
         }
 
         public void HideAll()
         {
-            while (showStack.Count > 0)
+            for (int i = showList.Count - 1; i >= 0; i--)
             {
-                if (showStack.TryPop(out Window window))
-                {
-                    window.Hide();
-                }
+                Hide(showList[i]);
             }
 
-            showStack.Clear();
+            showList.Clear();
         }
 
         private Window GetWindowInstance(WindowId id)
@@ -73,7 +76,7 @@ namespace Game.UI
                 return windows[id];
             }
 
-            WindowCfg cfg = GameCore.GameCfg.Find<WindowCfg>((int)id);
+            WindowCfg cfg = GameCore.Cfg.Find<WindowCfg>((int)id);
             if (cfg == null)
             {
                 MLog.Error($"没有窗体配置:{id}");
@@ -90,7 +93,7 @@ namespace Game.UI
                 return windows[id];
             }
 
-            WindowCfg cfg = GameCore.GameCfg.Find<WindowCfg>((int)id);
+            WindowCfg cfg = GameCore.Cfg.Find<WindowCfg>((int)id);
             if (cfg == null)
             {
                 MLog.Error($"没有窗体配置:{id}");
@@ -108,8 +111,7 @@ namespace Game.UI
                 return null;
             }
             Window win = prefab.GetComponent<Window>();
-            Window inst = GoHelper.Instantiate<Window>(win, GameCore.UI.UIRoot.GetWinGroup(win.group));
-            inst.Init(cfg);
+            Window inst = GameCore.UI.UIRoot.InstantiateWindow(win, cfg);
             windows[(WindowId)cfg.Id] = inst;
             return inst;
         }
@@ -120,12 +122,19 @@ namespace Game.UI
             {
                 return;
             }
-            if (showStack.TryPeek(out Window win) && win.Id == window.Id)
+
+            if (showList.Find(w => w.Id == window.Id) != null)
             {
                 return;
             }
-            showStack.Push(window);
-            window.Show();
+
+            showList.Add(window);
+            GameCore.UI.UIRoot.Show(window);
+        }
+
+        private void Hide(Window window)
+        {
+            GameCore.UI.UIRoot.Hide(window);
         }
     }
 }

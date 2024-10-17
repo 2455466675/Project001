@@ -28,7 +28,7 @@ namespace Game.System
 
         public Role(int id)
         {
-            RoleCfg cfg = GameCore.GameCfg.Find<RoleCfg>(id);
+            RoleCfg cfg = GameCore.Cfg.Find<RoleCfg>(id);
             if (cfg == null)
             {
                 return;

@@ -7,7 +7,7 @@ namespace Game.UI
     /// </summary>
 	public class NavigationPanelCommand : INavigationCommand
     {
-        public bool IsUndoable => true;
+        public bool IsUndoable => CheckUndoable();
 
         public WindowId Id => (WindowId)window.Id;
 
@@ -26,6 +26,10 @@ namespace Game.UI
             return commands.Peek();
         }
 
+        /// <summary>
+        /// 弹出最上面的一个列表
+        /// </summary>
+        /// <returns>是否已空</returns>
         public bool Pop()
         {
             if (commands.Count <= 0)
@@ -61,7 +65,7 @@ namespace Game.UI
         public void OnPop()
         {
             commands.Clear();
-            GameCore.UI.HideWindow();
+            GameCore.UI.HideWindow(Id);
         }
 
         public bool OnPush()
@@ -91,6 +95,19 @@ namespace Game.UI
             {
                 return false;
             }            
+        }
+
+        private bool CheckUndoable()
+        {
+            if (commands.TryPeek(out NavigationListCommand popCmd))
+            {
+                return popCmd.IsUndoable;
+            }
+            else
+            {
+                MLog.Error("CheckUndoable is error");
+                return false;                
+            }
         }
     }
 }

@@ -45,12 +45,16 @@ namespace Game.Core
 
         public LanguageItem GetLanguageItem(int id)
         {
+            if (id <= 0)
+            {
+                return null;
+            }
             if (languageItems.ContainsKey(id))
             {
                 return languageItems[id];
             }
 
-            LanguageCfg cfg = GameCore.GameCfg.Find<LanguageCfg>(id);            
+            LanguageCfg cfg = GameCore.Cfg.Find<LanguageCfg>(id);            
             if(cfg == null)
             {
                 MLog.Error($"没有此语言配置:{id}");
@@ -65,7 +69,7 @@ namespace Game.Core
 
         public Color GetColorById(int colorId)
         {
-            ColorCfg cfg = GameCore.GameCfg.Find<ColorCfg>(colorId);
+            ColorCfg cfg = GameCore.Cfg.Find<ColorCfg>(colorId);
             if (cfg == null)
             {
                 MLog.Error($"没有此颜色配置:{colorId}");

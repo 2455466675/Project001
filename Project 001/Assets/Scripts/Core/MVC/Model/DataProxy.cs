@@ -78,7 +78,7 @@ namespace MVC
 
         public DataContainer SetContainerLinker(string key, DataContainer container)
         {
-            return container.SetContainerLinker(key, container);
+            return this.container?.SetContainerLinker(key, container);
         }
     }
 }

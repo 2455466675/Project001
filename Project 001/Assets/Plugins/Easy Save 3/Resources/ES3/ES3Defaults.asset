@@ -31,11 +31,17 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
+    - UniTask.Linq
+    - UniTask
     - YooAsset.Editor
     - YooAsset
     - PsdPlugin
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - UniTask.Addressables
+    - UniTask.Editor
     - Sirenix.OdinInspector.CompatibilityLayer
+    - UniTask.TextMeshPro
+    - UniTask.DOTween
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0

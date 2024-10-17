@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Core
 {
-    public class InputSystem : MonoBehaviour, ICore
+    public class GameInputSystem : MonoBehaviour, ICore
     {
         private MyInput inputActions;
 
@@ -24,21 +22,29 @@ namespace Game.Core
                 new UIInputActionController(inputActions),
                 new RoleInputActionController(inputActions),
                 new FightInputActionController(inputActions),
+                new GMInputActionController(inputActions),
             };
 
             foreach (var item in controllers)
             {
-                item.Disable();
+                if (item.Mode != InputMode.GM)
+                {
+                    item.Disable();
+                }
             }
 
             yield return null;
         }
 
+        /// <summary>
+        /// 切换输入模式
+        /// </summary>
+        /// <param name="mode"></param>
         public void SwitchInputMode(InputMode mode)
         {
             foreach (var item in controllers) 
             {
-                if (item.Mode != mode)
+                if (item.Mode != mode && item.Mode != InputMode.GM)
                 {
                     item.Disable();
                 }
@@ -53,17 +59,25 @@ namespace Game.Core
             controller.Enable();
         }
 
+        /// <summary>
+        /// 添加一个持续性的输入
+        /// </summary>
+        /// <param name="action"></param>
         public void PushAction(InputActionWrapper action)
         {
             continuedActions.Add(action);
         }
 
+        /// <summary>
+        /// 移除一个持续性输入
+        /// </summary>
+        /// <param name="action"></param>
         public void PopAction(InputActionWrapper action) 
         {
             continuedActions.Remove(action);
         }
 
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
             for (int i = 0; i < continuedActions.Count; i++)
             {

@@ -1,6 +1,3 @@
-using System.Collections;
-using Navigation;
-
 namespace Game.UI
 {
     /// <summary>
@@ -12,6 +9,10 @@ namespace Game.UI
 
         public override WindowId WindowId => WindowId.WinLogin;
 
+        public override bool IsUndoable()
+        {
+            return false;
+        }
     }
 }
 

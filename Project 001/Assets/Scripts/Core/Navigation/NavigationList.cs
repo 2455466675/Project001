@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Game.UI;
 
@@ -64,8 +62,29 @@ namespace Navigation
     {
         public ListName listName;
 
-        public ListState State {  get; protected set; }
+        public ListState State { get; protected set; }
 
+        /// <summary>
+        /// 数据更新次数
+        /// </summary>
+        public int UpateTime { get; protected set; }
+
+        private bool isValid = true;
+        /// <summary>
+        /// 数据是否有效
+        /// </summary>
+        public bool IsValid 
+        {
+            get
+            {
+                return isValid;
+            }
+            set 
+            { 
+                isValid = value; 
+            }
+        }
+        
         public virtual bool InFocus(params int[] indexs)
         {
             throw new System.NotImplementedException();
@@ -79,7 +98,7 @@ namespace Navigation
         {
             throw new System.NotImplementedException();
         }
-        public virtual void Close()
+        public virtual void Exit()
         {
             throw new NotImplementedException();
         }
@@ -88,7 +107,6 @@ namespace Navigation
         {
             return false;
         }
-
 
         public virtual bool Select(params int[] indexs)
         {

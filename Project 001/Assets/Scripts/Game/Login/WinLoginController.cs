@@ -21,12 +21,12 @@ namespace Game.UI
             GameCore.StateController.SwitchState(GameState.PLAYING);
         }
 
-        public void OnTest(GuidableItem item) 
+        public void OnLoadGame(GuidableItem item) 
         {
-            //GameCore.UI.Enter(WindowId.WinOverview);
+            GameCore.UI.Enter(ListName.OverviewMenu);
         }
 
-        public void OnExit(GuidableItem item)
+        public void OnQuitGame(GuidableItem item)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

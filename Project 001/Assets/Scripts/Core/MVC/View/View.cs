@@ -8,6 +8,8 @@ namespace MVC
     /// </summary>
 	public class View : MonoBehaviour
 	{
+        public bool IsRegistered { get; private set; }
+
         [SerializeField]
         protected DataSet dataSet;
         private bool isDirty;
@@ -19,6 +21,7 @@ namespace MVC
             if (dataSet != null)
             {
                 dataSet.Register(this);
+                IsRegistered = true;
             }
         }
 
@@ -28,6 +31,7 @@ namespace MVC
             {
                 dataSet.Unregister(this);
                 dataSet = null;
+                IsRegistered = false;
             }
             OnUpdatedViewEvent = null;
         }
