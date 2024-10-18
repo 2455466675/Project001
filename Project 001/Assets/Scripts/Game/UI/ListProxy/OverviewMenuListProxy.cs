@@ -1,5 +1,4 @@
-using System.Collections;
-using Navigation;
+using Cysharp.Threading.Tasks;
 
 namespace Game.UI
 {
@@ -11,6 +10,11 @@ namespace Game.UI
         public override ListName Name => ListName.OverviewMenu;
 
         public override WindowId WindowId => WindowId.WinOverview;
+
+        public override async UniTask Precondition()
+        {
+            await LoadWindowAsync();
+        }
 
     }
 }

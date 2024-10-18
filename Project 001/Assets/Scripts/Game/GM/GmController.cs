@@ -21,14 +21,8 @@ namespace Game.UI
         public void OnSubmitItem(GuidableItem item)
         {
             int id = item.Datum.GetDataBase("id").IntValue;
-            if (id == 1001)
-            {
-                GameCore.System.ItemSystem.Package.Test();
-            }
-            else
-            {
-                GameCore.System.ItemSystem.Package.Test1();
-            }
+            string args = item.Datum.GetDataBase("args").StringValue;
+            GameCore.System.Gm.ExecuteCmd(id, args);
         }
     }
 }

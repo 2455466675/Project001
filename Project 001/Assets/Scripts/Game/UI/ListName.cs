@@ -12,6 +12,8 @@ namespace Game.UI
         PackageList     = 4,
         GmMenuList      = 5,
         GmItemList      = 6,
+        FightPlayerList = 7,
+        FightEnemyList  = 8,
     }
 }
 

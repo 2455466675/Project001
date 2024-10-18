@@ -26,8 +26,10 @@ namespace Game.UI
         /// GM界面
         /// </summary>
         WinGM       = 100005,
-
-        WinFightBg  = 100006,
+        /// <summary>
+        /// 战斗基础界面
+        /// </summary>
+        WinFightBg = 100006,
     }
 }
 

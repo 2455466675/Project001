@@ -59,6 +59,7 @@ namespace Game.System
             {
                 return;
             }
+            MLog.Log($"ExecuteCmd:{cmdId}, {args}");
             cmds[cmdId].Invoke(args);
         }
 
@@ -71,16 +72,7 @@ namespace Game.System
 
         private void Cmd1001(object o)
         {
-            MLog.Log("Execute Cmd1001");
-
-            GameCore.Scene.LoadSceneAsync("FightScene", UnityEngine.SceneManagement.LoadSceneMode.Single, null, (s) => {
-
-                MLog.Log("Execute Cmd1001 end");
-                //GameCore.UI.Exit();
-                //GameCore.UI.Enter(UI.WindowId.WinFightBg);
-                //GameCore.UI.SelectNavigatable(UI.ListViewId.FightEnemyList);
-            
-            } );
+            GameCore.System.FightSystem.Enter();            
         }
 
         private void Cmd1002(object o)

@@ -9,8 +9,8 @@ namespace Game.UI
     /// </summary>
 	public abstract class ListProxy : INavigationElement
     {
-        private NavigationList list;
-        private Window parent;
+        protected NavigationList list;
+        protected Window parent;
         public NavigationList List => list;
         public Window Parent => parent;
         /// <summary>
@@ -25,19 +25,7 @@ namespace Game.UI
         public abstract ListName Name { get; }
         public abstract WindowId WindowId { get; }
 
-        public void LoadWindow()
-        {
-            Window window = GameCore.UI.ShowWindow(WindowId);
-            parent = window;
-            list = window.Find(Name);
-        }
-
-        public async UniTask LoadWindowAsync()
-        {
-            Window window = await GameCore.UI.ShowWindowAsync(WindowId);
-            parent = window;
-            list = window.Find(Name);
-        }
+        public abstract UniTask Precondition();
 
         public void Exit()
         {
@@ -71,6 +59,13 @@ namespace Game.UI
         public virtual bool IsUndoable()
         {
             return true;
+        }
+
+        protected async UniTask LoadWindowAsync()
+        {
+            Window window = await GameCore.UI.ShowWindowAsync(WindowId);
+            parent = window;
+            list = window.Find(Name);
         }
     }
 }

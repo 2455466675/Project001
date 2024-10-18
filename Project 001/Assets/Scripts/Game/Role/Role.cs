@@ -11,9 +11,7 @@ namespace Game.System
 	public class Role
 	{
         public Actor Actor { get; private set; }
-
         public RoleData RoleData { get; private set; }
-
         public RoleCfg Cfg { get; private set; }
 
         public bool IsLeader;

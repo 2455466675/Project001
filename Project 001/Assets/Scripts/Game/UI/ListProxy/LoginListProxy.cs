@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+
 namespace Game.UI
 {
     /// <summary>
@@ -12,6 +14,14 @@ namespace Game.UI
         public override bool IsUndoable()
         {
             return false;
+        }
+
+        public override UniTask Precondition()
+        {
+            Window window = GameCore.UI.ShowWindow(WindowId);
+            parent = window;
+            list = window.Find(Name);
+            return UniTask.DelayFrame(1);
         }
     }
 }

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Navigation;
+using Cysharp.Threading.Tasks;
 
 namespace Game.UI
 {
@@ -13,6 +10,11 @@ namespace Game.UI
         public override ListName Name => ListName.PackageList;
 
         public override WindowId WindowId => WindowId.WinPackage;
+
+        public override async UniTask Precondition()
+        {
+            await LoadWindowAsync();
+        }
     }
 }
 

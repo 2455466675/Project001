@@ -2,6 +2,7 @@ using Game;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Navigation
 {
@@ -13,17 +14,7 @@ namespace Navigation
         public int[] CurrIndex => new int[] { pointer };
 
         [SerializeField]
-        private RectTransform viewport;
-        [SerializeField]
-        private RectTransform content;
-        [SerializeField]
         private GuidableItem item;
-        [SerializeField]
-        private float topPadding;
-        [SerializeField]
-        private float bottomPadding;
-        [SerializeField]
-        private float spacing;
 
         private int totalCount;
         private int minIndex;
@@ -249,13 +240,27 @@ namespace Navigation
             tf.anchorMax = new Vector2(0.5f, 1);
             tf.pivot = new Vector2(0.5f, 0.5f);
 
+            if (!content.TryGetComponent<VerticalLayoutGroup>(out var layoutGroup))
+            {
+                MLog.Warn("LoopNavigationList初始化，content没有VerticalLayoutGroup");
+                return;
+            }
+
+            content.anchorMin = new Vector2(0f, 1f);
+            content.anchorMax = new Vector2(1f, 1f);
+            content.pivot = new Vector2(0.5f, 1f);
+
+            float topPadding = layoutGroup.padding.top;
+            float bottomPadding = layoutGroup.padding.bottom;
+            float spacing = layoutGroup.spacing;
+
             float h = tf.rect.size.y;
             int c = Mathf.FloorToInt((vh - topPadding - bottomPadding) / (h + spacing / 2));    //计算个数
             items = new Dictionary<int, GuidableItem>(c);
             for (int i = 0; i < c; i++)
             {
                 GuidableItem lt = GoHelper.Instantiate<GuidableItem>(item, content);
-                (lt.transform as RectTransform).anchoredPosition = new Vector2(0, -(topPadding + h / 2 + i * h + i * spacing));
+                //(lt.transform as RectTransform).anchoredPosition = new Vector2(0, -(topPadding + h / 2 + i * h + i * spacing));
                 lt.SetActive(false);
                 items[i] = lt;
             }

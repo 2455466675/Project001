@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Navigation;
 using Cysharp.Threading.Tasks;
+using Game.System;
 
 namespace Game.UI
 {
@@ -29,6 +30,8 @@ namespace Game.UI
             proxys[ListName.PackageList] = new PackageListListProxy();
             proxys[ListName.GmMenuList] = new GmMenuListProxy();
             proxys[ListName.GmItemList] = new GmItemListProxy();
+            proxys[ListName.FightPlayerList] = new FightPlayerListProxy();
+            proxys[ListName.FightEnemyList] = new FightEnemyListProxy();
         }
 
         public void Enter(ListName listName)
@@ -36,6 +39,10 @@ namespace Game.UI
             if (proxys.TryGetValue(listName, out ListProxy proxy))
             {
                 EnterInner(proxy);
+            }
+            else
+            {
+                MLog.Error("未注册列表代理");
             }
         }
 
@@ -126,15 +133,8 @@ namespace Game.UI
         }
 
         private async void EnterInner(ListProxy proxy)
-        {
-            if (proxy.WindowId == WindowId.WinLogin)
-            {
-                proxy.LoadWindow();
-            }
-            else
-            {
-                await proxy.LoadWindowAsync();
-            }
+        {            
+            await proxy.Precondition();
 
             if (!proxy.IsValid)
             {

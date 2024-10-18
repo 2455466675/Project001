@@ -18,7 +18,7 @@ namespace Game.System
             }
 
             DataCollection itemList = CreateCollection("ItemList");
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 200; i++)
             {
                 DataContainer item = itemList.Append(true);
                 item.SetBaseValue("id", i + 1);

@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using Game.UI;
+using System.Collections.Generic;
+using Game;
 
 namespace Navigation
 {
@@ -60,7 +62,43 @@ namespace Navigation
     /// </summary>
 	public class NavigationList : MonoBehaviour, INavigationElement
     {
+        private static Dictionary<ListName, NavigationList> lists = new Dictionary<ListName, NavigationList>();
+
+        public static NavigationList GetNavigationList(ListName listName)
+        {
+            if (lists.ContainsKey(listName))
+            {
+                return lists[listName];
+            }
+            return null;
+        }
+
+        public static void AddGlobalList(NavigationList list)
+        {
+            if (list == null)
+            {
+                return;
+            }
+            ListName listName = list.listName;
+            if (listName == ListName.None)
+            {
+                MLog.Error("未定义的列表");
+                return;
+            }
+            if (lists.ContainsKey(listName))
+            {
+                MLog.Error($"同名的列表:{listName}");
+                return;
+            }
+            lists[listName] = list;
+        }
+
         public ListName listName;
+
+        [SerializeField]
+        protected RectTransform viewport;
+        [SerializeField]
+        protected RectTransform content;
 
         public ListState State { get; protected set; }
 
@@ -85,6 +123,11 @@ namespace Navigation
             }
         }
         
+        protected virtual void Awake()
+        {
+            AddGlobalList(this);
+        }
+
         public virtual bool InFocus(params int[] indexs)
         {
             throw new System.NotImplementedException();
