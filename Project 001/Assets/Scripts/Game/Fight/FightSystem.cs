@@ -47,7 +47,6 @@ namespace Game.System
         private void Entered(SceneInfo sceneInfo)
         {
             MLog.Log("进入战斗场景完毕");
-            GameCore.UI.Exit();
             GameCore.UI.Enter(UI.ListName.FightPlayerList);
         }
     }

@@ -93,6 +93,20 @@ namespace Navigation
             lists[listName] = list;
         }
 
+        public static void RemoveGlobalList(ListName listName)
+        {
+
+            if (listName == ListName.None)
+            {
+                return;
+            }
+            if (!lists.ContainsKey(listName))
+            {
+                return;
+            }
+            lists.Remove(listName);
+        }
+
         public ListName listName;
 
         [SerializeField]
@@ -126,6 +140,11 @@ namespace Navigation
         protected virtual void Awake()
         {
             AddGlobalList(this);
+        }
+
+        protected virtual void OnDestroy()
+        {
+            RemoveGlobalList(listName);
         }
 
         public virtual bool InFocus(params int[] indexs)
