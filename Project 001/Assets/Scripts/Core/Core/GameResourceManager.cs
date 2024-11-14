@@ -42,12 +42,24 @@ namespace Game.Core
       
             yield return null;
         }
-      
+
+        /// <summary>
+        /// 加载资源（Assets下的路径）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public T LoadAsset<T>(string path) where T : UnityEngine.Object
         {
             return package.LoadAssetSync<T>(path).AssetObject as T;
         }
 
+        /// <summary>
+        /// 异步加载资源（Assets下的路径）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public async UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object
         {
             AssetHandle handle = package.LoadAssetAsync<T>(path);
@@ -59,6 +71,18 @@ namespace Game.Core
         {
             AllAssetsHandle handle = package.LoadAllAssetsSync<T>(path);
             return handle.AllAssetObjects.Cast<T>().ToArray();
+        }
+
+        /// <summary>
+        /// 加载并实例化一个游戏物体（Assets下的路径）
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public GameObject LoadAndInstantiate(string path, Transform parent)
+        {
+            GameObject obj = LoadAsset<GameObject>(path);
+            return GoHelper.Instantiate(obj, parent);
         }
 
         public SceneInfo LoadScene(string sceneName, LoadSceneMode mode)

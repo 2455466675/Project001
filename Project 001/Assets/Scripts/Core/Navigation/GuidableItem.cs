@@ -6,7 +6,7 @@ namespace Navigation
     /// <summary>
     /// 
     /// </summary>
-	public class GuidableItem : DataSet
+	public class GuidableItem : ListItem
     {
         /// <summary>
         /// Ñ¡ÔñÆ÷

@@ -72,10 +72,13 @@ namespace Game.System
             Follow();
         }
 
-        public void Move(float x, float y)
+        public void Move(Vector2 dir)
         {
             MoveType moveType;
             string actionName;
+
+            float x = dir.x;
+            float y = dir.y;
 
             if (x != 0)
             {

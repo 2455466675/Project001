@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// ½ÇÉ«¼ÓËÙ
     /// </summary>
 	public class RoleAddSpeedAction : InputActionWrapper
     {

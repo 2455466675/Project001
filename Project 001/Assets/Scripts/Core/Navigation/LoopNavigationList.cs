@@ -72,9 +72,9 @@ namespace Navigation
             {
                 return false;
             }
-            GuidableItem item = items[index];
-            item.OutFocus();
+            items[index].OutFocus();            
             State = ListState.OutFocus;
+            SelectedItems = null;
             return true;
         }
 
@@ -95,6 +95,7 @@ namespace Navigation
         {
             pointer = -1;
             State = ListState.Exited;
+            SelectedItems = null;
         }
 
         public override bool Move(Vector2 dir)
@@ -187,12 +188,15 @@ namespace Navigation
                     item.Value.SetActive(false);
                 }
 
+                BackInner();
+                UpateTime++;
                 return;
             }
 
             if (this.totalCount == totalCount)
             {
                 OnIndexChanged();
+                UpateTime++;
                 return;
             }
 
@@ -232,9 +236,9 @@ namespace Navigation
                 return;
             }
 
-            float vh = viewport.rect.size.y;
+            item.SetActive(false);
 
-            item.gameObject.SetActive(false);
+            float vh = viewport.rect.size.y;
             RectTransform tf = item.GetComponent<RectTransform>();
             tf.anchorMin = new Vector2(0.5f, 1);
             tf.anchorMax = new Vector2(0.5f, 1);
@@ -242,7 +246,7 @@ namespace Navigation
 
             if (!content.TryGetComponent<VerticalLayoutGroup>(out var layoutGroup))
             {
-                MLog.Warn("LoopNavigationList初始化，content没有VerticalLayoutGroup");
+                MLog.Warn("LoopNavigationList初始化，content没有LayoutGroup");
                 return;
             }
 
@@ -289,7 +293,9 @@ namespace Navigation
 
         private void OnSelectChanged(bool isSuccess)
         {
-            OnSelectChangedEvent?.Invoke(new SelectChangedEventArgs(isSuccess, new int[] { pointer }, new GuidableItem[] { items[pointer - minIndex] }));
+            GuidableItem[] selectedItems = new GuidableItem[] { items[pointer - minIndex] };
+            SelectedItems = selectedItems;
+            OnSelectChangedEvent?.Invoke(new SelectChangedEventArgs(isSuccess, new int[] { pointer }, selectedItems));
         }
     }
 }

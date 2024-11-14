@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -8,8 +9,10 @@ namespace MVC
     /// <summary>
     /// 
     /// </summary>
-	public class ContainerValue : DataValue
+	public class ContainerValue : DataValue, IEnumerable<IDataModel>
 	{
+        public int Count => container.Count;
+
         private Dictionary<string, IDataModel> container;
 
         public ContainerValue()
@@ -26,7 +29,7 @@ namespace MVC
             }
             else
             {
-                container[key] = new DataBase(value);
+                container[key] = new DataBase(key, value);
             }
         }
 
@@ -39,7 +42,7 @@ namespace MVC
             }
             else
             {
-                container[key] = new DataBase(value);
+                container[key] = new DataBase(key, value);
             }        
         }
  
@@ -52,7 +55,7 @@ namespace MVC
             }
             else
             {
-                container[key] = new DataBase(value);
+                container[key] = new DataBase(key, value);
             }
         }
 
@@ -65,7 +68,7 @@ namespace MVC
             }
             else
             {
-                container[key] = new DataBase(value);
+                container[key] = new DataBase(key, value);
             }
         }
 
@@ -74,7 +77,7 @@ namespace MVC
             DataContainer container = GetDataContainer(key);
             if (container == null)
             {
-                container = new DataContainer();
+                container = new DataContainer(key);
                 this.container[key] = container;
             }
             return container;
@@ -85,7 +88,7 @@ namespace MVC
             DataCollection collection = GetDataCollection(key);
             if (collection == null)
             {
-                collection = new DataCollection();
+                collection = new DataCollection(key);
                 container[key] = collection;
             }
             return collection;          
@@ -212,16 +215,29 @@ namespace MVC
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(Environment.NewLine);
+            stringBuilder.Append("{");
             stringBuilder.Append($"count : {container.Count}");
             stringBuilder.Append(Environment.NewLine);
 
             foreach (var item in container)
             {
-                stringBuilder.Append($"key : {item.Key}, value : {item.Value}");
+                stringBuilder.Append($"\tkey : {item.Key}, value : {item.Value}");
                 stringBuilder.Append(Environment.NewLine);
             }
-       
+
+            stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+
+        public IEnumerator<IDataModel> GetEnumerator()
+        {
+            return container.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return container.Values.GetEnumerator();
         }
     }
 }

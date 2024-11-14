@@ -52,7 +52,7 @@ namespace Game.UI
         }
 
 #if UNITY_EDITOR
-        public void OnValidate()
+        public virtual void OnValidate()
         {
             target = GetComponent<ExtendText>();            
         }

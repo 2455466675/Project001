@@ -3,6 +3,7 @@ using UnityEngine;
 using Game.UI;
 using System.Collections.Generic;
 using Game;
+using UnityEngine.Events;
 
 namespace Navigation
 {
@@ -62,6 +63,11 @@ namespace Navigation
     /// </summary>
 	public class NavigationList : MonoBehaviour, INavigationElement
     {
+        [Serializable]
+        public class NavigationListUnityEvent : UnityEvent<NavigationList>
+        {
+        }
+
         private static Dictionary<ListName, NavigationList> lists = new Dictionary<ListName, NavigationList>();
 
         public static NavigationList GetNavigationList(ListName listName)
@@ -113,7 +119,18 @@ namespace Navigation
         protected RectTransform viewport;
         [SerializeField]
         protected RectTransform content;
+        [SerializeField]
+        private CanvasGroup canvasGroup;
+        [SerializeField]
+        private NavigationListUnityEvent OnSubmitEvent;
+        /// <summary>
+        /// 当前被选中的元素
+        /// </summary>
+        public GuidableItem[] SelectedItems { get; protected set; }
 
+        /// <summary>
+        /// 列表状态
+        /// </summary>
         public ListState State { get; protected set; }
 
         /// <summary>
@@ -147,6 +164,11 @@ namespace Navigation
             RemoveGlobalList(listName);
         }
 
+        public void OnSubmit()
+        {
+            OnSubmitEvent?.Invoke(this);
+        }
+
         public virtual bool InFocus(params int[] indexs)
         {
             throw new System.NotImplementedException();
@@ -178,6 +200,20 @@ namespace Navigation
         public virtual void UpdateTotalCount(int totalCount)
         {
 
+        }
+
+        public void SetAlpha(float alpha)
+        {
+            if (canvasGroup == null)
+            {
+                return;
+            }
+            canvasGroup.alpha = Mathf.Clamp(alpha, 0f, 1f);
+        }
+
+        protected void BackInner()
+        {
+            GameCore.UI.Back();
         }
     }
 }

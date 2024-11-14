@@ -57,7 +57,7 @@ namespace Navigation
             {
                 return;
             }
-            GameCore.UI.Select(args.Items);
+            GameCore.UI.Select(list, args.Items);
         }
     }
 }

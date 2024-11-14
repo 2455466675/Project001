@@ -9,6 +9,8 @@ namespace Game.System
 	public class GameSystemConfig : ScriptableObject
     {
         public ActionAssets commonActionAssets;
+
+        public string[] bones;
     }
 }
 

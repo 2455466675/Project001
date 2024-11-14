@@ -1,5 +1,6 @@
-
 using MVC;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.System
 {
@@ -7,13 +8,12 @@ namespace Game.System
     /// 
     /// </summary>
 	public class RoleSystem : DataProxy, IGameSystem
-    {
-        public Role[] roles;
-        public Role Leader => roles != null && roles.Length > 0 ? roles[0] : null;
+    {        
+        public SceneRole[] roles;
+        public SceneRole Leader => roles != null && roles.Length > 0 ? roles[0] : null;
 
         public RoleSystem(DataContainer container) : base(container)
         {
-
         }
 
         public void Init()
@@ -26,32 +26,30 @@ namespace Game.System
             //roles[0].NextRole = roles[1];
             //roles[1].PreviousRole = roles[0];
 
+            int count = 5;
+            roles = new SceneRole[count];
 
-            roles = new Role[5];
+            DataCollection datas = CreateCollection("Roles");
 
-            roles[0] = new Role(1001);
-            roles[1] = new Role(1002);
-            roles[2] = new Role(1003);
-            roles[3] = new Role(1004);
-            roles[4] = new Role(1005);
-
+            for (int i = 0; i < count; i++)
+            {
+                DataContainer item = datas.Append();
+                roles[i] = new SceneRole(1001 + i, item);
+            }
+           
+            roles[0].IsLeader = true;
             roles[0].NextRole = roles[1];
-            roles[0].SetIsLeader(true);
 
             roles[1].PrevRole = roles[0];
             roles[1].NextRole = roles[2];
-            roles[1].SetIsLeader(false);
 
             roles[2].PrevRole = roles[1];
             roles[2].NextRole = roles[3];
-            roles[2].SetIsLeader(false);
-
+  
             roles[3].PrevRole = roles[2];
             roles[3].NextRole = roles[4];
-            roles[3].SetIsLeader(false);
 
             roles[4].PrevRole = roles[3];
-            roles[4].SetIsLeader(false);
         }
 
         public void Run(bool isRunning)
@@ -62,14 +60,14 @@ namespace Game.System
             }
         }
 
-        public void Move(float x, float y)
+        public void Move(Vector2 dir)
         {
-            Leader.Move(x, y);            
+            Leader.Move(dir);            
         }
 
         public void Stop()
         {
-            Leader.Move(0f, 0f);
+            Leader.Move(new Vector2(0, 0));
         }
     }
 }

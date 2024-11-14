@@ -28,6 +28,11 @@ namespace Navigation
         {
 
         }
-	}
+
+        private void OnDisable()
+        {
+            OnDeselect();
+        }
+    }
 }
 

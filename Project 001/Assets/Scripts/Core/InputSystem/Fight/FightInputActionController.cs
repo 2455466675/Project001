@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// Õ½¶·ÊäÈë¿ØÖÆÆ÷
     /// </summary>
 	public class FightInputActionController : InputActionController
     {

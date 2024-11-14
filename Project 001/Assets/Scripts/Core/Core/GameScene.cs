@@ -10,8 +10,9 @@ namespace Game.Core
     /// </summary>
 	public class GameScene : MonoBehaviour, ICore
     {
-
         public SceneMap CurrScene {get; private set;}
+
+        public Transform characterContainer { get; private set; }
 
         private Coroutine loadSceneCo;
         private string loadingSceneName;
@@ -20,6 +21,9 @@ namespace Game.Core
 
         public IEnumerator Init()
         {
+            GameObject obj = new GameObject("characterContainer");
+            GoHelper.DontDestroy(obj);
+            characterContainer = obj.GetComponent<Transform>();
             yield return null;
         }
 
@@ -37,6 +41,7 @@ namespace Game.Core
 
             loadSceneCo = StartCoroutine(GameCore.ResourceManager.LoadSceneAsync(sceneName, mode, LoadingHandler, LoadEndHandler));            
         }
+
         public void SetScene(SceneMap scene)
         {
             CurrScene = scene;

@@ -1,3 +1,5 @@
+using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +11,12 @@ namespace MVC
 	public class DataSet : MonoBehaviour
 	{
         public DataContainer Datum => datum;
-
         private DataContainer datum;
 
+        private DataQuery query;
         private List<View> views;
+
+        private event Action OnDatumChangedEvent;
 
         private void OnDestroy()
         {
@@ -24,6 +28,24 @@ namespace MVC
             datum = null;
             views?.Clear();
             views = null;
+        }
+
+        public void Bind(Action action)
+        {
+            if (action == null)
+            {
+                return;
+            }
+            OnDatumChangedEvent += action;
+        }
+
+        public void Unbind(Action action)
+        {
+            if (action == null)
+            {
+                return;
+            }
+            OnDatumChangedEvent -= action;
         }
 
         public void Register(View view)
@@ -54,6 +76,11 @@ namespace MVC
             views.Remove(view);
         }
 
+        public void SetQuery(DataQuery query)
+        {
+            this.query = query;
+        }
+
         public void SetDatum(DataContainer datum)
         {
             this.datum?.Unbind(OnDatumChanged);
@@ -63,6 +90,7 @@ namespace MVC
 
         public DataBase FindDataBase(string path)
         {
+            CheckQuery();
             if (datum == null)
             {
                 return null;
@@ -72,6 +100,7 @@ namespace MVC
 
         public DataCollection FindDataCollection(string path)
         {
+            CheckQuery();
             if (datum == null)
             {
                 return null;
@@ -86,16 +115,18 @@ namespace MVC
                 return null;
             }
 
+            CheckQuery();
             if (datum == null)
             {
                 return null;
             }
-
             return datum.FindDataContainer(path);
         }
 
         private void OnDatumChanged()
         {
+            OnDatumChangedEvent?.Invoke();
+
             if (views == null)
             {
                 return;
@@ -107,6 +138,26 @@ namespace MVC
                     view.UpdateViewField();
                 }
             }
+        }
+
+        private void CheckQuery()
+        {
+            if (query == null || query.IsQueried)
+            {
+                return;
+            }
+            query.Query();
+        }
+
+        [Button("Print")]
+        private void Print()
+        {
+            if (datum == null) 
+            {
+                return;
+            }
+
+            Debug.Log(datum.ToString());
         }
     }
 }

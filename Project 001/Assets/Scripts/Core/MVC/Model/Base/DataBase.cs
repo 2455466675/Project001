@@ -10,23 +10,27 @@ namespace MVC
     {
         public override ValueType ValueType => value.ValueType;
 
-        public DataBase(int intValue)
+        public DataBase(string key, int intValue)
         {
+            Key = key;
             value = new BaseValue(NotifyChanged);
             IntValue = intValue;
         }
-        public DataBase(bool boolValue)
+        public DataBase(string key, bool boolValue)
         {
+            Key = key;
             value = new BaseValue(NotifyChanged);
             BoolValue = boolValue;
         }
-        public DataBase(float floatValue)
+        public DataBase(string key, float floatValue)
         {
+            Key = key;
             value = new BaseValue(NotifyChanged);
             FloatValue = floatValue;
         }
-        public DataBase(string stringValue)
+        public DataBase(string key, string stringValue)
         {
+            Key = key;
             value = new BaseValue(NotifyChanged);
             StringValue = stringValue;
         }
@@ -78,7 +82,7 @@ namespace MVC
 
         public override string ToString()
         {
-            return StringValue;
+            return string.Format("{0}:{1}", Key, StringValue);
         }
 
         public int CompareTo(DataBase other)

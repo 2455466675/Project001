@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// 场景角色行为控制器
     /// </summary>
 	public class RoleInputActionController : InputActionController
     {

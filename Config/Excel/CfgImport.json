@@ -34,6 +34,11 @@
             "excel":"overview_menu.xlsx",
             "type":"OverviewMenuCfg",
             "sheet":1
+        },
+        {
+            "excel":"monster.xlsx",
+            "type":"MonsterCfg",
+            "sheet":1
         }
     ]
 }

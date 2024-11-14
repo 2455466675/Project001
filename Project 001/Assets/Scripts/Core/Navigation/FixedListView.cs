@@ -8,7 +8,7 @@ namespace Navigation
     /// 
     /// </summary>
 	public class FixedListView : ListView
-    {
+	{
         [SerializeField]
         private FixedNavigationList list;
 
@@ -34,15 +34,17 @@ namespace Navigation
                 return;
             }
 
+            list.UpdateTotalCount(Count);
+
             for (int i = 0; i < Count; i++)
             {
                 GuidableItem item = list.GetItem(i);
                 if (item != null)
                 {
                     item.SetDatum(Datas[i]);
+                    item.SetIndex(i);
                 }
             }
-            list.UpdateTotalCount(Count);
         }
 
         private void SelectChangedHandler(SelectChangedEventArgs args)
@@ -51,7 +53,7 @@ namespace Navigation
             {
                 return;
             }
-            GameCore.UI.Select(args.Items);
+            GameCore.UI.Select(list, args.Items);
         }
     }
 }

@@ -8,6 +8,9 @@ namespace MVC
     /// </summary>
 	public class View : MonoBehaviour
 	{
+        /// <summary>
+        /// 是否已数据绑定
+        /// </summary>
         public bool IsRegistered { get; private set; }
 
         [SerializeField]

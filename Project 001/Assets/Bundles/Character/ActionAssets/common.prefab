@@ -1194,6 +1194,38 @@ MonoBehaviour:
   intValue: 0
   floatValue: 0
   boolValue: 1
+--- !u!1 &4369325722876381496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3932097774826893989}
+  m_Layer: 0
+  m_Name: BattleAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3932097774826893989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4369325722876381496}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6227549584098311660}
+  m_Father: {fileID: 1281902930738271456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4615299321323643047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,6 +1348,68 @@ MonoBehaviour:
   intValue: 0
   floatValue: 0
   boolValue: 1
+--- !u!1 &5482984050930053448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6227549584098311660}
+  - component: {fileID: 4371460760667516937}
+  - component: {fileID: 4518331766070984419}
+  m_Layer: 0
+  m_Name: HitPopText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6227549584098311660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482984050930053448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3932097774826893989}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4371460760667516937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482984050930053448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccadc8f90912ac143b8e5eecfc0ca5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: HitPopText
+  actions:
+  - {fileID: 4518331766070984419}
+--- !u!114 &4518331766070984419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482984050930053448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa6b5e18667d414e8b7c2cb6a3d6d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetBone: center
+  prefabPath: Assets/Bundles/Battle/HitPopText
 --- !u!1 &6254793281875052547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,6 +1579,7 @@ Transform:
   - {fileID: 7856626266823099113}
   - {fileID: 4679838994562344752}
   - {fileID: 405668448371559831}
+  - {fileID: 3932097774826893989}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &144127259068175718
@@ -1517,6 +1612,7 @@ MonoBehaviour:
   - {fileID: 718729571141878625}
   - {fileID: 3148439617030711833}
   - {fileID: 3906069810800778108}
+  - {fileID: 4371460760667516937}
 --- !u!1 &6717545847177619509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,6 +2267,7 @@ GameObject:
   - component: {fileID: 3906069810800778108}
   - component: {fileID: 7643561236513201941}
   - component: {fileID: 5514891052961278240}
+  - component: {fileID: 5664730009205774345}
   - component: {fileID: 2995262570103666983}
   m_Layer: 0
   m_Name: Idle
@@ -2211,6 +2308,7 @@ MonoBehaviour:
   - {fileID: 7643561236513201941}
   - {fileID: 5514891052961278240}
   - {fileID: 2995262570103666983}
+  - {fileID: 5664730009205774345}
 --- !u!114 &7643561236513201941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2241,6 +2339,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParameterName: IsMove
+  pt: 4
+  intValue: 0
+  floatValue: 0
+  boolValue: 0
+--- !u!114 &5664730009205774345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425173526164112107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdce2586b9a3db848a71c925e112f96c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParameterName: IsBattle
   pt: 4
   intValue: 0
   floatValue: 0

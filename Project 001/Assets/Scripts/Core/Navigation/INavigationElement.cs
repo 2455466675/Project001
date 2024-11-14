@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Navigation
 {
-    public interface INavigationElement
+    public interface INavigationElement : ISubmit
     {
         /// <summary>
         /// ¾Û½¹

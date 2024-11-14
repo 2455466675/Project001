@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// ’Ω∂∑ ‰»Î-“∆∂Ø
     /// </summary>
 	public class FightMoveAction : InputActionWrapper
     {

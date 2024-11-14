@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System.Linq;
 using UnityEngine;
+using System.Text;
 
 namespace MVC
 {
@@ -371,6 +372,24 @@ namespace MVC
         {
             queryIndex = index;
             OnValueChanged();
+        }
+
+
+        [Button("Print")]
+        private void Print()
+        {
+            if (datas == null || datas.Count == 0)
+            {
+                Debug.Log("null");
+                return;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < datas.Count; i++)
+            {
+                builder.Append(datas[i].ToString());
+            }
+            Debug.Log(builder.ToString());
         }
     }
 }

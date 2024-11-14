@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// ½ÇÉ«ÒÆ¶¯
     /// </summary>
 	public class RoleMoveAction : InputActionWrapper
     {
@@ -36,7 +36,7 @@ namespace Game.Core
         public override void Execute()
         {
             Vector2 v = inputAction.ReadValue<Vector2>();           
-            GameCore.System.RoleSystem.Move(v.x, v.y);
+            GameCore.System.RoleSystem.Move(v);
         }
     }
 }

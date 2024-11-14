@@ -9,9 +9,11 @@ namespace Game.UI
 
         public ListProxy Proxy { get; private set; }
 
-        public NavigationListCommand(ListProxy proxy)
+        private int[] indexs;
+        public NavigationListCommand(ListProxy proxy, int[] indexs)
         {
             Proxy = proxy;
+            this.indexs = indexs;
         }
 
         public void OnPop()
@@ -21,7 +23,16 @@ namespace Game.UI
 
         public bool OnPush()
         {
-            return Proxy.InFocus(0);
+            int[] args;
+            if (indexs != null)
+            {
+                args = indexs;
+            }
+            else
+            {
+                args = new int[1] { 0 };
+            }
+            return Proxy.InFocus(args);
         }
 
         public bool OnRise()

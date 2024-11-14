@@ -17,7 +17,7 @@ namespace Game.System
         public ActorMotor motor;
         public ActionAssets actionAssets;
         
-        public Role Role { get; private set; }
+        public SceneRole Role { get; private set; }
         public Actor PrevActor => Role != null && Role.PrevRole != null ? Role.PrevRole.Actor : null;
         public Actor NextActor => Role != null && Role.NextRole != null ? Role.NextRole.Actor : null;
         public bool IsLeader => Role != null && Role.IsLeader;
@@ -40,9 +40,10 @@ namespace Game.System
             ac.Execute(this);
         }
 
-        public void SetRole(Role role)
+        public void SetRole(SceneRole role)
         {
             Role = role;
+            SetColloderEnabled(IsLeader);
         }
 
         public void SetPosition(Vector2 position)
@@ -73,13 +74,21 @@ namespace Game.System
             _collider.enabled = enabled;
         }
 
-        public void Move(float x, float y) 
-        { 
-            motor.Move(x, y);
+        public void Move(Vector2 dir) 
+        {
+            if (motor == null)
+            {
+                return;
+            }
+            motor.Move(dir);
         }
 
         public void Run(bool isRunning)
         {
+            if (motor == null)
+            {
+                return;
+            }
             motor.IsRunning = isRunning;
         }
 

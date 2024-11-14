@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-
 namespace MVC
 {
     /// <summary>
@@ -8,6 +5,8 @@ namespace MVC
     /// </summary>
 	public class DataProxy
 	{
+        public DataContainer Container => container;
+
         private DataContainer container;
         public DataProxy(DataContainer container)
         {
@@ -23,14 +22,17 @@ namespace MVC
         {
             container?.SetBaseValue(key, value);
         }
+
         public void SetBaseValue(string key, float value)
         {
             container?.SetBaseValue(key, value);
         }
+
         public void SetBaseValue(string key, bool value)
         {
             container?.SetBaseValue(key, value);
         }
+
         public void SetBaseValue(string key, string value)
         {
             container?.SetBaseValue(key, value);

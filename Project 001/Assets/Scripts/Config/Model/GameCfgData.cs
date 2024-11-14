@@ -36,6 +36,9 @@ namespace Game.Cfg
 			var _OverviewMenuCfgContainer = new OverviewMenuCfgContainer();
 			_OverviewMenuCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(OverviewMenuCfg), _OverviewMenuCfgContainer);
+			var _MonsterCfgContainer = new MonsterCfgContainer();
+			_MonsterCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(MonsterCfg), _MonsterCfgContainer);
 		}
 		public void Serialize(BinaryWriter writer)
 		{

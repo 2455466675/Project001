@@ -10,26 +10,26 @@ namespace Navigation
 	public sealed class GuidableItemEvent : MonoBehaviour
 	{
         [Serializable]
-        public class OnSubmitEvent : UnityEvent<GuidableItem>
+        public class GuideItemUnityEvent : UnityEvent<GuidableItem>
         {
         }
 
         [SerializeField]
-        private OnSubmitEvent onSubmitEvent;
+        private GuideItemUnityEvent onSubmitEvent;
         [SerializeField]
-        private OnSubmitEvent onSelectEvent;
+        private GuideItemUnityEvent onSelectEvent;
         [SerializeField]
-        private OnSubmitEvent onDeselectEvent;
+        private GuideItemUnityEvent onDeselectEvent;
         [SerializeField]
-        private OnSubmitEvent onOutFocusEvent;
+        private GuideItemUnityEvent onOutFocusEvent;
         [SerializeField]
-        private OnSubmitEvent onMoveUpEvent;
+        private GuideItemUnityEvent onMoveUpEvent;
         [SerializeField]
-        private OnSubmitEvent onMoveDownEvent;
+        private GuideItemUnityEvent onMoveDownEvent;
         [SerializeField]
-        private OnSubmitEvent onMoveLeftEvent;
+        private GuideItemUnityEvent onMoveLeftEvent;
         [SerializeField]
-        private OnSubmitEvent onMoveRightEvent;
+        private GuideItemUnityEvent onMoveRightEvent;
 
         public void OnSubmit(GuidableItem item)
         {

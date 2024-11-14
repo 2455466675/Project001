@@ -42,13 +42,18 @@ namespace Game.UI
         public void Show()
         {
             gameObject.SetActive(true);
-            canvasGroup.alpha = 1f;
+            SetAlpha(1f);
         }
 
         public void Hide()
         {
-            canvasGroup.alpha = 0f;
+            SetAlpha(0f);
             gameObject.SetActive(false);
+        }
+
+        public void SetAlpha(float alpha)
+        {
+            canvasGroup.alpha = alpha;
         }
 
         public void InFocus()

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// Ö÷½çÃæ
     /// </summary>
 	public class RoleMenuAction : InputActionWrapper
     {

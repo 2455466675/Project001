@@ -28,6 +28,8 @@ namespace MVC
     public interface IDataModel : IBindable
     {
         ValueType ValueType { get; }
+
+        bool IsDataBase => ValueType == ValueType.Int || ValueType == ValueType.Float || ValueType == ValueType.Bool || ValueType == ValueType.String;
     }
 
     /// <summary>
@@ -35,6 +37,8 @@ namespace MVC
     /// </summary>
 	public abstract class DataModel<T> : IDataModel where T : DataValue
     {
+        public string Key { get; protected set; }
+
         protected T value;
 
         public abstract ValueType ValueType { get; }

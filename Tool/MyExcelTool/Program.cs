@@ -495,6 +495,15 @@ namespace ExecelTool
                 Directory.CreateDirectory(outputPath);
                 Console.WriteLine($"创建文件夹:{outputPath}");
             }
+            else
+            {
+                //清空
+                string[] files = Directory.GetFiles(outputPath);
+                foreach (string file in files)
+                {
+                    File.Delete(file);
+                }
+            }
 
             //GenerateInterface(outputPath);
             GenerateCfgMap(model);

@@ -3,9 +3,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
 namespace MVC
 {
@@ -38,8 +35,9 @@ namespace MVC
 
         public DataContainer this[int index] => Get(index);
         
-        public DataCollection()
+        public DataCollection(string key)
         {
+            Key = key;
             value = new CollectionValue(NotifyChanged);
         }
 

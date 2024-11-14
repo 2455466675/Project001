@@ -11,6 +11,8 @@ namespace Game.UI
 
         public WindowId Id => (WindowId)window.Id;
 
+        public int Count => commands.Count;
+
         private Window window;
 
         private Stack<NavigationListCommand> commands;
@@ -27,9 +29,9 @@ namespace Game.UI
         }
 
         /// <summary>
-        /// 弹出最上面的一个列表
+        /// 弹出最上面的一个列表命令
         /// </summary>
-        /// <returns>是否已空</returns>
+        /// <returns>执行此操作后是否已空</returns>
         public bool Pop()
         {
             if (commands.Count <= 0)
@@ -45,6 +47,11 @@ namespace Game.UI
             return commands.Count <= 0;
         }
 
+        /// <summary>
+        /// 压入一个列表命令
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
         public bool Push(NavigationListCommand cmd)
         {
             if (cmd.OnPush())

@@ -73,7 +73,7 @@ namespace Game.System
         private void Cmd1001(object o)
         {
             GameCore.UI.Exit();
-            GameCore.System.FightSystem.Enter();            
+            GameCore.System.BattleSystem.Enter();            
         }
 
         private void Cmd1002(object o)

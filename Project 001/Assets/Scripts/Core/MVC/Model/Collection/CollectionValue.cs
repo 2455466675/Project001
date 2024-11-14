@@ -23,7 +23,7 @@ namespace MVC
 
         public DataContainer Append(bool isSilent = false)
         {
-            DataContainer item = new DataContainer();            
+            DataContainer item = new DataContainer(string.Empty);            
             return Append(item, isSilent);
         }
 
@@ -152,13 +152,15 @@ namespace MVC
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append($"count : {collection.Count}");
+            stringBuilder.Append("{");
+            stringBuilder.Append($"\tcount : {collection.Count}");
             stringBuilder.Append(Environment.NewLine);
             for (int i = 0; i < collection.Count; i++)
             {
-                stringBuilder.Append(collection[i].ToString());
+                stringBuilder.Append($"\t{collection[i]}");
                 stringBuilder.Append(Environment.NewLine);
             }
+            stringBuilder.Append("}");
             return stringBuilder.ToString();
         }
     }

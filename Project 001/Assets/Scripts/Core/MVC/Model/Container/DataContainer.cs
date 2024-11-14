@@ -1,24 +1,28 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MVC
 {
-    public sealed class DataContainer : DataModel<ContainerValue>
+    public sealed class DataContainer : DataModel<ContainerValue>, IEnumerable<IDataModel>
     {
         private static DataContainer root;
         public static DataContainer Root
         {
             get 
             {
-                if (root == null)
-                {
-                    root = new DataContainer();
-                }
                 return root;
             }
         }
 
+        public static void CreateRoot()
+        {
+            root ??= new DataContainer("Root");
+        }
+
         public override ValueType ValueType => ValueType.Container;
+
+        public int Count => value.Count;
 
         public ContainerValue Value
         {
@@ -43,8 +47,9 @@ namespace MVC
 
         private DataProxy proxy;
 
-        public DataContainer()
+        public DataContainer(string key)
         {
+            Key = key;
             value = new ContainerValue();
         }
 
@@ -133,6 +138,16 @@ namespace MVC
         public override string ToString()
         {
             return value.ToString();
+        }
+
+        public IEnumerator<IDataModel> GetEnumerator()
+        {
+            return Value.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Value.GetEnumerator();
         }
     }
 }

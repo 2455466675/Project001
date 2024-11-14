@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 namespace Game.Core
 {
     /// <summary>
-    /// 
+    /// 战斗输入-确定
     /// </summary>
 	public class FightSubmitAction : InputActionWrapper
     {

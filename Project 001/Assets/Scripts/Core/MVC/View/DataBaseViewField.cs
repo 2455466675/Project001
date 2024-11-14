@@ -57,6 +57,11 @@ namespace MVC
         {
             action?.Invoke();
         }
+
+        public override string ToString()
+        {
+            return db.ToString();
+        }
     }
 }
 

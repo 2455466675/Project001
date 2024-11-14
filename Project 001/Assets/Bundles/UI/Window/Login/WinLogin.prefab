@@ -911,8 +911,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8056677630369114367}
-  - component: {fileID: 4474726648856199925}
   - component: {fileID: 2162882451137855227}
+  - component: {fileID: 7438676107159662115}
   m_Layer: 5
   m_Name: LoginList
   m_TagString: Untagged
@@ -943,29 +943,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4474726648856199925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5126421507104977415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e690290f9b726b548b8f1fd5397dff6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listName: 1
-  listType: 0
-  rowCount: 0
-  columnCount: 0
-  childAlignment: 0
-  items:
-  - {fileID: 7925187376658037911}
-  - {fileID: 6686765115134548895}
-  - {fileID: 5176837343266776108}
-  - {fileID: 5347722467167653831}
-  isLoop: 1
 --- !u!114 &2162882451137855227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -982,7 +959,32 @@ MonoBehaviour:
   field: 
   queryIndex: 0
   linqItems: []
-  list: {fileID: 4474726648856199925}
+  list: {fileID: 7438676107159662115}
+--- !u!114 &7438676107159662115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5126421507104977415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e011a86b808cd4d9dfaf406340fc08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listName: 1
+  viewport: {fileID: 0}
+  content: {fileID: 0}
+  listType: 0
+  rowCount: 0
+  columnCount: 0
+  childAlignment: 0
+  items:
+  - {fileID: 7925187376658037911}
+  - {fileID: 6686765115134548895}
+  - {fileID: 5176837343266776108}
+  - {fileID: 5347722467167653831}
+  isLoop: 1
 --- !u!1 &6552007790115428480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lists:
-  - {fileID: 4474726648856199925}
+  - {fileID: 7438676107159662115}
   group: 1
   winType: 1
   canvasGroup: {fileID: 4414816962690189924}

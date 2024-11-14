@@ -37,7 +37,7 @@ namespace Game.Core
             LanguageItem item = GetLanguageItem(id);
             if (item == null)
             {
-                return string.Empty;
+                return id.ToString();
             }
             
             return item.TextValue;
@@ -57,7 +57,7 @@ namespace Game.Core
             LanguageCfg cfg = GameCore.Cfg.Find<LanguageCfg>(id);            
             if(cfg == null)
             {
-                MLog.Error($"没有此语言配置:{id}");
+                //MLog.Error($"没有此语言配置:{id}");
                 return null;
             }
 

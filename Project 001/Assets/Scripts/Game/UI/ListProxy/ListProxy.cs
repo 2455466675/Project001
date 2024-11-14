@@ -1,6 +1,7 @@
 using UnityEngine;
 using Navigation;
 using Cysharp.Threading.Tasks;
+using System;
 
 namespace Game.UI
 {
@@ -22,32 +23,58 @@ namespace Game.UI
         /// </summary>
         public bool IsReady => (!list.IsValid) || (list.IsValid && list.UpateTime > 0);
 
+        private event Action<GuidableItem[]> OnSubmitEvent;
+
         public abstract ListName Name { get; }
         public abstract WindowId WindowId { get; }
 
+        /// <summary>
+        /// 代理数据准备，要确保在这里将list实例获取到
+        /// </summary>
+        /// <returns></returns>
         public abstract UniTask Precondition();
 
-        public void Exit()
+        /// <summary>
+        /// 注册点击事件
+        /// </summary>
+        /// <param name="action"></param>
+        public void Register(Action<GuidableItem[]> action)
         {
-            list.Exit();
+            if (action == null)
+            {
+                return;
+            }
+            OnSubmitEvent += action;
         }
 
-        public bool InFocus(params int[] indexs)
+        public virtual void OnSubmit()
+        {
+            list.OnSubmit();
+            OnSubmitEvent?.Invoke(list.SelectedItems);
+        }
+
+        public virtual void Exit()
+        {
+            list.Exit();
+            OnSubmitEvent = null;
+        }
+
+        public virtual bool InFocus(params int[] indexs)
         {
             return list.InFocus(indexs);
         }
 
-        public bool Move(Vector2 dir)
+        public virtual bool Move(Vector2 dir)
         {
             return list.Move(dir);
         }
 
-        public bool OutFocus()
+        public virtual bool OutFocus()
         {
             return list.OutFocus();
         }
 
-        public bool Refocus()
+        public virtual bool Refocus()
         {
             return list.Refocus();
         }

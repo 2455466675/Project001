@@ -357,6 +357,10 @@ MonoBehaviour:
   listName: 6
   viewport: {fileID: 3546981034986741695}
   content: {fileID: 6830707266124031546}
+  canvasGroup: {fileID: 0}
+  OnSubmitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   item: {fileID: 6573697544751742892}
 --- !u!1 &3762072944342767450
 GameObject:
@@ -506,6 +510,10 @@ MonoBehaviour:
   listName: 5
   viewport: {fileID: 5366960159446650959}
   content: {fileID: 827937126521531485}
+  canvasGroup: {fileID: 0}
+  OnSubmitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   item: {fileID: 1021114676368089134}
 --- !u!1 &5781605893793254859
 GameObject:
@@ -1149,7 +1157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de67174b4e8b31d448452899b29a0b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 7914548517196069825}
+  parent: {fileID: 8088328469161220206}
   dataSet: {fileID: 7140521291362838331}
   dataPath: Current
 --- !u!1 &8610283666692279680

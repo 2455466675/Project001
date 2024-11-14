@@ -1,7 +1,8 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
+using System.Text;
 using UnityEngine;
 
 namespace MVC
@@ -13,6 +14,7 @@ namespace MVC
 	{
         [SerializeField]
         private string[] fields;
+        public int FieldCount => fields != null ? fields.Length : 0;
         public int Count => viewFields != null ? viewFields.Length : 0;
         public DataBaseViewField MainField => viewFields?[0];
         public DataBaseViewField this[int index] => viewFields?[index];
@@ -72,6 +74,23 @@ namespace MVC
                 }
             }
             viewFields = null;
+        }
+
+        [Button("Print")]
+        private void Print()
+        {
+            if (Count == 0)
+            {
+                Debug.Log("null");
+                return;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < viewFields.Length; i++)
+            {
+                builder.Append(viewFields[i].ToString());
+            }
+            Debug.Log(builder.ToString());
         }
     }
 }

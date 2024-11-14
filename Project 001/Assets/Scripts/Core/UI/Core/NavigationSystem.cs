@@ -4,6 +4,8 @@ using UnityEngine;
 using Navigation;
 using Cysharp.Threading.Tasks;
 using Game.System;
+using System;
+using static UnityEditor.Progress;
 
 namespace Game.UI
 {
@@ -12,16 +14,18 @@ namespace Game.UI
     /// </summary>
 	public class NavigationSystem
 	{     
-        private GuidableItem[] current;
         public GuidableItem[] Current => current;
+        private GuidableItem[] current;
+        private NavigationList currentList;
 
         private Dictionary<ListName, ListProxy> proxys;
-
         private Stack<NavigationPanelCommand> commands;
+        private Stack<NavigationListCommand> listCmds;
 
         public NavigationSystem()
         {
             commands = new Stack<NavigationPanelCommand>();
+            listCmds = new Stack<NavigationListCommand>();
 
             proxys = new Dictionary<ListName, ListProxy>();
             proxys[ListName.Login] = new LoginListProxy();
@@ -30,15 +34,17 @@ namespace Game.UI
             proxys[ListName.PackageList] = new PackageListListProxy();
             proxys[ListName.GmMenuList] = new GmMenuListProxy();
             proxys[ListName.GmItemList] = new GmItemListProxy();
-            proxys[ListName.FightPlayerList] = new FightPlayerListProxy();
-            proxys[ListName.FightEnemyList] = new FightEnemyListProxy();
+            proxys[ListName.BattlePlayerList] = new BattlePlayerListProxy();
+            proxys[ListName.BattleEnemyList] = new BattleEnemyListProxy();
+            proxys[ListName.BattleActionList] = new BattleActionListProxy();
+            proxys[ListName.BattleActionList2] = new BattleActionList2Proxy();
         }
 
-        public void Enter(ListName listName)
+        public void Enter(ListName listName, Action<GuidableItem[]> submitAction, int[] indexs)
         {
             if (proxys.TryGetValue(listName, out ListProxy proxy))
             {
-                EnterInner(proxy);
+                EnterInner(proxy, submitAction, indexs);
             }
             else
             {
@@ -46,12 +52,24 @@ namespace Game.UI
             }
         }
 
+        /// <summary>
+        /// 程序内部强制退出
+        /// </summary>
         public void Exit()
         {
-            commands.Clear();
-            GameCore.StateController.SwitchModel(GameMode.SCENE);
+            while (listCmds.Count > 0)
+            {
+                NavigationListCommand cmd = listCmds.Pop();
+                cmd.OnPop();
+            }
+            Deselect();
+            ExitInner();
         }
 
+        /// <summary>
+        /// 后退键
+        /// </summary>
+        /// <returns></returns>
         public bool Back()
         {
             if (commands.TryPeek(out NavigationPanelCommand cmd))
@@ -74,11 +92,14 @@ namespace Game.UI
 
             if (commands.Count <= 0)
             {
-                Exit();       
+                ExitInner();
             }
             return true;
         }
 
+        /// <summary>
+        /// ESC键
+        /// </summary>
         public void Close()
         {
             while (commands.Count > 0 && Back())
@@ -97,6 +118,11 @@ namespace Game.UI
 
         public void Submit()
         {
+            if (commands.TryPeek(out NavigationPanelCommand cmd))
+            {
+                cmd.Peek().Proxy.OnSubmit();
+            }
+
             if (current != null)
             {
                 foreach (var item in current)
@@ -106,21 +132,16 @@ namespace Game.UI
             }
         }
 
-        public void Select(params GuidableItem[] items)
+        public void Select(NavigationList list, params GuidableItem[] items)
         {
-            if (current != null)
-            {
-                foreach (var item in current)
-                {
-                    item.OnDeselect();
-                }
-            }
+            Deselect();
 
-            if (items == null || items.Length == 0)
+            if (list == null || items == null || items.Length == 0)
             {
                 return;
             }
             
+            currentList = list;
             current = items;
 
             if (current != null)
@@ -132,7 +153,7 @@ namespace Game.UI
             }
         }
 
-        private async void EnterInner(ListProxy proxy)
+        private async void EnterInner(ListProxy proxy, Action<GuidableItem[]> submitAction, int[] indexs)
         {            
             await proxy.Precondition();
 
@@ -147,14 +168,26 @@ namespace Game.UI
                 await UniTask.DelayFrame(1);
             }
 
-            NavigationListCommand listCmd = new NavigationListCommand(proxy);
+            proxy.Register(submitAction);
 
+            NavigationListCommand listCmd = new NavigationListCommand(proxy, indexs);
+            //依附的界面已经打开了
             if (commands.TryPeek(out NavigationPanelCommand popCmd) && popCmd.Id == proxy.WindowId)
             {
-                popCmd.Push(listCmd);
+                //直接加入
+                if (popCmd.Push(listCmd) && popCmd.OnPush())
+                {
+
+                }
+                else
+                {
+                    MLog.Error($"此列表没有有效目标{proxy.Name}, {proxy.WindowId}");
+                    Back();
+                }
             }
             else
             {
+                //新建一个界面命令
                 NavigationPanelCommand panelCmd = new NavigationPanelCommand(proxy.Parent);
                 if (panelCmd.Push(listCmd) && panelCmd.OnPush())
                 {
@@ -164,11 +197,32 @@ namespace Game.UI
                 else
                 {
                     MLog.Error($"此列表没有有效目标{proxy.Name}, {proxy.WindowId}");
+                    panelCmd.Pop();
+                    panelCmd.OnPop();
                     return;
                 }
             }
 
+            listCmds.Push(listCmd);
             GameCore.StateController.SwitchModel(GameMode.UI);
+        }
+
+        private void ExitInner()
+        {
+            listCmds.Clear();
+            commands.Clear();
+            GameCore.StateController.SwitchModel(GameMode.SCENE);
+        }
+
+        private void Deselect()
+        {
+            if (current != null)
+            {                
+                for (int i = 0; i < current.Length; i++)
+                {
+                    current[i].OnDeselect();
+                }
+            }
         }
     }
 }

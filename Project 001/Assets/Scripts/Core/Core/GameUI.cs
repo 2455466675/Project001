@@ -3,6 +3,7 @@ using UnityEngine;
 using Game.Core;
 using Navigation;
 using Cysharp.Threading.Tasks;
+using System;
 
 namespace Game.UI
 {
@@ -15,7 +16,7 @@ namespace Game.UI
         public Camera UICamera => UIRoot != null ? UIRoot.UICamera : null;
 
         public Window TopWindow => windowSystem.Current;
-
+        
         private WindowSystem windowSystem;
         private NavigationSystem navigationSystem;
 
@@ -31,12 +32,14 @@ namespace Game.UI
         }
 
         /// <summary>
-        /// 进入UI
+        /// 进入一个选项列表
         /// </summary>
-        /// <param name="listName"></param>
-        public void Enter(ListName listName)
+        /// <param name="listName">列表名</param>
+        /// <param name="submitAction">列表点击事件</param>
+        /// <param name="indexs">默认选中</param>
+        public void Enter(ListName listName, Action<GuidableItem[]> submitAction = null, int[] indexs = null)
         {
-            navigationSystem.Enter(listName);
+            navigationSystem.Enter(listName, submitAction, indexs);
         }
 
         /// <summary>
@@ -81,9 +84,9 @@ namespace Game.UI
             navigationSystem.Close();
         }
 
-        public void Select(params GuidableItem[] items)
+        public void Select(NavigationList list, params GuidableItem[] items)
         {
-            navigationSystem.Select(items);
+            navigationSystem.Select(list, items);
         }
 
         public Window ShowWindow(WindowId id)
@@ -109,6 +112,11 @@ namespace Game.UI
         public bool WindowIsTop(WindowId id)
         {
             return windowSystem.WindowIsTop(id);
+        }
+
+        public GuidableItem[] CurrentGuidableItem()
+        {
+            return navigationSystem.Current;
         }
     }
 }

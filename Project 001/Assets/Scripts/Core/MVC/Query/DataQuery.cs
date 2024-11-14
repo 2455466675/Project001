@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MVC
@@ -10,14 +8,22 @@ namespace MVC
     [RequireComponent (typeof (DataSet))]
 	public class DataQuery : MonoBehaviour
 	{
-        public DataQuery parent;
-        public DataSet dataSet;
-        public string dataPath;
+        [SerializeField]
+        private DataSet parent;
+        [SerializeField]
+        private DataSet dataSet;
+        [SerializeField]
+        private string dataPath;
+        public bool IsQueried { get; private set; }
 
-        private DataContainer datum;
-        private bool isQueried;
-        private event Action OnDatumChangedEvent;
-     
+        private void Awake()
+        {
+            if (dataSet != null)
+            {
+                dataSet.SetQuery(this);
+            }
+        }
+
         private void Start()
         {
             if (parent != null)
@@ -36,62 +42,19 @@ namespace MVC
             }
         }
 
-        public void Bind(Action action)
-        {
-            if (action == null)
-            {
-                return;
-            }
-            OnDatumChangedEvent += action;
-        }
-
-        public void Unbind(Action action)
-        {
-            if (action == null)
-            {
-                return;
-            }
-            OnDatumChangedEvent -= action;
-        }
-
-        private DataContainer FindDataContainer(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                return null;
-            }
-
-            if (datum == null)
-            {
-                if (isQueried)
-                {
-                    return null;
-                }
-                else
-                {
-                    Query();
-                    isQueried = true;
-                }
-            }
-
-            if (datum == null)
-            {
-                return null;
-            }
-
-            return datum.FindDataContainer(path);
-        }
-
-        private void Query()
+        public void Query()
         {
             if (string.IsNullOrEmpty(dataPath))
             {
                 return;
             }
-            if (isQueried)
+            if (IsQueried)
             {
                 return;
             }
+
+            DataContainer datum;
+
             if (parent == null)
             {
                 datum = DataContainer.Root.FindDataContainer(dataPath);
@@ -104,22 +67,17 @@ namespace MVC
             {
                 return;
             }
-            datum.Bind(OnDatumChanged, true);
-            isQueried = true;
+
+            IsQueried = true;
             if (dataSet != null)
             {
                 dataSet.SetDatum(datum);
             }
         }
 
-        private void OnDatumChanged()
-        {
-            OnDatumChangedEvent?.Invoke();
-        }
-
         private void OnParentDatumChanged()
         {
-            isQueried = false;
+            IsQueried = false;
             Query();
         }
 
