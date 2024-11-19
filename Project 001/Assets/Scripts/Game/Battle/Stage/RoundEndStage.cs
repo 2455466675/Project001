@@ -3,20 +3,20 @@ namespace Game.System
     /// <summary>
     /// 回合结束阶段
     /// </summary>
-    public class RoundEndState : BattleStepBaseState
+    public class RoundEndStage : BattleStageBase
     {
-        public RoundEndState(BattleRoundController controller) : base(controller)
+        public RoundEndStage(BattleRoundController controller) : base(controller)
         {
         }
 
-        public override BattleStep Step => BattleStep.RoundEnd;
+        public override BattleStage Stage => BattleStage.RoundEnd;
 
         public override void Enter()
         {
             //1、回合结束事件触发（buff等等）
             //2、进入下一个回合            
             MLog.Log("回合结束阶段");
-            controller.SwitchState(BattleStep.RoundStart);
+            controller.SwitchState(BattleStage.RoundStart);
         }
     }
 }

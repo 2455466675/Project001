@@ -62,6 +62,13 @@ namespace Game.UI
                 NavigationListCommand cmd = listCmds.Pop();
                 cmd.OnPop();
             }
+
+            while (commands.Count > 0)
+            {
+                NavigationPanelCommand cmd = commands.Pop();
+                cmd.OnPop();
+            }
+
             Deselect();
             ExitInner();
         }

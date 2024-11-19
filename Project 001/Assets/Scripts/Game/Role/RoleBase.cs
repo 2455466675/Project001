@@ -3,10 +3,11 @@ using MVC;
 namespace Game.System
 {
     /// <summary>
-    /// 游戏角色类
+    /// 游戏角色
     /// </summary>
 	public class RoleBase : DataProxy
     {
+        public int Id { get; protected set; }
         public Actor Actor { get; protected set; }
 
         public RoleBase(DataContainer container) : base(container)

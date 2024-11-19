@@ -5,38 +5,38 @@ namespace Game.System
     /// <summary>
     /// 角色行动阶段
     /// </summary>
-    public class CharacterActionState : BattleStepBaseState
+    public class RoleActionStage : BattleStageBase
     {
         /// <summary>
         /// 确定行动角色
         /// </summary>
-        private readonly BattleRoleAction characterElected;
+        private readonly BattleRoleActionStep characterElected;
         /// <summary>
         /// 角色就位
         /// </summary>
-        private readonly BattleRoleAction characterTakePlace;
+        private readonly BattleRoleActionStep characterTakePlace;
         /// <summary>
         /// 动作选择
         /// </summary>
-        private readonly BattleRoleAction characterChoiceAction;
+        private readonly BattleRoleActionStep characterChoiceAction;
         /// <summary>
         /// 动作生效
         /// </summary>
-        private readonly BattleRoleAction characterActionEffect;
+        private readonly BattleRoleActionStep characterActionEffect;
         /// <summary>
         /// 动作结算
         /// </summary>
-        private readonly BattleRoleAction characterActionClearing;
+        private readonly BattleRoleActionStep characterActionClearing;
         /// <summary>
         /// 状态结束
         /// </summary>
-        private readonly BattleRoleAction characterActionEnd;
+        private readonly BattleRoleActionStep characterActionEnd;
         /// <summary>
         /// 状态参数
         /// </summary>
-        private readonly BattleRoleActionArg characterActionArg;
+        private readonly BattleRoleActionStepArg characterActionArg;
 
-        public CharacterActionState(BattleRoundController controller) : base(controller)
+        public RoleActionStage(BattleRoundController controller) : base(controller)
         {
             characterElected = new BattleRoleActionElected(controller);
             characterTakePlace = new BattleRoleTakePlace(controller);
@@ -45,10 +45,10 @@ namespace Game.System
             characterActionClearing = new BattleRoleActionClearing(controller);
             characterActionEnd = new BattleRoleActionEnd(controller);
 
-            characterActionArg = new BattleRoleActionArg();
+            characterActionArg = new BattleRoleActionStepArg();
         }
 
-        public override BattleStep Step => BattleStep.CharacterAction;
+        public override BattleStage Stage => BattleStage.CharacterAction;
 
         public override void Enter()
         {

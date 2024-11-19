@@ -7,7 +7,7 @@ namespace Game.System
     /// <summary>
     /// 5、动作结算
     /// </summary>
-    public class BattleRoleActionClearing : BattleRoleAction
+    public class BattleRoleActionClearing : BattleRoleActionStep
     {
         public BattleRoleActionClearing(BattleRoundController controller) : base(controller)
         {
@@ -23,7 +23,7 @@ namespace Game.System
         //   回合是否结束
         //   结束 =》回合结束状态
         //   没有 =》下一个角色行动
-        public override IEnumerator Execute(BattleRoleActionArg arg)
+        public override IEnumerator Execute(BattleRoleActionStepArg arg)
         {
             MLog.Log("CharacterActionClearing");
             arg.State = StepState.Clearing;

@@ -43,7 +43,7 @@ namespace Game.Core
             MLog.Log("º”‘ÿ≥°æ∞Ω· ¯");
             GameCore.StateController.SwitchModel(GameMode.SCENE);
 
-            GameCore.System.RoleSystem.Init();
+            GameCore.System.PartySystem.Init();
         }
     }
 }

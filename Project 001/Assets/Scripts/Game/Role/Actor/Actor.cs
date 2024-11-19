@@ -1,6 +1,7 @@
 using Game.System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Game.System
 {
@@ -17,7 +18,7 @@ namespace Game.System
         public ActorMotor motor;
         public ActionAssets actionAssets;
         
-        public SceneRole Role { get; private set; }
+        public PartyRole Role { get; private set; }
         public Actor PrevActor => Role != null && Role.PrevRole != null ? Role.PrevRole.Actor : null;
         public Actor NextActor => Role != null && Role.NextRole != null ? Role.NextRole.Actor : null;
         public bool IsLeader => Role != null && Role.IsLeader;
@@ -40,7 +41,7 @@ namespace Game.System
             ac.Execute(this);
         }
 
-        public void SetRole(SceneRole role)
+        public void SetRole(PartyRole role)
         {
             Role = role;
             SetColloderEnabled(IsLeader);

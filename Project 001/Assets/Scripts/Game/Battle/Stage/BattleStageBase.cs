@@ -1,6 +1,6 @@
 namespace Game.System
 {
-    public enum BattleStep
+    public enum BattleStage
     {
         /// <summary>
         /// Õ½¶·×¼±¸½×¶Î
@@ -42,13 +42,13 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-    public abstract class BattleStepBaseState
+    public abstract class BattleStageBase
     {
-        public abstract BattleStep Step { get; }
+        public abstract BattleStage Stage { get; }
 
         protected BattleRoundController controller;
 
-        public BattleStepBaseState(BattleRoundController controller)
+        public BattleStageBase(BattleRoundController controller)
         {
             this.controller = controller;
         }

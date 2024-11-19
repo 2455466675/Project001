@@ -55,7 +55,12 @@ MonoBehaviour:
   queryIndex: 0
   linqItems:
   - where:
-      groups: []
+      groups:
+      - type: 0
+        conditions:
+        - key: valid
+          type: 0
+          value: true
     order:
       conditons:
       - key: id
@@ -73,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e690290f9b726b548b8f1fd5397dff6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listName: 0
+  listName: 999
   viewport: {fileID: 2177903419386602600}
   content: {fileID: 1044800866318106829}
   canvasGroup: {fileID: 0}
@@ -262,7 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lists: []
   group: 0
-  winType: 1
+  winType: 0
   canvasGroup: {fileID: 1925771241319018839}
 --- !u!225 &1925771241319018839
 CanvasGroup:
@@ -312,7 +317,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 40}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2588983403447256109
 CanvasRenderer:
@@ -859,4 +864,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 4830629083510767426}
   dataSet: {fileID: 655844915072796454}
-  dataPath: CharacterData
+  dataPath: RoleData

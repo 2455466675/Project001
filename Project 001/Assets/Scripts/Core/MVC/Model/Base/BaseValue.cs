@@ -133,7 +133,7 @@ namespace MVC
                 }
                 if (valueType == ValueType.Bool)
                 {
-                    return boolValue.ToString();
+                    return boolValue.ToString().ToLower();
                 }
                 return string.Empty;
             }

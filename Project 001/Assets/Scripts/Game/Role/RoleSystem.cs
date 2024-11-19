@@ -1,73 +1,69 @@
 using MVC;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.System
 {
     /// <summary>
-    /// 
+    /// 玩家角色（数据）
     /// </summary>
 	public class RoleSystem : DataProxy, IGameSystem
-    {        
-        public SceneRole[] roles;
-        public SceneRole Leader => roles != null && roles.Length > 0 ? roles[0] : null;
+    {
+        private DataCollection roles;
+
+        private Dictionary<int, RoleData> datas;
 
         public RoleSystem(DataContainer container) : base(container)
         {
-        }
+            datas = new Dictionary<int, RoleData>();
 
-        public void Init()
-        {
-            //roles = new Role[2];
+            roles = CreateCollection("Roles");
 
-            //roles[0] = new Role(1001);
-            //roles[1] = new Role(1002);
-
-            //roles[0].NextRole = roles[1];
-            //roles[1].PreviousRole = roles[0];
-
-            int count = 5;
-            roles = new SceneRole[count];
-
-            DataCollection datas = CreateCollection("Roles");
-
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < 5; i++)
             {
-                DataContainer item = datas.Append();
-                roles[i] = new SceneRole(1001 + i, item);
-            }
-           
-            roles[0].IsLeader = true;
-            roles[0].NextRole = roles[1];
-
-            roles[1].PrevRole = roles[0];
-            roles[1].NextRole = roles[2];
-
-            roles[2].PrevRole = roles[1];
-            roles[2].NextRole = roles[3];
-  
-            roles[3].PrevRole = roles[2];
-            roles[3].NextRole = roles[4];
-
-            roles[4].PrevRole = roles[3];
-        }
-
-        public void Run(bool isRunning)
-        {
-            for (int i = 0; i < roles.Length; i++)
-            {
-                roles[i].Run(isRunning);
+                DataContainer item = roles.Append();
+                int id = 1001 + i;
+                item.SetBaseValue("id", id);
+                item.SetBaseValue("hp", i * 100 + i);
+                item.SetBaseValue("maxHp", (i + 1) * 100 + i);
+                item.SetBaseValue("sp", i * 50 + i);
+                datas[id] = new RoleData(item);
             }
         }
 
-        public void Move(Vector2 dir)
+        /// <summary>
+        /// 绑定数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        public RoleData BindRoleData(int id, RoleBase role)
         {
-            Leader.Move(dir);            
+            RoleData data;
+            if (datas.TryGetValue(id, out data))
+            {
+                role.SetContainerLinker("RoleData", data.Container);
+            }
+            else
+            {
+                DataContainer item = roles.Append();
+                item.SetBaseValue("id", id);
+                data = new RoleData(item);
+                datas[id] = data;
+            }
+
+            return data;
         }
 
-        public void Stop()
+        public RoleData GetRoleData(int id)
         {
-            Leader.Move(new Vector2(0, 0));
+            if (datas.ContainsKey(id))
+            {
+                return datas[id];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

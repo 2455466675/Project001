@@ -5,16 +5,16 @@ namespace Game.System
     /// <summary>
     /// 6¡¢×´Ì¬½áÊø
     /// </summary>
-	public class BattleRoleActionEnd : BattleRoleAction
+	public class BattleRoleActionEnd : BattleRoleActionStep
     {
         public BattleRoleActionEnd(BattleRoundController controller) : base(controller)
         {
         }
 
-        public override IEnumerator Execute(BattleRoleActionArg arg)
+        public override IEnumerator Execute(BattleRoleActionStepArg arg)
         {
             arg.State = StepState.End;
-            controller.SwitchState(BattleStep.CharacterAction);
+            controller.SwitchState(BattleStage.CharacterAction);
             yield return null;
         }
     }

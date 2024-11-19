@@ -86,6 +86,10 @@ namespace Navigation
                 return;
             }
             ListName listName = list.listName;
+            if (listName == ListName.Static)
+            {
+                return;
+            }
             if (listName == ListName.None)
             {
                 MLog.Error("未定义的列表");

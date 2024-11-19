@@ -30,13 +30,13 @@ namespace Game.Core
         public override void OnCanceled(InputAction.CallbackContext obj)
         {
             GameCore.Input.PopAction(this);
-            GameCore.System.RoleSystem.Stop();
+            GameCore.System.PartySystem.Stop();
         }
 
         public override void Execute()
         {
             Vector2 v = inputAction.ReadValue<Vector2>();           
-            GameCore.System.RoleSystem.Move(v);
+            GameCore.System.PartySystem.Move(v);
         }
     }
 }

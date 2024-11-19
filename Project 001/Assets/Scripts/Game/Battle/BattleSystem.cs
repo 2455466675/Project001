@@ -1,3 +1,4 @@
+using Game.Cfg;
 using MVC;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,8 @@ namespace Game.System
     /// </summary>
 	public class BattleSystem : DataProxy, IGameSystem
     {
-        private List<BattleRole> playerCharacters;
-        private List<BattleRole> enemyCharacters;
+        private List<BattleRole> playerRoles;
+        private List<BattleRole> enemyRoles;
 
         private BattleRoundController roundController;
 
@@ -21,31 +22,34 @@ namespace Game.System
             DataCollection playerPointList = CreateCollection("PlayerList");
             DataCollection enemyPointList = CreateCollection("EnemyList");
 
-            playerCharacters = new List<BattleRole>();
-            enemyCharacters = new List<BattleRole>();
+            playerRoles = new List<BattleRole>();
+            enemyRoles = new List<BattleRole>();
 
             for (int i = 0; i < 9; i++)
             {
                 DataContainer item = enemyPointList.Append();
-                BattleRole character = new BattleEnemyRole(i, item);
-                enemyCharacters.Add(character);
+                BattleRole role = new BattleEnemyRole(i, item);
+                enemyRoles.Add(role);
             }
 
             for (int i = 0; i < 4; i++)
             {
                 DataContainer item = playerPointList.Append();
-                BattleRole character = new BattlePlayerRole(i, item);
-                playerCharacters.Add(character);
+                BattleRole role = new BattlePlayerRole(i, item);
+                playerRoles.Add(role);
             }
 
             DataCollection actionList = CreateCollection("ActionList");
-            for (int i = 0; i < 20; i++)
-            {
-                DataContainer item = actionList.Append();
-                item.SetBaseValue("id", i);
-                item.SetBaseValue("name", $"Action_{i}");
-            }
 
+            List<BattleRoleActionCfg> cfgList = GameCore.Cfg.FindAll<BattleRoleActionCfg>();
+            for (int i = 0; i < cfgList.Count; i++)
+            {
+                BattleRoleActionCfg cfg = cfgList[i];
+                DataContainer item = actionList.Append();
+                item.SetBaseValue("id", cfg.Id);
+                item.SetBaseValue("name", cfg.Name);
+            }
+            
             DataCollection actionList2 = CreateCollection("ActionList2");
             for (int i = 0; i < 20; i++)
             {
@@ -79,17 +83,17 @@ namespace Game.System
 
             GameCore.Scene.characterContainer.gameObject.SetActive(false);
 
-            foreach (var character in enemyCharacters)
+            foreach (var character in enemyRoles)
             {
                 character.Reset();
             }
 
-            foreach (var character in playerCharacters)
+            foreach (var character in playerRoles)
             {
                 character.Reset();
             }
 
-            List<BattleRole> characters = new List<BattleRole>();
+            List<BattleRole> roles = new List<BattleRole>();
 
             int[] ids = new int[9]
             {
@@ -98,10 +102,10 @@ namespace Game.System
 
             for (int i = 0; i < ids.Length; i++)
             {
-                enemyCharacters[i].UpdateCfg(ids[i]);
+                enemyRoles[i].UpdateCfg(ids[i]);
                 if (ids[i] > 0)
                 {
-                    characters.Add(enemyCharacters[i]);
+                    roles.Add(enemyRoles[i]);
                 }
             }
 
@@ -112,19 +116,19 @@ namespace Game.System
 
             for (int i = 0; i < ids2.Length; i++)
             {
-                playerCharacters[i].UpdateCfg(ids2[i]);
+                playerRoles[i].UpdateCfg(ids2[i]);
                 if (ids2[i] > 0)
                 {
-                    characters.Add(playerCharacters[i]);
+                    roles.Add(playerRoles[i]);
                 }
 
-                if (playerCharacters[i].Actor != null)
+                if (playerRoles[i].Actor != null)
                 {
-                    playerCharacters[i].Actor.PlayAction("battle_idle");
+                    playerRoles[i].Actor.PlayAction("battle_idle");
                 }
             }
 
-            roundController.StartFight(characters);
+            roundController.StartFight(roles);
         }
     }
 }

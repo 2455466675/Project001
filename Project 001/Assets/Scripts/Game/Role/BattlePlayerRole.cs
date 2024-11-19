@@ -7,13 +7,15 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-	public class BattlePlayerRole : BattleRole
+	public class BattlePlayerRole : BattleRole, IRoleData
     {
         public override string ActorPath => cfg != null ? cfg.PrefabPath : string.Empty;
 
         public override BattleRoleType FightCharacterType => BattleRoleType.Player;
 
         private RoleCfg cfg;
+
+        private RoleData roleData;
 
         public BattlePlayerRole(int index, DataContainer container) : base(index, container)
         {
@@ -51,6 +53,14 @@ namespace Game.System
             }
 
             RefreshActor();
+
+            Id = cfgId;
+            roleData = GameCore.System.RoleSystem.BindRoleData(cfgId, this);
+        }
+
+        public RoleData GetRoleData()
+        {
+            return roleData;
         }
     }
 }

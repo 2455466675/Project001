@@ -23,18 +23,11 @@ namespace Game.System
 
         public virtual string ActorPath { get; }
 
-        public DataContainer CharacterData { get; private set; }
-
         public BattleRole(int index, DataContainer container) : base(container)
         {
             Index = index;
-            SetBaseValue("id", index);
+            SetBaseValue("index", index);
             SetBaseValue("valid", false);
-
-            CharacterData = CreateContainer("CharacterData");
-
-            CharacterData.SetBaseValue("hp", UnityEngine.Random.Range(10, 100));
-            CharacterData.SetBaseValue("maxHp", UnityEngine.Random.Range(100, 150));
         }
 
         /// <summary>

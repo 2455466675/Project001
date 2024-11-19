@@ -5,13 +5,13 @@ namespace Game.System
     /// <summary>
     /// 确定行动角色
     /// </summary>
-    public class BattleRoleActionElected : BattleRoleAction
+    public class BattleRoleActionElected : BattleRoleActionStep
     {
         public BattleRoleActionElected(BattleRoundController controller) : base(controller)
         {
         }
 
-        public override IEnumerator Execute(BattleRoleActionArg arg)
+        public override IEnumerator Execute(BattleRoleActionStepArg arg)
         {
             MLog.Log("CharacterElected");
             arg.State = StepState.Effect;

@@ -39,6 +39,9 @@ namespace Game.Cfg
 			var _MonsterCfgContainer = new MonsterCfgContainer();
 			_MonsterCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(MonsterCfg), _MonsterCfgContainer);
+			var _BattleRoleActionCfgContainer = new BattleRoleActionCfgContainer();
+			_BattleRoleActionCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(BattleRoleActionCfg), _BattleRoleActionCfgContainer);
 		}
 		public void Serialize(BinaryWriter writer)
 		{

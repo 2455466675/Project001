@@ -4,13 +4,13 @@ namespace Game.System
     /// 回合开始阶段
     /// </summary>
 
-    public class RoundStartState : BattleStepBaseState
+    public class RoundStartStage : BattleStageBase
     {
-        public RoundStartState(BattleRoundController controller) : base(controller)
+        public RoundStartStage(BattleRoundController controller) : base(controller)
         {
         }
 
-        public override BattleStep Step => BattleStep.RoundStart;
+        public override BattleStage Stage => BattleStage.RoundStart;
 
         public override void Enter()
         {
@@ -20,7 +20,7 @@ namespace Game.System
             //2、回合开始事件触发（buff等等）
             //3、角色开始行动
             controller.RandomList();
-            controller.SwitchState(BattleStep.CharacterAction);
+            controller.SwitchState(BattleStage.CharacterAction);
         }
     }
 }

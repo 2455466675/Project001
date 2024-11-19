@@ -13,12 +13,12 @@ namespace Game.Core
 
         public override void OnStarted(InputAction.CallbackContext obj)
         {
-            GameCore.System.RoleSystem.Run(true);
+            GameCore.System.PartySystem.Run(true);
         }
 
         public override void OnCanceled(InputAction.CallbackContext obj)
         {
-            GameCore.System.RoleSystem.Run(false);
+            GameCore.System.PartySystem.Run(false);
         }
 
         public override void Execute()

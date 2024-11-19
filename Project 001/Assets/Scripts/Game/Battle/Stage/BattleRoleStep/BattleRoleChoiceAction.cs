@@ -5,13 +5,13 @@ namespace Game.System
     /// <summary>
     /// 动作选择（电脑的是AI功能）
     /// </summary>
-    public class BattleRoleChoiceAction : BattleRoleAction
+    public class BattleRoleChoiceAction : BattleRoleActionStep
     {
         public BattleRoleChoiceAction(BattleRoundController controller) : base(controller)
         {
         }
 
-        public override IEnumerator Execute(BattleRoleActionArg arg)
+        public override IEnumerator Execute(BattleRoleActionStepArg arg)
         {
             MLog.Log("CharacterChoiceAction");
             arg.State = StepState.Choice;
@@ -37,10 +37,16 @@ namespace Game.System
             }
         }
 
-        public override void ActionCallBack(BattleRoleActionArg arg)
+        public override void ActionCallBack(BattleRoleActionStepArg arg)
         {
             GameCore.UI.Exit();
             arg.IsLocked = false;
+
+            RoleData roleData = GameCore.System.RoleSystem.GetRoleData(arg.Character.Id);
+            if (roleData != null)
+            {
+                roleData.SetBaseValue("hp", roleData.GetDataBase("hp").IntValue - 1);
+            }
         }
     }
 }

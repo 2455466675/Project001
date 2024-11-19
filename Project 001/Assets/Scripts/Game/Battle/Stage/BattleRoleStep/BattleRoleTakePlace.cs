@@ -7,13 +7,13 @@ namespace Game.System
     /// <summary>
     /// 角色就位（电脑没有）
     /// </summary>
-    public class BattleRoleTakePlace : BattleRoleAction
+    public class BattleRoleTakePlace : BattleRoleActionStep
     {
         public BattleRoleTakePlace(BattleRoundController controller) : base(controller)
         {
         }
 
-        public override IEnumerator Execute(BattleRoleActionArg arg)
+        public override IEnumerator Execute(BattleRoleActionStepArg arg)
         {
             MLog.Log("CharacterTakePlace");
             arg.State = StepState.TakePlace;

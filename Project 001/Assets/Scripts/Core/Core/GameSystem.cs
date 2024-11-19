@@ -17,6 +17,8 @@ namespace Game.System
 
         public BattleSystem BattleSystem { get; private set; }
 
+        public PartySystem PartySystem { get; private set; }
+
         public OverviewSystem OverviewSystem { get; private set; }
       
         public GameSystem()
@@ -30,6 +32,7 @@ namespace Game.System
             ItemSystem = new ItemSystem(GameData.CreateContainer("Item"));
             RoleSystem = new RoleSystem(GameData.CreateContainer("Role"));
             BattleSystem = new BattleSystem(GameData.CreateContainer("Battle"));
+            PartySystem = new PartySystem(GameData.CreateContainer("Party"));
             OverviewSystem = new OverviewSystem(GameData.CreateContainer("Overview"));          
         }
     }

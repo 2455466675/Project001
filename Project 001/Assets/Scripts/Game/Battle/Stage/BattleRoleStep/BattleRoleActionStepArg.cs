@@ -29,7 +29,7 @@ namespace Game.System
         End,
     }
 
-    public class BattleRoleActionArg
+    public class BattleRoleActionStepArg
     {
         /// <summary>
         /// µ±Ç°½ÇÉ«
@@ -45,7 +45,7 @@ namespace Game.System
         public StepState State { get; set; }
         public object Data { get; set; }
 
-        public BattleRoleActionArg()
+        public BattleRoleActionStepArg()
         {
             Reset();
         }

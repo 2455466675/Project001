@@ -9,28 +9,28 @@ namespace Game.System
     /// </summary>
 	public class BattleRoundController
 	{
-        private List<BattleRole> characters;
+        private List<BattleRole> roles;
 
-        private List<BattleStepBaseState> states;
+        private List<BattleStageBase> states;
 
-        private BattleStepBaseState currentState;   
+        private BattleStageBase currentState;   
 
         public BattleRoundController()
         {
 
-            states = new List<BattleStepBaseState>
+            states = new List<BattleStageBase>
             {
-                new BattlePrepState(this),
-                new BattleStartState(this),
-                new RoundStartState(this),
-                new CharacterActionState(this),
-                new RoundEndState(this)
+                new BattlePrepStage(this),
+                new BattleStartStage(this),
+                new RoundStartStage(this),
+                new RoleActionStage(this),
+                new RoundEndStage(this)
             };
         }
 
-        public void SwitchState(BattleStep Step)
+        public void SwitchState(BattleStage Step)
         {
-            BattleStepBaseState state = states.Find(s => s.Step == Step);
+            BattleStageBase state = states.Find(s => s.Stage == Step);
 
             currentState?.Exit();
             currentState = state;
@@ -39,15 +39,15 @@ namespace Game.System
 
         public void ActionDetermine(object data)
         {
-            BattleStepBaseState state = states.Find(s => s.Step == BattleStep.CharacterAction);
-            (state as CharacterActionState).ActionDetermine(data);
+            BattleStageBase state = states.Find(s => s.Stage == BattleStage.CharacterAction);
+            (state as RoleActionStage).ActionDetermine(data);
         }
 
-        public void StartFight(List<BattleRole> characters)
+        public void StartFight(List<BattleRole> roles)
         {
-            this.characters = characters;
+            this.roles = roles;
 
-            SwitchState(BattleStep.BattlePrep);            
+            SwitchState(BattleStage.BattlePrep);            
         }
 
         public bool IsOver()
@@ -57,16 +57,16 @@ namespace Game.System
 
         public void RandomList()
         {
-            for(int i = 0; i < characters.Count; i++)
+            for(int i = 0; i < roles.Count; i++)
             {
-                int index1 = Random.Range(0, characters.Count);
-                int index2 = Random.Range(0, characters.Count);
+                int index1 = Random.Range(0, roles.Count);
+                int index2 = Random.Range(0, roles.Count);
                 while (index1 == index2)
                 {
-                    index2 = Random.Range(0, characters.Count);
+                    index2 = Random.Range(0, roles.Count);
                 }
 
-                (characters[index2], characters[index1]) = (characters[index1], characters[index2]);
+                (roles[index2], roles[index1]) = (roles[index1], roles[index2]);
             }
         }
 
@@ -74,13 +74,13 @@ namespace Game.System
 
         public BattleRole GetCharacter()
         {
-            if (index >= characters.Count)
+            if (index >= roles.Count)
             {
                 RandomList();
                 index = 0;
             }
 
-            return characters[index++];
+            return roles[index++];
         }
     }
 }

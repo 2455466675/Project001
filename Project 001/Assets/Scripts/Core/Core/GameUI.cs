@@ -47,7 +47,6 @@ namespace Game.UI
         /// </summary>
         public void Exit()
         {
-            HideAll();
             navigationSystem.Exit();
         }
 
@@ -99,16 +98,28 @@ namespace Game.UI
             return await windowSystem.ShowWindowAsync(id);
         }
 
+        /// <summary>
+        /// 关闭界面
+        /// </summary>
+        /// <param name="id"></param>
         public void HideWindow(WindowId id)
         {
             windowSystem.HideWindow(id);
         }
 
+        /// <summary>
+        /// 关闭所有界面
+        /// </summary>
         public void HideAll()
         {
             windowSystem.HideAll();
         }
 
+        /// <summary>
+        /// 窗口是否在最上层
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool WindowIsTop(WindowId id)
         {
             return windowSystem.WindowIsTop(id);

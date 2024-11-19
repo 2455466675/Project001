@@ -29,19 +29,19 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - Assembly-CSharp-firstpass
-    - Assembly-CSharp
-    - UniTask.Linq
     - UniTask
-    - YooAsset.Editor
+    - Assembly-CSharp
+    - Assembly-CSharp-firstpass
+    - UniTask.Linq
     - YooAsset
-    - PsdPlugin
-    - Sirenix.OdinInspector.CompatibilityLayer.Editor
-    - UniTask.Addressables
-    - UniTask.Editor
+    - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
     - UniTask.TextMeshPro
-    - UniTask.DOTween
+    - UniTask.Addressables
+    - PsdPlugin
+    - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - YooAsset.Editor
+    - UniTask.Editor
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0

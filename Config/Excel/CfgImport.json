@@ -39,6 +39,11 @@
             "excel":"monster.xlsx",
             "type":"MonsterCfg",
             "sheet":1
+        },
+        {
+            "excel":"battle/battle_role_action.xlsx",
+            "type":"BattleRoleActionCfg",
+            "sheet":1
         }
     ]
 }

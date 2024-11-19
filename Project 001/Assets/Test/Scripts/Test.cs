@@ -67,7 +67,7 @@ namespace Game
 
             MyTest myTest = ES3.Load<MyTest>(nameof(MyTest), "test");
             Debug.Log("myTest:" + myTest.ToString());
-            image.transform.DOLocalMove(new Vector3(500, 500, 10), 5);
+            //image.transform.DOLocalMove(new Vector3(500, 500, 10), 5);
         }
     }
 }

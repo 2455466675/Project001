@@ -5,11 +5,11 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-    public abstract class BattleRoleAction
+    public abstract class BattleRoleActionStep
     {
         protected readonly BattleRoundController controller;
 
-        public BattleRoleAction(BattleRoundController controller)
+        public BattleRoleActionStep(BattleRoundController controller)
         {
             this.controller = controller;
         }
@@ -19,13 +19,13 @@ namespace Game.System
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        public abstract IEnumerator Execute(BattleRoleActionArg arg);
+        public abstract IEnumerator Execute(BattleRoleActionStepArg arg);
 
         /// <summary>
         /// 行动再次返回
         /// </summary>
         /// <param name="arg"></param>
-        public virtual void ActionCallBack(BattleRoleActionArg arg) 
+        public virtual void ActionCallBack(BattleRoleActionStepArg arg) 
         {
         }
     }

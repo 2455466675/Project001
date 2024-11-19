@@ -5,19 +5,19 @@ namespace Game.System
     /// <summary>
     /// 战斗开始阶段
     /// </summary>
-    public class BattleStartState : BattleStepBaseState
+    public class BattleStartStage : BattleStageBase
     {
-        public BattleStartState(BattleRoundController controller) : base(controller)
+        public BattleStartStage(BattleRoundController controller) : base(controller)
         {
         }
 
-        public override BattleStep Step => BattleStep.BattleStart;
+        public override BattleStage Stage => BattleStage.BattleStart;
 
         public override void Enter()
         {
             MLog.Log("战斗开始阶段");
             GameCore.UI.ShowWindow(WindowId.WinBattleInfo);
-            controller.SwitchState(BattleStep.RoundStart);
+            controller.SwitchState(BattleStage.RoundStart);
         }
     }
 }
