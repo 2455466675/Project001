@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 404166798}
   - component: {fileID: 404166797}
   m_Layer: 0
-  m_Name: GameInitiator
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cfg:
+    PackageName: DefaultPackage
     FormulaFilePath: Assets/Bundles/Common/Formula
     GameCfgFile: cfg.bytes
     UIRootPath: Assets/Bundles/UI/Window/UIRoot

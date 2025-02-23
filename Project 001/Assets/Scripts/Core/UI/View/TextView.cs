@@ -1,4 +1,4 @@
-using Game.Core;
+using Game.Cfg;
 using MVC;
 using UnityEngine;
 

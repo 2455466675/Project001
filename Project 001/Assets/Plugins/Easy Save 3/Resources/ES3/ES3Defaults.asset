@@ -38,6 +38,7 @@ MonoBehaviour:
     - Sirenix.OdinInspector.CompatibilityLayer
     - UniTask.TextMeshPro
     - UniTask.Addressables
+    - EC
     - PsdPlugin
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - YooAsset.Editor

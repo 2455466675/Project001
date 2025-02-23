@@ -1,8 +1,7 @@
-using Game.Cfg;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Core
+namespace Game.Cfg
 {
     public class LanguageItem 
     {

@@ -9,10 +9,14 @@ namespace Game
     public class GameInitCfg
     {
         /// <summary>
+        /// 资源包名
+        /// </summary>
+        public string PackageName;
+
+        /// <summary>
         /// Formula路径
         /// </summary>
         public string FormulaFilePath;
-
         /// <summary>
         /// 游戏配置文件
         /// </summary>

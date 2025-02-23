@@ -1,6 +1,7 @@
 using Game.UI;
 using Navigation;
 using UnityEngine;
+using NavigationList = Navigation.NavigationList;
 
 namespace Game.System
 {

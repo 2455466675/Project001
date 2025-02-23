@@ -108,6 +108,24 @@ namespace Game
             }
         }
 
+        public static void DestroyGameObject(Transform tf)
+        {
+            if (tf == null) 
+            {
+                return;
+            }
+            UnityEngine.Object.Destroy(tf.gameObject);
+        }
+
+        public static void DestroyGameObject(GameObject go) 
+        {
+            if (go == null) 
+            {
+                return;
+            }
+            UnityEngine.Object.Destroy(go);
+        }
+
         public static Transform FindOrCreateChild(this Transform self, string target)
         {
             if (self == null)
