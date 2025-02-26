@@ -1,3 +1,5 @@
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System;
 using System.Collections.Generic;
 
@@ -10,27 +12,27 @@ namespace EC
     {
         public int Guid { get; private set; }
         public bool IsValid { get; private set; }
-        public World World { get; private set; }
+        public World MyWorld { get; private set; }
 
         private int parentGuid;
-        public Entity Parent => World.GetEntity(parentGuid);
+        public Entity Parent => MyWorld.GetEntity(parentGuid);
 
         private List<int> children;
         public int ChildCount => children.Count;
 
-        private Dictionary<Type, Component> components;
+        private List<Component> components;
 
         internal Entity(int guid, int parent, World world)
         {       
             Reuse(guid, parent, world);
-            components = new Dictionary<Type, Component>();
+            components = new List<Component>();
             children = new List<int>();
         }
 
         internal void Reuse(int guid, int parent, World world) 
         {
             Guid = guid;
-            World = world;
+            MyWorld = world;
             parentGuid = parent;
             IsValid = true;
         }
@@ -39,64 +41,81 @@ namespace EC
         {
             foreach (var child in children)
             {
-                World.DestroyEntity(child);
+                MyWorld.DestroyEntity(child);
             }
             children.Clear();
 
-            foreach (var component in components.Values)
+            foreach (var component in components)
             {
-                World.DestroyComponent(component);
+                MyWorld.DestroyComponent(component);
             }
             components.Clear();
 
             Guid = -1;
             parentGuid = -1;
-            World = null;
+            MyWorld = null;
             IsValid = false;
         }
 
         public Entity CreateChild() 
         {
-            Entity entity = World.CreateEntity(this);
+            Entity entity = MyWorld.CreateEntity(this);
             children.Add(entity.Guid);
             return entity;
         }
 
         public T GetComponent<T>() where T : Component 
         {
-            Type t = typeof(T);            
-            if (components.ContainsKey(t)) 
+            foreach (var component in components)
             {
-                return components[t] as T;
+                if (component is T)
+                {
+                    return component as T;
+                }
             }
-            else
+            return default;
+        }
+
+        public List<T> GetComponents<T>() where T : Component
+        {
+            List<T> components = new List<T>();
+
+            foreach (var component in components)
             {
-                return default;                
+                if (component is not null)
+                {
+                    components.Add(component);
+                }
             }
+
+            return components;
         }
 
         public T AddComponent<T>() where T : Component, new()
         {
-            Type t = typeof(T);
-            if (components.ContainsKey(t)) 
-            {
-                return components[t] as T;
-            }
-            else
-            {
-                T component = World.CreateComponent<T>(this);           
-                components[t] = component;
-                return component;
-            }
+            T component = MyWorld.CreateComponent<T>(this);
+            components.Add(component);
+            return component;
         }
 
         public void RemoveComponent<T>() 
         {
-            Type t = typeof(T);
-            if (components.TryGetValue(t, out Component v)) 
-            { 
-                World.DestroyComponent(v);
-                components.Remove(t);
+            List<Component> temp = new List<Component>();
+
+            for (int i = 0; i < components.Count; i++)
+            {
+                Component component = components[i];
+                if (component is T) 
+                {
+                    temp.Add(component);
+                }
+            }
+
+            for (int i = 0; i < temp.Count; i++)
+            {
+                Component component = temp[i];
+                MyWorld.DestroyComponent(component);
+                components.Remove(component);
             }
         }
 

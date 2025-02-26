@@ -15,16 +15,16 @@ namespace Game.Core
 
         public IEnumerator Init(GameInitCfg intCfg) 
         {            
-            UIEntity = Entity.CreateChild();
+            UIEntity = MyEntity.CreateChild();
 
             UIRootComponent uirc = UIEntity.AddComponent<UIRootComponent>();
 
             yield return uirc.Init(intCfg);
         }
 
-        public void ShowPanel(int id) 
+        public void ShowPanel<T>(int id) where T : PanelControllerComponent, new()
         {
-            UIEntity.GetComponent<UIRootComponent>().ShowPanel(id);
+            UIEntity.GetComponent<UIRootComponent>().ShowPanel<T>(id);
         }
     }
 }

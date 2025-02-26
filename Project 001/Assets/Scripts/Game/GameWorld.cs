@@ -1,5 +1,6 @@
 using EC;
 using Game.Core;
+using Game.UI;
 using System.Collections;
 
 namespace Game
@@ -27,7 +28,7 @@ namespace Game
             UIComponent uic = Instance.AddComponent<UIComponent>();
             yield return uic.Init(intCfg);
 
-            uic.ShowPanel(1);
+            uic.ShowPanel<TestPanelController>(1);
 
             yield return null;
         }

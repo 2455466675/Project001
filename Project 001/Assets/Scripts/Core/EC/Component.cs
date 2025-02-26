@@ -7,15 +7,15 @@ namespace EC
     {
         public int Guid { get; private set; }
 
-        public Entity Entity { get; private set; }
+        public Entity MyEntity { get; private set; }
 
-        public World World => Entity?.World;
+        public World MyWorld => MyEntity?.MyWorld;
 
         public Component() { }
 
         internal void Initialize(Entity entity, int guid) 
         {
-            Entity = entity;
+            MyEntity = entity;
             Guid = guid;
         }
 
@@ -23,18 +23,18 @@ namespace EC
         {
             OnDestroy();
             Guid = -1;
-            Entity = null;
+            MyEntity = null;
         }
 
         public T GetComponent<T>() where T : Component 
         {
-            if (Entity == null) 
+            if (MyEntity == null) 
             {
                 return default;
             }
             else 
             {
-                return Entity.GetComponent<T>();            
+                return MyEntity.GetComponent<T>();            
             }
         }
 

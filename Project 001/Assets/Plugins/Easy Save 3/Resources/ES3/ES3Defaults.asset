@@ -33,12 +33,12 @@ MonoBehaviour:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - UniTask.Linq
+    - EC
     - YooAsset
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
     - UniTask.TextMeshPro
     - UniTask.Addressables
-    - EC
     - PsdPlugin
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - YooAsset.Editor

@@ -17,7 +17,7 @@ namespace Game.UI
 
         public IEnumerator Init(GameInitCfg intCfg)
         {
-            GameObject uiRootGo = World.GetComponent<ResourceComponent>().LoadAndInstantiate(intCfg.UIRootPath, null);
+            GameObject uiRootGo = MyWorld.GetComponent<ResourceComponent>().LoadAndInstantiate(intCfg.UIRootPath, null);
             UIRoot = uiRootGo.GetComponent<UIRoot>();
 
             panels = new List<PanelComponent>();
@@ -25,19 +25,26 @@ namespace Game.UI
             yield return UIRoot;
         }
 
-        public void ShowPanel(int id) 
+        public void ShowPanel<T>(int id) where T : PanelControllerComponent, new()
         {
             PanelComponent pc = panels.Find(p => p.Id == id);
             if (pc != null) 
             {
                 pc.Show();
+
+                T controller = pc.GetComponent<T>();
+                controller.Show();
             }
             else
             {
-                Entity panelEntity = Entity.CreateChild();
+                Entity panelEntity = MyEntity.CreateChild();
                 pc = panelEntity.AddComponent<PanelComponent>();
+                T controller = panelEntity.AddComponent<T>();
+
                 pc.Init(id);
                 pc.Show();
+                controller.Show();
+
                 panels.Add(pc);
             }
         }
