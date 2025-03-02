@@ -1,11 +1,10 @@
-using Game;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Navigation
+namespace Game.UI
 {
     public enum ChildAlignment
     {
@@ -18,50 +17,37 @@ namespace Navigation
     /// <summary>
     /// 元素是一直存在的，不会创建元素
     /// </summary>
-	public class StaticNavigationList : NavigationList
+	public class StaticNavigationGroup : NavigationGroup
     {
-        public ListType listType;
+        public GroupType groupType;
 
-        [ShowIf("listType", ListType.Grid)]
+        [ShowIf("groupType", GroupType.Grid)]
         public int rowCount;
-        [ShowIf("listType", ListType.Grid)]
+        [ShowIf("groupType", GroupType.Grid)]
         public int columnCount;
-        [ShowIf("listType", ListType.Grid)]
+        [ShowIf("groupType", GroupType.Grid)]
         public ChildAlignment childAlignment;
 
-        public List<GuidableItem> items;
-        public bool isLoop;
+        [SerializeField]
+        private List<NavigationItem> items;
+
+        [SerializeField]
+        private bool isLoop;
 
         /// <summary>
-        /// 当前显示的数据组的起始索引
+        /// 当前选择的索引
         /// </summary>
-        private int minIndex;
-        /// <summary>
-        /// 当前显示的数据组的结束索引
-        /// </summary>
-        private int maxIndex;
-        /// <summary>
-        /// 当前指针位置
-        /// </summary>
-        private int pointer;
-        private bool isInit;
-
         private int[] index;
         private bool IsMultiple => index != null && index.Length > 1;
-        private bool IsGrid => listType == ListType.Grid;
+        private bool IsGrid => groupType == GroupType.Grid;
 
         /// <summary>
         /// 当前选择发生变化时
         /// </summary>
-        private event Action<SelectChangedEventArgs> OnSelectChangedEvent;
+        public event Action<SelectChangedEventArgs> OnSelectChangedEvent;
 
-        public void Init(Action<SelectChangedEventArgs> selectHandler)
+        public void Init()
         {
-            if (selectHandler == null)
-            {
-                isInit = false;
-                return;
-            }
             if (items == null || items.Count == 0)
             {
                 isInit = false;
@@ -73,15 +59,14 @@ namespace Navigation
                 items[i].SetIndex(i);
             }
 
-            OnSelectChangedEvent += selectHandler;
             pointer = 0;
             minIndex = 0;
             maxIndex = items.Count - 1;
-            State = ListState.Exited;
+            state = GroupState.Exited;
             isInit = true;
         }
 
-        public GuidableItem GetItem(int index)
+        public NavigationItem GetItem(int index)
         {
             if (items == null || items.Count == 0)
             {
@@ -94,60 +79,94 @@ namespace Navigation
             return items[index];
         }
 
-        public override void UpdateTotalCount(int totalCount)
+        public override void UpdateElementCount(int totalCount)
         {
-            base.UpdateTotalCount(totalCount);
-            UpateTime++;
+            base.UpdateElementCount(totalCount);
         }
 
-        public override bool InFocus(params int[] indexs)
+        public override void OnExit()
         {
-            if (Select(indexs))
-            {
-                State = ListState.InFocus;
-                return true;
-            }
-            else
-            {
-                return false;
-            }            
-        }
-
-        public override bool OutFocus()
-        {
-            if (index == null || index.Length <= 0)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < index.Length; i++)
-            {
-                GuidableItem item = items[index[i]];
-                item.OutFocus();
-            }
-            State = ListState.OutFocus;
-            SelectedItems = null;
-            return true;
-        }
-
-        public override bool Refocus()
-        {
-            if (Select(index))
-            {
-                State = ListState.InFocus;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public override void Exit()
-        {
+            base.OnExit();
             index = null;
-            State = ListState.Exited;
-            SelectedItems = null;
+        }
+
+        public override void OnInFocus(bool isRefocus, params int[] indexs)
+        {
+            if (isRefocus) 
+            {
+                if (Select(index))
+                {
+                    state = GroupState.InFocused;
+                }
+            }
+            else
+            {
+                if (Select(indexs))
+                {
+                    state = GroupState.InFocused;
+                }
+            }
+        }
+
+        public override void OnOutFocus()
+        {
+            base.OnOutFocus();
+        }
+
+        public override void OnMove(Vector2 dir)
+        {
+            if (IsMultiple)
+            {
+                MLog.Log("有多个选中元素时不允许此操作,元素数量:", this.index.Length);
+                return;
+            }
+
+            float x = dir.x;
+            float y = dir.y;
+
+            int index = -1;
+            if (y > 0)
+            {
+                bool minus = !IsGrid || childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
+                index = MovePointVertical(pointer, minus);
+            }
+            else if (y < 0)
+            {
+                bool minus = !IsGrid || childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
+                index = MovePointVertical(pointer, !minus);
+            }
+            else if (x < 0)
+            {
+                if (!IsGrid)
+                {
+                    return;
+                }
+
+                bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.LowerLeft;
+                index = MovePointHorizontal(pointer, minus);
+            }
+            else if (x > 0)
+            {
+                if (!IsGrid)
+                {
+                    return;
+                }
+
+                bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.LowerLeft;
+                index = MovePointHorizontal(pointer, !minus);
+            }
+
+            if (index < minIndex || index > maxIndex)
+            {
+                return;
+            }
+
+            if (index == pointer)
+            {
+                return;
+            }
+
+            Select(index);
         }
 
         public override bool Select(params int[] indexs)
@@ -176,81 +195,32 @@ namespace Navigation
                 }
             }
 
-            GuidableItem[] argItems = null;
+            NavigationItem[] argItems = null;
             if (isSuccess)
             {
-                argItems = new GuidableItem[indexs.Length];
+                argItems = new NavigationItem[indexs.Length];
                 for (int i = 0; i < indexs.Length; i++)
                 {
                     int j = indexs[i];
                     argItems[i] = items[j];
                 }
 
+                //将无效的元素剔除
                 argItems = argItems.Where(item => item.IsValid).ToArray();
                 index = argItems?.Select(item => item.Index).ToArray();
 
                 isSuccess = argItems != null && argItems.Length > 0;
                 pointer = argItems != null ? items.IndexOf(argItems[0]) : 0;
             }
-            SelectedItems = argItems;
+
             OnSelectChangedEvent?.Invoke(new SelectChangedEventArgs(isSuccess, indexs, argItems));
+
+            if (isSuccess) 
+            {
+                SelectChanged(argItems);
+            }
+
             return isSuccess;
-        }
-
-        public override bool Move(Vector2 dir)
-        {
-            if (IsMultiple)
-            {
-                MLog.Log("有多个选中元素时不允许此操作,元素数量:", this.index.Length);
-                return false;
-            }
-
-            float x = dir.x;
-            float y = dir.y;
-
-            int index = -1;
-            if (y > 0)
-            {
-                bool minus = !IsGrid || childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
-                index = MovePointVertical(pointer, minus);
-            }
-            else if (y < 0)
-            {
-                bool minus = !IsGrid || childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
-                index = MovePointVertical(pointer, !minus);
-            }
-            else if (x < 0)
-            {
-                if (!IsGrid)
-                {
-                    return false;
-                }
-
-                bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.LowerLeft;
-                index = MovePointHorizontal(pointer, minus);
-            }
-            else if (x > 0)
-            {
-                if (!IsGrid)
-                {
-                    return false;
-                }
-
-                bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.LowerLeft;
-                index = MovePointHorizontal(pointer, !minus);
-            }
-
-            if (index < minIndex || index > maxIndex)
-            {
-                return false;
-            }
-
-            if (index == pointer)
-            {
-                return false;
-            }
-
-            return Select(index);
         }
 
         /// <summary>
@@ -262,7 +232,6 @@ namespace Navigation
         private int MovePointVertical(int beginIndex, bool minus)
         {
             int index;
-
             do
             {
                 if (minus)
@@ -385,9 +354,9 @@ namespace Navigation
         }
 
         [Button("Init")]
-        private void Init()
+        private void InitGroup()
         {
-            items = GetComponentsInChildren<GuidableItem>().ToList();
+            items = GetComponentsInChildren<NavigationItem>().ToList();
         }
     }
 }

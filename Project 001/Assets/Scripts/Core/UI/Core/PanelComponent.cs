@@ -1,6 +1,5 @@
+using Game.Cfg;
 using Game.Core;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Game.UI
@@ -10,6 +9,8 @@ namespace Game.UI
     /// </summary>
     public class PanelComponent : EC.Component
     {
+        public UIDefine.Panel_ID PanelID => panel.panelID;
+
         public int Id { get; private set; }
 
         private Panel panel;
@@ -17,12 +18,11 @@ namespace Game.UI
 
         private List<NavigationGroupComponent> groupComponents;
 
-        public void Init(int id) 
+        public void Init(UIDefine.Panel_ID panelID) 
         {
-            Id = id;
-
             var parent = MyEntity.Parent.GetComponent<UIRootComponent>().GetWinGroup(UIGroup.Normal);
-            var panelGo = MyWorld.GetComponent<ResourceComponent>().LoadAndInstantiate("Assets/Bundles/UI/Panel/PanelTest", parent.transform);
+            var config = MyWorld.GetComponent<ConfigComponent>().Find<PanelCfg>((int)panelID);
+            var panelGo = MyWorld.GetComponent<ResourceComponent>().LoadAndInstantiate(config.Path, parent.transform);
 
             panel = panelGo.GetComponent<Panel>();
 
@@ -41,16 +41,15 @@ namespace Game.UI
             }
         }
 
-        public NavigationGroupComponent GetNavigationGroup(int index)
+        public NavigationGroupComponent GetNavigationGroup(UIDefine.Group_ID groupID)
         {
             if (groupComponents == null)
             {
                 return null;
             }
 
-            return groupComponents[index];
+            return groupComponents.Find(g => g.GroupID == groupID);
         }
-
 
         public void Show() 
         {
@@ -60,26 +59,6 @@ namespace Game.UI
         public void Hide() 
         {
             panel.Hide();
-        }
-
-        public void InFocus() 
-        {
-        
-        }
-
-        public void OutFocus()
-        {
-        
-        }
-
-        public void Move() 
-        {
-        
-        }
-
-        public void Submit() 
-        { 
-        
         }
 
         protected override void OnDestroy()

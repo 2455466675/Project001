@@ -5,7 +5,6 @@ using Navigation;
 using Cysharp.Threading.Tasks;
 using Game.System;
 using System;
-using static UnityEditor.Progress;
 
 namespace Game.UI
 {

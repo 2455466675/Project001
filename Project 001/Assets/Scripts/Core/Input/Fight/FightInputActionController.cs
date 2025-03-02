@@ -1,0 +1,33 @@
+using System.Collections.Generic;
+
+namespace Game.Core
+{
+    /// <summary>
+    /// Õ½¶·ÊäÈë¿ØÖÆÆ÷
+    /// </summary>
+	public class FightInputActionController : InputActionController
+    {
+        public override InputMode Mode => InputMode.Fight;
+
+        public FightInputActionController(MyInput inputActions) : base(inputActions)
+        {
+            actions = new List<InputActionWrapper>
+            {
+                new FightMoveAction(inputActions.Fight.Move),
+                new FightSubmitAction(inputActions.Fight.Submit),
+                new FightCancelAction(inputActions.Fight.Cancel)
+            };
+        }
+
+        public override void Enable()
+        {
+            inputActions.Fight.Enable();
+        }
+
+        public override void Disable()
+        {
+            inputActions.Fight.Disable();
+        }
+    }
+}
+

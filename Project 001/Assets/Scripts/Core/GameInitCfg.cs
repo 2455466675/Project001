@@ -25,5 +25,9 @@ namespace Game
         /// UI物体预制体路径
         /// </summary>
         public string UIRootPath;
+        /// <summary>
+        /// ui导航配置
+        /// </summary>
+        public string NavigationConfigFilePath;
     }
 }

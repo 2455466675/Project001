@@ -156,7 +156,8 @@ MonoBehaviour:
     PackageName: DefaultPackage
     FormulaFilePath: Assets/Bundles/Common/Formula
     GameCfgFile: cfg.bytes
-    UIRootPath: Assets/Bundles/UI/Window/UIRoot
+    UIRootPath: Assets/Bundles/UI/UIRoot
+    NavigationConfigFilePath: Assets/Bundles/Common/NavigationConfig
 --- !u!4 &404166798
 Transform:
   m_ObjectHideFlags: 0

@@ -81,7 +81,7 @@ namespace Game.Core
         {
             for (int i = 0; i < continuedActions.Count; i++)
             {
-                continuedActions[i].FixedUpdate();
+                continuedActions[i].Tick();
             }
         }    
     }

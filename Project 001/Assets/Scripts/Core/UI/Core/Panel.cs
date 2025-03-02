@@ -7,6 +7,8 @@ namespace Game.UI
     /// </summary>
     public class Panel : MonoBehaviour
     {
+        public UIDefine.Panel_ID panelID;
+
         public UIGroup group;
 
         public CanvasGroup canvasGroup;

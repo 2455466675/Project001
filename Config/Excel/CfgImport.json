@@ -16,6 +16,11 @@
             "sheet":1
         },  
         {
+            "excel":"panel.xlsx",
+            "type":"PanelCfg",
+            "sheet":1
+        },
+        {
             "excel":"role.xlsx",
             "type":"RoleCfg",
             "sheet":1

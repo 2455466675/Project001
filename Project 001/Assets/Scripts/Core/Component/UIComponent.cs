@@ -1,7 +1,7 @@
 using EC;
 using Game.UI;
 using System.Collections;
-using System.Security.Principal;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game.Core
@@ -22,9 +22,44 @@ namespace Game.Core
             yield return uirc.Init(intCfg);
         }
 
-        public void ShowPanel<T>(int id) where T : PanelControllerComponent, new()
+        public void ShowPanel(UIDefine.Panel_ID panelID)
         {
-            UIEntity.GetComponent<UIRootComponent>().ShowPanel<T>(id);
+            UIEntity.GetComponent<UIRootComponent>().ShowPanel(panelID);
+        }
+
+        public void HidePanel(UIDefine.Panel_ID panelID)
+        {
+            UIEntity.GetComponent<UIRootComponent>().HidePanel(panelID);
+        }
+
+        public void Navigate(UIDefine.Group_ID groupID)
+        {
+            UIEntity.GetComponent<UIRootComponent>().Navigate(groupID);
+        }
+
+        public void Move(Vector2 dir) 
+        {
+            UIEntity.GetComponent<UIRootComponent>().Move(dir);
+        }
+
+        public void Submit()
+        {
+            UIEntity.GetComponent<UIRootComponent>().Submit();
+        }
+
+        public void Back()
+        {
+            UIEntity.GetComponent<UIRootComponent>().Back();
+        }
+
+        public void Close()
+        {
+            UIEntity.GetComponent<UIRootComponent>().Close();
+        }
+
+        public NavigationGroupComponent GetNavigationGroup(UIDefine.Group_ID groupID) 
+        {
+            return UIEntity.GetComponent<UIRootComponent>().GetNavigationGroup(groupID);
         }
     }
 }

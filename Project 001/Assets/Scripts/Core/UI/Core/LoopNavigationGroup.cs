@@ -1,5 +1,4 @@
-using Navigation;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,11 +10,233 @@ namespace Game.UI
     /// </summary>
     public class LoopNavigationGroup : NavigationGroup
     {
-        public void Init(int count) 
-        {
-            Debug.Log("count:" + count);
+        /// <summary>
+        /// 当最大索引和最小索引发生变化时
+        /// </summary>
+        public event Action<IndexChangedEventArgs> OnIndexChangedEvent;
+        /// <summary>
+        /// 当前选择发生变化时
+        /// </summary>
+        public event Action<SelectChangedEventArgs> OnSelectChangedEvent;
 
-            item.gameObject.SetActive(false);
+        private Dictionary<int, NavigationItem> items;
+
+        private int totalCount;
+        private int itemCount;
+
+        public void Init() 
+        {
+            isInit = true;
+            totalCount = -1;
+            minIndex = -1;
+            maxIndex = -1;
+            pointer = -1;
+            state = GroupState.Exited;
+
+            CreateItems();            
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            pointer = -1;
+        }
+
+        public override void OnInFocus(bool isRefocus,params int[] indexs)
+        {
+            if (isRefocus) 
+            {
+                if (Select(pointer))
+                {
+                    state = GroupState.InFocused;
+                }
+            }
+            else
+            {
+                if (Select(indexs))
+                {
+                    state = GroupState.InFocused;
+                }                
+            }
+        }
+
+        public override void OnOutFocus()
+        {            
+            base.OnOutFocus();
+        }
+
+        public override void OnMove(Vector2 dir)
+        {
+            float y = dir.y;
+            int index;
+            if (y > 0)
+            {
+                index = pointer - 1;
+            }
+            else if (y < 0)
+            {
+                index = pointer + 1;
+            }
+            else
+            {
+                return;
+            }
+
+            Select(index);
+        }
+
+        public override void OnSubmit()
+        {
+            base.OnSubmit();
+        }
+
+        public override void UpdateElementCount(int count)
+        {
+            if (count < 0)
+            {
+                return;
+            }
+
+            if (count == 0)
+            {
+                minIndex = 0;
+                maxIndex = 0;
+                pointer = 0;
+                totalCount = 0;
+
+                foreach (var item in items)
+                {
+                    item.Value.SetActive(false);
+                }
+
+
+                //退出
+                return;
+            }
+
+            if (totalCount == count)
+            {
+                OnIndexChanged();
+                return;
+            }
+
+            totalCount = count;
+
+            int oldPointer = pointer;
+
+            if (pointer == 0)
+            {
+                minIndex = 0;
+                maxIndex = Mathf.Min(totalCount - 1, itemCount - 1);
+            }
+            else
+            {
+                int i = pointer - minIndex;
+
+                maxIndex = Mathf.Min(totalCount - 1, Mathf.Max(maxIndex, itemCount - 1));
+                minIndex = Mathf.Max(maxIndex - (itemCount - 1), 0);
+                pointer = Mathf.Clamp(minIndex + i, minIndex, maxIndex);
+            }
+
+            OnIndexChanged();
+
+            if (state == GroupState.InFocused)
+            {
+                OnSelectChanged(oldPointer != pointer);
+            }
+        }
+
+        public override bool Select(params int[] indexs)
+        {
+            if (!isInit)
+            {
+                return false;
+            }
+            if (indexs == null || indexs.Length <= 0)
+            {
+                return false;
+            }
+
+            int index = indexs[0];
+
+            bool isSuccess = false;
+
+            if (index < 0 || index >= totalCount)
+            {
+                isSuccess = false;
+            }
+            else if (index >= minIndex && index <= maxIndex)
+            {
+                pointer = index;
+                isSuccess = true;
+            }
+            else if (index < minIndex)
+            {
+                int i = minIndex - index;
+
+                minIndex -= i;
+                maxIndex -= i;
+                pointer = minIndex;
+
+                isSuccess = true;
+                OnIndexChanged();
+            }
+            else if (index > maxIndex)
+            {
+                int i = index - maxIndex;
+
+                minIndex += i;
+                maxIndex += i;
+                pointer = maxIndex;
+
+                isSuccess = true;
+                OnIndexChanged();
+            }
+
+            OnSelectChanged(isSuccess);
+            return isSuccess;
+        }
+
+        private void OnIndexChanged()
+        {
+            int length = maxIndex - minIndex + 1;
+            NavigationItem[] lts = new NavigationItem[length];
+
+            foreach (var item in items)
+            {
+                item.Value.SetActive(item.Key < length);
+
+                if (item.Key >= length)
+                {
+                    continue;
+                }
+
+                lts[item.Key] = item.Value;
+            }
+
+            OnIndexChangedEvent?.Invoke(new IndexChangedEventArgs(minIndex, maxIndex, lts));
+        }
+
+        private void OnSelectChanged(bool isSuccess)
+        {
+            NavigationItem[] selectedItems = new NavigationItem[] { items[pointer - minIndex] };
+            OnSelectChangedEvent?.Invoke(new SelectChangedEventArgs(isSuccess, new int[] { pointer }, selectedItems));
+
+            if (isSuccess) 
+            {
+                SelectChanged(selectedItems);
+            }
+        }
+
+        private void CreateItems()
+        {
+            if (item == null)
+            {
+                MLog.Error("item is null");
+                return;
+            }
+
+            item.SetActive(false);
 
             float vh = viewport.rect.size.y;
             RectTransform tf = item.GetComponent<RectTransform>();
@@ -25,7 +246,7 @@ namespace Game.UI
 
             if (!content.TryGetComponent<VerticalLayoutGroup>(out var layoutGroup))
             {
-                MLog.Warn("LoopNavigationList初始化，content没有LayoutGroup");
+                MLog.Warn("content没有LayoutGroup");
                 return;
             }
 
@@ -38,14 +259,15 @@ namespace Game.UI
             float spacing = layoutGroup.spacing;
 
             float h = tf.rect.size.y;
-            int c = Mathf.FloorToInt((vh - topPadding - bottomPadding) / (h + spacing / 2));    //计算个数
-
+            int c = Mathf.FloorToInt((vh - topPadding - bottomPadding) / (h + spacing / 2));
+            items = new Dictionary<int, NavigationItem>(c);
             for (int i = 0; i < c; i++)
             {
-                GameObject lt = GoHelper.Instantiate(item.gameObject, content);
-
-                lt.SetActive(true);
+                NavigationItem lt = GoHelper.Instantiate<NavigationItem>(item, content);
+                lt.SetActive(false);
+                items[i] = lt;
             }
+            itemCount = items.Count;
         }
     }
 }

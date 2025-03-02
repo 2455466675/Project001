@@ -11,56 +11,176 @@ namespace Game.UI
     /// </summary>
     public class UIRootComponent : EC.Component, IInitializable
     {
-        private UIRoot UIRoot;
+        private UIRoot uiRoot;
+
+        private NavigationConfig navigationConfig;
 
         private List<PanelComponent> panels;
 
+        private Stack<PanelCommand> commands;
+
         public IEnumerator Init(GameInitCfg intCfg)
         {
-            GameObject uiRootGo = MyWorld.GetComponent<ResourceComponent>().LoadAndInstantiate(intCfg.UIRootPath, null);
-            UIRoot = uiRootGo.GetComponent<UIRoot>();
+            ResourceComponent rc = MyWorld.GetComponent<ResourceComponent>();
+
+            GameObject uiRootGo = rc.LoadAndInstantiate(intCfg.UIRootPath, null);
+            uiRoot = uiRootGo.GetComponent<UIRoot>();
+
+            navigationConfig = rc.LoadAsset<NavigationConfig>(intCfg.NavigationConfigFilePath);
+            navigationConfig.Init();
 
             panels = new List<PanelComponent>();
+            commands = new Stack<PanelCommand>();
 
-            yield return UIRoot;
+            yield return uiRoot;
         }
 
-        public void ShowPanel<T>(int id) where T : PanelControllerComponent, new()
+        public PanelComponent ShowPanel(UIDefine.Panel_ID panelID)
         {
-            PanelComponent pc = panels.Find(p => p.Id == id);
-            if (pc != null) 
+            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
+            if (pc != null)
             {
                 pc.Show();
-
-                T controller = pc.GetComponent<T>();
-                controller.Show();
             }
             else
             {
                 Entity panelEntity = MyEntity.CreateChild();
                 pc = panelEntity.AddComponent<PanelComponent>();
-                T controller = panelEntity.AddComponent<T>();
 
-                pc.Init(id);
+                pc.Init(panelID);
                 pc.Show();
-                controller.Show();
 
                 panels.Add(pc);
             }
+
+            return pc;
+        }
+        
+        public NavigationGroupComponent GetNavigationGroup(UIDefine.Group_ID groupID) 
+        {
+            UIDefine.Panel_ID panelID = navigationConfig.GetMap(groupID);
+            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
+            if (pc == null)
+            {
+                return null;
+            }
+            return pc.GetNavigationGroup(groupID);
         }
 
-        public void HidePanel(int id) 
+        public void HidePanel(UIDefine.Panel_ID panelID) 
         {
-            PanelComponent pc = panels.Find(p => p.Id == id);
-            if(pc != null) 
+            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
+            pc?.Hide();
+        }
+
+        public void Navigate(UIDefine.Group_ID groupID) 
+        {
+            UIDefine.Panel_ID panelID = navigationConfig.GetMap(groupID);
+
+            ShowPanel(panelID);
+
+            GroupCommand groupCmd = new(groupID, new int[] {0});
+            //依附的界面已经打开了
+            if (commands.TryPeek(out PanelCommand popCmd) && popCmd.PanelID == panelID)
             {
-                pc.Hide();
+                //直接加入
+                if (popCmd.Push(groupCmd) && popCmd.OnPush())
+                {
+
+                }
+                else
+                {
+                    //Back();
+                }
+            }
+            else
+            {
+                //新建一个界面命令
+                PanelCommand panelCmd = new(panelID);
+                if (panelCmd.Push(groupCmd) && panelCmd.OnPush())
+                {
+                    popCmd?.OnSink();
+                    commands.Push(panelCmd);
+                }
+                else
+                {
+                    panelCmd.Pop();
+                    panelCmd.OnPop();
+                    return;
+                }
+            }
+        }
+
+        public void Move(Vector2 dir) 
+        {
+            if (commands.TryPeek(out PanelCommand cmd))
+            {
+                var group = GetNavigationGroup(cmd.Peek().GroupID);
+                group?.Move(dir);
+            }
+        }
+
+        /// <summary>
+        /// 确定（Enter键、空格、鼠标左键）
+        /// </summary>
+        public void Submit() 
+        {
+            if (commands.TryPeek(out PanelCommand cmd))
+            {
+                var group = GetNavigationGroup(cmd.Peek().GroupID);
+                group?.Submit();
+            }
+        }
+
+        /// <summary>
+        /// 后退（C键、鼠标右键）
+        /// </summary>
+        /// <returns></returns>
+        public bool Back()
+        {
+            if (commands.TryPeek(out PanelCommand cmd))
+            {
+                if (!cmd.IsUndoable)
+                {
+                    MLog.Log("not Undoable panel:", cmd.PanelID);
+                    return false;
+                }
+
+                if (cmd.Pop())
+                {
+                    cmd.OnPop();
+                    commands.Pop();
+                    if (commands.TryPeek(out PanelCommand cmd2))
+                    {
+                        cmd2.OnRise();
+                    }
+                }
+            }
+
+            if (commands.Count <= 0)
+            {
+ 
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 关闭（ESC键）
+        /// </summary>
+        public void Close()
+        {
+            while (commands.Count > 0)
+            {
+                if (!Back()) 
+                {
+                    break;
+                }
             }
         }
 
         public WindowGroup GetWinGroup(UIGroup group) 
         { 
-            return UIRoot.GetWinGroup(group);
+            return uiRoot.GetWinGroup(group);
         }
     }
 }

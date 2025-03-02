@@ -28,7 +28,13 @@ namespace Game
             UIComponent uic = Instance.AddComponent<UIComponent>();
             yield return uic.Init(intCfg);
 
-            uic.ShowPanel<TestPanelController>(1);
+            InputComponent ic = Instance.AddComponent<InputComponent>();
+            yield return ic.Init(intCfg);
+
+            ic.SwitchInputMode(InputMode.UI);
+
+            uic.Navigate(UIDefine.Group_ID.Test_Group_1);
+            uic.GetNavigationGroup(UIDefine.Group_ID.Test_Group_1).SetUndoable(false);            
 
             yield return null;
         }

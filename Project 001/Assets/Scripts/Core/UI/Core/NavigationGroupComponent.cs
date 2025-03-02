@@ -9,37 +9,42 @@ namespace Game.UI
     {
         public NavigationGroup group;
 
+        public UIDefine.Group_ID GroupID => group.groupID;
+
+        public bool IsUndoable { get; private set; }
+
         public void Init(NavigationGroup group) 
         {
             this.group = group;
+            IsUndoable = true;
         }
 
-        public void OnShow() 
+        public void SetUndoable(bool undoable) 
         {
-            group.OnShow();
+            IsUndoable = undoable;
         }
 
-        public void OnHide() 
+        public void Exit() 
         {
-            group.OnHide();
+            group.OnExit();
         }
 
-        public void OnInFocus()
+        public void InFocus(bool isRefocus, params int[] indexs)
         {
-            group.OnInFocus();
+            group.OnInFocus(isRefocus, indexs);
         }
 
-        public void OnOutFocus()
+        public void OutFocus()
         {
             group.OnOutFocus();
         }
 
-        public void OnMove(Vector2 dir)
+        public void Move(Vector2 dir)
         {
             group.OnMove(dir);
         }
 
-        public void OnSubmit()
+        public void Submit()
         {
             group.OnSubmit();
         }

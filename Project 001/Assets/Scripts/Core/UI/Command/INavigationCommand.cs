@@ -22,7 +22,7 @@ namespace Game.UI
         /// </summary>
         bool OnRise();
         /// <summary>
-        /// 不在栈顶时
+        /// 被覆盖时
         /// </summary>
         bool OnSink();
     }
