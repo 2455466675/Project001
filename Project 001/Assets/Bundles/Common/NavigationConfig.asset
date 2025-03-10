@@ -19,3 +19,11 @@ MonoBehaviour:
     panel: 1
   - group: 3
     panel: 2
+  - group: 2001
+    panel: 1001
+  - group: 2101
+    panel: 1002
+  - group: 2102
+    panel: 1002
+  - group: 2201
+    panel: 1003

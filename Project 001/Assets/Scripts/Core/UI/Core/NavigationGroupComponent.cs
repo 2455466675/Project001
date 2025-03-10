@@ -7,7 +7,7 @@ namespace Game.UI
     /// </summary>
     public class NavigationGroupComponent : EC.Component
     {
-        public NavigationGroup group;
+        private NavigationGroup group;
 
         public UIDefine.Group_ID GroupID => group.groupID;
 
@@ -29,9 +29,9 @@ namespace Game.UI
             group.OnExit();
         }
 
-        public void InFocus(bool isRefocus, params int[] indexs)
+        public bool InFocus(bool isRefocus, params int[] indexs)
         {
-            group.OnInFocus(isRefocus, indexs);
+            return group.OnInFocus(isRefocus, indexs);
         }
 
         public void OutFocus()

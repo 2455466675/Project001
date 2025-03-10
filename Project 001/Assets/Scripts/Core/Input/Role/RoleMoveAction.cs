@@ -1,3 +1,4 @@
+using Game.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,13 +30,15 @@ namespace Game.Core
         }
 
         public override void OnCanceled(InputAction.CallbackContext obj)
-        {
+        {       
             PopContinued();
+            GameWorld.Instance.GetComponent<SystemComponent>().PartyComponent.Move(Vector2.zero);
         }
 
         public override void Execute()
         {
-            Vector2 v = inputAction.ReadValue<Vector2>();           
+            Vector2 v = inputAction.ReadValue<Vector2>();
+            GameWorld.Instance.GetComponent<SystemComponent>().PartyComponent.Move(v);
         }
     }
 }

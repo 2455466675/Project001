@@ -31,7 +31,6 @@ namespace Game.Cfg
                     data.Deserialize(br);
                 }              
             }
-            Language = new GameLanguage();
 
             yield return null;
         }

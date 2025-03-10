@@ -45,16 +45,28 @@ namespace Game.UI
             }
             //æ€Ωπ
             var group = GetNavigationGroup();
-            group?.InFocus(false, args);
-            return true;
+            if (group != null) 
+            {
+                return group.InFocus(false, args);
+            }
+            else
+            {
+                return false;
+            }            
         }
 
         public bool OnRise()
         {
             //÷ÿ—°
             var group = GetNavigationGroup();
-            group?.InFocus(true);
-            return true;
+            if (group != null) 
+            {
+                return group.InFocus(true);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool OnSink()

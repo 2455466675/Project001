@@ -16,12 +16,12 @@ namespace Game.Core
 
         private void Awake()
         {
-            GameCore.Scene.SetScene(this);
+            //GameCore.Scene.SetScene(this);
         }
 
         private void OnDestroy()
         {
-            GameCore.Scene.SetScene(null);
+            //GameCore.Scene.SetScene(null);
         }
 
         public SceneContainer GetContainer(string containerName)

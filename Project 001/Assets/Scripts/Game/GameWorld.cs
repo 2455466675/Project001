@@ -1,6 +1,6 @@
 using EC;
 using Game.Core;
-using Game.UI;
+using Game.System;
 using System.Collections;
 
 namespace Game
@@ -31,12 +31,17 @@ namespace Game
             InputComponent ic = Instance.AddComponent<InputComponent>();
             yield return ic.Init(intCfg);
 
-            ic.SwitchInputMode(InputMode.UI);
+            GSMComponent gsmc = Instance.AddComponent<GSMComponent>();
+            yield return gsmc.Init(intCfg);
 
-            uic.Navigate(UIDefine.Group_ID.Test_Group_1);
-            uic.GetNavigationGroup(UIDefine.Group_ID.Test_Group_1).SetUndoable(false);            
+            SystemComponent sc = Instance.AddComponent<SystemComponent>();
+            yield return sc.Init(intCfg);
+
+            Instance.AddComponent<SceneComponent>();
 
             yield return null;
+
+            gsmc.SwitchState(GameState.LAUNCH);
         }
 
         public static void Step(float dt) 

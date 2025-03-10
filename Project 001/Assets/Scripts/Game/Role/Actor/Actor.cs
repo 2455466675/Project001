@@ -1,7 +1,6 @@
 using Game.System;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Game.System
 {

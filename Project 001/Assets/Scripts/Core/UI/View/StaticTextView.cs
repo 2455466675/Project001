@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Game.UI
 {
     /// <summary>
@@ -5,9 +7,11 @@ namespace Game.UI
     /// </summary>
 	public class StaticTextView : TextView
 	{
-        protected override void Start()
+        [SerializeField]
+        private int textId;
+
+        protected void Start()
         {
-            base.Start();
             SetTextById(textId);
         }
     }

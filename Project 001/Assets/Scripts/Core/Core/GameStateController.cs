@@ -43,15 +43,6 @@ namespace Game.Core
             yield return null;
         }
 
-        public void Update()
-        {
-            if (currStateInst == null)
-            {
-                return;
-            }
-            currStateInst.OnStay();
-        }
-
         /// <summary>
         /// ÇÐ»»ÓÎÏ·×´Ì¬
         /// </summary>

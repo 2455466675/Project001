@@ -1,6 +1,5 @@
 using Game.Core;
 using UnityEngine;
-using Navigation;
 
 namespace Game.UI
 {
@@ -9,24 +8,26 @@ namespace Game.UI
     /// </summary>
     public class WinLoginController : MonoBehaviour
     {
+        [SerializeField]
+        private StaticNavigationGroup loginMenu;
 
-        public void OnSelect(GuidableItem item)
+        private void Awake()
         {
-
+            loginMenu.Init();
         }
 
-        public void OnStartNewGame(GuidableItem item)
+        public void OnStartNewGame(NavigationItem item)
         {
-            GameCore.UI.Exit();
-            GameCore.StateController.SwitchState(GameState.PLAYING);
+            GameWorld.Instance.GetComponent<GSMComponent>().SwitchState(GameState.PLAYING);
         }
 
-        public void OnLoadGame(GuidableItem item) 
+        public void OnLoadGame(NavigationItem item) 
         {
-            GameCore.UI.Enter(ListName.OverviewMenu);
+            var uic = GameWorld.Instance.GetComponent<UIComponent>();
+            uic.Navigate(UIDefine.Group_ID.Test_Group_1);
         }
 
-        public void OnQuitGame(GuidableItem item)
+        public void OnQuitGame(NavigationItem item)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

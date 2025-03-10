@@ -64,7 +64,7 @@ namespace Game.System
         /// </summary>
         public void Enter()
         {
-            GameCore.Scene.LoadSceneAsync("BattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single, Loading, Entered);
+            //GameCore.Scene.LoadSceneAsync("BattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single, Loading, Entered);
         }
 
         public void ActionDetermine(object data)

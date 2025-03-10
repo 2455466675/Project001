@@ -52,9 +52,9 @@ namespace Game.Core
             UIEntity.GetComponent<UIRootComponent>().Back();
         }
 
-        public void Close()
+        public void Close(bool compulsory = false)
         {
-            UIEntity.GetComponent<UIRootComponent>().Close();
+            UIEntity.GetComponent<UIRootComponent>().Close(compulsory);
         }
 
         public NavigationGroupComponent GetNavigationGroup(UIDefine.Group_ID groupID) 

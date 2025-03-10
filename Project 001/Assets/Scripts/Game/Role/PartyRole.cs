@@ -51,9 +51,9 @@ namespace Game.System
                 return;
             }
 
-            GameObject obj = GameCore.ResourceManager.LoadAndInstantiate(Cfg.PrefabPath, GameCore.Scene.GetContainer(Cfg.Container).container);
-            Actor = obj.GetComponent<Actor>();
-            Actor.SetRole(this);
+            //GameObject obj = GameCore.ResourceManager.LoadAndInstantiate(Cfg.PrefabPath, GameCore.Scene.GetContainer(Cfg.Container).container);
+            //Actor = obj.GetComponent<Actor>();
+            //Actor.SetRole(this);
         }
 
         /// <summary>

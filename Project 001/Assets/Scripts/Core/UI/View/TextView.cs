@@ -1,5 +1,5 @@
 using Game.Cfg;
-using MVC;
+using Game.Core;
 using UnityEngine;
 
 namespace Game.UI
@@ -7,18 +7,14 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-	public class TextView : DataBaseView
+	public class TextView : View
 	{
-        public ExtendText target;
-        public int textId;
-
-        protected override void OnUpdateView()
-        {
-        }
+        [SerializeField]
+        private ExtendText target;
 
         public void SetTextById(int textId)
         {
-            LanguageItem item = GameCore.Cfg.GetLanguageItem(textId);
+            LanguageItem item = GameWorld.Instance.GetComponent<ConfigComponent>().GetLanguageItem(textId);
             if (item == null)
             {
                 SetTextInner(string.Empty, default);
@@ -31,12 +27,12 @@ namespace Game.UI
 
         public void SetTextByStr(string str)
         {
-            SetTextInner(str, GameCore.Cfg.Language.DefaultTextColor);
+            SetTextInner(str, GameLanguage.DefaultTextColor);
         }
 
         public void SetTextByStr(string str, int colorId)
         {
-            SetTextInner(str, GameCore.Cfg.GetColorById(colorId));
+            SetTextInner(str, GameWorld.Instance.GetComponent<ConfigComponent>().GetColorById(colorId));
         }
 
         public void SetTextByStr(string str, Color color)

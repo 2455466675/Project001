@@ -9,7 +9,7 @@ namespace Game.System
     /// </summary>
 	public class BattleEnemyRole : BattleRole
     {
-        public override string ActorPath => cfg != null ? cfg.PrefabPath : string.Empty;
+        public override string ActorPath => "";
         public override BattleRoleType FightCharacterType => BattleRoleType.Enemy;
 
         private MonsterCfg cfg;
@@ -21,7 +21,7 @@ namespace Game.System
         public override void Reset()
         {
             StaticNavigationList list = NavigationList.GetNavigationList(UI.ListName.BattleEnemyList) as StaticNavigationList;
-            FightPoint = list.GetItem(Index) as BattlePointItem;
+            //FightPoint = list.GetItem(Index) as BattlePointItem;
             SetBaseValue("valid", false);
             cfg = null;
         }

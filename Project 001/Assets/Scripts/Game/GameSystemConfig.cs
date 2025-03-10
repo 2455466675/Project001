@@ -8,9 +8,15 @@ namespace Game.System
     [CreateAssetMenu(menuName= "MyMenu/Create GameSystemConfig")]
 	public class GameSystemConfig : ScriptableObject
     {
-        public ActionAssets commonActionAssets;
+        [SerializeField]
+        private ActionContainer actionContainer;
 
         public string[] bones;
+
+        public ActionGroup FindAction(string actionName) 
+        {
+            return actionContainer.GetAction(actionName);
+        }
     }
 }
 

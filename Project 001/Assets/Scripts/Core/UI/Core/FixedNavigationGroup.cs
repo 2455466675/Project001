@@ -22,9 +22,6 @@ namespace Game.UI
         private int[] index;
         private bool IsMultiple => index != null && index.Length > 1;
 
-        private float topPadding;
-        private float bottomPadding;
-
         /// <summary>
         /// 当前选择发生变化时
         /// </summary>
@@ -42,21 +39,6 @@ namespace Game.UI
                 MLog.Error("item is null");
                 return;
             }
-
-            if (viewport == null)
-            {
-                MLog.Error("FixedNavigationList没有viewport");
-                return;
-            }
-
-            if (!content.TryGetComponent<LayoutGroup>(out var layoutGroup))
-            {
-                MLog.Warn("FixedNavigationList初始化，content没有LayoutGroup");
-                return;
-            }
-
-            topPadding = layoutGroup.padding.top;
-            bottomPadding = layoutGroup.padding.bottom;
 
             state = GroupState.Exited;
             items = new List<NavigationItem>();
@@ -81,6 +63,7 @@ namespace Game.UI
         {
             if (!isInit)
             {
+                MLog.Error("列表尚未初始化");
                 return;
             }
 
@@ -101,6 +84,7 @@ namespace Game.UI
                         it.SetActive(true);
                     }
                     items.Add(it);
+                    it.SetIndex(items.Count - 1);
                 }
             }
             else if (TotalCount > count)
@@ -134,13 +118,18 @@ namespace Game.UI
             index = null;
         }
 
-        public override void OnInFocus(bool isRefocus, params int[] indexs)
+        public override bool OnInFocus(bool isRefocus, params int[] indexs)
         {
             if (isRefocus) 
             {
                 if (Select(index))
                 {
                     state = GroupState.InFocused;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
@@ -148,6 +137,11 @@ namespace Game.UI
                 if (Select(indexs))
                 {
                     state = GroupState.InFocused;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
@@ -236,31 +230,6 @@ namespace Game.UI
 
                 isSuccess = argItems != null && argItems.Length > 0;
                 pointer = argItems != null ? items.IndexOf(argItems[0]) : 0;
-            }
-
-            if (argItems != null && argItems.Length == 1)
-            {
-                Vector3[] corners = new Vector3[4];
-                viewport.GetWorldCorners(corners);
-
-                RectTransform rt = argItems[0].transform as RectTransform;
-
-                Vector3 leftBottom = rt.parent.InverseTransformPoint(corners[0]);
-                Vector3 rightTop = rt.parent.InverseTransformPoint(corners[2]);
-
-                float h = rt.rect.height / 2;
-                float y = rt.localPosition.y;
-
-                if (leftBottom.y > y - h)
-                {
-                    float c = leftBottom.y - (y - h) + bottomPadding;
-                    content.localPosition = new Vector3(content.localPosition.x, content.localPosition.y + c, 0);
-                }
-                else if (rightTop.y < y + h)
-                {
-                    float c = (y + h) - rightTop.y + topPadding;
-                    content.localPosition = new Vector3(content.localPosition.x, content.localPosition.y - c, 0);
-                }
             }
 
             OnSelectChangedEvent?.Invoke(new SelectChangedEventArgs(isSuccess, indexs, argItems));

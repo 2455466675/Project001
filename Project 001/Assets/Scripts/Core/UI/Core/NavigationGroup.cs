@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.UI
@@ -65,6 +66,39 @@ namespace Game.UI
     /// </summary>
     public class NavigationGroup : MonoBehaviour
     {
+        private static Dictionary<UIDefine.Group_ID, NavigationGroup> groups;
+
+        public static void AddNavigationGroup(NavigationGroup group) 
+        {
+            if (groups == null) 
+            {
+                groups = new Dictionary<UIDefine.Group_ID, NavigationGroup>();
+            }
+
+            if (group.groupID == UIDefine.Group_ID.Undefined) 
+            {
+                return;
+            }
+
+            if (groups.ContainsKey(group.groupID)) 
+            {
+                return;
+            }
+            groups.Add(group.groupID, group);
+        }
+
+        public static NavigationGroup GetNavigationGroup(UIDefine.Group_ID groupID) 
+        {
+            if(groups.ContainsKey(groupID)) 
+            {
+                return groups[groupID];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public UIDefine.Group_ID groupID;
 
         [SerializeField]
@@ -86,6 +120,11 @@ namespace Game.UI
 
         private NavigationItem[] current;
 
+        private void Awake()
+        {
+            AddNavigationGroup(this);
+        }
+
         /// <summary>
         /// 当退出时
         /// </summary>
@@ -99,8 +138,9 @@ namespace Game.UI
         /// <summary>
         /// 当聚焦时
         /// </summary>
-        public virtual void OnInFocus(bool isRefocus, params int[] indexs)
+        public virtual bool OnInFocus(bool isRefocus, params int[] indexs)
         {
+            return false;
         }
 
         /// <summary>

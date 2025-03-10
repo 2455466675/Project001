@@ -56,6 +56,10 @@ namespace Game.UI
 
             for (int i = 0; i < items.Count; i++)
             {
+                if (items[i] == null) 
+                {
+                    continue;
+                }
                 items[i].SetIndex(i);
             }
 
@@ -90,13 +94,18 @@ namespace Game.UI
             index = null;
         }
 
-        public override void OnInFocus(bool isRefocus, params int[] indexs)
+        public override bool OnInFocus(bool isRefocus, params int[] indexs)
         {
             if (isRefocus) 
             {
                 if (Select(index))
                 {
                     state = GroupState.InFocused;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
@@ -104,6 +113,11 @@ namespace Game.UI
                 if (Select(indexs))
                 {
                     state = GroupState.InFocused;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }

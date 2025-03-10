@@ -21,7 +21,7 @@ namespace Game.Core
 
         public IEnumerator Init()
         {
-            GameObject obj = new GameObject("characterContainer");
+            GameObject obj = new GameObject("characterContainer");            
             GoHelper.DontDestroy(obj);
             characterContainer = obj.GetComponent<Transform>();
             yield return null;

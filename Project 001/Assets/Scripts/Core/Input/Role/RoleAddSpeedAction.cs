@@ -1,3 +1,4 @@
+using Game.System;
 using UnityEngine.InputSystem;
 
 namespace Game.Core
@@ -13,12 +14,12 @@ namespace Game.Core
 
         public override void OnStarted(InputAction.CallbackContext obj)
         {
-            
+            GameWorld.Instance.GetComponent<SystemComponent>().PartyComponent.Run(true);
         }
 
         public override void OnCanceled(InputAction.CallbackContext obj)
         {
-            
+            GameWorld.Instance.GetComponent<SystemComponent>().PartyComponent.Run(false);
         }
 
         public override void Execute()

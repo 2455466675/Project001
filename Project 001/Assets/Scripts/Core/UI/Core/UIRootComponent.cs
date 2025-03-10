@@ -16,6 +16,7 @@ namespace Game.UI
         private NavigationConfig navigationConfig;
 
         private List<PanelComponent> panels;
+        private List<NavigationGroupComponent> groups;
 
         private Stack<PanelCommand> commands;
 
@@ -30,6 +31,7 @@ namespace Game.UI
             navigationConfig.Init();
 
             panels = new List<PanelComponent>();
+            groups = new List<NavigationGroupComponent>();
             commands = new Stack<PanelCommand>();
 
             yield return uiRoot;
@@ -58,13 +60,32 @@ namespace Game.UI
         
         public NavigationGroupComponent GetNavigationGroup(UIDefine.Group_ID groupID) 
         {
-            UIDefine.Panel_ID panelID = navigationConfig.GetMap(groupID);
-            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
-            if (pc == null)
+            if (groupID == UIDefine.Group_ID.Undefined) 
             {
                 return null;
             }
-            return pc.GetNavigationGroup(groupID);
+
+            var group = groups.Find(g => g.GroupID == groupID);
+            if (group != null) 
+            {
+                return group;
+            }
+            
+            NavigationGroup navigationGroup = NavigationGroup.GetNavigationGroup(groupID);
+            if (navigationGroup == null) 
+            {
+                return null;
+            }
+            
+            UIDefine.Panel_ID panelID = navigationConfig.GetMap(groupID);
+            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
+
+            Entity entity = pc.MyEntity.CreateChild();
+            group = entity.AddComponent<NavigationGroupComponent>();
+            group.Init(navigationGroup);
+            groups.Add(group);
+
+            return group;           
         }
 
         public void HidePanel(UIDefine.Panel_ID panelID) 
@@ -75,6 +96,8 @@ namespace Game.UI
 
         public void Navigate(UIDefine.Group_ID groupID) 
         {
+            MyWorld.GetComponent<InputComponent>().PushInputMode(InputMode.UI);
+
             UIDefine.Panel_ID panelID = navigationConfig.GetMap(groupID);
 
             ShowPanel(panelID);
@@ -159,7 +182,7 @@ namespace Game.UI
 
             if (commands.Count <= 0)
             {
- 
+                MyWorld.GetComponent<InputComponent>().PopInputMode(InputMode.UI);
             }
             return true;
         }
@@ -167,15 +190,45 @@ namespace Game.UI
         /// <summary>
         /// ¹Ø±Õ£¨ESC¼ü£©
         /// </summary>
-        public void Close()
+        public void Close(bool compulsory)
         {
-            while (commands.Count > 0)
+            if (compulsory) 
             {
-                if (!Back()) 
+                while (commands.Count > 0)
                 {
-                    break;
+                    if (commands.TryPop(out PanelCommand cmd))
+                    {
+                        var subCmds = cmd.Commands;
+                        while (subCmds.Count > 0)
+                        {
+                            if (subCmds.TryPop(out GroupCommand subCmd)) 
+                            {
+                                subCmd.OnPop();                            
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        cmd.OnPop();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }                
+            }
+            else
+            {                
+                while (commands.Count > 0)
+                {
+                    if (!Back()) 
+                    {
+                        break;
+                    }
                 }
             }
+            MyWorld.GetComponent<InputComponent>().PopInputMode(InputMode.UI);
         }
 
         public WindowGroup GetWinGroup(UIGroup group) 

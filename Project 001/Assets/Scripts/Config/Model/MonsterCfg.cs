@@ -13,14 +13,14 @@ namespace Game.Cfg
 	{
 		public int Id {get; private set;} 
 		public string Name {get; private set;} 
-		public string PrefabPath {get; private set;} 
+		public int Actor {get; private set;} 
 		public int RoleType {get; private set;} 
 		public string HeadIcon {get; private set;} 
 		public void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
 			Name = reader.ReadString();
-			PrefabPath = reader.ReadString();
+			Actor = reader.ReadInt32();
 			RoleType = reader.ReadInt32();
 			HeadIcon = reader.ReadString();
 		}
@@ -28,7 +28,7 @@ namespace Game.Cfg
 		{
 			writer.Write(Id);
 			writer.Write(Name);
-			writer.Write(PrefabPath);
+			writer.Write(Actor);
 			writer.Write(RoleType);
 			writer.Write(HeadIcon);
 		}

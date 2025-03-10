@@ -29,7 +29,7 @@ namespace Game.Core
                     data.Deserialize(br);
                 }
             }
-            Language = new GameLanguage();
+            Language = new GameLanguage(this);
 
             yield return null;
         }

@@ -27,6 +27,9 @@ namespace Game.Cfg
 			var _PanelCfgContainer = new PanelCfgContainer();
 			_PanelCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(PanelCfg), _PanelCfgContainer);
+			var _ActorCfgContainer = new ActorCfgContainer();
+			_ActorCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(ActorCfg), _ActorCfgContainer);
 			var _RoleCfgContainer = new RoleCfgContainer();
 			_RoleCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(RoleCfg), _RoleCfgContainer);

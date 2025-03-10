@@ -18,7 +18,7 @@ namespace Game.Core
 
         public override void Execute()
         {
-            
+            GameWorld.Instance.GetComponent<UIComponent>().Navigate(UI.UIDefine.Group_ID.Overview_Menu_Group);
         }
     }
 }

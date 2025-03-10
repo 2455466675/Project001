@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09b3862a93fea847a68f1f00d24f93f, type: 3}
   m_Name: GameSystemConfig
   m_EditorClassIdentifier: 
-  commonActionAssets: {fileID: 144127259068175718, guid: 66d67651d2301484983a709bb1673570, type: 3}
+  actionContainer: {fileID: 6516126168666503809, guid: 66d67651d2301484983a709bb1673570, type: 3}
+  bones: []

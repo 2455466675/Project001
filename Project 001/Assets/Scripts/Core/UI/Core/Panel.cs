@@ -13,8 +13,6 @@ namespace Game.UI
 
         public CanvasGroup canvasGroup;
 
-        public NavigationGroup[] groups;
-
         /// <summary>
         /// œ‘ æ
         /// </summary>
@@ -47,11 +45,6 @@ namespace Game.UI
         public void OutFocus()
         {
             canvasGroup.alpha = 0.6f;
-        }
-
-        private void OnValidate()
-        {
-            groups = GetComponentsInChildren<NavigationGroup>();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Game.System
     /// </summary>
 	public class BattlePlayerRole : BattleRole, IRoleData
     {
-        public override string ActorPath => cfg != null ? cfg.PrefabPath : string.Empty;
+        public override string ActorPath => "";
 
         public override BattleRoleType FightCharacterType => BattleRoleType.Player;
 
@@ -24,7 +24,7 @@ namespace Game.System
         public override void Reset()
         {
             StaticNavigationList list = NavigationList.GetNavigationList(UI.ListName.BattlePlayerList) as StaticNavigationList;
-            FightPoint = list.GetItem(Index) as BattlePointItem;
+            //FightPoint = list.GetItem(Index) as BattlePointItem;
             SetBaseValue("valid", false);
             cfg = null;
             Actor = null;

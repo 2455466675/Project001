@@ -22,9 +22,9 @@ namespace Game.Core
             yield return GameWorld.Start(cfg);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            GameWorld.Step(Time.deltaTime);
+            GameWorld.Step(Time.fixedDeltaTime);
         }
 
         //public IEnumerator Start()

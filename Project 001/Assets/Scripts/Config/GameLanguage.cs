@@ -1,3 +1,4 @@
+using Game.Core;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,13 +21,15 @@ namespace Game.Cfg
     /// </summary>
     public class GameLanguage 
     {
-        public Color DefaultTextColor => Color.black;
+        public static Color DefaultTextColor => Color.black;
 
         private readonly Dictionary<int, LanguageItem> languageItems;
         private readonly Dictionary<string, Color> colorMap;
+        private readonly ConfigComponent config;
 
-        public GameLanguage()
+        public GameLanguage(ConfigComponent config)
         {
+            this.config = config;
             languageItems = new Dictionary<int, LanguageItem>();
             colorMap = new Dictionary<string, Color>();
         }
@@ -53,7 +56,7 @@ namespace Game.Cfg
                 return languageItems[id];
             }
 
-            LanguageCfg cfg = GameCore.Cfg.Find<LanguageCfg>(id);            
+            LanguageCfg cfg = config.Find<LanguageCfg>(id);            
             if(cfg == null)
             {
                 //MLog.Error($"没有此语言配置:{id}");
@@ -68,7 +71,7 @@ namespace Game.Cfg
 
         public Color GetColorById(int colorId)
         {
-            ColorCfg cfg = GameCore.Cfg.Find<ColorCfg>(colorId);
+            ColorCfg cfg = config.Find<ColorCfg>(colorId);
             if (cfg == null)
             {
                 MLog.Error($"没有此颜色配置:{colorId}");

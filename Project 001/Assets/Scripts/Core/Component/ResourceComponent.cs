@@ -95,13 +95,13 @@ namespace Game.Core
             return sceneInfo;
         }
 
-        public IEnumerator LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<AsyncOperation> action, Action<Scene> loadEndEvt)
+        public async UniTask LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<float> action, Action<Scene> loadEndEvt)
         {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, mode);
             while (!asyncLoad.isDone)
             {
-                action?.Invoke(asyncLoad);
-                yield return null;
+                action?.Invoke(asyncLoad.progress);
+                await UniTask.Yield();
             }
             loadEndEvt?.Invoke(SceneManager.GetSceneAt(SceneManager.sceneCount - 1));
         }

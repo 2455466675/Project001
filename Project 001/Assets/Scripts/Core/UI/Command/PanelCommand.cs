@@ -12,17 +12,17 @@ namespace Game.UI
 
         public UIDefine.Panel_ID PanelID { get; private set; }
 
-        private Stack<GroupCommand> commands;
+        public Stack<GroupCommand> Commands { get; private set; }
 
         public PanelCommand(UIDefine.Panel_ID panelID)
         {
             PanelID = panelID;
-            commands = new Stack<GroupCommand>();
+            Commands = new Stack<GroupCommand>();
         }
 
         public GroupCommand Peek()
         {
-            return commands.Peek();
+            return Commands.Peek();
         }
 
         /// <summary>
@@ -31,17 +31,17 @@ namespace Game.UI
         /// <returns>执行此操作后是否已空</returns>
         public bool Pop()
         {
-            if (commands.Count <= 0)
+            if (Commands.Count <= 0)
             {
                 return true;
             }
-            GroupCommand cmd = commands.Pop();
+            GroupCommand cmd = Commands.Pop();
             cmd.OnPop();
-            if (commands.TryPeek(out GroupCommand popCmd))
+            if (Commands.TryPeek(out GroupCommand popCmd))
             {
                 popCmd.OnRise();
             }
-            return commands.Count <= 0;
+            return Commands.Count <= 0;
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace Game.UI
         {
             if (cmd.OnPush())
             {
-                if (commands.TryPeek(out GroupCommand popCmd))
+                if (Commands.TryPeek(out GroupCommand popCmd))
                 {
                     popCmd.OnSink();
                 }
-                commands.Push(cmd);
+                Commands.Push(cmd);
                 return true;
             }
             else
@@ -68,7 +68,7 @@ namespace Game.UI
 
         public void OnPop()
         {
-            commands.Clear();
+            Commands.Clear();
             GameWorld.Instance.GetComponent<UIComponent>().HidePanel(PanelID);
         }
 
@@ -79,7 +79,7 @@ namespace Game.UI
 
         public bool OnRise()
         {
-            if (commands.TryPeek(out GroupCommand popCmd))
+            if (Commands.TryPeek(out GroupCommand popCmd))
             {
                 return popCmd.OnRise();
             }
@@ -91,7 +91,7 @@ namespace Game.UI
 
         public bool OnSink()
         {
-            if (commands.TryPeek(out GroupCommand popCmd))
+            if (Commands.TryPeek(out GroupCommand popCmd))
             {
                 return popCmd.OnSink();
             }
@@ -103,7 +103,7 @@ namespace Game.UI
 
         private bool CheckUndoable()
         {
-            if (commands.TryPeek(out GroupCommand popCmd))
+            if (Commands.TryPeek(out GroupCommand popCmd))
             {
                 return popCmd.IsUndoable;
             }

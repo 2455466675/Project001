@@ -42,13 +42,18 @@ namespace Game.UI
             pointer = -1;
         }
 
-        public override void OnInFocus(bool isRefocus,params int[] indexs)
+        public override bool OnInFocus(bool isRefocus,params int[] indexs)
         {
             if (isRefocus) 
             {
                 if (Select(pointer))
                 {
                     state = GroupState.InFocused;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
@@ -56,7 +61,12 @@ namespace Game.UI
                 if (Select(indexs))
                 {
                     state = GroupState.InFocused;
-                }                
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -92,6 +102,12 @@ namespace Game.UI
 
         public override void UpdateElementCount(int count)
         {
+            if (!isInit) 
+            {
+                MLog.Error("列表尚未初始化");
+                return;
+            }
+
             if (count < 0)
             {
                 return;
@@ -210,7 +226,7 @@ namespace Game.UI
                 {
                     continue;
                 }
-
+                
                 lts[item.Key] = item.Value;
             }
 
@@ -265,6 +281,7 @@ namespace Game.UI
             {
                 NavigationItem lt = GoHelper.Instantiate<NavigationItem>(item, content);
                 lt.SetActive(false);
+                lt.SetIndex(i);
                 items[i] = lt;
             }
             itemCount = items.Count;

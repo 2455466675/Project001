@@ -7,6 +7,8 @@ namespace Game.UI
     /// </summary>
     public class NavigationItem : MonoBehaviour
     {
+        protected object data;
+
         /// <summary>
         /// Ñ¡ÔñÆ÷
         /// </summary>
@@ -17,9 +19,21 @@ namespace Game.UI
         /// </summary>
         [SerializeField]
         private NavigationEvent @event;
+
         public bool IsBeSelected { get; }
         public virtual bool IsValid => true;
         public int Index { get; private set; }
+
+        public void SetData(object data) 
+        {
+            this.data = data;
+            OnRefresh();
+        }
+
+        public object GetData() 
+        {
+            return data;
+        }
 
         public void SetActive(bool active)
         {
@@ -74,5 +88,7 @@ namespace Game.UI
                 @event.OnSubmit(this);
             }
         }
+
+        protected virtual void OnRefresh() { }
     }
 }

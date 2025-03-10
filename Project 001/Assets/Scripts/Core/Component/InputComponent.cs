@@ -23,8 +23,12 @@ namespace Game.Core
         /// </summary>
         private List<InputActionWrapper> continuedActions = new List<InputActionWrapper>();
 
+        private Stack<IInputActionController> controllerStack;
+
         public IEnumerator Init(GameInitCfg intCfg)
         {
+            controllerStack = new Stack<IInputActionController>();
+
             gameInput = new MyInput();
             gameInput.Enable();
 
@@ -48,26 +52,50 @@ namespace Game.Core
         }
 
         /// <summary>
-        /// 切换输入模式
+        /// 将一个输入模式转到激活
         /// </summary>
         /// <param name="mode"></param>
-        public void SwitchInputMode(InputMode mode)
+        public void PushInputMode(InputMode mode) 
         {
-            foreach (var item in controllers)
+            if (controllerStack.TryPeek(out controller)) 
             {
-                if (item.Mode != mode && item.Mode != InputMode.GM)
+                if (controller.Mode != mode) 
                 {
-                    item.Disable();
+                    controller.Disable();
                 }
-            }
-
-            if (controller != null && controller.Mode == mode)
-            {
-                return;
+                else
+                {
+                    return;
+                }
             }
 
             controller = controllers.Find(c => c.Mode == mode);
             controller.Enable();
+            controllerStack.Push(controller);
+        }
+
+        /// <summary>
+        /// 退出最近一次添加的输入模式
+        /// </summary>
+        /// <param name="mode"></param>
+        public void PopInputMode(InputMode mode)
+        {
+            if (controllerStack.TryPeek(out controller))
+            {
+                if (controller.Mode != mode) 
+                {
+                    return;
+                }
+            }
+
+            if (controllerStack.TryPop(out controller))
+            {
+                controller.Disable();
+            }
+            if (controllerStack.TryPeek(out controller))
+            {
+                controller.Enable();
+            }
         }
 
         /// <summary>
