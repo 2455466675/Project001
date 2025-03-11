@@ -216,7 +216,8 @@ namespace Game.UI
                     {
                         break;
                     }
-                }                
+                }      
+                commands.Clear();
             }
             else
             {                

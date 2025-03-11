@@ -9,6 +9,8 @@ namespace Game.System
     /// </summary>
 	public class Actor : MonoBehaviour
 	{
+        public int id;
+
         public SpriteRenderer sp;
         public Rigidbody2D rb;
         public Animator animator;
@@ -23,11 +25,6 @@ namespace Game.System
         public bool IsLeader => Role != null && Role.IsLeader;
         public bool IsMoving => motor != null && motor.IsMoving;
         public bool IsRunning => motor != null && motor.IsRunning;
-
-
-        public void Awake()
-        {
-        }
 
         public void PlayAction(string acName)
         {

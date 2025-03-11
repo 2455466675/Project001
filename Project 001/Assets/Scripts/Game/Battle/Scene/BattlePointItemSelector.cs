@@ -8,7 +8,7 @@ namespace Game.System
     /// </summary>
 	public class BattlePointItemSelector : NavigationItemSelector
 	{
-        public BattleActorLoader fightActor;
+        public BattlePointItem point;
 
         public GameObject finger;
         public Vector2 offest;
@@ -36,16 +36,24 @@ namespace Game.System
                 return;
             }
 
-            if (fightActor == null || fightActor.actor == null)
+            if (point == null)
             {
                 return;
             }
 
             if (state)
             {
-                Transform point = fightActor.actor.GetBone("center");
-                finger.transform.SetPositionAndRotation(point.position + (Vector3)offest, Quaternion.AngleAxis(flip ? 180f : 0f, Vector3.up));
-                finger.SetActive(true);
+                BattleUnit unit = GameWorld.Instance.GetComponent<SystemComponent>().BattleComponent.GetUnit(point.UnitId);
+                Transform tf = unit.ActorComponent.GetBone("center");
+                if (tf == null) 
+                {
+                    finger.SetActive(false);
+                }
+                else
+                {                    
+                    finger.transform.SetPositionAndRotation(tf.position + (Vector3)offest, Quaternion.AngleAxis(flip ? 180f : 0f, Vector3.up));
+                    finger.SetActive(true);
+                }
             }
             else
             {

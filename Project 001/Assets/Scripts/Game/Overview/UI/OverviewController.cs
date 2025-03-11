@@ -35,7 +35,15 @@ namespace Game.UI
 
         public void OnClickMenu(NavigationItem item)
         {
-            GameWorld.Instance.GetComponent<UIComponent>().Navigate(UI.UIDefine.Group_ID.Package_Menu_Group);
+            if (item.Index == 0) 
+            {
+                GameWorld.Instance.GetComponent<UIComponent>().Navigate(UI.UIDefine.Group_ID.Package_Menu_Group);            
+            }
+            else
+            {
+                GameWorld.Instance.GetComponent<SystemComponent>().BattleComponent.Enter();
+            }
+
         }
     } 
 }

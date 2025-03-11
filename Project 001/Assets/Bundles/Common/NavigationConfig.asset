@@ -27,3 +27,7 @@ MonoBehaviour:
     panel: 1002
   - group: 2201
     panel: 1003
+  - group: 2301
+    panel: 1004
+  - group: 2302
+    panel: 1004

@@ -1,5 +1,3 @@
-using Game.Cfg;
-using Game.Core;
 using UnityEngine;
 
 namespace Game.System
@@ -9,25 +7,22 @@ namespace Game.System
     /// </summary>
     public class ActorComponent : EC.Component
     {       
+        public int ActorId { get; private set; }
         private Actor actor;
 
-        public void Init(int id) 
+        public void Init(int actorId) 
         {
-            ConfigComponent cc = MyWorld.GetComponent<ConfigComponent>();
-            RoleCfg Cfg = cc.Find<RoleCfg>(id);
-            if (Cfg == null)
-            {
-                return;
-            }
+            ActorId = actorId;
+        }
 
-            ActorCfg actorCfg = cc.Find<ActorCfg>(Cfg.Actor);
-            if (actorCfg == null) 
+        public void RefreshActor() 
+        {
+            if (actor != null)
             {
-                return;
+                MyWorld.GetComponent<ActorFactoryComponent>().RecycleActor(actor);
+                actor = null;
             }
-
-            GameObject obj = MyWorld.GetComponent<ResourceComponent>().LoadAndInstantiate(actorCfg.PrefabPath, GameObject.FindWithTag("CharacterContainer").transform);
-            actor = obj.GetComponent<Actor>();
+            actor = MyWorld.GetComponent<ActorFactoryComponent>().CreateActor(ActorId, GetActorNode());
         }
 
         public void PlayAction(string actionName, params object[] actionArgs) 
@@ -46,18 +41,40 @@ namespace Game.System
 
         public Vector2 GetPosition() 
         {
+            if (actor == null) return Vector2.zero;
             return actor.transform.position;
         }
 
         public void SetPosition(Vector2 position)
         {
+            if (actor == null) return;
             actor.transform.position = position;
+        }
+
+        public Transform GetBone(string boneName) 
+        {
+            if (actor == null) return null;
+            return actor.GetBone(boneName);
         }
 
         public void SetColloderEnabled(bool enabled)
         {
             if (actor == null) return;
             actor.SetColloderEnabled(enabled);
+        }
+
+        protected virtual Transform GetActorNode() 
+        {
+            return null; 
+        }
+
+        protected override void OnDestroy()
+        {
+            if (actor != null)
+            {
+                MyWorld.GetComponent<ActorFactoryComponent>().RecycleActor(actor);
+                actor = null;
+            }
         }
     }
 }

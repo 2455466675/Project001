@@ -34,6 +34,8 @@ namespace Game
             GSMComponent gsmc = Instance.AddComponent<GSMComponent>();
             yield return gsmc.Init(intCfg);
 
+            Instance.AddComponent<ActorFactoryComponent>();
+
             SystemComponent sc = Instance.AddComponent<SystemComponent>();
             yield return sc.Init(intCfg);
 

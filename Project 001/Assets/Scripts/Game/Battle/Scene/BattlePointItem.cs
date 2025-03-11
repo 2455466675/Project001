@@ -1,4 +1,7 @@
 using Game.UI;
+using System.Drawing;
+using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Game.System
 {
@@ -7,13 +10,21 @@ namespace Game.System
     /// </summary>
 	public class BattlePointItem : NavigationItem
 	{
+        public int UnitId { get; private set; }
         public override bool IsValid => CheckValid();
 
-        public BattleActorLoader actorLoader;
+        public Transform actorNode;
+
+        public void SetUnitId(int unitId) 
+        {
+            UnitId = unitId;
+        }
 
         private bool CheckValid()
         {
-            return true;
+            BattleUnit unit = GameWorld.Instance.GetComponent<SystemComponent>().BattleComponent.GetUnit(UnitId);
+            Transform tf = unit.ActorComponent.GetBone("center");
+            return tf != null;
         }
     }
 }

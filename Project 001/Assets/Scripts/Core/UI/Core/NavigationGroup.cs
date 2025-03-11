@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -187,9 +188,12 @@ namespace Game.UI
         {
             if (current != null)
             {
-                for (int i = 0; i < current.Length; i++)
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
                 {
-                    current[i].OnDeselect();
+                    temp[i].OnDeselect();
                 }
             }
         }
@@ -200,9 +204,12 @@ namespace Game.UI
 
             if (current != null)
             {
-                foreach (var item in current)
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
                 {
-                    item.OnSelect();
+                    temp[i].OnSelect();
                 }
             }
         }
@@ -211,9 +218,12 @@ namespace Game.UI
         {
             if (current != null)
             {
-                for (int i = 0; i < current.Length; i++)
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
                 {
-                    current[i].OutFocus();
+                    temp[i].OutFocus();
                 }
             }
         }
@@ -222,9 +232,12 @@ namespace Game.UI
         {
             if (current != null)
             {
-                for (int i = 0; i < current.Length; i++)
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
                 {
-                    current[i].OnSubmit();
+                    temp[i].OnSubmit();
                 }
             }
         }

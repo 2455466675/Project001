@@ -1,4 +1,6 @@
 using EC;
+using Game.Cfg;
+using Game.Core;
 
 namespace Game.System
 {
@@ -10,13 +12,17 @@ namespace Game.System
         public void Awake()
         {
             MyEntity.AddComponent<QueueableComponent>();
-            MyEntity.AddComponent<ActorComponent>();
+            MyEntity.AddComponent<SceneActorComponent>();
             MyEntity.AddComponent<MotorComponent>();
         }
 
         public void Init(int id) 
         {
-            MyEntity.GetComponent<ActorComponent>().Init(id);
+            var cc = MyWorld.GetComponent<ConfigComponent>();
+            var cfg = cc.Find<RoleCfg>(id);
+
+            MyEntity.GetComponent<SceneActorComponent>().Init(cfg.Actor);
+            MyEntity.GetComponent<SceneActorComponent>().RefreshActor();
         }
     }
 }

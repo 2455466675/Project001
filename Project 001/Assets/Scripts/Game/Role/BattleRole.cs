@@ -43,8 +43,6 @@ namespace Game.System
 
         public override void RefreshActor()
         {
-            Actor = FightPoint.actorLoader.LoadActor(ActorPath);
-            SetBaseValue("valid", Actor != null);
         }
     }
 }

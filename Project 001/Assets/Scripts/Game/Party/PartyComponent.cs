@@ -28,7 +28,7 @@ namespace Game.System
             {
                 CharacterComponent cc = characters[i];
                 QueueableComponent qc = cc.GetComponent<QueueableComponent>();
-                ActorComponent ac = cc.GetComponent<ActorComponent>();
+                SceneActorComponent ac = cc.GetComponent<SceneActorComponent>();
                 if (i == 0) 
                 {
                     qc.IsLeader = true;

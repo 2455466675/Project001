@@ -24,7 +24,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3455127606671483698}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.52, y: 1.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,6 +32,7 @@ Transform:
   - {fileID: 8763050672491811373}
   - {fileID: 7131741789856458949}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5281087609593952290
 MonoBehaviour:
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selector: {fileID: 7716320101161138346}
   event: {fileID: 0}
-  actorLoader: {fileID: 3103596255373844353}
+  actorNode: {fileID: 8763050672491811373}
 --- !u!1 &4130027677196271373
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 8763050672491811373}
   - component: {fileID: 3103596255373844353}
   m_Layer: 0
-  m_Name: RoleActor
+  m_Name: ActorNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,13 +73,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4130027677196271373}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6603315755856592558}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3103596255373844353
 MonoBehaviour:
@@ -127,6 +127,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7131741789856458949}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -216,7 +217,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8773579242496285958}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -224,6 +224,7 @@ Transform:
   m_Children:
   - {fileID: 1689943273761621509}
   m_Father: {fileID: 6603315755856592558}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7716320101161138346
 MonoBehaviour:
@@ -237,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc6049bb1e93884095b212e2248954b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fightActor: {fileID: 3103596255373844353}
+  point: {fileID: 5281087609593952290}
   finger: {fileID: 8588256558700543682}
   offest: {x: -0.5, y: 0}
   flip: 0
