@@ -11,18 +11,18 @@ namespace Game.System
     {
         public void Awake()
         {
-            MyEntity.AddComponent<QueueableComponent>();
-            MyEntity.AddComponent<SceneActorComponent>();
-            MyEntity.AddComponent<MotorComponent>();
+            Entity.AddComponent<QueueableComponent>();
+            Entity.AddComponent<SceneActorComponent>();
+            Entity.AddComponent<MotorComponent>();
         }
 
         public void Init(int id) 
         {
-            var cc = MyWorld.GetComponent<ConfigComponent>();
+            var cc = World.GetComponent<ConfigComponent>();
             var cfg = cc.Find<RoleCfg>(id);
 
-            MyEntity.GetComponent<SceneActorComponent>().Init(cfg.Actor);
-            MyEntity.GetComponent<SceneActorComponent>().RefreshActor();
+            Entity.GetComponent<SceneActorComponent>().Init(cfg.Actor);
+            Entity.GetComponent<SceneActorComponent>().RefreshActor();
         }
     }
 }

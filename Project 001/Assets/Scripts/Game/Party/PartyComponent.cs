@@ -17,7 +17,7 @@ namespace Game.System
 
             for (int i = 0; i < 4; i++)
             {
-                Entity character = MyEntity.CreateChild();
+                Entity character = Entity.CreateChild();
                 CharacterComponent cc = character.AddComponent<CharacterComponent>();
                 cc.Init(1001);
                 

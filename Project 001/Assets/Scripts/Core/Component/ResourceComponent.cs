@@ -87,23 +87,21 @@ namespace Game.Core
             return GoHelper.Instantiate(obj, parent);
         }
 
-        public SceneInfo LoadScene(string sceneName, LoadSceneMode mode)
+        public Scene LoadScene(string sceneName, LoadSceneMode mode)
         {
-            Scene scene = SceneManager.LoadScene(sceneName, new LoadSceneParameters(mode));
-            SceneInfo sceneInfo = new();
-            sceneInfo.SetScene(scene);
-            return sceneInfo;
+            SceneManager.LoadScene(sceneName, mode);
+            return SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
         }
 
-        public async UniTask LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<float> action, Action<Scene> loadEndEvt)
+        public async UniTask<Scene> LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<float> action)
         {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, mode);
             while (!asyncLoad.isDone)
             {
                 action?.Invoke(asyncLoad.progress);
                 await UniTask.Yield();
-            }
-            loadEndEvt?.Invoke(SceneManager.GetSceneAt(SceneManager.sceneCount - 1));
+            }            
+            return SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
         }
 
         public Sprite GetSprite(string spriteName)

@@ -18,7 +18,7 @@ namespace Game.Core
 
         public IEnumerator Init(GameInitCfg intCfg)
         {
-            Formula = MyWorld.GetComponent<ResourceComponent>().LoadAsset<Formula>(intCfg.FormulaFilePath);
+            Formula = World.GetComponent<ResourceComponent>().LoadAsset<Formula>(intCfg.FormulaFilePath);
 
             string filePath = Path.Combine(Application.streamingAssetsPath, intCfg.GameCfgFile);
             using (FileStream stream = new FileStream(filePath, FileMode.Open))

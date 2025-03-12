@@ -19,7 +19,7 @@ namespace Game.System
 
         public void Awake()
         {
-            var list = MyWorld.GetComponent<ConfigComponent>().FindAll<OverviewMenuCfg>();
+            var list = World.GetComponent<ConfigComponent>().FindAll<OverviewMenuCfg>();
 
             int count = list.Count;
             menuList = new List<OverviewMenuItem>(count);

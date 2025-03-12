@@ -40,9 +40,9 @@ namespace Game.System
         public void Awake()
         {
             traces = new List<MoveTrace>();
-            actor = MyEntity.GetComponent<ActorComponent>();
-            queueable = MyEntity.GetComponent<QueueableComponent>();
-            gap = MyWorld.GetComponent<ConfigComponent>().Formula.TEAM_GAP;
+            actor = Entity.GetComponent<ActorComponent>();
+            queueable = Entity.GetComponent<QueueableComponent>();
+            gap = World.GetComponent<ConfigComponent>().Formula.TEAM_GAP;
         }
 
         public void LateUpdate(float dt)

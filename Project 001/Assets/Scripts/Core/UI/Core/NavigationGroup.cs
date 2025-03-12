@@ -1,3 +1,4 @@
+using Game.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,6 +87,7 @@ namespace Game.UI
                 return;
             }
             groups.Add(group.groupID, group);
+            GameWorld.Instance.GetComponent<UIComponent>().AddNavigationGroup(group);
         }
 
         public static NavigationGroup GetNavigationGroup(UIDefine.Group_ID groupID) 
@@ -97,6 +99,15 @@ namespace Game.UI
             else
             {
                 return null;
+            }
+        }
+
+        public static void RemoveNavigationGroup(UIDefine.Group_ID groupID) 
+        {
+            if (groups.ContainsKey(groupID))
+            {
+                groups.Remove(groupID);
+                GameWorld.Instance.GetComponent<UIComponent>().RemoveNavigationGroup(groupID);
             }
         }
 
@@ -124,6 +135,11 @@ namespace Game.UI
         private void Awake()
         {
             AddNavigationGroup(this);
+        }
+
+        private void OnDestroy()
+        {
+            RemoveNavigationGroup(groupID);
         }
 
         /// <summary>

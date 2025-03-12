@@ -1,3 +1,5 @@
+using EC;
+using Game.Core;
 using Game.UI;
 using UnityEngine;
 using NavigationList = Navigation.NavigationList;
@@ -24,9 +26,8 @@ namespace Game.System
         {
             if (Input.GetKeyDown(KeyCode.N))
             {
-                //BattlePointItem fightPoint = list.GetItem(4) as BattlePointItem;
-
-                //fightPoint.actorLoader.actor.PlayAction("HitPopText");
+                MLog.Log("ExitBattleScene");
+                GameWorld.Instance.GetComponent<SystemComponent>().BattleComponent.Exit();
             }
 
         }
@@ -34,7 +35,6 @@ namespace Game.System
         public void OnClickEnemyList(NavigationList list)
         {
             MLog.Log("OnClickEnemyList");
-            GameCore.System.BattleSystem.ActionDetermine(list);
         }
     }
 }

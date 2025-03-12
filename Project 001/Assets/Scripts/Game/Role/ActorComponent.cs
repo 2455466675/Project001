@@ -19,10 +19,10 @@ namespace Game.System
         {
             if (actor != null)
             {
-                MyWorld.GetComponent<ActorFactoryComponent>().RecycleActor(actor);
+                World.GetComponent<ActorFactoryComponent>().RecycleActor(actor);
                 actor = null;
             }
-            actor = MyWorld.GetComponent<ActorFactoryComponent>().CreateActor(ActorId, GetActorNode());
+            actor = World.GetComponent<ActorFactoryComponent>().CreateActor(ActorId, GetActorNode());
         }
 
         public void PlayAction(string actionName, params object[] actionArgs) 
@@ -31,7 +31,7 @@ namespace Game.System
             {
                 return;
             }
-            ActionGroup action = MyWorld.GetComponent<SystemComponent>().Config.FindAction(actionName);
+            ActionGroup action = World.GetComponent<SystemComponent>().Config.FindAction(actionName);
             if (action == null) 
             {
                 return;
@@ -72,7 +72,7 @@ namespace Game.System
         {
             if (actor != null)
             {
-                MyWorld.GetComponent<ActorFactoryComponent>().RecycleActor(actor);
+                GameWorld.Instance.GetComponent<ActorFactoryComponent>().RecycleActor(actor);
                 actor = null;
             }
         }

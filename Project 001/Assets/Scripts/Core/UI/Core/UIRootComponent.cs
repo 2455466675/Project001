@@ -22,7 +22,7 @@ namespace Game.UI
 
         public IEnumerator Init(GameInitCfg intCfg)
         {
-            ResourceComponent rc = MyWorld.GetComponent<ResourceComponent>();
+            ResourceComponent rc = World.GetComponent<ResourceComponent>();
 
             GameObject uiRootGo = rc.LoadAndInstantiate(intCfg.UIRootPath, null);
             uiRoot = uiRootGo.GetComponent<UIRoot>();
@@ -46,18 +46,66 @@ namespace Game.UI
             }
             else
             {
-                Entity panelEntity = MyEntity.CreateChild();
+                Entity panelEntity = Entity.CreateChild();
                 pc = panelEntity.AddComponent<PanelComponent>();
+                panels.Add(pc);
 
                 pc.Init(panelID);
                 pc.Show();
-
-                panels.Add(pc);
             }
 
             return pc;
         }
-        
+
+        public void HidePanel(UIDefine.Panel_ID panelID)
+        {
+            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
+            pc?.Hide();
+        }
+
+        public void AddNavigationGroup(NavigationGroup navigationGroup) 
+        {
+            if (navigationGroup == null)
+            {
+                return;
+            }
+
+            var group = groups.Find(g => g.GroupID == navigationGroup.groupID);
+            if (group != null)
+            {
+                return;
+            }
+
+            Entity entity; 
+            UIDefine.Panel_ID panelID = navigationConfig.GetMap(navigationGroup.groupID);
+            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
+            if(pc == null) 
+            {
+                ShowPanel(panelID);
+                pc = panels.Find(p => p.PanelID == panelID);
+                if (pc == null) 
+                {
+                    return;
+                }
+            }
+
+            entity = pc.Entity.CreateChild();
+            group = entity.AddComponent<NavigationGroupComponent>();
+            group.Init(navigationGroup);
+            groups.Add(group);
+        }
+
+        public void RemoveNavigationGroup(UIDefine.Group_ID groupID) 
+        {
+            var group = groups.Find(g => g.GroupID == groupID);
+            if (group == null)
+            {
+                return;
+            }
+            groups.Remove(group);
+            World.DestroyEntity(group.Entity);
+        }
+
         public NavigationGroupComponent GetNavigationGroup(UIDefine.Group_ID groupID) 
         {
             if (groupID == UIDefine.Group_ID.Undefined) 
@@ -66,37 +114,12 @@ namespace Game.UI
             }
 
             var group = groups.Find(g => g.GroupID == groupID);
-            if (group != null) 
-            {
-                return group;
-            }
-            
-            NavigationGroup navigationGroup = NavigationGroup.GetNavigationGroup(groupID);
-            if (navigationGroup == null) 
-            {
-                return null;
-            }
-            
-            UIDefine.Panel_ID panelID = navigationConfig.GetMap(groupID);
-            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
-
-            Entity entity = pc.MyEntity.CreateChild();
-            group = entity.AddComponent<NavigationGroupComponent>();
-            group.Init(navigationGroup);
-            groups.Add(group);
-
             return group;           
-        }
-
-        public void HidePanel(UIDefine.Panel_ID panelID) 
-        {
-            PanelComponent pc = panels.Find(p => p.PanelID == panelID);
-            pc?.Hide();
         }
 
         public void Navigate(UIDefine.Group_ID groupID) 
         {
-            MyWorld.GetComponent<InputComponent>().PushInputMode(InputMode.UI);
+            World.GetComponent<InputComponent>().PushInputMode(InputMode.UI);
 
             UIDefine.Panel_ID panelID = navigationConfig.GetMap(groupID);
 
@@ -182,7 +205,7 @@ namespace Game.UI
 
             if (commands.Count <= 0)
             {
-                MyWorld.GetComponent<InputComponent>().PopInputMode(InputMode.UI);
+                World.GetComponent<InputComponent>().PopInputMode(InputMode.UI);
             }
             return true;
         }
@@ -229,7 +252,7 @@ namespace Game.UI
                     }
                 }
             }
-            MyWorld.GetComponent<InputComponent>().PopInputMode(InputMode.UI);
+            World.GetComponent<InputComponent>().PopInputMode(InputMode.UI);
         }
 
         public WindowGroup GetWinGroup(UIGroup group) 

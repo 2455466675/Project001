@@ -1,3 +1,4 @@
+using Game.Core;
 using UnityEngine;
 
 namespace Game.System
@@ -9,7 +10,7 @@ namespace Game.System
     {
         protected override Transform GetActorNode()
         {
-            return GameObject.FindWithTag("CharacterContainer").transform;
+            return World.GetComponent<SceneComponent>().CharacterContainer;
         }
     }
 }

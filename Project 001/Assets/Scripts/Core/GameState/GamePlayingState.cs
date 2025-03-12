@@ -25,7 +25,7 @@ namespace Game.Core
             MLog.Log("Мгдижа:", progress, Time.frameCount);
         }
 
-        private void Fun2(SceneInfo info)
+        private void Fun2(SceneEntity info)
         {
             GameWorld.Instance.GetComponent<UIComponent>().Close(true);
             GameWorld.Instance.GetComponent<InputComponent>().PushInputMode(InputMode.Role);

@@ -8,29 +8,39 @@ namespace Game.Core
     /// </summary>
 	public class FightMoveAction : InputActionWrapper
     {
-        private float intervalTime = 0.15f;
-        private float t;
+        private readonly float pressTime = 0.3f;
+        private float pressTimer;
+
+        private readonly float intervalTime = 0.15f;
+        private float intervalTimer;
         public FightMoveAction(InputAction inputAction) : base(inputAction)
         {
         }
 
         public override void Tick()
         {
-            if (t <= 0f)
+            if (pressTimer > 0)
+            {
+                pressTimer -= Time.deltaTime;
+                return;
+            }
+
+            if (intervalTimer <= 0f)
             {
                 Execute();
-                t = intervalTime;
+                intervalTimer = intervalTime;
             }
             else
             {
-                t -= Time.fixedDeltaTime;
+                intervalTimer -= Time.deltaTime;
             }
         }
 
         public override void OnStarted(InputAction.CallbackContext obj)
         {
             Execute();
-            t = intervalTime;
+            pressTimer = pressTime;
+            intervalTimer = intervalTime;
             PushContinued();
         }
 
@@ -45,7 +55,8 @@ namespace Game.Core
 
         public override void Execute()
         {
-            MLog.Log("FightMoveAction");
+            Vector2 dir = inputAction.ReadValue<Vector2>();
+            GameWorld.Instance.GetComponent<UIComponent>().Move(dir);
         }
     }
 }

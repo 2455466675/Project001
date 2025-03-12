@@ -13,7 +13,7 @@ namespace Game.System
 
         public void Awake()
         {
-            ActorComponent = MyEntity.AddComponent<BattleActorComponent>();
+            ActorComponent = Entity.AddComponent<BattleActorComponent>();
         }
 
         public void SetUnitId(int unitId) 
@@ -34,7 +34,7 @@ namespace Game.System
 
         public void Awake()
         {
-            roundComponent = MyEntity.AddComponent<RoundComponent>();
+            roundComponent = Entity.AddComponent<RoundComponent>();
 
             playerUnits = new List<BattleUnit>();
             enemyUnits = new List<BattleUnit>();      
@@ -42,8 +42,27 @@ namespace Game.System
 
         public void Enter() 
         {
-            MyWorld.GetComponent<UIComponent>().Close(true);
-            MyWorld.GetComponent<SceneComponent>().LoadSceneAsync("BattleScene", UnityEngine.SceneManagement.LoadSceneMode.Additive, LoadingHandler, LoadEndHandler);
+            World.GetComponent<UIComponent>().Close(true);
+            World.GetComponent<SceneComponent>().EnterBattleScene(LoadEndHandler);
+        }
+
+        public void Exit() 
+        {
+            World.GetComponent<UIComponent>().Close(true);
+            World.GetComponent<SceneComponent>().ExitBattleScene();
+
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                World.DestroyEntity(playerUnits[i].Entity);
+            }
+
+            for (int i = 0; i < enemyUnits.Count; i++)
+            {
+                World.DestroyEntity(enemyUnits[i].Entity);
+            }
+
+            playerUnits.Clear();
+            enemyUnits.Clear();
         }
 
         public BattleUnit GetUnit(int unitId) 
@@ -53,7 +72,7 @@ namespace Game.System
             return unit;
         }
 
-        private void LoadEndHandler(Core.SceneInfo info)
+        private void LoadEndHandler(SceneEntity info)
         {
             StaticNavigationGroup playerGroup = NavigationGroup.GetNavigationGroup(UIDefine.Group_ID.Battle_Player_Group) as StaticNavigationGroup;
             StaticNavigationGroup enemyGroup = NavigationGroup.GetNavigationGroup(UIDefine.Group_ID.Battle_Enemy_Group) as StaticNavigationGroup;
@@ -64,7 +83,7 @@ namespace Game.System
             {
                 BattlePointItem point = playerGroup.GetItem(i) as BattlePointItem;
 
-                Entity entity = MyEntity.CreateChild();
+                Entity entity = Entity.CreateChild();
                 var unit = entity.AddComponent<BattleUnit>();
                 entity.AddComponent<BattleHeroComponent>();
                 
@@ -80,7 +99,7 @@ namespace Game.System
             {
                 BattlePointItem point = enemyGroup.GetItem(i) as BattlePointItem;
 
-                Entity entity = MyEntity.CreateChild();
+                Entity entity = Entity.CreateChild();
                 var unit = entity.AddComponent<BattleUnit>();
                 entity.AddComponent<BattleMonsterComponent>();
 
@@ -104,13 +123,8 @@ namespace Game.System
                 bmc.Init(enemies[i]);
             }
 
-            MyWorld.GetComponent<UIComponent>().ShowPanel(UIDefine.Panel_ID.Battle_Panel);
-            MyWorld.GetComponent<UIComponent>().Navigate(UIDefine.Group_ID.Battle_Enemy_Group);
+            World.GetComponent<UIComponent>().Navigate(UIDefine.Group_ID.Battle_Enemy_Group);
             //roundComponent.Start();
-        }
-
-        private void LoadingHandler(float obj)
-        {            
         }
     }
 }

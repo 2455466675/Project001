@@ -34,7 +34,7 @@ namespace Game.System
             }
             else
             {
-                ConfigComponent cc = MyWorld.GetComponent<ConfigComponent>();
+                ConfigComponent cc = World.GetComponent<ConfigComponent>();
                 ActorCfg actorCfg = cc.Find<ActorCfg>(actorId);
                 if (actorCfg == null)
                 {
@@ -42,7 +42,7 @@ namespace Game.System
                     return null;
                 }
 
-                GameObject obj = MyWorld.GetComponent<ResourceComponent>().LoadAndInstantiate(actorCfg.PrefabPath, node);
+                GameObject obj = World.GetComponent<ResourceComponent>().LoadAndInstantiate(actorCfg.PrefabPath, node);
                 Actor actor = obj.GetComponent<Actor>();
                 actor.id = actorId;
                 return actor;
@@ -50,7 +50,7 @@ namespace Game.System
         }
 
         public void RecycleActor(Actor actor) 
-        {
+        {            
             if (actor == null)
             {
                 return;

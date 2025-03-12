@@ -9,10 +9,10 @@ namespace EC
     {
         public int Guid { get; private set; }
         public bool IsValid { get; private set; }
-        public World MyWorld { get; private set; }
+        public World World { get; private set; }
 
         private int parentGuid;
-        public Entity Parent => MyWorld.GetEntity(parentGuid);
+        public Entity Parent => World.GetEntity(parentGuid);
 
         private List<int> children;
         public int ChildCount => children.Count;
@@ -29,7 +29,7 @@ namespace EC
         internal void Reuse(int guid, int parent, World world) 
         {
             Guid = guid;
-            MyWorld = world;
+            World = world;
             parentGuid = parent;
             IsValid = true;
         }
@@ -38,25 +38,25 @@ namespace EC
         {
             foreach (var child in children)
             {
-                MyWorld.DestroyEntity(child);
+                World.DestroyEntity(child);
             }
             children.Clear();
 
             foreach (var component in components)
             {
-                MyWorld.DestroyComponent(component);
+                World.DestroyComponent(component);
             }
             components.Clear();
 
             Guid = -1;
             parentGuid = -1;
-            MyWorld = null;
+            World = null;
             IsValid = false;
         }
 
         public Entity CreateChild() 
         {
-            Entity entity = MyWorld.CreateEntity(this);
+            Entity entity = World.CreateEntity(this);
             children.Add(entity.Guid);
             return entity;
         }
@@ -90,7 +90,7 @@ namespace EC
 
         public T AddComponent<T>() where T : Component, new()
         {
-            T component = MyWorld.CreateComponent<T>(this);
+            T component = World.CreateComponent<T>(this);
             components.Add(component);
             return component;
         }
@@ -111,7 +111,7 @@ namespace EC
             for (int i = 0; i < temp.Count; i++)
             {
                 Component component = temp[i];
-                MyWorld.DestroyComponent(component);
+                World.DestroyComponent(component);
                 components.Remove(component);
             }
         }

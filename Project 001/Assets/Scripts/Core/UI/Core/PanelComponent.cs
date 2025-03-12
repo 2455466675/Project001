@@ -8,7 +8,7 @@ namespace Game.UI
     /// </summary>
     public class PanelComponent : EC.Component
     {
-        public UIDefine.Panel_ID PanelID => panel.panelID;
+        public UIDefine.Panel_ID PanelID { get; private set; }
 
         public int Id { get; private set; }
 
@@ -17,9 +17,10 @@ namespace Game.UI
 
         public void Init(UIDefine.Panel_ID panelID) 
         {
-            var parent = MyEntity.Parent.GetComponent<UIRootComponent>().GetWinGroup(UIGroup.Normal);
-            var config = MyWorld.GetComponent<ConfigComponent>().Find<PanelCfg>((int)panelID);
-            var panelGo = MyWorld.GetComponent<ResourceComponent>().LoadAndInstantiate(config.Path, parent.transform);
+            PanelID = panelID;
+            var parent = Entity.Parent.GetComponent<UIRootComponent>().GetWinGroup(UIGroup.Normal);
+            var config = World.GetComponent<ConfigComponent>().Find<PanelCfg>((int)panelID);
+            var panelGo = World.GetComponent<ResourceComponent>().LoadAndInstantiate(config.Path, parent.transform);
 
             panel = panelGo.GetComponent<Panel>();       
         }

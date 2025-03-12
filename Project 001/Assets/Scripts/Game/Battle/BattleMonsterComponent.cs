@@ -10,7 +10,7 @@ namespace Game.System
     {
         public void Init(int id) 
         {
-            ConfigComponent cc = MyWorld.GetComponent<ConfigComponent>();
+            ConfigComponent cc = World.GetComponent<ConfigComponent>();
             MonsterCfg cfg = cc.Find<MonsterCfg>(id);
 
             if (cfg == null) 

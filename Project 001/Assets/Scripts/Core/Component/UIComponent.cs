@@ -15,7 +15,7 @@ namespace Game.Core
 
         public IEnumerator Init(GameInitCfg intCfg) 
         {            
-            UIEntity = MyEntity.CreateChild();
+            UIEntity = Entity.CreateChild();
 
             UIRootComponent uirc = UIEntity.AddComponent<UIRootComponent>();
 
@@ -55,6 +55,16 @@ namespace Game.Core
         public void Close(bool compulsory = false)
         {
             UIEntity.GetComponent<UIRootComponent>().Close(compulsory);
+        }
+
+        public void AddNavigationGroup(NavigationGroup group)
+        {
+            UIEntity.GetComponent<UIRootComponent>().AddNavigationGroup(group);
+        }
+
+        public void RemoveNavigationGroup(UIDefine.Group_ID groupID)
+        {
+            UIEntity.GetComponent<UIRootComponent>().RemoveNavigationGroup(groupID);
         }
 
         public NavigationGroupComponent GetNavigationGroup(UIDefine.Group_ID groupID) 

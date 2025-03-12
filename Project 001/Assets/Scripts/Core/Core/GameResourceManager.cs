@@ -85,11 +85,10 @@ namespace Game.Core
             return GoHelper.Instantiate(obj, parent);
         }
 
-        public SceneInfo LoadScene(string sceneName, LoadSceneMode mode)
+        public SceneEntity LoadScene(string sceneName, LoadSceneMode mode)
         {
             Scene scene = SceneManager.LoadScene(sceneName, new LoadSceneParameters(mode));
-            SceneInfo sceneInfo = new();
-            sceneInfo.SetScene(scene);
+            SceneEntity sceneInfo = new(scene);
             return sceneInfo;
         }
 

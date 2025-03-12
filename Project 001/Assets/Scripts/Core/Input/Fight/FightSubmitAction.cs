@@ -18,7 +18,7 @@ namespace Game.Core
 
         public override void Execute()
         {
-            MLog.Log("FightSubmitAction");
+            GameWorld.Instance.GetComponent<UIComponent>().Submit();
         }
     }
 }

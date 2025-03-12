@@ -18,11 +18,11 @@ namespace Game.System
 
         public IEnumerator Init(GameInitCfg intCfg)
         {
-            ResourceComponent rc = MyWorld.GetComponent<ResourceComponent>();
+            ResourceComponent rc = World.GetComponent<ResourceComponent>();
 
-            Config = rc.LoadAsset<GameSystemConfig>(MyWorld.GetComponent<ConfigComponent>().Formula.GAME_SYSTEM_CONFIG_PATH);
+            Config = rc.LoadAsset<GameSystemConfig>(World.GetComponent<ConfigComponent>().Formula.GAME_SYSTEM_CONFIG_PATH);
 
-            Entity systemEntity = MyEntity.CreateChild();
+            Entity systemEntity = Entity.CreateChild();
 
             OverviewComponent = systemEntity.CreateChild().AddComponent<OverviewComponent>();
 

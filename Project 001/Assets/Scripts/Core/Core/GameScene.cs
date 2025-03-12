@@ -17,7 +17,7 @@ namespace Game.Core
         private Coroutine loadSceneCo;
         private string loadingSceneName;
         private Action<AsyncOperation> loadingAction;
-        private Action<SceneInfo> loadEndAction;
+        private Action<SceneEntity> loadEndAction;
 
         public IEnumerator Init()
         {
@@ -27,7 +27,7 @@ namespace Game.Core
             yield return null;
         }
 
-        public void LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<AsyncOperation> loadingAction, Action<SceneInfo> loadEndAction)
+        public void LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<AsyncOperation> loadingAction, Action<SceneEntity> loadEndAction)
         {
             if (loadSceneCo != null)
             {
@@ -64,8 +64,7 @@ namespace Game.Core
 
         private void LoadEndHandler(Scene scene)
         {
-            SceneInfo sceneInfo = new();
-            sceneInfo.SetScene(scene);
+            SceneEntity sceneInfo = new(scene);
             loadEndAction?.Invoke(sceneInfo);
 
             loadingSceneName = string.Empty;
