@@ -1,4 +1,4 @@
-namespace Game.Cfg 
+namespace Config
 {
     public interface ICfg : IBinarySerialize
     {

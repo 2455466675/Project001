@@ -8,6 +8,5 @@ public static class EditorInitialization
     static EditorInitialization()
     {
         Debug.Log("Startup!");
-        SystemSetting.LoadInstEditor();
     }
 }

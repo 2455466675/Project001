@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace Game.Cfg
+namespace Config
 {
 	[Serializable]
 	public partial class RoleCfg : ICfg

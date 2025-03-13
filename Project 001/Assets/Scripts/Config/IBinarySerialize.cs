@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Game.Cfg
+namespace Config
 {
     /// <summary>
     /// 

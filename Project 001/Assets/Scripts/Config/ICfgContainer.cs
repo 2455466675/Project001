@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Game.Cfg
+namespace Config
 {
     public interface ICfgContainer : IBinarySerialize
     {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Unity\\Project\\Tool\\MyExcelTool\\ExcelTool.csproj": {}
+    "D:\\workspace\\Project001\\Tool\\MyExcelTool\\ExcelTool.csproj": {}
   },
   "projects": {
-    "D:\\Unity\\Project\\Tool\\MyExcelTool\\ExcelTool.csproj": {
+    "D:\\workspace\\Project001\\Tool\\MyExcelTool\\ExcelTool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Unity\\Project\\Tool\\MyExcelTool\\ExcelTool.csproj",
+        "projectUniqueName": "D:\\workspace\\Project001\\Tool\\MyExcelTool\\ExcelTool.csproj",
         "projectName": "ExcelTool",
-        "projectPath": "D:\\Unity\\Project\\Tool\\MyExcelTool\\ExcelTool.csproj",
+        "projectPath": "D:\\workspace\\Project001\\Tool\\MyExcelTool\\ExcelTool.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\Unity\\Project\\Tool\\MyExcelTool\\obj\\",
+        "outputPath": "D:\\workspace\\Project001\\Tool\\MyExcelTool\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
