@@ -10,8 +10,6 @@ namespace ECS
 
         private int entity;
 
-        internal Component() { }
-
         internal void Initialize(int guid, int parentGuid)
         {
             Guid = guid;
@@ -59,7 +57,7 @@ namespace ECS
             e.RemoveComponent<T>();
         }
 
-        public virtual void OnDestroy() { }
+        protected virtual void OnDestroy() { }
 
         public override int GetHashCode()
         {

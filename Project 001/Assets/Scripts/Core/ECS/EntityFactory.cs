@@ -6,19 +6,24 @@ namespace ECS
     /// <summary>
     /// 
     /// </summary>
-    public class EntityFactory
+    internal class EntityFactory
     {
         private static EntityFactory instance;
-        public static EntityFactory Instance
+        internal static EntityFactory Instance
         {
             get 
-            {
-                if (instance == null) 
-                {
-                    instance = new EntityFactory();
-                }
+            {                
                 return instance;
             }
+        }
+
+        internal static void Initialize() 
+        {
+            if (instance != null)
+            {
+                return;
+            }
+            instance = new EntityFactory();
         }
 
         private int entityIndex;
@@ -68,7 +73,7 @@ namespace ECS
             }
         }
 
-        public T CreateEntity<T>(int parentGuid) where T : Entity, new()
+        internal T CreateEntity<T>(int parentGuid) where T : Entity, new()
         {     
             Type t = typeof(T);
 
@@ -97,7 +102,7 @@ namespace ECS
             return r;
         }
 
-        public void DestroyEntity(int guid) 
+        internal void DestroyEntity(int guid) 
         {
             Entity entity = FindEntity(guid);
             if (entity == null) 
@@ -114,7 +119,7 @@ namespace ECS
             Recycle(entity);
         }
 
-        public Entity FindEntity(int guid) 
+        internal Entity FindEntity(int guid) 
         {
             if (entities.ContainsKey(guid)) 
             {

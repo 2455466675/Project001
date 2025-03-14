@@ -13,18 +13,14 @@ namespace ECS
         public Entity Parent => EntityFactory.Instance.FindEntity(parent);
 
         private int parent;
-        private List<int> children;
+        private HashSet<int> children;
         private Dictionary<Type, Component> components;
-
-        internal Entity() 
-        {
-        }
-
+        
         internal void Initialize(int guid, int parentGuid) 
         {
             Guid = guid;
             parent = parentGuid;
-            children = new List<int>();
+            children = new HashSet<int>();
             components = new Dictionary<Type, Component>();
         }
 
@@ -39,10 +35,11 @@ namespace ECS
             components.Clear();
             components = null;
 
-            for (int i = 0; i < ChildCount; i++)
+            foreach (var guid in children)
             {
-                EntityFactory.Instance.DestroyEntity(children[i]);
+                EntityFactory.Instance.DestroyEntity(guid);
             }
+
             children.Clear();
             children = null;
         }
@@ -95,15 +92,15 @@ namespace ECS
 
         public T FindChild<T>() where T : Entity
         {
-            for (int i = 0; i < ChildCount; i++)
+            foreach (var guid in children)
             {
-                Entity child = EntityFactory.Instance.FindEntity(children[i]);
-                if (child == null) 
+                Entity child = EntityFactory.Instance.FindEntity(guid);
+                if (child == null)
                 {
                     continue;
                 }
 
-                if (child is T) 
+                if (child is T)
                 {
                     return child as T;
                 }
@@ -128,7 +125,17 @@ namespace ECS
             return child as T;
         }
 
-        public virtual void OnDestroy() { }
+        public void RemoveChild(int guid) 
+        {
+            if (!children.Contains(guid))
+            {
+                return;
+            }
+            children.Remove(guid);
+            EntityFactory.Instance.DestroyEntity(guid);
+        }
+
+        protected virtual void OnDestroy() { }
 
         public override int GetHashCode()
         {
