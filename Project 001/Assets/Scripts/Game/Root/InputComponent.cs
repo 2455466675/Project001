@@ -1,25 +1,8 @@
 using Game.Input;
+using Game.UI;
 
 namespace Game
-{
-    public interface IInputCammand 
-    {
-        public void OnPop();
-        public void OnPush();
-        public void OnRise();
-        public void OnSink();
-    }
-
-    public class InputModule
-    {
-        public virtual void OnMove(float x, float y) { }
-        public virtual void OnSubmit() { }
-        public virtual void OnCancel() { }
-        public virtual void OnEsc() { }
-        public virtual void OnLeftShift() { }
-        public virtual void OnMap() { }
-    }
-
+{    
     /// <summary>
     /// 
     /// </summary>
@@ -60,27 +43,53 @@ namespace Game
 
         private void OnMove(float x, float y) 
         {
-            MLog.Log("OnMove", x, y);
+            ActionContext context = new()
+            {
+                InputType = InputType.Move,
+                Vector2Value = new UnityEngine.Vector2(x, y)
+            };
+            GetComponent<UIComponent>().InputAction(context);
         }
         private void OnSubmit() 
         {
-            MLog.Log("OnSubmit");
+            ActionContext context = new()
+            {
+                InputType = InputType.Submit,
+            };
+            GetComponent<UIComponent>().InputAction(context);
         }
         private void OnCancel() 
         {
-            MLog.Log("OnCancel");
+            ActionContext context = new()
+            {
+                InputType = InputType.Cancel,
+            };
+            GetComponent<UIComponent>().InputAction(context);
         }
         private void OnEsc() 
         {
-            MLog.Log("OnEsc");
+            ActionContext context = new()
+            {
+                InputType = InputType.Esc,
+            };
+            GetComponent<UIComponent>().InputAction(context);
         }
         private void OnLeftShift(bool isPress) 
         {
-            MLog.Log("OnLeftShift", isPress);
+            ActionContext context = new()
+            {
+                InputType = InputType.LeftShift,
+                BoolValue = isPress
+            };
+            GetComponent<UIComponent>().InputAction(context);
         }
         private void OnMap() 
         {
-            MLog.Log("OnMap");
+            ActionContext context = new()
+            {
+                InputType = InputType.Map,
+            };
+            GetComponent<UIComponent>().InputAction(context);
         }
     }
 }

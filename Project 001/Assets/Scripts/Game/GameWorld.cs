@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using ECS;
+using Game.UI;
 
 namespace Game
 {
@@ -30,6 +31,9 @@ namespace Game
 
             var ic = Root.AddComponent<InputComponent>();
             ic.Init();
+
+            var uic = Root.AddComponent<UIComponent>();
+            uic.Init();
         }
 
         public static void Tick(float dt) 
