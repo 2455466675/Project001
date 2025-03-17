@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using ECS;
-using Game.UI;
 
 namespace Game
 {

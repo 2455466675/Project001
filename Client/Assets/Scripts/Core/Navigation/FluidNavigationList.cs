@@ -1,4 +1,3 @@
-using Game;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,7 +40,7 @@ namespace Navigation
         {
             if (!isInit)
             {
-                MLog.Error("列表尚未初始化");
+                Debug.LogError("列表尚未初始化");
                 return;
             }
 
@@ -215,7 +214,7 @@ namespace Navigation
         {
             if (item == null)
             {
-                MLog.Error("item is null");
+                Debug.LogError("item is null");
                 return;
             }
 
@@ -229,7 +228,7 @@ namespace Navigation
 
             if (!content.TryGetComponent<VerticalLayoutGroup>(out var layoutGroup))
             {
-                MLog.Warn("content没有LayoutGroup");
+                Debug.LogError("content没有LayoutGroup");
                 return;
             }
 
@@ -246,7 +245,7 @@ namespace Navigation
             items = new Dictionary<int, NavigationItem>(c);
             for (int i = 0; i < c; i++)
             {
-                NavigationItem lt = GoHelper.Instantiate<NavigationItem>(item, content);
+                NavigationItem lt = Instantiate<NavigationItem>(item, content);
                 lt.SetActive(false);
                 lt.SetIndex(i);
                 items[i] = lt;

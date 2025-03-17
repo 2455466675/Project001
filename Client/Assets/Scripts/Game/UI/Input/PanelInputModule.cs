@@ -8,6 +8,11 @@ namespace Game.UI
         {
             MLog.Log("TestGroupCammand OnInputAction");
         }
+
+        protected override void OnPush()
+        {
+            //load panel   
+        }
     }
 
     public class TestListCammand : InputCammand

@@ -6,7 +6,7 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-    public class Panel : NavigationGroup
+    public class NavigationPanel : NavigationGroup
     {
         [SerializeField]
         private CanvasGroup canvasGroup;

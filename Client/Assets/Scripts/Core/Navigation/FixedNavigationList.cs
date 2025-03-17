@@ -1,10 +1,7 @@
-using Game;
 using Sirenix.OdinInspector;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.MaterialProperty;
 
 namespace Navigation
 {
@@ -81,7 +78,7 @@ namespace Navigation
         {
             if (IsMultiple)
             {
-                MLog.Log("有多个选中元素时不允许此操作,元素数量:", this.index.Length);
+                Debug.LogError("有多个选中元素时不允许此操作,元素数量:" + this.index.Length);
                 return;
             }
 
@@ -212,7 +209,7 @@ namespace Navigation
 
                 if (index == beginIndex)
                 {
-                    MLog.Error("列表索引出现了异常，没有可用元素。index:" + index);
+                    Debug.LogError("列表索引出现了异常，没有可用元素。index:" + index);
                     return -1;
                 }
                 else if (index < minIndex || index > maxIndex)
@@ -288,7 +285,7 @@ namespace Navigation
 
                 if (q == b) //已经判断了一圈
                 {
-                    MLog.Error("列表索引出现了异常，没有可用元素。index:" + index);
+                    Debug.LogError("列表索引出现了异常，没有可用元素。index:" + index);
                     return -1;
                 }
 
