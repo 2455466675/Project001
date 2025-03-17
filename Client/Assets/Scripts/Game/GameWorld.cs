@@ -32,7 +32,9 @@ namespace Game
             ic.Init();
 
             var uic = Root.AddComponent<UIComponent>();
-            uic.Init();
+            uic.Init(config);
+
+            uic.Navigate(UI.NavigationListDefine.Test_List_1);
         }
 
         public static void Tick(float dt) 

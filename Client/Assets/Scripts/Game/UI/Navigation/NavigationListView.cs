@@ -8,6 +8,7 @@ namespace Game.UI
     /// </summary>
     public class NavigationListView : MonoBehaviour
     {        
+        public NavigationList List => list;
         public NavigationListDefine define;
 
         [SerializeField]

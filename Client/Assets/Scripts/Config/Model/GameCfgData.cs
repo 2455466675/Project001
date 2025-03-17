@@ -24,6 +24,9 @@ namespace Config
 			var _WindowCfgContainer = new WindowCfgContainer();
 			_WindowCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(WindowCfg), _WindowCfgContainer);
+			var _NavigationGroupCfgContainer = new NavigationGroupCfgContainer();
+			_NavigationGroupCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(NavigationGroupCfg), _NavigationGroupCfgContainer);
 			var _RoleCfgContainer = new RoleCfgContainer();
 			_RoleCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(RoleCfg), _RoleCfgContainer);

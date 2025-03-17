@@ -6,6 +6,8 @@ namespace Game.UI
 
         Test_Group_1 = 1,
         Test_Group_2 = 2,
+
+        Login_Group  = 1001,
     }
 
     public enum NavigationListDefine
@@ -14,5 +16,7 @@ namespace Game.UI
 
         Test_List_1 = 1,
         Test_List_2 = 2,
+
+        Login_List  = 10011,
     }
 }

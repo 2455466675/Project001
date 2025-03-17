@@ -79,15 +79,22 @@ namespace Navigation
         {
             SubmitCurrent();
         }
+
+        public bool InFocus(bool isRefocus, int[] indexs = null)
+        {
+            if (indexs == null || indexs.Length == 0) 
+            {
+                indexs = new int[] { 0 };
+            }
+            return OnInFocus(isRefocus, indexs);
+        }
+
         public void OutFocus()
         {
             state = ListState.OutFocused;
             OutFocusCurrent();
         }
-        public bool Enter(bool isRefocus, int[] indexs = null)
-        {
-            return OnEnter(isRefocus, indexs);
-        }
+
         public void Exit()
         {
             state = ListState.Closed;
@@ -100,7 +107,7 @@ namespace Navigation
         {
         }
 
-        protected virtual bool OnEnter(bool isRefocus, int[] indexs = null) 
+        protected virtual bool OnInFocus(bool isRefocus, int[] indexs = null) 
         {
             return false;
         }

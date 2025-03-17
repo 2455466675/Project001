@@ -35,8 +35,11 @@ MonoBehaviour:
     - UniTask.Linq
     - YooAsset
     - Assembly-CSharp
+    - Navigation
+    - Game
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
+    - GameConfig
     - UniTask.TextMeshPro
     - UniTask.Addressables
     - PsdPlugin

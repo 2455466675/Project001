@@ -1,7 +1,7 @@
 {
     "excelPath":"./Excel/",
-    "csFileOutputPaht":"../Project 001/Assets/Scripts/Config/Model",
-    "cfgFileOutputPaht":"../Project 001/Assets/StreamingAssets",
+    "csFileOutputPaht":"../Client/Assets/Scripts/Config/Model",
+    "cfgFileOutputPaht":"../Client/Assets/StreamingAssets",
     "language":"language/",
     "cfgList":
     [ 
@@ -13,6 +13,11 @@
         {
             "excel":"window.xlsx",
             "type":"WindowCfg",
+            "sheet":1
+        },  
+        {
+            "excel":"navigation_group.xlsx",
+            "type":"NavigationGroupCfg",
             "sheet":1
         },  
         {

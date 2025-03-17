@@ -27,24 +27,22 @@ namespace ECS
         }
 
         private int entityIndex;
-        private int componentIndex;
 
         private Dictionary<int, Entity> entities;
         private HashSet<IUpdate> updateItems;
         private List<IUpdate> addUpdateCache;
         private List<IUpdate> removeUpdateCache;
-        private Dictionary<Type, Queue<IEntity>> pool;
+        private Dictionary<Type, Queue<Entity>> pool;
 
         private EntityFactory() 
         {
             entityIndex = 10000;
-            componentIndex = 20000;
 
             entities = new Dictionary<int, Entity>();
             updateItems = new HashSet<IUpdate>();
             addUpdateCache = new List<IUpdate>();
             removeUpdateCache = new List<IUpdate>();
-            pool = new Dictionary<Type, Queue<IEntity>>();
+            pool = new Dictionary<Type, Queue<Entity>>();
         }
 
         public void Update(float dt) 
@@ -73,12 +71,12 @@ namespace ECS
             }
         }
 
-        internal T CreateEntity<T>(int parentGuid) where T : Entity, new()
+        internal T CreateEntity<T>(int parentGuid, bool isComponent) where T : Entity, new()
         {     
             Type t = typeof(T);
 
             T r = default;
-            if (pool.TryGetValue(t, out Queue<IEntity> queue) && queue.Count > 0)
+            if (pool.TryGetValue(t, out Queue<Entity> queue) && queue.Count > 0)
             {
                 r = queue.Dequeue() as T;                
             }
@@ -86,7 +84,7 @@ namespace ECS
             r ??= new T();
 
             int guid = GenerateEntityGuid();
-            r.Initialize(guid, parentGuid);
+            r.Initialize(guid, parentGuid, isComponent);
             entities[guid] = r;
 
             if (r is IAwake a) 
@@ -131,61 +129,17 @@ namespace ECS
             }
         }
 
-        internal T CreateComponent<T>(int parentGuid) where T : Component, new() 
-        {
-            Type t = typeof(T);
-
-            T r = default;
-            if (pool.TryGetValue(t, out Queue<IEntity> queue) && queue.Count > 0)
-            {
-                r = queue.Dequeue() as T;
-            }
-
-            r ??= new T();
-
-            int guid = GenerateComponentGuid();
-            r.Initialize(guid, parentGuid);
-
-            if (r is IAwake a)
-            {
-                a.Awake();
-            }
-
-            if (r is IUpdate u)
-            {
-                addUpdateCache.Add(u);
-            }
-
-            return r;
-        }
-
-        internal void DestroyComponent(Component component) 
-        {
-            if (component == null)
-            {
-                return;
-            }
-
-            if (component is IUpdate u)
-            {
-                removeUpdateCache.Remove(u);
-            }
-
-            component.Destroy();
-            Recycle(component);
-        }
-
-        private void Recycle(IEntity e)
+        private void Recycle(Entity e)
         {
             Type type = e.GetType();
-            Queue<IEntity> queue;
+            Queue<Entity> queue;
             if (pool.ContainsKey(type))
             {
                 queue = pool[type];
             }
             else
             {
-                queue = new Queue<IEntity>();
+                queue = new Queue<Entity>();
                 pool[type] = queue;
             }
 
@@ -195,11 +149,6 @@ namespace ECS
         private int GenerateEntityGuid() 
         {
             return ++entityIndex;
-        }
-
-        private int GenerateComponentGuid()
-        {
-            return ++componentIndex;
         }
     }
 }

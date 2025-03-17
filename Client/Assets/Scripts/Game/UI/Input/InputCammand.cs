@@ -52,7 +52,11 @@ namespace Game.UI
                 {
                     if (TryPeek(out cammand)) 
                     {
-                        cammand.Rise();
+                        bool success = cammand.Rise();  
+                        if (!success) 
+                        {
+                            return Pop();   //如果下一个命令上升失败，将其也弹出
+                        }
                     }
                     return false;
                 }
@@ -84,24 +88,33 @@ namespace Game.UI
             }
         }
 
-        public void Push(InputCammand cammand) 
+        /// <summary>
+        /// 压入一个子命令
+        /// </summary>
+        /// <param name="cammand"></param>
+        /// <returns>是否成功</returns>
+        public bool Push(InputCammand cammand) 
         {
             if (cammand == null) 
             {
-                return;
+                return false;
+            }
+            bool success = cammand.OnPush();
+            if (!success) 
+            {
+                return false;
             }
 
             if (TryPeek(out InputCammand peek)) 
             {
                 peek.Sink();
             }
-
-            cammand.OnPush();
             subCammands.Push(cammand);
+            return true;
         }
 
         /// <summary>
-        /// 最上层的一个命令
+        /// 整个树上最上面的一个命令
         /// </summary>
         /// <returns></returns>
         public InputCammand Top() 
@@ -132,12 +145,21 @@ namespace Game.UI
         /// <summary>
         /// 命令升到栈顶
         /// </summary>
-        private void Rise() 
+        /// <returns>是否成功</returns>
+        private bool Rise() 
         {
-            OnRise();
-            if (TryPeek(out InputCammand cammand))
+            bool success = OnRise();
+            if (!success) 
             {
-                cammand.Rise();
+                return false;
+            }
+            else
+            {
+                if (TryPeek(out InputCammand cammand))
+                {
+                   return cammand.Rise();
+                }                
+                return true;
             }
         }
 
@@ -162,14 +184,17 @@ namespace Game.UI
         /// <summary>
         /// 当命令入栈时
         /// </summary>
-        protected virtual void OnPush() 
+        /// <returns>是否成功</returns>
+        protected virtual bool OnPush() 
         {
+            return true;
         }
         /// <summary>
         /// 当命令升到栈顶时
         /// </summary>
-        protected virtual void OnRise() 
+        protected virtual bool OnRise() 
         {
+            return true;
         }
         /// <summary>
         /// 当命令下沉时

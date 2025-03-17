@@ -2,28 +2,6 @@ using Game.Input;
 
 namespace Game.UI
 {
-    public class TestGroupCammand : InputCammand 
-    {
-        protected override void OnInputAction(ActionContext context)
-        {
-            MLog.Log("TestGroupCammand OnInputAction");
-        }
-
-        protected override void OnPush()
-        {
-            //load panel   
-        }
-    }
-
-    public class TestListCammand : InputCammand
-    {
-        public NavigationListDefine id;
-        protected override void OnInputAction(ActionContext context)
-        {
-            MLog.Log("TestListCammand OnInputAction:", id);
-        }
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -33,16 +11,35 @@ namespace Game.UI
 
         public override void Navigate(NavigationListDefine list_ID)
         {
-            MLog.Log("PanelInputModule Navigate");
-            Push(new TestGroupCammand());
+            NavigationGroupDefine groupDefine = GameWorld.Root.GetComponent<UIComponent>().ListDefineToGroupDefine(list_ID);
+            if (groupDefine == NavigationGroupDefine.Undefined)
+            {
+                return;
+            }
+
+            NavigationListCammand listCammand = new NavigationListCammand(list_ID);
+            NavigationGroupCammand groupCammand;
 
             if (TryPeek(out InputCammand cammand)) 
             {
-                TestListCammand testListCammand = new TestListCammand();
-                testListCammand.id = list_ID;
-                testListCammand.IsStatic = list_ID == NavigationListDefine.Undefined;
-                cammand.Push(testListCammand);
+                groupCammand = cammand as NavigationGroupCammand;
+                if (groupCammand != null && groupCammand.Define == groupDefine) 
+                {
+                    if (groupCammand.TryPeek(out InputCammand sub)) 
+                    {
+                        if (sub is NavigationListCammand _sub && _sub.Define == list_ID)
+                        {
+                            return;
+                        }
+                    }
+                    groupCammand.Push(listCammand);
+                    return;
+                }                
             }
+
+            groupCammand = new NavigationGroupCammand(groupDefine);
+            Push(groupCammand);
+            groupCammand.Push(listCammand);
         }
 
         protected override void OnInputAction(ActionContext context)

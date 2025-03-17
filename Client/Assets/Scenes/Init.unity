@@ -154,10 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config:
     PackageName: DefaultPackage
-    FormulaFilePath: Game/Formula
     GameCfgFile: cfg.bytes
-    UIRootPath: 
-    NavigationConfigFilePath: 
+    UIRootPath: Assets/Bundles/UI/UIRoot
+    Formula: Game/Formula
+    NavigationMap: Game/NavigationMap
 --- !u!4 &404166798
 Transform:
   m_ObjectHideFlags: 0

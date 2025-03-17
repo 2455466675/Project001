@@ -14,7 +14,7 @@ namespace ECS
         public World() 
         {
             EntityFactory.Initialize();
-            root = EntityFactory.Instance.CreateEntity<Root>(0);
+            root = EntityFactory.Instance.CreateEntity<Root>(0, false);
         }
 
         public void Update(float dt) 

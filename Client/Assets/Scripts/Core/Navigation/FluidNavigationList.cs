@@ -102,7 +102,7 @@ namespace Navigation
             pointer = -1;
         }
 
-        protected override bool OnEnter(bool isRefocus, int[] indexs)
+        protected override bool OnInFocus(bool isRefocus, int[] indexs)
         {
             int index = isRefocus ? pointer : indexs[0];
             if (Select(index))

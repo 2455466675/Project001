@@ -10,11 +10,11 @@ namespace Navigation
     /// </summary>
     public class FixedNavigationList : NavigationList
     {
-        [ShowIf("groupType", ListType.Grid)]
+        [ShowIf("listType", ListType.Grid)]
         public int rowCount;
-        [ShowIf("groupType", ListType.Grid)]
+        [ShowIf("listType", ListType.Grid)]
         public int columnCount;
-        [ShowIf("groupType", ListType.Grid)]
+        [ShowIf("listType", ListType.Grid)]
         public ChildAlignment childAlignment;
 
         [SerializeField]
@@ -60,7 +60,7 @@ namespace Navigation
             index = null;
         }
 
-        protected override bool OnEnter(bool isRefocus, int[] indexs)
+        protected override bool OnInFocus(bool isRefocus, int[] indexs)
         {
             int[] indexArray = isRefocus ? index : indexs;
             if (Select(indexArray))

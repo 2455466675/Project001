@@ -10,7 +10,7 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public class ConfigComponent : ECS.Component
+    public class ConfigComponent : ECS.Entity
     {
         public GameLanguage Language { get; private set; }
         public Formula Formula { get; private set; }
@@ -18,7 +18,7 @@ namespace Game
 
         public async UniTask Init(GameInitConfig config)
         {
-            Formula = Resources.Load<Formula>(config.FormulaFilePath);
+            Formula = GameWorld.Root.GetComponent<ResourceComponent>().LoadFormRes<Formula>(config.Formula);
            
             string filePath = Path.Combine(Application.streamingAssetsPath, config.GameCfgFile);
             using (FileStream stream = new FileStream(filePath, FileMode.Open))

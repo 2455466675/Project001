@@ -10,7 +10,7 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public class ResourceComponent : ECS.Component
+    public class ResourceComponent : ECS.Entity
     {
         private ResourcePackage package;
 
@@ -40,6 +40,17 @@ namespace Game
                 OfflinePlayModeParameters parameters = new OfflinePlayModeParameters();
                 await package.InitializeAsync(parameters);
             }
+        }
+
+        /// <summary>
+        /// ¥”Resourcesœ¬º”‘ÿ
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public T LoadFormRes<T>(string path) where T : UnityEngine.Object
+        {
+            return Resources.Load<T>(path);
         }
 
         /// <summary>

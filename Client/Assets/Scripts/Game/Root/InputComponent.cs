@@ -6,7 +6,7 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public class InputComponent : ECS.Component
+    public class InputComponent : ECS.Entity
     {
         private GameInput gameInput;
 
@@ -16,27 +16,27 @@ namespace Game
 
             gameInput.Enable();
 
-            var move = Entity.CreateChild<MoveActionWrapper>();
+            var move = CreateChild<MoveActionWrapper>();
             move.Initialize(gameInput.DefaultMap.Move);
             move.ActionEvent += OnMove;
 
-            var submit = Entity.CreateChild<SubmitActionWrapper>();
+            var submit = CreateChild<SubmitActionWrapper>();
             submit.Initialize(gameInput.DefaultMap.Submit);
             submit.ActionEvent += OnSubmit;
 
-            var cancel = Entity.CreateChild<CancelActionWrapper>();
+            var cancel = CreateChild<CancelActionWrapper>();
             cancel.Initialize(gameInput.DefaultMap.Cancel);
             cancel.ActionEvent += OnCancel;
 
-            var esc = Entity.CreateChild<EscActionWrapper>();
+            var esc = CreateChild<EscActionWrapper>();
             esc.Initialize(gameInput.DefaultMap.Esc);
             esc.ActionEvent += OnEsc;
 
-            var ls = Entity.CreateChild<LeftShiftActionWrapper>();
+            var ls = CreateChild<LeftShiftActionWrapper>();
             ls.Initialize(gameInput.DefaultMap.LeftShift);
             ls.ActionEvent += OnLeftShift;
 
-            var map = Entity.CreateChild<MapActionWrapper>();
+            var map = CreateChild<MapActionWrapper>();
             map.Initialize(gameInput.DefaultMap.Map);
             map.ActionEvent += OnMap;
         }
@@ -48,7 +48,7 @@ namespace Game
                 InputType = InputType.Move,
                 Vector2Value = new UnityEngine.Vector2(x, y)
             };
-            GetComponent<UIComponent>().InputAction(context);
+            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
         }
         private void OnSubmit() 
         {
@@ -56,7 +56,7 @@ namespace Game
             {
                 InputType = InputType.Submit,
             };
-            GetComponent<UIComponent>().InputAction(context);
+            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
         }
         private void OnCancel() 
         {
@@ -64,7 +64,7 @@ namespace Game
             {
                 InputType = InputType.Cancel,
             };
-            GetComponent<UIComponent>().InputAction(context);
+            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
         }
         private void OnEsc() 
         {
@@ -72,7 +72,7 @@ namespace Game
             {
                 InputType = InputType.Esc,
             };
-            GetComponent<UIComponent>().InputAction(context);
+            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
         }
         private void OnLeftShift(bool isPress) 
         {
@@ -81,7 +81,7 @@ namespace Game
                 InputType = InputType.LeftShift,
                 BoolValue = isPress
             };
-            GetComponent<UIComponent>().InputAction(context);
+            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
         }
         private void OnMap() 
         {
@@ -89,7 +89,7 @@ namespace Game
             {
                 InputType = InputType.Map,
             };
-            GetComponent<UIComponent>().InputAction(context);
+            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
         }
     }
 }

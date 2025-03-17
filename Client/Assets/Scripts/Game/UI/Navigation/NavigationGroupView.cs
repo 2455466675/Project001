@@ -11,8 +11,14 @@ namespace Game.UI
     public class NavigationGroupView : MonoBehaviour
     {
         public NavigationGroupDefine define;
+        public NavigationGroup Group => group;
+        public NavigationListView[] Children => children;
+
         [SerializeField]
         private NavigationGroup group;
+
+        [SerializeField]
+        protected NavigationListView[] children;
 
         private void OnValidate()
         {
@@ -41,8 +47,9 @@ namespace Game.UI
                 return;
             }
 
-            NavigationListView[] views = GetComponentsInChildren<NavigationListView>();
-            if (views == null || views.Length == 0) 
+            children = GetComponentsInChildren<NavigationListView>();
+
+            if (children == null || children.Length == 0) 
             {
                 Debug.LogError("NavigationListView[] not Find");
                 return;
@@ -56,7 +63,7 @@ namespace Game.UI
 
             group.Init();
             string s = "";
-            foreach (var view in views) 
+            foreach (var view in children) 
             {
                 view.Init();
                 if (!view.IsValid) 

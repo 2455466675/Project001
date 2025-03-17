@@ -9,12 +9,35 @@ namespace Navigation
     /// </summary>
     public class NavigationGroup : MonoBehaviour
     {
-        [SerializeField]
-        protected NavigationList[] list;
-
         public void Init()
         {
-            list = GetComponentsInChildren<NavigationList>();
+        }
+
+        public void Enter(bool isRefocus) 
+        {
+            OnEnter(isRefocus);
+        }
+
+        public void Exit() 
+        {        
+            OnExit();
+        }
+
+        public void OutFocus() 
+        {        
+            OnOutFocus();
+        }
+
+        protected virtual void OnEnter(bool isRefocus) 
+        {
+        }
+
+        protected virtual void OnExit() 
+        {
+        }
+
+        protected virtual void OnOutFocus() 
+        {
         }
     }
 }
