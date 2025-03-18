@@ -1,6 +1,4 @@
 using Navigation;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Game.UI
 {
@@ -17,9 +15,9 @@ namespace Game.UI
 
         public void Init(NavigationListDefine define, NavigationList list) 
         {
+            proxy = Parent.Parent.GetComponent<NavigationProxy>().GetNavigationListProxy(define);
             this.ListDefine = define;
             this.list = list;
-            proxy = new NavigationListProxy();
 
             list.Init();
             (list as FluidNavigationList).UpdateItemCount(5);

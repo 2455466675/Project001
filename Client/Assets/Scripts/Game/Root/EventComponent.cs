@@ -1,0 +1,52 @@
+using ECS;
+using System;
+using System.Collections.Generic;
+
+namespace Game
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class EventComponent : Entity
+    {
+        private Dictionary<Type, List<IEvent>> allEvent;
+
+        public void Init()
+        {
+            allEvent = new Dictionary<Type, List<IEvent>>();
+
+            List<Type> types = GameWorld.Root.GetComponent<CodeComponent>().GetTypes<EventAttribute>();
+            foreach (Type type in types) 
+            {
+                object o = Activator.CreateInstance(type);
+                if (o is IEvent e)
+                {
+                    Type t = e.Type;
+                    if (!allEvent.ContainsKey(t)) 
+                    {
+                        allEvent.Add(t, new List<IEvent>());
+                    }
+                    allEvent[t].Add(e);
+                }
+            }
+        }
+
+        public void Publish<T>(T arg) where T : struct
+        {
+            Type t = typeof(T);
+            if (!allEvent.ContainsKey(t)) 
+            {
+                return;
+            }
+
+            List<IEvent> events = allEvent[t];
+            foreach (IEvent e in events) 
+            {
+                if (e is GameEvent<T> ge) 
+                {
+                    ge.Run(arg);
+                }
+            }
+        }
+    }
+}

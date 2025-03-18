@@ -1,4 +1,3 @@
-using Config;
 using Game.UI;
 
 namespace Game

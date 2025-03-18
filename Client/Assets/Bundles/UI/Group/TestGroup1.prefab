@@ -182,6 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 225340348913407276}
   - component: {fileID: 666862053752937467}
+  - component: {fileID: 8374399905906967450}
   m_Layer: 5
   m_Name: ListItem
   m_TagString: Untagged
@@ -225,7 +226,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selector: {fileID: 7785472390886966125}
-  event: {fileID: 0}
+  event: {fileID: 8374399905906967450}
+--- !u!114 &8374399905906967450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3492656085146012718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f82a4dab57fdfd40bcfc7b2632621d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSubmitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onOutFocusEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveRightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3677315421860459292
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,8 +612,9 @@ GameObject:
   - component: {fileID: 3539147437802427526}
   - component: {fileID: 1417025446385078839}
   - component: {fileID: 2028417415264179010}
+  - component: {fileID: 9003997860289681364}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TextView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -699,6 +737,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9003997860289681364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507588850624446825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9072adbf1a8fc494c9fff4ab5b864ce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2028417415264179010}
 --- !u!1001 &7580632173285684919
 PrefabInstance:
   m_ObjectHideFlags: 0

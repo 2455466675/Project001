@@ -1,5 +1,4 @@
 using Navigation;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Game.UI
@@ -15,8 +14,8 @@ namespace Game.UI
         private Dictionary<NavigationListDefine, NavigationListEntity> lists;
 
         public void Init(NavigationGroupDefine define) 
-        {
-            proxy = new NavigationGroupProxy();
+        {            
+            proxy = Parent.GetComponent<NavigationProxy>().GetNavigationGroupProxy(define);
             NavigationGroupView view = proxy.LoadGroup(define);
 
             group = view.Group;

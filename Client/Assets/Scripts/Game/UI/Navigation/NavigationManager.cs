@@ -11,7 +11,9 @@ namespace Game.UI
 
         public void Awake()
         {
-            groups = new Dictionary<NavigationGroupDefine, NavigationGroupEntity>();       
+            groups = new Dictionary<NavigationGroupDefine, NavigationGroupEntity>();
+
+            AddComponent<NavigationProxy>();
         }
 
         public void LoadMap(string path) 

@@ -21,7 +21,7 @@ namespace Config
     /// </summary>
     public class GameLanguage 
     {
-        public Color DefaultTextColor => Color.black;
+        public static Color DefaultTextColor => Color.black;
 
         private readonly Dictionary<int, LanguageItem> languageItems;
         private readonly Dictionary<string, Color> colorMap;

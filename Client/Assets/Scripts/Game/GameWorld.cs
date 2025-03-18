@@ -25,11 +25,14 @@ namespace Game
             var resourceComponent = Root.AddComponent<ResourceComponent>();
             await resourceComponent.Init(config);
 
+            var configComponent = Root.AddComponent<ConfigComponent>();
+            await configComponent.Init(config);
+
             var codeComponent = Root.AddComponent<CodeComponent>();
             codeComponent.Init();
 
-            var configComponent = Root.AddComponent<ConfigComponent>();
-            await configComponent.Init(config);
+            var eventComponent = Root.AddComponent<EventComponent>();
+            eventComponent.Init();
 
             var inputComponent = Root.AddComponent<InputComponent>();
             inputComponent.Init();
