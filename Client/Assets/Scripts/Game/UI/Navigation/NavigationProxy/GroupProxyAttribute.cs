@@ -1,8 +1,6 @@
-using System;
-
 namespace Game.UI
 {
-    public class GroupProxyAttribute : Attribute
+    public class GroupProxyAttribute : GameAttribute
     {
         public NavigationGroupDefine Define { get; private set; }
 

@@ -9,12 +9,15 @@ namespace Game.UI
     /// </summary>
     public class NavigationListEntity : ECS.Entity
     {
+        public NavigationListDefine ListDefine { get; private set; }
+
         private NavigationListProxy proxy;
 
         private NavigationList list;
 
-        public void Init(NavigationList list) 
+        public void Init(NavigationListDefine define, NavigationList list) 
         {
+            this.ListDefine = define;
             this.list = list;
             proxy = new NavigationListProxy();
 

@@ -1,8 +1,6 @@
-using System;
-
 namespace Game.UI
 {
-    public class ListProxyAttribute : Attribute
+    public class ListProxyAttribute : GameAttribute
     {
         public NavigationListDefine Define { get; private set; }
 

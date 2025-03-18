@@ -28,7 +28,7 @@ namespace Game.UI
                 foreach (var v in children)
                 {
                     NavigationListEntity e = CreateChild<NavigationListEntity>();
-                    e.Init(v.List);
+                    e.Init(v.define, v.List);
                     lists[v.define] = e;
                 }
             }

@@ -22,19 +22,22 @@ namespace Game
 
         public static async UniTask Start(GameInitConfig config) 
         {
-            var rc = Root.AddComponent<ResourceComponent>();
-            await rc.Init(config);
+            var resourceComponent = Root.AddComponent<ResourceComponent>();
+            await resourceComponent.Init(config);
 
-            var cc = Root.AddComponent<ConfigComponent>();
-            await cc.Init(config);
+            var codeComponent = Root.AddComponent<CodeComponent>();
+            codeComponent.Init();
 
-            var ic = Root.AddComponent<InputComponent>();
-            ic.Init();
+            var configComponent = Root.AddComponent<ConfigComponent>();
+            await configComponent.Init(config);
 
-            var uic = Root.AddComponent<UIComponent>();
-            uic.Init(config);
+            var inputComponent = Root.AddComponent<InputComponent>();
+            inputComponent.Init();
 
-            uic.Navigate(UI.NavigationListDefine.Test_List_1);
+            var uiComponent = Root.AddComponent<UIComponent>();
+            uiComponent.Init(config);
+
+            uiComponent.Navigate(UI.NavigationListDefine.Test_List_1);
         }
 
         public static void Tick(float dt) 
