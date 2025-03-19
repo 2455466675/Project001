@@ -32,6 +32,12 @@ namespace Navigation
 
         public override void Init()
         {
+            if (isInit) 
+            {
+                Debug.LogWarning("repeat init");
+                return;
+            }
+
             if (items == null || items.Count == 0)
             {
                 isInit = false;
@@ -76,6 +82,11 @@ namespace Navigation
 
         protected override void OnMove(float h, float v)
         {
+            if (!isInit)
+            {
+                return;
+            }
+
             if (IsMultiple)
             {
                 Debug.LogError("有多个选中元素时不允许此操作,元素数量:" + this.index.Length);

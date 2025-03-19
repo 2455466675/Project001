@@ -53,8 +53,6 @@ namespace Navigation
     public class NavigationList : MonoBehaviour
     {
         [SerializeField]
-        protected NavigationItem item;
-        [SerializeField]
         protected ListType listType;
 
         protected int minIndex;

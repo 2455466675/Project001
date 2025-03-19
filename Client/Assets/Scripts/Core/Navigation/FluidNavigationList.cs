@@ -16,6 +16,9 @@ namespace Navigation
         public event Action<ListChangedEventArgs> OnListChangedEvent;
 
         [SerializeField]
+        protected NavigationItem item;
+
+        [SerializeField]
         protected RectTransform viewport;
         [SerializeField]
         protected RectTransform content;
@@ -26,6 +29,30 @@ namespace Navigation
 
         public override void Init()
         {
+            if (isInit)
+            {
+                Debug.LogWarning("repeat init");
+                return;
+            }
+
+            if (item == null)
+            {
+                Debug.LogError("item is null");
+                return;
+            }
+
+            if (viewport == null) 
+            {
+                Debug.LogError("viewport is null");
+                return;
+            }
+
+            if (content == null) 
+            {
+                Debug.LogError("content is null");
+                return;
+            }
+
             isInit = true;
             totalCount = -1;
             minIndex = -1;
@@ -39,8 +66,7 @@ namespace Navigation
         public void UpdateItemCount(int count)
         {
             if (!isInit)
-            {
-                Debug.LogError("列表尚未初始化");
+            {                
                 return;
             }
 
@@ -118,6 +144,11 @@ namespace Navigation
 
         protected override void OnMove(float h, float v)
         {
+            if (!isInit) 
+            {
+                return;
+            }
+
             float y = v;
             int index;
             if (y > 0)
@@ -212,12 +243,6 @@ namespace Navigation
 
         private void CreateItems()
         {
-            if (item == null)
-            {
-                Debug.LogError("item is null");
-                return;
-            }
-
             item.SetActive(false);
 
             float vh = viewport.rect.size.y;

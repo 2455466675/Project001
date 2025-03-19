@@ -16,6 +16,7 @@ namespace Game.UI
 
         Test_List_1 = 1,
         Test_List_2 = 2,
+        Test_List_3 = 3,
 
         Login_List  = 10011,
     }

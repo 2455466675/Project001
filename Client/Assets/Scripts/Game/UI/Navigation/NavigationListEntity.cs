@@ -19,8 +19,8 @@ namespace Game.UI
             this.ListDefine = define;
             this.list = list;
 
-            list.Init();
-            (list as FluidNavigationList).UpdateItemCount(5);
+            //list.Init();
+            //(list as FluidNavigationList).UpdateItemCount(5);
         }
 
         public void Move(float h, float v)
