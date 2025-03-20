@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Navigation
 {
@@ -10,7 +7,7 @@ namespace Navigation
     /// </summary>
     public class NavigationItem : MonoBehaviour
     {
-        protected object data;
+        private object data;
 
         /// <summary>
         /// Ñ¡ÔñÆ÷
@@ -88,6 +85,19 @@ namespace Navigation
             if (@event != null)
             {
                 @event.OnSubmit(this);
+            }
+        }
+
+        public void InitItem() 
+        {
+            if (@event == null) 
+            {
+                @event = GetComponentInChildren<NavigationItemEvent>();
+            }
+
+            if (selector == null) 
+            {
+                selector = GetComponentInChildren<NavigationItemSelector>();
             }
         }
 

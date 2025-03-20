@@ -16,7 +16,7 @@ namespace Game.UI
     /// </summary>
     public abstract class InputCammand
     {
-        public bool IsStatic {get;set;}
+        public bool IsLocked => CheckIsLocked();
         public int Count => subCammands.Count;
 
         private readonly Stack<InputCammand> subCammands;
@@ -30,7 +30,7 @@ namespace Game.UI
         {
             if (subCammands.Count == 0) 
             {
-                return !IsStatic;
+                return !IsLocked;
             }
 
             if (TryPeek(out InputCammand cammand)) 
@@ -46,7 +46,7 @@ namespace Game.UI
 
                 if (subCammands.Count == 0) 
                 {
-                    return !IsStatic;
+                    return !IsLocked;
                 }
                 else
                 {
@@ -79,7 +79,7 @@ namespace Game.UI
                 {
                     break;
                 }
-                if (top.IsStatic)
+                if (top.IsLocked)
                 {
                     break;
                 }
@@ -114,7 +114,7 @@ namespace Game.UI
         }
 
         /// <summary>
-        /// 整个树上最上面的一个命令
+        /// 整颗树上最上面的一个命令
         /// </summary>
         /// <returns></returns>
         public InputCammand Top() 
@@ -128,11 +128,10 @@ namespace Game.UI
             return temp;
         }
 
-        public bool TryPeek(out InputCammand cammand) 
-        {
-            return subCammands.TryPeek(out cammand);
-        }
-
+        /// <summary>
+        /// 输入操作
+        /// </summary>
+        /// <param name="context"></param>
         public void InputAction(ActionContext context)
         {
             if (TryPeek(out InputCammand cammand))
@@ -140,6 +139,11 @@ namespace Game.UI
                 cammand.InputAction(context);
             }
             OnInputAction(context);
+        }
+
+        public bool TryPeek(out InputCammand cammand) 
+        {
+            return subCammands.TryPeek(out cammand);
         }
 
         /// <summary>
@@ -204,6 +208,14 @@ namespace Game.UI
         }
         protected virtual void OnInputAction(ActionContext context) 
         {
+        }
+        /// <summary>
+        /// 是否锁定此命令
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool CheckIsLocked() 
+        {
+            return false;
         }
     }
 }

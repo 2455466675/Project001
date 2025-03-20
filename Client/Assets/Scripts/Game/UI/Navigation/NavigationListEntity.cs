@@ -9,6 +9,8 @@ namespace Game.UI
     {
         public NavigationListDefine ListDefine { get; private set; }
 
+        public bool IsLocked => proxy != null && proxy.IsLocked();
+
         private NavigationListProxy proxy;
 
         private NavigationList list;

@@ -2,9 +2,10 @@ namespace Game.UI
 {
     public enum ModuleType 
     {
-        Basal  = 1,
-        Panel  = 2,
-        Battle = 3,
+        Undefined = 0,
+        Basal     = 1,
+        Panel     = 2,
+        Battle    = 3,
     }
 
     /// <summary>
@@ -14,6 +15,6 @@ namespace Game.UI
     {
         public abstract ModuleType ModuleType { get;}
 
-        public virtual void Navigate(NavigationListDefine list_ID) { }
+        public virtual void Navigate(NavigationListDefine list_ID, int[] navigateIndexs) { }
     }
 }

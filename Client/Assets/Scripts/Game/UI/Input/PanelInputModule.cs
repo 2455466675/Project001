@@ -9,7 +9,7 @@ namespace Game.UI
     {
         public override ModuleType ModuleType => ModuleType.Panel;
 
-        public override void Navigate(NavigationListDefine list_ID)
+        public override void Navigate(NavigationListDefine list_ID, int[] navigateIndexs)
         {
             NavigationGroupDefine groupDefine = GameWorld.Root.GetComponent<UIComponent>().ListDefineToGroupDefine(list_ID);
             if (groupDefine == NavigationGroupDefine.Undefined)
@@ -17,7 +17,7 @@ namespace Game.UI
                 return;
             }
 
-            NavigationListCammand listCammand = new NavigationListCammand(list_ID);
+            NavigationListCammand listCammand = new NavigationListCammand(list_ID, navigateIndexs);
             NavigationGroupCammand groupCammand;
 
             if (TryPeek(out InputCammand cammand)) 

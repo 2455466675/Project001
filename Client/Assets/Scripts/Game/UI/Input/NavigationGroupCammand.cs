@@ -25,13 +25,20 @@ namespace Game.UI
 
         protected override bool OnRise()
         {
-            GameWorld.Root.GetComponent<UIComponent>().RefocusGroup(Define);
+            var entity = GetEntity();
+            entity?.Refocus();
             return true;
         }
 
         protected override void OnSink()
         {
-            GameWorld.Root.GetComponent<UIComponent>().OutFocusGroup(Define);
+            var entity = GetEntity();
+            entity?.OutFocus();            
+        }
+
+        private NavigationGroupEntity GetEntity() 
+        {
+            return GameWorld.Root.GetComponent<UIComponent>().GetNavigationGroupEntity(Define);
         }
     }
 }

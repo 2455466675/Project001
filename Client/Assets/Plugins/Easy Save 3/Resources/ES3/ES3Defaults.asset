@@ -33,10 +33,10 @@ MonoBehaviour:
     - UniTask
     - Assembly-CSharp-firstpass
     - UniTask.Linq
-    - Game
     - YooAsset
     - Assembly-CSharp
     - Navigation
+    - Game
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
     - GameConfig

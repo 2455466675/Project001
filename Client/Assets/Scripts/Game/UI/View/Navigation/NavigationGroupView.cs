@@ -8,7 +8,7 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-    public class NavigationGroupView : MonoBehaviour
+    public class NavigationGroupView : View
     {
         public NavigationGroupDefine define;
         public NavigationGroup Group => group;
@@ -31,6 +31,11 @@ namespace Game.UI
         [Button("GenerateMap")]
         private void GenerateMap()
         {
+            if (Application.isPlaying) 
+            {
+                return;
+            }
+
             if (define == NavigationGroupDefine.Undefined) 
             {
                 Debug.LogError("NavigationGroupView is Undefined");
@@ -55,6 +60,7 @@ namespace Game.UI
                 return;
             }
 
+#if UNITY_EDITOR
             NavigationMap map = Resources.Load<NavigationMap>("Game/NavigationMap");
             if (map == null) 
             {
@@ -65,7 +71,6 @@ namespace Game.UI
             string s = "";
             foreach (var view in children) 
             {
-                view.Init();
                 if (!view.IsValid) 
                 {
                     Debug.LogError($"NavigationListView is not valid : {view.define}");
@@ -80,12 +85,10 @@ namespace Game.UI
                 s += $"({view.define} => {define});";
             }
 
-#if UNITY_EDITOR
             EditorUtility.SetDirty(map);
             AssetDatabase.SaveAssets();
-#endif
-
             Debug.Log($"GenerateMap! : {s}");
+#endif
         }
     }
 }

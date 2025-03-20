@@ -57,29 +57,8 @@ namespace Game.UI
 
         public void HideGroup(NavigationGroupDefine define)
         {
-            if (!groups.ContainsKey(define))
-            {
-                return;
-            }
-            groups[define].Hide();
-        }
-
-        public void RefocusGroup(NavigationGroupDefine define)
-        {
-            if (!groups.ContainsKey(define))
-            {
-                return;
-            }
-            groups[define].Refocus();
-        }
-
-        public void OutFocusGroup(NavigationGroupDefine define)
-        {
-            if (!groups.ContainsKey(define))
-            {
-                return;
-            }
-            groups[define].OutFocus();
+            var entity = GetNavigationGroupEntity(define);
+            entity?.Hide();            
         }
         #endregion
 
@@ -98,41 +77,6 @@ namespace Game.UI
                 return groupEntity.GetNavigationListEntity(listDefine);
             }
         }
-
-        public void Move(NavigationListDefine define, float h, float v) 
-        {
-            NavigationListEntity listEntity = GetNavigationListEntity(define);
-            listEntity?.Move(h, v);
-        }
-
-        public void Submit(NavigationListDefine define)
-        {
-            NavigationListEntity listEntity = GetNavigationListEntity(define);
-            listEntity?.Submit();
-        }
-
-        public bool InFocus(NavigationListDefine define, bool isRefocus, int[] indexs = null)
-        {
-            NavigationListEntity listEntity = GetNavigationListEntity(define);
-            if (listEntity == null) 
-            {
-                return false;
-            }
-            return listEntity.InFocus(isRefocus, indexs);            
-        }
-
-        public void OutFocus(NavigationListDefine define)
-        {
-            NavigationListEntity listEntity = GetNavigationListEntity(define);
-            listEntity?.OutFocus();
-        }
-
-        public void Exit(NavigationListDefine define)
-        {
-            NavigationListEntity listEntity = GetNavigationListEntity(define);
-            listEntity?.Exit();
-        }
-
         #endregion
     }
 }

@@ -1,5 +1,4 @@
 using Navigation;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,21 +8,27 @@ namespace Game.UI
     /// 
     /// </summary>
     public class TestController2 : Controller
-    {
-        public FluidNavigationList fluidNavigationList;
-        public FixedNavigationList fixedNavigationList;
-
+    {        
         private void Awake()
         {
-            if (fluidNavigationList != null) 
+            FluidListView view2 = GetView<FluidListView>("FluidNavigationList");
+
+            if (view2 != null)
             {
-                fluidNavigationList.Init();
-                fluidNavigationList.UpdateItemCount(20);
+                List<object> list = new List<object>();
+                for (int i = 0; i < 20; i++)
+                {
+                    list.Add(i);
+                }
+
+                view2.UpdateData(list);
             }
 
-            if (fixedNavigationList != null) 
+            FixedListView view3 = GetView<FixedListView>("FixedNavigationList");
+
+            if (view3 != null) 
             {
-                fixedNavigationList.Init();
+                view3.UpdateData(new List<object>() {1,2,3,4,5,6,7,8});
             }
         }
 

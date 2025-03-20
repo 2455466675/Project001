@@ -10,14 +10,17 @@ namespace Game.UI
     /// </summary>
     public class TestController : Controller
     {
-        public FluidNavigationList fluidNavigationList;
-
         private void Awake()
         {
-            if (fluidNavigationList != null)
+            FluidListView view = GetView<FluidListView>("FluidNavigationList");
+            if (view != null)
             {
-                fluidNavigationList.Init();
-                fluidNavigationList.UpdateItemCount(20);
+                List<object> list = new List<object>();
+                for (int i = 0; i < 32; i++)
+                {
+                    list.Add(i);
+                }
+                view.UpdateData(list);
             }
         }
 

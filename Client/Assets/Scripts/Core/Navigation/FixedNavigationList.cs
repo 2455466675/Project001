@@ -60,6 +60,16 @@ namespace Navigation
             isInit = true;
         }
 
+        public NavigationItem GetItem(int index) 
+        {
+            if (index <0 || index >= items.Count) 
+            {
+                return null; 
+            }
+
+            return items[index];
+        }
+
         protected override void OnExit()
         {
             base.OnExit();

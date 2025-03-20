@@ -31,7 +31,7 @@ namespace Game.UI
                 case InputType.Esc:
                     if (TryPeek(out InputCammand cammand))
                     {
-                        if (cammand.Count == 0 && !cammand.IsStatic) 
+                        if (cammand.Count == 0 && !cammand.IsLocked) 
                         {
                             Pop();
                         }
@@ -40,18 +40,21 @@ namespace Game.UI
             }
         }
 
-        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType = ModuleType.Panel)
+        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs = null)
         {
             InputModule module;
 
             if (TryPeek(out InputCammand cammand))
             {
                 module = cammand as InputModule;              
-                if (module != null && module.ModuleType == moduleType) 
+                if (module != null) 
                 {
-                    module.Navigate(list_ID);
-                    return;
-                }
+                    if (moduleType == ModuleType.Undefined || module.ModuleType == moduleType)
+                    {
+                        module.Navigate(list_ID, navigateIndexs);
+                        return;
+                    }
+                }           
             }
 
             module = modules.Find(m => m.ModuleType == moduleType);
@@ -62,7 +65,7 @@ namespace Game.UI
             }
 
             Push(module);
-            module.Navigate(list_ID);
+            module.Navigate(list_ID, navigateIndexs);
         }
     }
 }

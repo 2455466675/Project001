@@ -40,7 +40,7 @@ namespace Game
             var uiComponent = Root.AddComponent<UIComponent>();
             uiComponent.Init(config);
 
-            uiComponent.Navigate(UI.NavigationListDefine.Test_List_1);
+            uiComponent.Navigate(UI.NavigationListDefine.Test_List_1, UI.ModuleType.Panel);
         }
 
         public static void Tick(float dt) 

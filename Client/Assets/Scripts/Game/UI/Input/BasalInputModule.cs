@@ -9,11 +9,6 @@ namespace Game.UI
     {
         public override ModuleType ModuleType => ModuleType.Basal;
 
-        public BasalInputModule() 
-        {
-            IsStatic = true;
-        }
-
         protected override void OnInputAction(ActionContext context)
         {
             MLog.Log("BasalInputModule OnInputAction");
@@ -25,6 +20,11 @@ namespace Game.UI
                     GameWorld.Root.GetComponent<UIComponent>().Navigate(NavigationListDefine.Test_List_1, ModuleType.Panel);
                     break;
             }
+        }
+
+        protected override bool CheckIsLocked()
+        {
+            return true;
         }
     }
 }

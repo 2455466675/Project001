@@ -11,7 +11,7 @@ namespace Game.UI
         public NavigationListDefine Define { get; private set; }
         private int[] defaultIndexs;
 
-        public NavigationListCammand(NavigationListDefine define, int[] defaultIndexs = null) : base()
+        public NavigationListCammand(NavigationListDefine define, int[] defaultIndexs) : base()
         {
             this.Define = define;
             this.defaultIndexs = defaultIndexs;
@@ -19,39 +19,68 @@ namespace Game.UI
 
         protected override void OnPop()
         {
-            GameWorld.Root.GetComponent<UIComponent>().Exit(Define);
+            var entity = GetEntity();
+            entity?.Exit();            
         }
 
         protected override bool OnPush()
         {
-            bool r = GameWorld.Root.GetComponent<UIComponent>().InFocus(Define, false, defaultIndexs);
-            return r;
+            var entity = GetEntity();
+            if (entity == null) 
+            {
+                return false;
+            }
+            else
+            {
+                return entity.InFocus(false, defaultIndexs);
+            }          
         }
 
         protected override bool OnRise()
         {
-            bool r = GameWorld.Root.GetComponent<UIComponent>().InFocus(Define, true);
-            return r;
+            var entity = GetEntity();
+            if (entity == null)
+            {
+                return false;
+            }
+            else
+            {
+                return entity.InFocus(true);
+            }
         }
 
         protected override void OnSink()
         {
-            GameWorld.Root.GetComponent<UIComponent>().OutFocus(Define);
+            var entity = GetEntity();
+            entity?.OutFocus();
         }
 
         protected override void OnInputAction(ActionContext context)
         {
+            var entity = GetEntity();
+
             InputType inputType = context.InputType;
             switch (inputType) 
             {
                 case InputType.Move:
                     Vector2 v = context.Vector2Value;
-                    GameWorld.Root.GetComponent<UIComponent>().Move(Define, v.x, v.y);
+                    entity?.Move(v.x, v.y);
                     break;
                 case InputType.Submit:
-                    GameWorld.Root.GetComponent<UIComponent>().Submit(Define);
+                    entity?.Submit();                
                     break;
             }
+        }
+
+        protected override bool CheckIsLocked()
+        {
+            var entity = GetEntity();
+            return entity != null && entity.IsLocked;
+        }
+
+        private NavigationListEntity GetEntity() 
+        {
+            return GameWorld.Root.GetComponent<UIComponent>().GetNavigationListEntity(Define);
         }
     }
 }

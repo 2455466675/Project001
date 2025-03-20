@@ -1,3 +1,4 @@
+using Navigation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -5,18 +6,14 @@ using UnityEngine;
 
 namespace Game.UI
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    [DisallowMultipleComponent]
-    public class Controller : MonoBehaviour, IViewContainer
+    public class GameNavigationItem : NavigationItem, IViewContainer
     {
         [SerializeField]
         private ViewEntity[] views;
 
         public T GetView<T>() where T : View
         {
-            if (views == null) 
+            if (views == null)
             {
                 return default;
             }
@@ -26,12 +23,12 @@ namespace Game.UI
             for (int i = 0; i < views.Length; i++)
             {
                 var ve = views[i];
-                if (ve == null || ve.view == null) 
+                if (ve == null || ve.view == null)
                 {
                     continue;
                 }
 
-                if (ve.view.GetType() == t) 
+                if (ve.view.GetType() == t)
                 {
                     return ve.view as T;
                 }
@@ -40,7 +37,7 @@ namespace Game.UI
             return default;
         }
 
-        public T GetView<T>(string viewName) where T : View 
+        public T GetView<T>(string viewName) where T : View
         {
             if (views == null)
             {
@@ -67,8 +64,10 @@ namespace Game.UI
         }
 
         [Button("Init")]
-        public void Init() 
+        public void Init()
         {
+            InitItem();
+
             List<View> result = new List<View>();
             FindViews(transform, result);
 
@@ -87,17 +86,17 @@ namespace Game.UI
             views = temp.ToArray();
         }
 
-        private void FindViews(Transform tf, List<View> result) 
+        private void FindViews(Transform tf, List<View> result)
         {
-            if (tf == null) 
+            if (tf == null)
             {
                 return;
             }
 
             View[] v = tf.GetComponents<View>();
-            if (v != null && v.Length > 0) 
+            if (v != null && v.Length > 0)
             {
-                result.AddRange(v);            
+                result.AddRange(v);
             }
 
             int childCount = tf.childCount;
@@ -109,12 +108,6 @@ namespace Game.UI
             for (int i = 0; i < childCount; i++)
             {
                 Transform child = tf.GetChild(i);
-                if (child.GetComponent<IViewContainer>() != null)
-                {
-                    child.GetComponent<IViewContainer>().Init();
-                    continue;
-                }
-
                 FindViews(child, result);
             }
         }

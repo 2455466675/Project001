@@ -27,14 +27,24 @@ namespace Game
             controller.InputAction(context);
         }
 
-        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType = ModuleType.Panel) 
+        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType = ModuleType.Undefined, int[] navigateIndexs = null) 
         {
-            controller.Navigate(list_ID, moduleType);
+            controller.Navigate(list_ID, moduleType, navigateIndexs);
         }
 
         public NavigationGroupDefine ListDefineToGroupDefine(NavigationListDefine listDefine)
         {
             return navigationManager.ListDefineToGroupDefine(listDefine);
+        }
+
+        public NavigationGroupEntity GetNavigationGroupEntity(NavigationGroupDefine define) 
+        {
+            return navigationManager.GetNavigationGroupEntity(define);
+        }
+
+        public NavigationListEntity GetNavigationListEntity(NavigationListDefine listDefine) 
+        {
+            return navigationManager.GetNavigationListEntity(listDefine);
         }
 
         public void ShowGroup(NavigationGroupDefine define) 
@@ -45,41 +55,6 @@ namespace Game
         public void HideGroup(NavigationGroupDefine define)
         {
             navigationManager.HideGroup(define);
-        }
-
-        public void RefocusGroup(NavigationGroupDefine define)
-        {
-            navigationManager.RefocusGroup(define);
-        }
-
-        public void OutFocusGroup(NavigationGroupDefine define)
-        {
-            navigationManager.OutFocusGroup(define);
-        }
-
-        public void Move(NavigationListDefine define, float h, float v)
-        {
-            navigationManager.Move(define, h, v);
-        }
-
-        public void Submit(NavigationListDefine define)
-        {
-            navigationManager.Submit(define);
-        }
-
-        public bool InFocus(NavigationListDefine define, bool isRefocus, int[] indexs = null)
-        {
-            return navigationManager.InFocus(define, isRefocus, indexs);
-        }
-
-        public void OutFocus(NavigationListDefine define)
-        {
-            navigationManager.OutFocus(define);
-        }
-
-        public void Exit(NavigationListDefine define)
-        {
-            navigationManager.Exit(define);
         }
     }
 }

@@ -51,5 +51,10 @@ namespace Game.UI
             }
             list.Exit();
         }
+
+        public virtual bool IsLocked() 
+        {
+            return false;
+        }
     }
 }
