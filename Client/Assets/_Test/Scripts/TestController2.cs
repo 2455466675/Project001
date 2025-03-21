@@ -8,8 +8,8 @@ namespace Game.UI
     /// 
     /// </summary>
     public class TestController2 : Controller
-    {        
-        private void Awake()
+    {
+        protected override void Register()
         {
             FluidListView view2 = GetView<FluidListView>("FluidNavigationList");
 
@@ -26,9 +26,9 @@ namespace Game.UI
 
             FixedListView view3 = GetView<FixedListView>("FixedNavigationList");
 
-            if (view3 != null) 
+            if (view3 != null)
             {
-                view3.UpdateData(new List<object>() {1,2,3,4,5,6,7,8});
+                view3.UpdateData(new List<object>() { 1, 2, 3, 4, 5, 6, 7, 8 });
             }
         }
 

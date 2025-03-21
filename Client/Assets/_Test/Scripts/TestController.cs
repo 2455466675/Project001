@@ -10,7 +10,7 @@ namespace Game.UI
     /// </summary>
     public class TestController : Controller
     {
-        private void Awake()
+        protected override void Register()
         {
             FluidListView view = GetView<FluidListView>("FluidNavigationList");
             if (view != null)

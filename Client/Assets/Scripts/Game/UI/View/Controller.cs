@@ -14,6 +14,11 @@ namespace Game.UI
         [SerializeField]
         private ViewEntity[] views;
 
+        private void Awake()
+        {
+            Register();
+        }
+
         public T GetView<T>() where T : View
         {
             if (views == null) 
@@ -65,6 +70,8 @@ namespace Game.UI
 
             return default;
         }
+
+        protected virtual void Register() { }
 
         [Button("Init")]
         public void Init() 
