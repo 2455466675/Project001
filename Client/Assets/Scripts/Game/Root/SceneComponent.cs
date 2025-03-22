@@ -9,7 +9,10 @@ namespace Game
 {
     public class SceneEntity : Entity
     {
+        public int SceneId { get; private set; }
+
         public Scene Scene { get; private set; }
+
         public int Index => Scene.buildIndex;
         public string Name => Scene.name;
         public string Path => Scene.path;
@@ -27,20 +30,23 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public class SceneComponent : Entity, IAwake
+    public class SceneComponent : Entity
     {
+        private SceneMap sceneMap;
         private Stack<SceneEntity> scenes;
 
         private string loadingSceneName;
         private Action<float> loadingAction;
         private bool isLoading;
 
-        public void Awake()
+        public void Init(GameInitConfig config)
         {
             scenes = new Stack<SceneEntity>();
+
+            sceneMap = GameWorld.Root.GetComponent<ResourceComponent>().LoadFormRes<SceneMap>(config.SceneMap);
         }
 
-        public void LoadScene(string sceneName, LoadSceneMode mode = LoadSceneMode.Single)
+        public void LoadScene(int sceneId)
         {
             if (isLoading)
             {
@@ -48,13 +54,15 @@ namespace Game
                 return;
             }
 
-            if (scenes.TryPeek(out SceneEntity e) && e.Name == sceneName) 
-            {
-                MLog.Warn($"要加载的场景已激活：{sceneName}");
-                return;
-            }
+            SceneData data = sceneMap.GetSceneData(sceneId);
 
-            Scene scene = GameWorld.Root.GetComponent<ResourceComponent>().LoadScene(sceneName, mode);
+            //if (scenes.TryPeek(out SceneEntity e) && e.Name == sceneName) 
+            //{
+            //    MLog.Warn($"要加载的场景已激活：{sceneName}");
+            //    return;
+            //}
+
+            Scene scene = GameWorld.Root.GetComponent<ResourceComponent>().LoadScene(data.Path, data.LoadSceneMode);
 
             
 

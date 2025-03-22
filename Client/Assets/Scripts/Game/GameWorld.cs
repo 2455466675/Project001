@@ -40,7 +40,8 @@ namespace Game
             var uiComponent = Root.AddComponent<UIComponent>();
             uiComponent.Init(config);
 
-            Root.AddComponent<SceneComponent>();
+            var sceneComponent = Root.AddComponent<SceneComponent>();
+            sceneComponent.Init(config);
 
             uiComponent.Navigate(UI.NavigationListDefine.Test_List_1, UI.ModuleType.Panel);
         }

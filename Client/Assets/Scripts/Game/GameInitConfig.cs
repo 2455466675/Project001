@@ -28,5 +28,9 @@ namespace Game
         /// uiµº∫Ω≈‰÷√
         /// </summary>
         public string NavigationMap;
+        /// <summary>
+        /// ≥°æ∞≈‰÷√
+        /// </summary>
+        public string SceneMap;
     }
 }
