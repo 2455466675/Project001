@@ -43,7 +43,11 @@ namespace Game
             var sceneComponent = Root.AddComponent<SceneComponent>();
             sceneComponent.Init(config);
 
-            uiComponent.Navigate(UI.NavigationListDefine.Test_List_1, UI.ModuleType.Panel);
+            var stateComponent = Root.AddComponent<StateComponent>();
+            stateComponent.Init();
+
+            //LoginState
+            //PlayingState
         }
 
         public static void Tick(float dt) 

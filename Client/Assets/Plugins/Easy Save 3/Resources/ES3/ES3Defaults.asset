@@ -32,6 +32,7 @@ MonoBehaviour:
     - ECS
     - UniTask
     - Assembly-CSharp-firstpass
+    - Eflatun.SceneReference
     - UniTask.Linq
     - Game
     - YooAsset
@@ -42,6 +43,7 @@ MonoBehaviour:
     - GameConfig
     - UniTask.TextMeshPro
     - UniTask.Addressables
+    - Eflatun.SceneReference.Editor
     - PsdPlugin
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - YooAsset.Editor

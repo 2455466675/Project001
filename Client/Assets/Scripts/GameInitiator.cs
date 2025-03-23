@@ -11,12 +11,15 @@ namespace Game
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             GameWorld.Initialize();   
         }
 
         private async void Start()
         {
             await GameWorld.Start(config);
+
+            GameWorld.Root.GetComponent<EventComponent>().Publish(new GameStartEventArg());
         }
 
         private void Update() 

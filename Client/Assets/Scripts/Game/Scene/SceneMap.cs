@@ -22,6 +22,7 @@ namespace Game
         public int BuildIndex => reference.BuildIndex;
         public string Name => reference.Name;
         public string Path => reference.Path;
+        public Scene LoadedScene => reference.LoadedScene;
     }
 
     [CreateAssetMenu(menuName = "MyMenu/Create SceneMap")]

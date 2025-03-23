@@ -158,6 +158,7 @@ MonoBehaviour:
     UIRootPath: Assets/Bundles/UI/UIRoot
     Formula: Game/Formula
     NavigationMap: Game/NavigationMap
+    SceneMap: Game/SceneMap
 --- !u!4 &404166798
 Transform:
   m_ObjectHideFlags: 0

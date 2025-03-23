@@ -18,3 +18,13 @@ MonoBehaviour:
     reference:
       asset: {fileID: 102900000, guid: aae9ae996d7648646a6001712312559b, type: 3}
       guid: aae9ae996d7648646a6001712312559b
+  - id: 10002
+    loadSceneMode: 1
+    reference:
+      asset: {fileID: 102900000, guid: a9ad07816368f7d44b36f8cb1470fba2, type: 3}
+      guid: a9ad07816368f7d44b36f8cb1470fba2
+  - id: 10003
+    loadSceneMode: 0
+    reference:
+      asset: {fileID: 102900000, guid: 5063736dbd68d714a8b4c8c0f77850ec, type: 3}
+      guid: 5063736dbd68d714a8b4c8c0f77850ec

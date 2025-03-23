@@ -1,104 +1,74 @@
 using ECS;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game
 {
-    public class SceneEntity : Entity
-    {
-        public int SceneId { get; private set; }
-
-        public Scene Scene { get; private set; }
-
-        public int Index => Scene.buildIndex;
-        public string Name => Scene.name;
-        public string Path => Scene.path;
-        
-        public void SetActive(bool active)
-        {
-            GameObject[] objects = Scene.GetRootGameObjects();
-            foreach (GameObject obj in objects)
-            {
-                obj.SetActive(active);
-            }
-        }
-    }
-
     /// <summary>
     /// 
     /// </summary>
     public class SceneComponent : Entity
     {
         private SceneMap sceneMap;
-        private Stack<SceneEntity> scenes;
+        private List<SceneEntity> scenes;
+        private Stack<SceneEntity> activatedScenes;
 
-        private string loadingSceneName;
         private Action<float> loadingAction;
-        private bool isLoading;
+        private int loadingSceneId;
 
         public void Init(GameInitConfig config)
         {
-            scenes = new Stack<SceneEntity>();
+            loadingSceneId = -1;
+
+            scenes = new List<SceneEntity>();
+            activatedScenes = new Stack<SceneEntity>();
 
             sceneMap = GameWorld.Root.GetComponent<ResourceComponent>().LoadFormRes<SceneMap>(config.SceneMap);
         }
 
         public void LoadScene(int sceneId)
         {
-            if (isLoading)
+            if (loadingSceneId > 0)
             {
-                MLog.Error("有一个正在加载中的场景:" + loadingSceneName);
+                MLog.Error("有一个正在加载中的场景:" + loadingSceneId);
                 return;
             }
 
-            SceneData data = sceneMap.GetSceneData(sceneId);
+            SceneEntity entity = FindOrCreateSceneEntity(sceneId);
 
-            //if (scenes.TryPeek(out SceneEntity e) && e.Name == sceneName) 
-            //{
-            //    MLog.Warn($"要加载的场景已激活：{sceneName}");
-            //    return;
-            //}
-
-            Scene scene = GameWorld.Root.GetComponent<ResourceComponent>().LoadScene(data.Path, data.LoadSceneMode);
-
-            
-
-            //PushScene(sceneEntity, mode);
-            
+            if (!entity.Scene.isLoaded)
+            {                
+                GameWorld.Root.GetComponent<ResourceComponent>().LoadScene(entity.Path, entity.LoadSceneMode);
+            }
+           
+            PushScene(entity);            
         }
 
-        public async void LoadSceneAsync(string sceneName, Action<float> loadingAction, Action loadEndAction, LoadSceneMode mode = LoadSceneMode.Single)
+        public async void LoadSceneAsync(int sceneId, Action<float> loadingAction, Action loadEndAction)
         {
-            if (isLoading)
+            if (loadingSceneId > 0)
             {
-                MLog.Error("有一个正在加载中的场景:" + loadingSceneName);
+                MLog.Error("有一个正在加载中的场景:" + loadingSceneId);
                 return;
             }
 
-            if (scenes.TryPeek(out SceneEntity e) && e.Name == sceneName)
+            SceneEntity entity = FindOrCreateSceneEntity(sceneId);
+
+            if (!entity.Scene.isLoaded)
             {
-                MLog.Warn($"要加载的场景已激活：{sceneName}");
-                return;
+                loadingSceneId = sceneId;
+                this.loadingAction = loadingAction;
+
+                await GameWorld.Root.GetComponent<ResourceComponent>().LoadSceneAsync(entity.Path, entity.LoadSceneMode, LoadingHandler);                
             }
 
-            isLoading = true;
-            loadingSceneName = sceneName;
-            this.loadingAction = loadingAction;
-
-            Scene scene = await GameWorld.Root.GetComponent<ResourceComponent>().LoadSceneAsync(sceneName, mode, LoadingHandler);
-
-
-
-            //PushScene(sceneEntity, mode);
+            PushScene(entity);
 
             loadEndAction?.Invoke();
 
-            loadingSceneName = string.Empty;
             this.loadingAction = null;
-            isLoading = false;
+            loadingSceneId = -1;
         }
 
         private void LoadingHandler(float progress)
@@ -106,44 +76,56 @@ namespace Game
             this.loadingAction?.Invoke(progress);
         }
 
-        private void PushScene(SceneEntity scene, LoadSceneMode mode)
+        private void PushScene(SceneEntity entity)
         {
-            scene.SetActive(true);
+            entity.SetActive(true);
 
-            if (mode == LoadSceneMode.Single)
+            if (entity.LoadSceneMode == LoadSceneMode.Single)
             {
-                scenes.Clear();
+                activatedScenes.Clear();
             }
             else
             {
-                if (scenes.TryPeek(out SceneEntity s))
+                if (activatedScenes.TryPeek(out SceneEntity s))
                 {
                     s.SetActive(false);
                 }
-
-                SceneManager.SetActiveScene(scene.Scene);
+                SceneManager.SetActiveScene(entity.Scene);
             }
 
-            scenes.Push(scene);
+            activatedScenes.Push(entity);
         }
 
         private void PopScene()
         {
-            if (scenes.Count <= 1)
+            if (activatedScenes.Count <= 1)
             {
                 return;
             }
 
-            if (scenes.TryPop(out SceneEntity s1))
+            if (activatedScenes.TryPop(out SceneEntity s1))
             {
                 s1?.SetActive(false);
             }
 
-            if (scenes.TryPeek(out SceneEntity s2))
+            if (activatedScenes.TryPeek(out SceneEntity s2))
             {
                 SceneManager.SetActiveScene(s2.Scene);
                 s2.SetActive(true);
             }
         }
+
+        private SceneEntity FindOrCreateSceneEntity(int sceneId) 
+        {
+            SceneEntity entity = scenes.Find(e => e.SceneId == sceneId);
+            if (entity == null)
+            {
+                entity = CreateChild<SceneEntity>();
+                entity.Init(sceneMap.GetSceneData(sceneId));
+
+                scenes.Add(entity);
+            }
+            return entity;
+        } 
     }
 }

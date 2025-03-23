@@ -27,7 +27,6 @@ namespace Game.UI
             }
 
             Type t = typeof(T);
-
             for (int i = 0; i < views.Length; i++)
             {
                 var ve = views[i];
@@ -41,7 +40,6 @@ namespace Game.UI
                     return ve.view as T;
                 }
             }
-
             return default;
         }
 
