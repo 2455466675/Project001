@@ -20,7 +20,7 @@ namespace Game.UI
                 {
                     list.Add(i);
                 }
-                view.UpdateData(list);
+                view.UpdateData(list.ToArray());
             }
         }
 

@@ -27,7 +27,7 @@ namespace Game.UI
             return go.GetComponent<NavigationGroupView>();
         }
 
-        public virtual void InFocus(NavigationGroup group, bool isRefocus)
+        public virtual void InFocus(NavigationGroupView group, bool isRefocus)
         {
             if (group == null) 
             {
@@ -48,7 +48,7 @@ namespace Game.UI
             }
         }
 
-        public virtual void OutFocus(NavigationGroup group)
+        public virtual void OutFocus(NavigationGroupView group)
         {
             if (group == null)
             {
@@ -60,7 +60,7 @@ namespace Game.UI
             }
         }
 
-        public virtual void Exit(NavigationGroup group)
+        public virtual void Exit(NavigationGroupView group)
         {
             if (group == null)
             {

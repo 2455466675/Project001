@@ -117,9 +117,9 @@ namespace Navigation
 
             OnListChanged();
 
-            if (state == ListState.InFocused)
+            if (state == ListState.InFocused && oldPointer != pointer)
             {
-                OnSelectChanged(oldPointer != pointer);
+                OnSelectChanged();
             }
         }
 
@@ -133,6 +133,7 @@ namespace Navigation
             int index = isRefocus ? pointer : indexs[0];
             if (Select(index))
             {
+                OnSelectChanged();
                 state = ListState.InFocused;
                 return true;
             }
@@ -164,7 +165,11 @@ namespace Navigation
                 return;
             }
 
-            Select(index);
+            bool success = Select(index);
+            if (success) 
+            {
+                OnSelectChanged();
+            }   
         }
 
         private bool Select(int index)
@@ -207,8 +212,7 @@ namespace Navigation
                 isSuccess = true;
                 OnListChanged();
             }
-
-            OnSelectChanged(isSuccess);
+           
             return isSuccess;
         }
 
@@ -232,13 +236,10 @@ namespace Navigation
             OnListChangedEvent?.Invoke(new ListChangedEventArgs(minIndex, maxIndex, lts));
         }
 
-        private void OnSelectChanged(bool isSuccess)
-        {      
-            if (isSuccess)
-            {
-                NavigationItem[] selectedItems = new NavigationItem[] { items[pointer - minIndex] };
-                SelectChanged(selectedItems);
-            }
+        private void OnSelectChanged()
+        {                  
+            NavigationItem[] selectedItems = new NavigationItem[] { items[pointer - minIndex] };
+            SelectChanged(selectedItems);
         }
 
         private void CreateItems()

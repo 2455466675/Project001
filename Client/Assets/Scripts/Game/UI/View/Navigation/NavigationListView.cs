@@ -1,18 +1,155 @@
 using Navigation;
-using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Game.UI
 {
     /// <summary>
     /// 
     /// </summary>
-    public abstract class NavigationListView : View
+    public abstract class NavigationListView : View, INavigation
     {        
+        [ReadOnly]
+        [SerializeField]
+        private int guid;
+
+        [SerializeField]
+        private NavigationListDefine define;
         public bool IsValid => List != null;
-        public abstract NavigationList List { get; }
+        public NavigationListDefine Define => define;
+        protected abstract NavigationList List { get; }
 
-        public NavigationListDefine define;
+        public void Bind(int guid) 
+        {
+            this.guid = guid;            
+        }
 
-        public abstract void UpdateData(List<object> data);
+        private void OnEnable()
+        {
+            NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+            e?.OnEnable();
+        }
+
+        private void OnDisable()
+        {
+            NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+            e?.OnDisable();
+        }
+
+        private void OnDestroy()
+        {
+            guid = -1;
+        }
+
+        protected void Register()
+        {
+            List.OnSelectedEvent += List_OnSelectedEvent;
+            List.OnDeselectedEvent += List_OnDeselectedEvent;
+            List.OnSubmitEvent += List_OnSubmitEvent;
+            List.OnMoveEvent += List_OnMoveEvent;
+            
+        }
+
+        private void List_OnMoveEvent(float h, float v, NavigationItem obj)
+        {
+            if (obj != null && obj is GameNavigationItem item)
+            {
+                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                if (e == null) 
+                {
+                    return;
+                }
+
+                if (h > 0)
+                {
+                    e.OnMoveRight(item);
+                }
+                if (h < 0)
+                {
+                    e.OnMoveLeft(item);
+                }
+                if (v > 0)
+                {
+                    e.OnMoveUp(item);
+                }
+                if (v < 0)
+                {
+                    e.OnMoveDown(item);
+                }
+            }
+        }
+
+        private void List_OnSubmitEvent(NavigationItem obj)
+        {
+            if (obj != null && obj is GameNavigationItem item) 
+            {
+                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                e?.OnSubmit(item);
+            }
+        }
+
+        private void List_OnDeselectedEvent(NavigationItem obj)
+        {
+            if (obj != null && obj is GameNavigationItem item)
+            {
+                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                e?.OnDeselect(item);
+            }
+        }
+
+        private void List_OnSelectedEvent(NavigationItem obj)
+        {
+            if (obj != null && obj is GameNavigationItem item)
+            {
+                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                e?.OnSelect(item);
+            }
+        }
+
+        public abstract void UpdateData(object[] data);
+
+        public void Move(float h, float v)
+        {
+            if (List != null) 
+            {
+                List.Move(h, v);   
+            }            
+        }
+
+        public void Submit()
+        {
+            if (List != null) 
+            {
+                List.Submit();
+            }
+        }
+
+        public bool InFocus(bool isRefocus, int[] indexs = null)
+        {
+            if (List != null)
+            {
+                return List.InFocus(isRefocus, indexs);               
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void OutFocus()
+        {
+            if (List != null)
+            {
+                List.OutFocus();
+            }
+        }
+
+        public void Exit()
+        {
+            if (List != null)
+            {
+                List.Exit();
+            }
+        }
     }
 }

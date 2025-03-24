@@ -19,7 +19,6 @@ namespace Game.UI
             }
 
             Type t = typeof(T);
-
             for (int i = 0; i < views.Length; i++)
             {
                 var ve = views[i];
@@ -33,11 +32,10 @@ namespace Game.UI
                     return ve.view as T;
                 }
             }
-
             return default;
         }
 
-        public T GetView<T>(string viewName) where T : View
+        public T GetView<T>(string key) where T : View
         {
             if (views == null)
             {
@@ -54,7 +52,7 @@ namespace Game.UI
                     continue;
                 }
 
-                if (ve.view.GetType() == t && ve.name == viewName)
+                if (ve.view.GetType() == t && ve.key == key)
                 {
                     return ve.view as T;
                 }
@@ -78,7 +76,7 @@ namespace Game.UI
                 View view = result[i];
 
                 ViewEntity entity = new ViewEntity();
-                entity.name = view.gameObject.name;
+                entity.key = view.gameObject.name;
                 entity.view = view;
                 temp.Add(entity);
             }

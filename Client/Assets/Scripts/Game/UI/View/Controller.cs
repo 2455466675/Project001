@@ -60,7 +60,7 @@ namespace Game.UI
                     continue;
                 }
 
-                if (ve.view.GetType() == t && ve.name == viewName)
+                if (ve.view.GetType() == t && ve.key == viewName)
                 {
                     return ve.view as T;
                 }
@@ -84,7 +84,7 @@ namespace Game.UI
                 View view = result[i];
 
                 ViewEntity entity = new ViewEntity();
-                entity.name = view.gameObject.name;
+                entity.key = view.gameObject.name;
                 entity.view = view;
                 temp.Add(entity);
             }

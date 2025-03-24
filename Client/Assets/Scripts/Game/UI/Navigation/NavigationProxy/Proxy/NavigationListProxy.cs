@@ -1,5 +1,3 @@
-using Navigation;
-
 namespace Game.UI
 {
     /// <summary>
@@ -7,7 +5,23 @@ namespace Game.UI
     /// </summary>
     public class NavigationListProxy
     {
-        public virtual void Move(NavigationList list, float h, float v)
+
+        #region Unity生命周期
+        public virtual void Awake(NavigationListView list) 
+        {            
+        }
+
+        public virtual void OnEnable(NavigationListView list) 
+        {
+        }
+
+        public virtual void OnDisable(NavigationListView list) 
+        {        
+        }
+        #endregion
+
+        #region 导航行为
+        public virtual void Move(NavigationListView list, float h, float v)
         {
             if (list == null) 
             {
@@ -16,7 +30,7 @@ namespace Game.UI
             list.Move(h, v);
         }
 
-        public virtual void Submit(NavigationList list)
+        public virtual void Submit(NavigationListView list)
         {
             if (list == null)
             {
@@ -25,7 +39,7 @@ namespace Game.UI
             list.Submit();
         }
 
-        public virtual bool InFocus(NavigationList list, bool isRefocus, int[] indexs = null)
+        public virtual bool InFocus(NavigationListView list, bool isRefocus, int[] indexs = null)
         {
             if (list == null)
             {
@@ -34,7 +48,7 @@ namespace Game.UI
             return list.InFocus(isRefocus, indexs);
         }
 
-        public virtual void OutFocus(NavigationList list)
+        public virtual void OutFocus(NavigationListView list)
         {
             if (list == null)
             {
@@ -43,7 +57,7 @@ namespace Game.UI
             list.OutFocus();
         }
 
-        public virtual void Exit(NavigationList list) 
+        public virtual void Exit(NavigationListView list) 
         {
             if (list == null)
             {
@@ -51,10 +65,36 @@ namespace Game.UI
             }
             list.Exit();
         }
-
         public virtual bool IsLocked() 
         {
             return false;
         }
+        #endregion
+
+        #region 列表项事件
+        public virtual void OnSelect(NavigationListView list, GameNavigationItem item)
+        {
+        }
+
+        public virtual void OnDeselect(NavigationListView list, GameNavigationItem item)
+        {
+        }
+
+        public virtual void OnSubmit(NavigationListView list, GameNavigationItem item)
+        {
+        }
+        public virtual void OnMoveUp(NavigationListView list, GameNavigationItem item)
+        {
+        }
+        public virtual void OnMoveDown(NavigationListView list, GameNavigationItem item)
+        {
+        }
+        public virtual void OnMoveLeft(NavigationListView list, GameNavigationItem item)
+        {
+        }
+        public virtual void OnMoveRight(NavigationListView list, GameNavigationItem item)
+        {
+        }
+        #endregion
     }
 }

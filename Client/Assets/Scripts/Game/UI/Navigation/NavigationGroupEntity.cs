@@ -9,28 +9,28 @@ namespace Game.UI
     public class NavigationGroupEntity : ECS.Entity
     {
         private NavigationGroupProxy proxy;
-        private NavigationGroup group;
+        private NavigationGroupView group;
 
         private Dictionary<NavigationListDefine, NavigationListEntity> lists;
 
         public void Init(NavigationGroupDefine define) 
         {            
             proxy = Parent.GetComponent<NavigationProxy>().GetNavigationGroupProxy(define);
-            NavigationGroupView view = proxy.LoadGroup(define);
-
-            group = view.Group;
+            NavigationGroupView group = proxy.LoadGroup(define);
 
             lists = new Dictionary<NavigationListDefine, NavigationListEntity>();
-            NavigationListView[] children = view.Children;
+            NavigationListView[] children = group.Children;
             if (children != null && children.Length > 0 ) 
             {
                 foreach (var v in children)
                 {
                     NavigationListEntity e = CreateChild<NavigationListEntity>();
-                    e.Init(v.define, v.List);
-                    lists[v.define] = e;
+                    lists[v.Define] = e;
+                    e.Init(v);
                 }
             }
+
+            this.group = group;
         }
 
         public NavigationListEntity GetNavigationListEntity(NavigationListDefine define) 

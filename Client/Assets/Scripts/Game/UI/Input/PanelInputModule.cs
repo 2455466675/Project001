@@ -44,8 +44,6 @@ namespace Game.UI
 
         protected override void OnInputAction(ActionContext context)
         {
-            MLog.Log("PanelInputModule OnInputAction");
-
             InputType inputType = context.InputType;
             switch (inputType)
             {

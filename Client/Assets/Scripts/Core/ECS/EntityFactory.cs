@@ -119,6 +119,11 @@ namespace ECS
 
         internal Entity FindEntity(int guid) 
         {
+            if (guid < 0) 
+            {
+                return null;
+            }
+
             if (entities.ContainsKey(guid)) 
             {
                 return entities[guid];

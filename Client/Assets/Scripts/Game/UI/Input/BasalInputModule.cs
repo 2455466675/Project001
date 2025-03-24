@@ -11,8 +11,6 @@ namespace Game.UI
 
         protected override void OnInputAction(ActionContext context)
         {
-            MLog.Log("BasalInputModule OnInputAction");
-
             InputType inputType = context.InputType;
             switch (inputType)
             {

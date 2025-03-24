@@ -1,14 +1,13 @@
 using Navigation;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.UI
 {
     public class FluidListView : NavigationListView
     {
-        public override NavigationList List => list;
+        protected override NavigationList List => list;
 
-        private List<object> data;
+        private object[] data;
 
         [SerializeField]
         private FluidNavigationList list;
@@ -19,21 +18,22 @@ namespace Game.UI
             {
                 list.Init();
                 list.OnListChangedEvent += List_OnListChangedEvent;
+                Register();
             }
         }
 
-        public override void UpdateData(List<object> data) 
+        public override void UpdateData(object[] data) 
         {
             this.data = data;
             if (list != null) 
             {
-                list.UpdateItemCount(this.data != null ? this.data.Count : 0);
+                list.UpdateItemCount(this.data != null ? this.data.Length : 0);
             }
         }
 
         private void List_OnListChangedEvent(ListChangedEventArgs obj)
         {
-            if (data == null || data.Count == 0) 
+            if (data == null || data.Length == 0) 
             {
                 return;
             }
@@ -52,7 +52,7 @@ namespace Game.UI
                 var item = items[i];
 
                 int index = min + i;
-                if (index > max || index < 0 || index >= data.Count) 
+                if (index > max || index < 0 || index >= data.Length) 
                 {
                     continue;                
                 }

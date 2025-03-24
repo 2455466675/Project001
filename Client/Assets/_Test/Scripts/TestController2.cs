@@ -21,14 +21,14 @@ namespace Game.UI
                     list.Add(i);
                 }
 
-                view2.UpdateData(list);
+                view2.UpdateData(list.ToArray());
             }
 
             FixedListView view3 = GetView<FixedListView>("FixedNavigationList");
 
             if (view3 != null)
             {
-                view3.UpdateData(new List<object>() { 1, 2, 3, 4, 5, 6, 7, 8 });
+                view3.UpdateData(new object[]{ 1, 2, 3, 4, 5, 6, 7, 8 });
             }
         }
 

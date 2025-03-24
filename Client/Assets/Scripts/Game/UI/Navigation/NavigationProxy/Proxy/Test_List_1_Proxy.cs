@@ -1,4 +1,3 @@
-using Navigation;
 using UnityEngine;
 
 namespace Game.UI
@@ -6,10 +5,21 @@ namespace Game.UI
     [ListProxy(NavigationListDefine.Test_List_1)]
     public class Test_List_1_Proxy : NavigationListProxy
     {
-        public override bool InFocus(NavigationList list, bool isRefocus, int[] indexs = null)
+        public override void OnEnable(NavigationListView list)
         {
-            Debug.Log("Test_List_1_Proxy");
-            return base.InFocus(list, isRefocus, indexs);
+            int count = Random.Range(5, 20);
+
+            object[] data = new object[count];
+            for (int i = 0; i < count; i++)
+            {
+                data[i] = i;
+            }
+            list.UpdateData(data);
+        }
+
+        public override void OnSubmit(NavigationListView list, GameNavigationItem item)
+        {
+            MLog.Log("Test_List_1_Proxy.OnSubmit()");
         }
     }
 }

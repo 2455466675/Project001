@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5033770037687045509}
-  - component: {fileID: 256252690183090739}
   - component: {fileID: 1874246731045201112}
   - component: {fileID: 5508568936135379157}
   m_Layer: 5
@@ -40,18 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &256252690183090739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726954445616296755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a088d4b63d3b5a547b469b502846cdd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1874246731045201112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,9 +52,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   define: 1
-  group: {fileID: 256252690183090739}
   children:
   - {fileID: 6907670074347647688}
+  views:
+  - key: FluidNavigationList
+    view: {fileID: 6907670074347647688}
 --- !u!225 &5508568936135379157
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -227,19 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onSubmitEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7174317197260591769}
-        m_TargetAssemblyTypeName: Game.UI.TestController, Assembly-CSharp
-        m_MethodName: OnClickTestGroup1
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onSelectEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -276,7 +253,7 @@ MonoBehaviour:
   selector: {fileID: 7785472390886966125}
   event: {fileID: 8374399905906967450}
   views:
-  - name: TextView
+  - key: TextView
     view: {fileID: 9003997860289681364}
 --- !u!1 &3677315421860459292
 GameObject:
@@ -518,7 +495,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8462157641380430874}
-  - component: {fileID: 7174317197260591769}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -548,21 +524,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7174317197260591769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6766725403151845286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f621c3420c8fde4e9ed0c20d71eb785, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  views:
-  - name: FluidNavigationList
-    view: {fileID: 6907670074347647688}
 --- !u!1 &8407514268961728650
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   define: 1
+  guid: 0
   list: {fileID: 5490446774420137720}
 --- !u!1 &8507588850624446825
 GameObject:

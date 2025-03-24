@@ -50,7 +50,7 @@ namespace Navigation
     /// <summary>
     /// 
     /// </summary>
-    public class NavigationList : MonoBehaviour
+    public class NavigationList : MonoBehaviour, INavigation
     {
         [SerializeField]
         protected ListType listType;
@@ -64,12 +64,18 @@ namespace Navigation
 
         private NavigationItem[] current;
 
+        public event Action<NavigationItem> OnSelectedEvent;
+        public event Action<NavigationItem> OnDeselectedEvent;
+        public event Action<NavigationItem> OnSubmitEvent;
+        public event Action<float, float, NavigationItem> OnMoveEvent;
+
         public virtual void Init() 
         {
         }
 
         public void Move(float h, float v)
         {
+            MoveCurrent(h, v);
             OnMove(h, v);
         }
 
@@ -129,7 +135,9 @@ namespace Navigation
 
                 for (int i = 0; i < temp.Length; i++)
                 {
-                    temp[i].OnDeselect();
+                    NavigationItem item = temp[i];
+                    item.OnDeselect();
+                    OnDeselectedEvent?.Invoke(item);
                 }
             }
         }
@@ -145,7 +153,9 @@ namespace Navigation
 
                 for (int i = 0; i < temp.Length; i++)
                 {
-                    temp[i].OnSelect();
+                    NavigationItem item = temp[i];
+                    item.OnSelect();
+                    OnSelectedEvent?.Invoke(item);
                 }
             }
         }
@@ -173,7 +183,42 @@ namespace Navigation
 
                 for (int i = 0; i < temp.Length; i++)
                 {
-                    temp[i].OnSubmit();
+                    NavigationItem item = temp[i];
+                    item.OnSubmit();
+                    OnSubmitEvent?.Invoke(item);
+                }
+            }
+        }
+
+        private void MoveCurrent(float h, float v) 
+        {
+            if (current != null)
+            {
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    NavigationItem item = temp[i];
+
+                    if (h > 0)
+                    {
+                        item.OnMoveRight();
+                    }
+                    if (h < 0)
+                    {
+                        item.OnMoveLeft();
+                    }
+                    if (v > 0)
+                    {
+                        item.OnMoveUp();
+                    }
+                    if (v < 0)
+                    {
+                        item.OnMoveDown();
+                    }
+
+                    OnMoveEvent?.Invoke(h, v, item);
                 }
             }
         }

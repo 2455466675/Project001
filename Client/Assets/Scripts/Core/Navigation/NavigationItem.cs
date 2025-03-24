@@ -34,17 +34,17 @@ namespace Navigation
             return data;
         }
 
-        public void SetActive(bool active)
+        internal void SetActive(bool active)
         {
             gameObject.SetActive(active);
         }
 
-        public void SetIndex(int index)
+        internal void SetIndex(int index)
         {
             Index = index;
         }
 
-        public void OnSelect()
+        internal void OnSelect()
         {
             if (selector != null)
             {
@@ -56,7 +56,7 @@ namespace Navigation
             }
         }
 
-        public void OnDeselect()
+        internal void OnDeselect()
         {
             if (selector != null)
             {
@@ -68,7 +68,7 @@ namespace Navigation
             }
         }
 
-        public void OutFocus()
+        internal void OutFocus()
         {
             if (selector != null)
             {
@@ -80,7 +80,7 @@ namespace Navigation
             }
         }
 
-        public void OnSubmit()
+        internal void OnSubmit()
         {
             if (@event != null)
             {
@@ -88,7 +88,39 @@ namespace Navigation
             }
         }
 
-        public void InitItem() 
+        internal void OnMoveUp() 
+        {
+            if (@event != null)
+            {
+                @event.OnMoveUp(this);
+            }
+        }
+
+        internal void OnMoveDown()
+        {
+            if (@event != null)
+            {
+                @event.OnMoveDown(this);
+            }
+        }
+
+        internal void OnMoveLeft()
+        {
+            if (@event != null)
+            {
+                @event.OnMoveLeft(this);
+            }
+        }
+
+        internal void OnMoveRight()
+        {
+            if (@event != null)
+            {
+                @event.OnMoveRight(this);
+            }
+        }
+
+        protected void InitItem() 
         {
             if (@event == null) 
             {

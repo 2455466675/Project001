@@ -1,12 +1,11 @@
 using Navigation;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.UI
 {
     public class FixedListView : NavigationListView
     {
-        public override NavigationList List => list;
+        protected override NavigationList List => list;
 
         [SerializeField]
         private FixedNavigationList list;
@@ -15,11 +14,12 @@ namespace Game.UI
         {
             if (list != null) 
             {
-                list.Init();                
+                list.Init();
+                Register();
             }
         }
 
-        public override void UpdateData(List<object> data)
+        public override void UpdateData(object[] data)
         {            
             if (list == null) 
             {
@@ -31,7 +31,7 @@ namespace Game.UI
                 return;
             }
 
-            for (int i = 0; i < data.Count; i++)
+            for (int i = 0; i < data.Length; i++)
             {
                 var item = list.GetItem(i);
                 if (item != null)
