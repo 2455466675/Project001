@@ -46,8 +46,7 @@ namespace Game.UI
             List.OnSelectedEvent += List_OnSelectedEvent;
             List.OnDeselectedEvent += List_OnDeselectedEvent;
             List.OnSubmitEvent += List_OnSubmitEvent;
-            List.OnMoveEvent += List_OnMoveEvent;
-            
+            List.OnMoveEvent += List_OnMoveEvent;            
         }
 
         private void List_OnMoveEvent(float h, float v, NavigationItem obj)
@@ -103,6 +102,15 @@ namespace Game.UI
             {
                 NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
                 e?.OnSelect(item);
+            }
+        }
+
+        protected void OnItemRefresh(NavigationItem obj) 
+        {
+            if (obj != null && obj is GameNavigationItem item)
+            {
+                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                e?.OnRefresh(item);
             }
         }
 

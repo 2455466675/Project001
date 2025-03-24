@@ -72,6 +72,11 @@ namespace Game.UI
         #endregion
 
         #region 列表项事件
+
+        public virtual void OnRefresh(NavigationListView list, GameNavigationItem item) 
+        {
+        }
+
         public virtual void OnSelect(NavigationListView list, GameNavigationItem item)
         {
         }

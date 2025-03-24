@@ -37,6 +37,7 @@ namespace Game.UI
                 if (item != null)
                 {
                     item.SetData(data[i]);
+                    OnItemRefresh(item);
                 }
             }       
         }

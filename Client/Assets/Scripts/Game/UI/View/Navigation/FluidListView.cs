@@ -58,6 +58,7 @@ namespace Game.UI
                 }
                 
                 item.SetData(data[index]); 
+                OnItemRefresh(item);
             }
         }
 

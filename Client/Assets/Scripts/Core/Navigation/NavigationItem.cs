@@ -26,7 +26,6 @@ namespace Navigation
         public void SetData(object data)
         {
             this.data = data;
-            OnRefresh();
         }
 
         public object GetData()
@@ -132,7 +131,5 @@ namespace Navigation
                 selector = GetComponentInChildren<NavigationItemSelector>();
             }
         }
-
-        protected virtual void OnRefresh() { }
     }
 }

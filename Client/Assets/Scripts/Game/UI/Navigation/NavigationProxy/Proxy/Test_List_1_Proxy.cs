@@ -17,6 +17,15 @@ namespace Game.UI
             list.UpdateData(data);
         }
 
+        public override void OnRefresh(NavigationListView list, GameNavigationItem item)
+        {
+            TextView view = item.GetView<TextView>();
+            if (view != null)
+            {
+                view.SetTextByStr(item.GetData().ToString());
+            }
+        }
+
         public override void OnSubmit(NavigationListView list, GameNavigationItem item)
         {
             MLog.Log("Test_List_1_Proxy.OnSubmit()");

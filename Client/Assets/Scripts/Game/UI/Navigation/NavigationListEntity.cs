@@ -68,6 +68,11 @@ namespace Game.UI
             proxy?.Exit(list);
         }
 
+        public void OnRefresh(GameNavigationItem item) 
+        {
+            proxy?.OnRefresh(list, item);
+        }
+
         public void OnSelect(GameNavigationItem item) 
         {
             proxy?.OnSelect(list, item);    
