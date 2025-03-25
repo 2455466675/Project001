@@ -62,8 +62,6 @@ namespace Game.UI
                     continue;                
                 }
 
-                Debug.Log($"{item.Index} -- item.IsBinded : {item.IsBinded}");
-
                 if (item.IsBinded) 
                 {
                     OnItemUnbindData(item);

@@ -1,7 +1,7 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Navigation
 {
@@ -10,18 +10,84 @@ namespace Navigation
     /// </summary>
     public class FluidNavigationList : NavigationList
     {
+        [Serializable]
+        private class Vertical
+        {
+            public enum Alignment
+            {
+                TopToBottom,
+                BottomToTop,
+            }
+
+            public float horizontalOffest;
+            public float verticalOffest;
+            public float spacing;
+            public Alignment alignment;
+        }
+
+        [Serializable]
+        private class Horizontal 
+        {
+            public enum Alignment
+            {
+                LeftToRight,
+                RightToLeft,
+            }
+
+            public float horizontalOffest;
+            public float verticalOffest;
+            public float spacing;
+            public Alignment alignment;
+        }
+
+        [Serializable]
+        private class Grid 
+        {
+            public enum Alignment
+            {
+                UpperLeft,
+                UpperRight,
+                LowerLeft,
+                LowerRight,
+            }
+
+            public float horizontalOffest;
+            public float verticalOffest;
+            public float xSpacing;
+            public float ySpacing;
+            public Alignment alignment;
+
+            public int rowCount;
+            public int columnCount;
+        }
+
         /// <summary>
         /// 当列表发生变化时
         /// </summary>
         public event Action<ListChangedEventArgs> OnListChangedEvent;
 
         [SerializeField]
-        protected NavigationItem item;
+        private NavigationItem item;
+        [SerializeField]
+        private RectTransform viewport;
+        [SerializeField]
+        private RectTransform content;
+
+        private bool Isvertical => listType == ListType.Vertical;
+        private bool IsHorizontal => listType == ListType.Horizontal;
+        private bool IsGrid => listType == ListType.Grid;
 
         [SerializeField]
-        protected RectTransform viewport;
+        [ShowIf("listType", ListType.Vertical)]
+        private Vertical vertical;
+
         [SerializeField]
-        protected RectTransform content;
+        [ShowIf("listType", ListType.Horizontal)]
+        private Horizontal horizontal;
+
+        [SerializeField]
+        [ShowIf("listType", ListType.Grid)]
+        private Grid grid;
 
         private int totalCount;
         private int itemCount;
@@ -60,7 +126,19 @@ namespace Navigation
             pointer = -1;
             state = ListState.Closed;
 
-            CreateItems();
+            //CreateItems();
+            if (Isvertical) 
+            {
+                CreateItemsByVertical();
+            }
+            if (IsHorizontal)
+            {
+                CreateItemsByHorizontal();
+            }  
+            if (IsGrid) 
+            {
+                CreateItemsByGrid();
+            }
         }
 
         public override void Clear()
@@ -159,17 +237,90 @@ namespace Navigation
                 return;
             }
 
-            float y = v;
-            int index;
-            if (y > 0)
+            int index = -1;
+            if (Isvertical) 
             {
-                index = pointer - 1;
+                if (v > 0)
+                {
+                    index = pointer + ((vertical.alignment == Vertical.Alignment.TopToBottom) ? -1 : 1);
+                }
+                else if (v < 0)
+                {                    
+                    index = pointer + ((vertical.alignment == Vertical.Alignment.TopToBottom) ? 1 : -1);
+                }
             }
-            else if (y < 0)
+
+            if (IsHorizontal) 
             {
-                index = pointer + 1;
+                if (h > 0) 
+                {
+                    index = pointer + ((horizontal.alignment == Horizontal.Alignment.LeftToRight) ? 1 : -1);
+                }
+                else if(h < 0)
+                {
+                    index = pointer + ((horizontal.alignment == Horizontal.Alignment.LeftToRight) ? -1 : +1);
+                }
             }
-            else
+
+            if (IsGrid) 
+            {
+                bool upperLeft = grid.alignment == Grid.Alignment.UpperLeft;
+                bool upperRight = grid.alignment == Grid.Alignment.UpperRight;
+                bool lowerLeft = grid.alignment == Grid.Alignment.LowerLeft;
+                bool lowerRight = grid.alignment == Grid.Alignment.LowerRight;
+
+                if (v > 0)
+                {
+                    if (upperLeft || upperRight) 
+                    {
+                        index = pointer - grid.rowCount;
+                    }
+       
+                    if (lowerLeft || lowerRight) 
+                    {
+                        index = pointer + grid.rowCount;
+                    }
+                }
+                else if (v < 0)
+                {
+                    if (upperLeft || upperRight)
+                    {
+                        index = pointer + grid.rowCount;
+                    }
+
+                    if (lowerLeft || lowerRight)
+                    {
+                        index = pointer - grid.rowCount;
+                    }
+                }
+
+                if (h > 0)
+                {
+                    if (upperLeft || lowerLeft)
+                    {
+                        index = pointer + 1;
+                    }
+
+                    if (upperRight || lowerRight)
+                    {
+                        index = pointer - 1;
+                    }
+                }
+                else if (h < 0)
+                {
+                    if (upperLeft || lowerLeft)
+                    {
+                        index = pointer - 1;
+                    }
+
+                    if (upperRight || lowerRight)
+                    {
+                        index = pointer + 1;
+                    }
+                }
+            }
+
+            if (index < 0) 
             {
                 return;
             }
@@ -201,23 +352,37 @@ namespace Navigation
             }
             else if (index < minIndex)
             {
-                int i = minIndex - index;
+                if (IsGrid) 
+                {
+                    minIndex -= grid.rowCount;
+                    maxIndex -= grid.rowCount;
+                }
+                else
+                {
+                    int i = minIndex - index;
+                    minIndex -= i;
+                    maxIndex -= i;
+                }
 
-                minIndex -= i;
-                maxIndex -= i;
-                pointer = minIndex;
-
+                pointer = index;
                 isSuccess = true;
                 OnListChanged();
             }
             else if (index > maxIndex)
             {
-                int i = index - maxIndex;
+                if (IsGrid)
+                {
+                    minIndex += grid.rowCount;
+                    maxIndex += grid.rowCount;
+                }
+                else
+                {
+                    int i = index - maxIndex;
+                    minIndex += i;
+                    maxIndex += i;
+                }
 
-                minIndex += i;
-                maxIndex += i;
-                pointer = maxIndex;
-
+                pointer = index;
                 isSuccess = true;
                 OnListChanged();
             }
@@ -257,42 +422,175 @@ namespace Navigation
             NavigationItem[] selectedItems = new NavigationItem[] { items[pointer - minIndex] };
             SelectChanged(selectedItems);
         }
-
-        private void CreateItems()
+   
+        private void CreateItemsByVertical()
         {
             item.SetActive(false);
+            items = new Dictionary<int, NavigationItem>();
+
+            bool topToBottom = vertical.alignment == Vertical.Alignment.TopToBottom;
+            Vector2 pivot = new Vector2(0.5f, topToBottom ? 1f : 0f);
+            RectTransform tf = item.GetComponent<RectTransform>();
+            tf.anchorMin = new Vector2(0.5f, 0.5f);
+            tf.anchorMax = new Vector2(0.5f, 0.5f);
+            tf.pivot = pivot;
+
+            content.anchorMin = new Vector2(0f, 0f);
+            content.anchorMax = new Vector2(1f, 1f);
+            content.pivot = pivot;
+            content.sizeDelta = Vector2.zero;
+
+            float verticalOffest = vertical.verticalOffest;
+            float horizontalOffest = vertical.horizontalOffest;
+
+            float spacing = vertical.spacing;
 
             float vh = viewport.rect.size.y;
-            RectTransform tf = item.GetComponent<RectTransform>();
-            tf.anchorMin = new Vector2(0.5f, 1);
-            tf.anchorMax = new Vector2(0.5f, 1);
-            tf.pivot = new Vector2(0.5f, 0.5f);
-
-            if (!content.TryGetComponent<VerticalLayoutGroup>(out var layoutGroup))
-            {
-                Debug.LogError("content没有LayoutGroup");
-                return;
-            }
-
-            content.anchorMin = new Vector2(0f, 1f);
-            content.anchorMax = new Vector2(1f, 1f);
-            content.pivot = new Vector2(0.5f, 1f);
-
-            float topPadding = layoutGroup.padding.top;
-            float bottomPadding = layoutGroup.padding.bottom;
-            float spacing = layoutGroup.spacing;
-
             float h = tf.rect.size.y;
-            int c = Mathf.FloorToInt((vh - topPadding - bottomPadding) / (h + spacing / 2));
-            items = new Dictionary<int, NavigationItem>(c);
+            int c = Mathf.FloorToInt((vh - verticalOffest) / (h + spacing / 2));
+
             for (int i = 0; i < c; i++)
             {
                 NavigationItem lt = Instantiate<NavigationItem>(item, content);
+
+                float x = 0f + horizontalOffest;
+                float y = (h * i + verticalOffest + spacing * i) * (topToBottom ? 1f : -1f);                
+
+                lt.transform.localPosition = new Vector2(x, y);
                 lt.SetIndex(i);
                 lt.SetActive(false);
                 items[i] = lt;
             }
             itemCount = items.Count;
+        }
+
+        private void CreateItemsByHorizontal()
+        {
+            item.SetActive(false);
+            items = new Dictionary<int, NavigationItem>();
+
+            bool leftToRight = horizontal.alignment == Horizontal.Alignment.LeftToRight;
+            Vector2 pivot = new Vector2(leftToRight ? 0f : 1f, 0.5f);
+            RectTransform tf = item.GetComponent<RectTransform>();
+            tf.anchorMin = new Vector2(0.5f, 0.5f);
+            tf.anchorMax = new Vector2(0.5f, 0.5f);
+            tf.pivot = pivot;
+
+            content.anchorMin = new Vector2(0f, 0f);
+            content.anchorMax = new Vector2(1f, 1f);
+            content.pivot = pivot;
+            content.sizeDelta = Vector2.zero;
+
+            float verticalOffest = horizontal.verticalOffest;
+            float horizontalOffest = horizontal.horizontalOffest;
+            float spacing = horizontal.spacing;
+
+            float vw = viewport.rect.size.x;
+            float w = tf.rect.size.x;
+            int c = Mathf.FloorToInt((vw - horizontalOffest) / (w + spacing / 2));
+
+            for (int i = 0; i < c; i++)
+            {
+                NavigationItem lt = Instantiate<NavigationItem>(item, content);
+
+                float x = (w * i + horizontalOffest + spacing * i) * (leftToRight ? 1f : -1f);
+                float y = 0f + verticalOffest;
+
+                lt.transform.localPosition = new Vector2(x, y);
+                lt.SetIndex(i);
+                lt.SetActive(false);
+                items[i] = lt;
+            }
+            itemCount = items.Count;
+        }
+
+        private void CreateItemsByGrid()
+        {
+            item.SetActive(false);
+            items = new Dictionary<int, NavigationItem>();
+
+            bool upperLeft = grid.alignment == Grid.Alignment.UpperLeft;
+            bool upperRight = grid.alignment == Grid.Alignment.UpperRight;
+            bool lowerLeft = grid.alignment == Grid.Alignment.LowerLeft;
+            bool lowerRight = grid.alignment == Grid.Alignment.LowerRight;
+
+            Vector2 pivot = new Vector2();
+            if (upperLeft) 
+            {
+                pivot.x = 0f;
+                pivot.y = 1f;
+            }
+            if (upperRight) 
+            {
+                pivot.x = 1f;
+                pivot.y = 1f;
+            }
+            if (lowerLeft) 
+            {
+                pivot.x = 0f;
+                pivot.y = 0f;
+            }
+            if (lowerRight)
+            {
+                pivot.x = 1f;
+                pivot.y = 0f;
+            }
+
+            RectTransform tf = item.GetComponent<RectTransform>();
+            tf.anchorMin = new Vector2(0.5f, 0.5f);
+            tf.anchorMax = new Vector2(0.5f, 0.5f);
+            tf.pivot = pivot;
+
+            content.anchorMin = new Vector2(0f, 0f);
+            content.anchorMax = new Vector2(1f, 1f);
+            content.pivot = pivot;
+            content.sizeDelta = Vector2.zero;
+
+            float verticalOffest = grid.verticalOffest;
+            float horizontalOffest = grid.horizontalOffest;
+            float xSpacing = grid.xSpacing;
+            float ySpacing = grid.ySpacing;
+
+            float w = tf.rect.size.x;
+            float h = tf.rect.size.y;
+
+            int rc = grid.rowCount;
+            int cc = grid.columnCount;
+
+            for (int i = 0; i < rc; i++)
+            {
+                for (int j = 0; j < cc; j++)
+                {
+                    NavigationItem lt = Instantiate<NavigationItem>(item, content);
+
+                    float x = w * j + horizontalOffest + xSpacing * j;
+                    float y = h * i + verticalOffest + ySpacing * i;
+
+                    if (upperLeft) 
+                    {
+                        y *= -1f;
+                    }
+
+                    if (upperRight) 
+                    {
+                        x *= -1f;
+                        y *= -1f;
+                    }
+
+                    if (lowerRight) 
+                    {
+                        x *= -1f;
+                    }
+
+                    int index = rc * i + j;
+                    lt.transform.localPosition = new Vector2(x, y);
+                    lt.SetIndex(index);
+                    lt.SetActive(false);
+                    items[index] = lt;
+                }
+            }
+
+            itemCount = rc * cc;
         }
     }
 }

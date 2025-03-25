@@ -17,7 +17,9 @@ namespace Game.UI
     {
         public override void OnEnable(NavigationListView list)
         {
-            int count = Random.Range(5, 20);
+            int count = Random.Range(80, 100);
+
+            count = 11;
 
             TestData[] data = new TestData[count];
             for (int i = 0; i < count; i++)

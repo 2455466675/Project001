@@ -10,6 +10,14 @@ namespace Navigation
     /// </summary>
     public class FixedNavigationList : NavigationList
     {
+        public enum ChildAlignment
+        {
+            UpperLeft,
+            UpperRight,
+            LowerLeft,
+            LowerRight,
+        }
+
         [ShowIf("listType", ListType.Grid)]
         public int rowCount;
         [ShowIf("listType", ListType.Grid)]

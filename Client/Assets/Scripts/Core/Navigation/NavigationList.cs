@@ -17,14 +17,6 @@ namespace Navigation
         Grid       = 2,
     }
 
-    public enum ChildAlignment
-    {
-        UpperLeft,
-        UpperRight,
-        LowerLeft,
-        LowerRight,
-    }
-
     public struct ListChangedEventArgs
     {
         /// <summary>
@@ -55,8 +47,11 @@ namespace Navigation
         [SerializeField]
         protected ListType listType;
 
+        [SerializeField]
         protected int minIndex;
+        [SerializeField]
         protected int maxIndex;
+        [SerializeField]
         protected int pointer;
 
         protected bool isInit;
