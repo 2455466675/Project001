@@ -1,3 +1,4 @@
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using UnityEngine;
 
 namespace Game.UI
@@ -15,11 +16,13 @@ namespace Game.UI
     [ListProxy(NavigationListDefine.Test_List_1)]
     public class Test_List_1_Proxy : NavigationListProxy
     {
+        static int count;
+
         public override void OnEnable(NavigationListView list)
         {
-            int count = Random.Range(80, 100);
+            //int count = Random.Range(80, 100);
 
-            count = 11;
+            count = 14;
 
             TestData[] data = new TestData[count];
             for (int i = 0; i < count; i++)
@@ -31,12 +34,12 @@ namespace Game.UI
 
         public override void OnBindData(NavigationListView list, GameNavigationItem item)
         {
-            MLog.Log("OnBindData", item.GetData().ToString());
+            
         }
 
         public override void OnUnbindData(NavigationListView list, GameNavigationItem item)
         {
-            MLog.Log("OnUnbindData", item.GetData().ToString());
+
         }
 
         public override void OnRefresh(NavigationListView list, GameNavigationItem item)
@@ -50,7 +53,15 @@ namespace Game.UI
 
         public override void OnSubmit(NavigationListView list, GameNavigationItem item)
         {
-            MLog.Log("Test_List_1_Proxy.OnSubmit()");
+            //int count = Random.Range(80, 100);
+
+            count = count - 3;
+            TestData[] data = new TestData[count];
+            for (int i = 0; i < count; i++)
+            {
+                data[i] = new TestData() { id = i };
+            }
+            list.UpdateData(data);
         }
     }
 }
