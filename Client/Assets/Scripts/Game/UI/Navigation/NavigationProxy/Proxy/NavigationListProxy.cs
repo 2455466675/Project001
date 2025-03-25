@@ -5,16 +5,13 @@ namespace Game.UI
     /// </summary>
     public class NavigationListProxy
     {
-
         #region Unity生命周期
         public virtual void Awake(NavigationListView list) 
         {            
         }
-
         public virtual void OnEnable(NavigationListView list) 
         {
         }
-
         public virtual void OnDisable(NavigationListView list) 
         {        
         }
@@ -29,7 +26,6 @@ namespace Game.UI
             }
             list.Move(h, v);
         }
-
         public virtual void Submit(NavigationListView list)
         {
             if (list == null)
@@ -38,7 +34,6 @@ namespace Game.UI
             }
             list.Submit();
         }
-
         public virtual bool InFocus(NavigationListView list, bool isRefocus, int[] indexs = null)
         {
             if (list == null)
@@ -47,7 +42,6 @@ namespace Game.UI
             }
             return list.InFocus(isRefocus, indexs);
         }
-
         public virtual void OutFocus(NavigationListView list)
         {
             if (list == null)
@@ -56,7 +50,6 @@ namespace Game.UI
             }
             list.OutFocus();
         }
-
         public virtual void Exit(NavigationListView list) 
         {
             if (list == null)
@@ -73,18 +66,21 @@ namespace Game.UI
 
         #region 列表项事件
 
+        public virtual void OnBindData(NavigationListView list, GameNavigationItem item) 
+        {
+        }
+        public virtual void OnUnbindData(NavigationListView list, GameNavigationItem item)
+        {
+        }
         public virtual void OnRefresh(NavigationListView list, GameNavigationItem item) 
         {
         }
-
         public virtual void OnSelect(NavigationListView list, GameNavigationItem item)
         {
         }
-
         public virtual void OnDeselect(NavigationListView list, GameNavigationItem item)
         {
         }
-
         public virtual void OnSubmit(NavigationListView list, GameNavigationItem item)
         {
         }

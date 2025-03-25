@@ -8,6 +8,9 @@ namespace Navigation
     public class NavigationItem : MonoBehaviour
     {
         private object data;
+        public bool IsBinded => data is not null;
+        public int Index { get; private set; }
+        public virtual bool IsValid => true;
 
         /// <summary>
         /// Ñ¡ÔñÆ÷
@@ -20,12 +23,14 @@ namespace Navigation
         [SerializeField]
         private NavigationItemEvent @event;
 
-        public int Index { get; private set; }
-        public virtual bool IsValid => true;
-
-        public void SetData(object data)
-        {
+        public void BindData(object data) 
+        {            
             this.data = data;
+        }
+
+        public void UnbindData() 
+        {
+            this.data = null;
         }
 
         public object GetData()
@@ -36,6 +41,10 @@ namespace Navigation
         internal void SetActive(bool active)
         {
             gameObject.SetActive(active);
+            if (!active && IsBinded) 
+            {
+                UnbindData();
+            }
         }
 
         internal void SetIndex(int index)

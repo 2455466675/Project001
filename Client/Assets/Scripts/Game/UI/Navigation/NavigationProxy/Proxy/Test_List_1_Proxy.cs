@@ -2,6 +2,16 @@ using UnityEngine;
 
 namespace Game.UI
 {
+    public class TestData 
+    {
+        public int id;
+
+        public override string ToString()
+        {
+            return id.ToString();
+        }
+    }
+
     [ListProxy(NavigationListDefine.Test_List_1)]
     public class Test_List_1_Proxy : NavigationListProxy
     {
@@ -9,12 +19,22 @@ namespace Game.UI
         {
             int count = Random.Range(5, 20);
 
-            object[] data = new object[count];
+            TestData[] data = new TestData[count];
             for (int i = 0; i < count; i++)
             {
-                data[i] = i;
+                data[i] = new TestData() { id = i };
             }
             list.UpdateData(data);
+        }
+
+        public override void OnBindData(NavigationListView list, GameNavigationItem item)
+        {
+            MLog.Log("OnBindData", item.GetData().ToString());
+        }
+
+        public override void OnUnbindData(NavigationListView list, GameNavigationItem item)
+        {
+            MLog.Log("OnUnbindData", item.GetData().ToString());
         }
 
         public override void OnRefresh(NavigationListView list, GameNavigationItem item)

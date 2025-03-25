@@ -30,16 +30,34 @@ namespace Game.UI
             {
                 return;
             }
-
-            for (int i = 0; i < data.Length; i++)
+            
+            for (int i = 0; i < list.Count; i++)
             {
                 var item = list.GetItem(i);
-                if (item != null)
+                if (item == null) 
                 {
-                    item.SetData(data[i]);
+                    continue;
+                }
+
+                if (i < data.Length) 
+                {
+                    if (item.IsBinded)
+                    {
+                        OnItemUnbindData(item);
+                        item.UnbindData();
+                    }
+
+                    item.BindData(data[i]);
+                    OnItemBindData(item);
+
                     OnItemRefresh(item);
                 }
-            }       
+                else
+                {
+                    OnItemUnbindData(item);
+                    item.UnbindData();
+                }
+            }    
         }
 
         private void OnValidate()

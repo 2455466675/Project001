@@ -32,6 +32,11 @@ namespace Game.UI
 
         private void OnDisable()
         {
+            if(List != null) 
+            {
+                List.Clear();            
+            }
+
             NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
             e?.OnDisable();
         }
@@ -41,12 +46,18 @@ namespace Game.UI
             guid = -1;
         }
 
-        protected void Register()
+        protected virtual void Register()
         {
             List.OnSelectedEvent += List_OnSelectedEvent;
             List.OnDeselectedEvent += List_OnDeselectedEvent;
             List.OnSubmitEvent += List_OnSubmitEvent;
-            List.OnMoveEvent += List_OnMoveEvent;            
+            List.OnMoveEvent += List_OnMoveEvent;
+            List.OnClearItemEvent += List_OnClearItemEvent;
+        }
+
+        private void List_OnClearItemEvent(NavigationItem obj)
+        {
+            OnItemUnbindData(obj);
         }
 
         private void List_OnMoveEvent(float h, float v, NavigationItem obj)
@@ -102,6 +113,24 @@ namespace Game.UI
             {
                 NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
                 e?.OnSelect(item);
+            }
+        }
+
+        protected void OnItemBindData(NavigationItem obj) 
+        {
+            if (obj != null && obj is GameNavigationItem item)
+            {
+                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                e?.OnBindData(item);
+            }
+        }
+
+        protected void OnItemUnbindData(NavigationItem obj)
+        {
+            if (obj != null && obj is GameNavigationItem item)
+            {
+                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                e?.OnUnbindData(item);
             }
         }
 

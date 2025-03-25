@@ -17,7 +17,6 @@ namespace Game.UI
             if (list != null) 
             {
                 list.Init();
-                list.OnListChangedEvent += List_OnListChangedEvent;
                 Register();
             }
         }
@@ -29,6 +28,12 @@ namespace Game.UI
             {
                 list.UpdateItemCount(this.data != null ? this.data.Length : 0);
             }
+        }
+
+        protected override void Register()
+        {
+            base.Register();
+            list.OnListChangedEvent += List_OnListChangedEvent;
         }
 
         private void List_OnListChangedEvent(ListChangedEventArgs obj)
@@ -56,8 +61,18 @@ namespace Game.UI
                 {
                     continue;                
                 }
-                
-                item.SetData(data[index]); 
+
+                Debug.Log($"{item.Index} -- item.IsBinded : {item.IsBinded}");
+
+                if (item.IsBinded) 
+                {
+                    OnItemUnbindData(item);
+                    item.UnbindData();
+                }
+
+                item.BindData(data[index]); 
+                OnItemBindData(item);
+
                 OnItemRefresh(item);
             }
         }

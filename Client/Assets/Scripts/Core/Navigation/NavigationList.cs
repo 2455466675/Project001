@@ -64,13 +64,20 @@ namespace Navigation
 
         private NavigationItem[] current;
 
+        public event Action OnListEmptyEvent;
+
         public event Action<NavigationItem> OnSelectedEvent;
         public event Action<NavigationItem> OnDeselectedEvent;
         public event Action<NavigationItem> OnSubmitEvent;
+        public event Action<NavigationItem> OnClearItemEvent;
         public event Action<float, float, NavigationItem> OnMoveEvent;
 
         public virtual void Init() 
         {
+        }
+
+        public virtual void Clear() 
+        {        
         }
 
         public void Move(float h, float v)
@@ -124,6 +131,17 @@ namespace Navigation
         {
             DeselectCurrent();
             SelectCurrent(items);
+        }
+
+        protected void ClearItem(NavigationItem item) 
+        {
+            OnClearItemEvent?.Invoke(item);
+            item.UnbindData();
+        }
+
+        protected void ListEmpty() 
+        {
+            OnListEmptyEvent?.Invoke();
         }
 
         private void DeselectCurrent()

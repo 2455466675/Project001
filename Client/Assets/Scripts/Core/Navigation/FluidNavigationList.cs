@@ -63,6 +63,19 @@ namespace Navigation
             CreateItems();
         }
 
+        public override void Clear()
+        {
+            foreach (var kv in items)
+            {
+                NavigationItem item = kv.Value;
+                if (item.IsBinded)
+                {
+                    ClearItem(item);
+                }
+                item.SetActive(false);
+            }
+        }
+
         public void UpdateItemCount(int count)
         {
             if (!isInit)
@@ -82,12 +95,8 @@ namespace Navigation
                 pointer = 0;
                 totalCount = 0;
 
-                foreach (var item in items)
-                {
-                    item.Value.SetActive(false);
-                }
-
-                //TODO:ÍË³ö
+                Clear();
+                ListEmpty();
                 return;
             }
 
@@ -221,16 +230,23 @@ namespace Navigation
             int length = maxIndex - minIndex + 1;
             NavigationItem[] lts = new NavigationItem[length];
 
-            foreach (var item in items)
+            foreach (var kv in items)
             {
-                item.Value.SetActive(item.Key < length);
-
-                if (item.Key >= length)
+                int index = kv.Key;
+                NavigationItem item = kv.Value;
+                if (index < length) 
                 {
-                    continue;
+                    item.SetActive(true);
+                    lts[index] = item;
                 }
-
-                lts[item.Key] = item.Value;
+                else
+                {
+                    if (item.IsBinded) 
+                    {
+                        ClearItem(item);
+                    }
+                    item.SetActive(false);
+                }                
             }
 
             OnListChangedEvent?.Invoke(new ListChangedEventArgs(minIndex, maxIndex, lts));
@@ -272,8 +288,8 @@ namespace Navigation
             for (int i = 0; i < c; i++)
             {
                 NavigationItem lt = Instantiate<NavigationItem>(item, content);
-                lt.SetActive(false);
                 lt.SetIndex(i);
+                lt.SetActive(false);
                 items[i] = lt;
             }
             itemCount = items.Count;

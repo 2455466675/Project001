@@ -20,6 +20,8 @@ namespace Navigation
         [SerializeField]
         private List<NavigationItem> items;
 
+        public int Count => items != null ? items.Count : 0;
+
         [SerializeField]
         private bool isLoop;
 
@@ -44,12 +46,9 @@ namespace Navigation
                 return;
             }
 
+            items.RemoveAll(x => x == null);
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i] == null)
-                {
-                    continue;
-                }
                 items[i].SetIndex(i);
             }
 
@@ -60,9 +59,20 @@ namespace Navigation
             isInit = true;
         }
 
+        public override void Clear()
+        {
+            foreach (var item in items)
+            {
+                if (item.IsBinded) 
+                {
+                    ClearItem(item);
+                }
+            }
+        }
+
         public NavigationItem GetItem(int index) 
         {
-            if (index <0 || index >= items.Count) 
+            if (index < 0 || index >= items.Count) 
             {
                 return null; 
             }
