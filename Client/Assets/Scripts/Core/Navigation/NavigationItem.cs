@@ -8,6 +8,9 @@ namespace Navigation
     public class NavigationItem : MonoBehaviour
     {
         private object data;
+        [SerializeField]
+        private string param;
+
         public bool IsBinded => data is not null;
         public int Index { get; private set; }
         public virtual bool IsValid => true;
@@ -36,6 +39,29 @@ namespace Navigation
         public object GetData()
         {
             return data;
+        }
+
+        public string GetStringParam() 
+        {
+            return param;
+        }
+
+        public int GetIntParam() 
+        {
+            if (int.TryParse(param, out var val)) 
+            {
+                return val;
+            }
+            return 0;
+        }
+
+        public double GetDoubleParam() 
+        {
+            if (double.TryParse(param, out var val)) 
+            {
+                return val;
+            }
+            return 0d;
         }
 
         internal void SetActive(bool active)
