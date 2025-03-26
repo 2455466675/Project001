@@ -305,11 +305,14 @@ namespace Navigation
                 return index;
             }
 
-            int min = 0;
-            int max = maxIndex / rowCount;
+            //无效索引，进行补偿。
+            //每列开始，从上往下，查找一个有效的。
 
-            int b = beginIndex / rowCount;
-            int q = index / rowCount;
+            int min = 0;
+            int max = maxIndex / rowCount;  //最大行数。
+
+            int b = beginIndex / rowCount;  //从第几列开始
+            int q = index / rowCount;       //当前无效索引所在列
 
             do
             {
