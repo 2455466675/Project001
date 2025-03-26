@@ -1,9 +1,6 @@
-using Codice.Client.BaseCommands.BranchExplorer;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 namespace Navigation
@@ -243,6 +240,7 @@ namespace Navigation
         [SerializeField]
         [ShowIf("listType", ListType.Grid)]
         private Grid grid;
+
         [SerializeField]
         private NavigationItem item;
         [SerializeField]
@@ -255,10 +253,6 @@ namespace Navigation
         private bool IsGrid => listType == ListType.Grid;
 
         /// <summary>
-        /// 当列表发生变化时
-        /// </summary>
-        public event Action<ListChangedEventArgs> OnListChangedEvent;
-        /// <summary>
         /// 数据数量
         /// </summary>
         private int totalCount;
@@ -267,6 +261,10 @@ namespace Navigation
         /// </summary>
         private int itemCount;
         private Dictionary<int, NavigationItem> items;
+        /// <summary>
+        /// 当列表发生变化时
+        /// </summary>
+        public event Action<ListChangedEventArgs> OnListChangedEvent;
 
         public override void Init()
         {
@@ -450,7 +448,7 @@ namespace Navigation
             {
                 index = grid.MovePointer(h, v, pointer, totalCount - 1);
             }
-            Debug.Log($"index : {index}");
+
             if (index < 0) 
             {
                 return;
@@ -554,7 +552,7 @@ namespace Navigation
                 }                
             }
 
-            OnListChangedEvent?.Invoke(new ListChangedEventArgs(minIndex, maxIndex, lts));
+            OnListChangedEvent?.Invoke(new ListChangedEventArgs(minIndex, maxIndex, itemCount, totalCount, lts));            
         }
 
         private void OnSelectChanged()

@@ -30,11 +30,18 @@ namespace Navigation
         /// <summary>
         /// 起始索引与结束索引之间的元素
         /// </summary>
+        
+        public int ItemCount { get; private set; }
+
+        public int TotalCount { get; private set; }
+
         public NavigationItem[] Items { get; private set; }
-        public ListChangedEventArgs(int minIndex, int maxIndex, NavigationItem[] items)
+        public ListChangedEventArgs(int minIndex, int maxIndex, int itemCount, int totalCount, NavigationItem[] items)
         {
             MinIndex = minIndex;
             MaxIndex = maxIndex;
+            ItemCount = itemCount;
+            TotalCount = totalCount;
             Items = items;
         }
     }
@@ -46,21 +53,18 @@ namespace Navigation
     {
         [SerializeField]
         protected ListType listType;
-
         //[SerializeField]
         protected int minIndex;
         //[SerializeField]
         protected int maxIndex;
         //[SerializeField]
         protected int pointer;
-
         protected bool isInit;
         protected ListState state;
 
         private NavigationItem[] current;
 
         public event Action OnListEmptyEvent;
-
         public event Action<NavigationItem> OnSelectedEvent;
         public event Action<NavigationItem> OnDeselectedEvent;
         public event Action<NavigationItem> OnSubmitEvent;
