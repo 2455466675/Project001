@@ -1340,21 +1340,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listType: 1
-  minIndex: 0
-  maxIndex: 0
-  pointer: 0
-  item: {fileID: 6668557131482254799}
-  viewport: {fileID: 8783294895652475001}
-  content: {fileID: 2891451125028035989}
   vertical:
     horizontalOffest: 0
     verticalOffest: 10
     spacing: 5
+    isLoop: 1
     alignment: 0
   horizontal:
     horizontalOffest: 10
     verticalOffest: 0
     spacing: 5
+    isLoop: 1
     alignment: 0
   grid:
     horizontalOffest: 10
@@ -1362,8 +1358,11 @@ MonoBehaviour:
     xSpacing: 5
     ySpacing: 5
     alignment: 0
-    rowCount: 3
-    columnCount: 3
+    rowCount: 8
+    columnCount: 7
+  item: {fileID: 6668557131482254799}
+  viewport: {fileID: 8783294895652475001}
+  content: {fileID: 2891451125028035989}
 --- !u!114 &6907670074347647688
 MonoBehaviour:
   m_ObjectHideFlags: 0

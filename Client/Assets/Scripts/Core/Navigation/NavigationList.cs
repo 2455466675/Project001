@@ -47,11 +47,11 @@ namespace Navigation
         [SerializeField]
         protected ListType listType;
 
-        [SerializeField]
+        //[SerializeField]
         protected int minIndex;
-        [SerializeField]
+        //[SerializeField]
         protected int maxIndex;
-        [SerializeField]
+        //[SerializeField]
         protected int pointer;
 
         protected bool isInit;

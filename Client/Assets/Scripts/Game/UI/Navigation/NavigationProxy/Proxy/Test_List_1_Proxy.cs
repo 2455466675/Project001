@@ -22,7 +22,7 @@ namespace Game.UI
         {
             //int count = Random.Range(80, 100);
 
-            count = 14;
+            count = 84;
 
             TestData[] data = new TestData[count];
             for (int i = 0; i < count; i++)

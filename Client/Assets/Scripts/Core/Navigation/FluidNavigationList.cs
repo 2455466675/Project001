@@ -1,6 +1,9 @@
+using Codice.Client.BaseCommands.BranchExplorer;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace Navigation
@@ -10,8 +13,13 @@ namespace Navigation
     /// </summary>
     public class FluidNavigationList : NavigationList
     {
+        private interface IAlignment
+        {
+            int MovePointer(float h, float v, int pointer, int max);
+        }
+
         [Serializable]
-        private class Vertical
+        private class Vertical : IAlignment
         {
             public enum Alignment
             {
@@ -22,11 +30,57 @@ namespace Navigation
             public float horizontalOffest;
             public float verticalOffest;
             public float spacing;
+            public bool isLoop;
             public Alignment alignment;
+
+            public int MovePointer(float h, float v, int pointer, int max)
+            {
+                int index = -1;
+                bool topToBottom = alignment == Alignment.TopToBottom;
+                if (v > 0)
+                {
+                    if (topToBottom)
+                    {
+                        index = pointer - 1;
+                        if (index < 0 && isLoop)
+                        {
+                            index = max;
+                        }
+                    }
+                    else
+                    {
+                        index = pointer + 1;
+                        if (index > max && isLoop)
+                        {
+                            index = 0;
+                        }
+                    }
+                }
+                else if (v < 0)
+                {
+                    if (topToBottom)
+                    {
+                        index = pointer + 1;
+                        if (index > max && isLoop)
+                        {
+                            index = 0;
+                        }
+                    }
+                    else
+                    {
+                        index = pointer - 1;
+                        if (index < 0 && isLoop)
+                        {
+                            index = max;
+                        }
+                    }
+                }
+                return index;
+            }
         }
 
         [Serializable]
-        private class Horizontal 
+        private class Horizontal : IAlignment
         {
             public enum Alignment
             {
@@ -37,11 +91,57 @@ namespace Navigation
             public float horizontalOffest;
             public float verticalOffest;
             public float spacing;
+            public bool isLoop;
             public Alignment alignment;
+
+            public int MovePointer(float h, float v, int pointer, int max)
+            {
+                int index = -1;
+                bool leftToRight = alignment == Alignment.LeftToRight;
+                if (h > 0)
+                {
+                    if (leftToRight)
+                    {
+                        index = pointer + 1;
+                        if (index > max && isLoop)
+                        {
+                            index = 0;
+                        }
+                    }
+                    else
+                    {
+                        index = pointer - 1;
+                        if (index < 0 && isLoop)
+                        {
+                            index = max;
+                        }
+                    }
+                }
+                else if (h < 0)
+                {
+                    if (leftToRight)
+                    {
+                        index = pointer - 1;
+                        if (index < 0 && isLoop)
+                        {
+                            index = max;
+                        }
+                    }
+                    else
+                    {
+                        index = pointer + 1;
+                        if (index > max && isLoop)
+                        {
+                            index = 0;
+                        }
+                    }
+                }
+                return index;
+            }
         }
 
         [Serializable]
-        private class Grid 
+        private class Grid : IAlignment
         {
             public enum Alignment
             {
@@ -59,23 +159,78 @@ namespace Navigation
 
             public int rowCount;
             public int columnCount;
+
+            public int MovePointer(float h, float v, int pointer, int max)
+            {
+                int index = -1;
+                bool upperLeft = alignment == Alignment.UpperLeft;
+                bool upperRight = alignment == Alignment.UpperRight;
+                bool lowerLeft = alignment == Alignment.LowerLeft;
+                bool lowerRight = alignment == Alignment.LowerRight;
+                if (v > 0)
+                {
+                    if (upperLeft || upperRight)
+                    {
+                        index = pointer - columnCount;
+                    }
+
+                    if (lowerLeft || lowerRight)
+                    {
+                        index = pointer + columnCount;
+                    }
+                }
+                else if (v < 0)
+                {
+                    if (upperLeft || upperRight)
+                    {
+                        index = pointer + columnCount;
+                    }
+
+                    if (lowerLeft || lowerRight)
+                    {
+                        index = pointer - columnCount;
+                    }
+                }
+
+                if (h > 0)
+                {
+                    if (upperLeft || lowerLeft)
+                    {
+                        if ((pointer + 1) % columnCount > 0)
+                        {
+                            index = pointer + 1;
+                        }
+                    }
+
+                    if (upperRight || lowerRight)
+                    {
+                        if ((pointer) % columnCount > 0)
+                        {
+                            index = pointer - 1;
+                        }
+                    }
+                }
+                else if (h < 0)
+                {
+                    if (upperLeft || lowerLeft)
+                    {
+                        if ((pointer) % columnCount > 0)
+                        {
+                            index = pointer - 1;
+                        }
+                    }
+
+                    if (upperRight || lowerRight)
+                    {
+                        if ((pointer + 1) % columnCount > 0)
+                        {
+                            index = pointer + 1;
+                        }
+                    }
+                }
+                return index;
+            }
         }
-
-        /// <summary>
-        /// 当列表发生变化时
-        /// </summary>
-        public event Action<ListChangedEventArgs> OnListChangedEvent;
-
-        [SerializeField]
-        private NavigationItem item;
-        [SerializeField]
-        private RectTransform viewport;
-        [SerializeField]
-        private RectTransform content;
-
-        private bool Isvertical => listType == ListType.Vertical;
-        private bool IsHorizontal => listType == ListType.Horizontal;
-        private bool IsGrid => listType == ListType.Grid;
 
         [SerializeField]
         [ShowIf("listType", ListType.Vertical)]
@@ -88,8 +243,28 @@ namespace Navigation
         [SerializeField]
         [ShowIf("listType", ListType.Grid)]
         private Grid grid;
+        [SerializeField]
+        private NavigationItem item;
+        [SerializeField]
+        private RectTransform viewport;
+        [SerializeField]
+        private RectTransform content;
 
+        private bool Isvertical => listType == ListType.Vertical;
+        private bool IsHorizontal => listType == ListType.Horizontal;
+        private bool IsGrid => listType == ListType.Grid;
+
+        /// <summary>
+        /// 当列表发生变化时
+        /// </summary>
+        public event Action<ListChangedEventArgs> OnListChangedEvent;
+        /// <summary>
+        /// 数据数量
+        /// </summary>
         private int totalCount;
+        /// <summary>
+        /// 子物体数量
+        /// </summary>
         private int itemCount;
         private Dictionary<int, NavigationItem> items;
 
@@ -199,19 +374,19 @@ namespace Navigation
                     int oldMin = minIndex;
 
                     maxIndex = Mathf.Min(totalCount - 1, Mathf.Max(maxIndex, itemCount - 1));
-                    if ((maxIndex + 1) % grid.rowCount == 0) 
+                    if ((maxIndex + 1) % grid.columnCount == 0) 
                     {
                         minIndex = Mathf.Max(maxIndex - (grid.rowCount * grid.columnCount) + 1, 0);
                     }
                     else
                     {
-                        minIndex = Mathf.Max(maxIndex - ((grid.rowCount - 1) * grid.columnCount + (maxIndex + 1) % grid.rowCount) + 1, 0);
+                        minIndex = Mathf.Max(maxIndex - ((grid.rowCount - 1) * grid.columnCount + (maxIndex + 1) % grid.columnCount) + 1, 0);
                     }
 
                     pointer = Mathf.Clamp(pointer, minIndex, maxIndex);
 
                     OnListChanged();
-                    if (state == ListState.InFocused && (oldPointer != pointer || Mathf.Abs(oldMin - minIndex) >= grid.rowCount))
+                    if (state == ListState.InFocused && (oldPointer != pointer || Mathf.Abs(oldMin - minIndex) >= grid.columnCount))
                     {
                         OnSelectChanged();
                     }
@@ -263,98 +438,19 @@ namespace Navigation
             int index = -1;
             if (Isvertical) 
             {
-                if (v > 0)
-                {
-                    index = pointer + ((vertical.alignment == Vertical.Alignment.TopToBottom) ? -1 : 1);
-                }
-                else if (v < 0)
-                {                    
-                    index = pointer + ((vertical.alignment == Vertical.Alignment.TopToBottom) ? 1 : -1);
-                }
+                index = vertical.MovePointer(h, v, pointer, totalCount - 1);
             }
 
             if (IsHorizontal) 
             {
-                if (h > 0) 
-                {
-                    index = pointer + ((horizontal.alignment == Horizontal.Alignment.LeftToRight) ? 1 : -1);
-                }
-                else if(h < 0)
-                {
-                    index = pointer + ((horizontal.alignment == Horizontal.Alignment.LeftToRight) ? -1 : +1);
-                }
+                index = horizontal.MovePointer(h, v, pointer, totalCount - 1);
             }
 
             if (IsGrid) 
             {
-                bool upperLeft = grid.alignment == Grid.Alignment.UpperLeft;
-                bool upperRight = grid.alignment == Grid.Alignment.UpperRight;
-                bool lowerLeft = grid.alignment == Grid.Alignment.LowerLeft;
-                bool lowerRight = grid.alignment == Grid.Alignment.LowerRight;
-
-                if (v > 0)
-                {
-                    if (upperLeft || upperRight) 
-                    {
-                        index = pointer - grid.rowCount;
-                    }
-       
-                    if (lowerLeft || lowerRight) 
-                    {
-                        index = pointer + grid.rowCount;
-                    }
-                }
-                else if (v < 0)
-                {
-                    if (upperLeft || upperRight)
-                    {
-                        index = pointer + grid.rowCount;
-                    }
-
-                    if (lowerLeft || lowerRight)
-                    {
-                        index = pointer - grid.rowCount;
-                    }
-                }
-
-                if (h > 0)
-                {
-                    if (upperLeft || lowerLeft)
-                    {                      
-                        if ((pointer + 1) % grid.rowCount > 0) 
-                        {
-                            index = pointer + 1;
-                        }                        
-                    }
-
-                    if (upperRight || lowerRight)
-                    {
-                        if ((pointer) % grid.rowCount > 0)
-                        {
-                            index = pointer - 1;
-                        }
-                    }
-                }
-                else if (h < 0)
-                {
-                    if (upperLeft || lowerLeft)
-                    {
-                        if ((pointer) % grid.rowCount > 0)
-                        {
-                            index = pointer - 1;
-                        }
-                    }
-
-                    if (upperRight || lowerRight)
-                    {
-                        if ((pointer + 1) % grid.rowCount > 0)
-                        {
-                            index = pointer + 1;
-                        }
-                    }
-                }
+                index = grid.MovePointer(h, v, pointer, totalCount - 1);
             }
-
+            Debug.Log($"index : {index}");
             if (index < 0) 
             {
                 return;
@@ -389,20 +485,21 @@ namespace Navigation
             {
                 if (IsGrid) 
                 {
-                    minIndex -= grid.rowCount;
-                    if((maxIndex + 1) % grid.rowCount == 0) 
+                    minIndex -= grid.columnCount;
+                    if((maxIndex + 1) % grid.columnCount == 0) 
                     {
-                        maxIndex -= grid.rowCount;
+                        maxIndex -= grid.columnCount;
                     }
                     else 
                     {
-                        maxIndex -= (maxIndex + 1) % grid.rowCount;
+                        maxIndex -= (maxIndex + 1) % grid.columnCount;
                     }
                 }
                 else
                 {
-                    minIndex -= 1;
-                    maxIndex -= 1;
+                    int i = minIndex - index;
+                    minIndex -= i;
+                    maxIndex -= i;
                 }
 
                 pointer = index;        
@@ -414,14 +511,15 @@ namespace Navigation
             {
                 if (IsGrid)
                 {
-                    minIndex += grid.rowCount;
-                    maxIndex += grid.rowCount;
+                    minIndex += grid.columnCount;
+                    maxIndex += grid.columnCount;
                     maxIndex = Mathf.Min(totalCount - 1, maxIndex);
                 }
                 else
                 {
-                    minIndex += 1;
-                    maxIndex += 1;
+                    int i = index - maxIndex;
+                    minIndex += i;
+                    maxIndex += i;
                 }
 
                 pointer = index;                
@@ -624,7 +722,7 @@ namespace Navigation
                         x *= -1f;
                     }
 
-                    int index = rc * i + j;
+                    int index = cc * i + j;
                     lt.transform.localPosition = new Vector2(x, y);
                     lt.SetIndex(index);
                     lt.SetActive(false);
