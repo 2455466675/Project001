@@ -36,30 +36,13 @@ namespace Game.UI
             }
             else
             {
-                return null;
-            }
-        }
-
-        public void ShowGroup(NavigationGroupDefine define) 
-        {
-            if (groups.ContainsKey(define)) 
-            {
-                groups[define].Show();
-            }
-            else
-            {
                 NavigationGroupEntity groupEntity = CreateChild<NavigationGroupEntity>();
                 groupEntity.Init(define);
-                groupEntity.Show();
                 groups[define] = groupEntity;
+                return groupEntity;
             }
         }
 
-        public void HideGroup(NavigationGroupDefine define)
-        {
-            var entity = GetNavigationGroupEntity(define);
-            entity?.Hide();            
-        }
         #endregion
 
         #region NavigationList

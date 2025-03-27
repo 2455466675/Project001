@@ -17,7 +17,7 @@ namespace Game
 
         private async void Start()
         {
-            await GameWorld.Start(config);
+            await GameWorld.Init(config);
 
             GameWorld.Root.GetComponent<EventComponent>().Publish(new GameStartEventArg());
         }

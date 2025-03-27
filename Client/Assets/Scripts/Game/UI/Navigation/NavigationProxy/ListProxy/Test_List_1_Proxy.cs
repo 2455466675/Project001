@@ -1,4 +1,3 @@
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using UnityEngine;
 
 namespace Game.UI
@@ -22,7 +21,7 @@ namespace Game.UI
         {
             //int count = Random.Range(80, 100);
 
-            count = 84;
+            count = 10;
 
             TestData[] data = new TestData[count];
             for (int i = 0; i < count; i++)
@@ -47,7 +46,10 @@ namespace Game.UI
             TextView view = item.GetView<TextView>();
             if (view != null)
             {
-                view.SetTextByStr(item.GetData().ToString());
+                if (item.TryGetData(out TestData data)) 
+                {
+                    view.SetTextByStr(data.ToString());                
+                }
             }
         }
 
@@ -56,6 +58,7 @@ namespace Game.UI
             //int count = Random.Range(80, 100);
 
             count = count - 3;
+            count = Mathf.Max(count, 0);
             TestData[] data = new TestData[count];
             for (int i = 0; i < count; i++)
             {

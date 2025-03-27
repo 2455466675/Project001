@@ -20,7 +20,7 @@ namespace Game
             instance = new GameWorld();
         }
 
-        public static async UniTask Start(GameInitConfig config) 
+        public static async UniTask Init(GameInitConfig config) 
         {
             var resourceComponent = Root.AddComponent<ResourceComponent>();
             await resourceComponent.Init(config);
@@ -46,8 +46,8 @@ namespace Game
             var stateComponent = Root.AddComponent<StateComponent>();
             stateComponent.Init();
 
-            //LoginState
-            //PlayingState
+            var systemComponent = Root.AddComponent<SystemComponent>();
+            systemComponent.Init();
         }
 
         public static void Tick(float dt) 

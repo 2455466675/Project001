@@ -27,28 +27,27 @@ namespace Game.UI
             return go.GetComponent<NavigationGroupView>();
         }
 
-        public virtual void InFocus(NavigationGroupView group, bool isRefocus)
+        public virtual void Show(NavigationGroupView group) 
         {
-            if (group == null) 
+            if (group == null)
             {
                 return;
             }
-
-            if (isRefocus) 
-            {
-                if (group.TryGetComponent<CanvasGroup>(out var canvasGroup)) 
-                {
-                    canvasGroup.alpha = 1;
-                }
-            }
-            else
-            {
-                group.gameObject.SetActive(true);
-                group.transform.SetAsLastSibling();                
-            }
+            group.gameObject.SetActive(true);
+            group.transform.SetAsLastSibling();
         }
 
-        public virtual void OutFocus(NavigationGroupView group)
+        public virtual void Hide(NavigationGroupView group) 
+        {
+            if (group == null)
+            {
+                return;
+            }
+            group.gameObject.SetActive(false);
+            group.transform.SetAsLastSibling();
+        }
+
+        public virtual void OutFocus(NavigationGroupView group) 
         {
             if (group == null)
             {
@@ -60,14 +59,16 @@ namespace Game.UI
             }
         }
 
-        public virtual void Exit(NavigationGroupView group)
+        public virtual void Refocus(NavigationGroupView group) 
         {
             if (group == null)
             {
                 return;
             }
-            group.gameObject.SetActive(false);
-            group.transform.SetAsLastSibling();
+            if (group.TryGetComponent<CanvasGroup>(out var canvasGroup))
+            {
+                canvasGroup.alpha = 1;
+            }
         }
     }
 }

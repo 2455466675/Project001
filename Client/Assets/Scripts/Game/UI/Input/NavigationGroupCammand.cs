@@ -14,12 +14,15 @@ namespace Game.UI
 
         protected override void OnPop()
         {
-            GameWorld.Root.GetComponent<UIComponent>().HideGroup(Define);
+            NavigationGroupEntity entity = GetEntity();
+            entity?.Hide();
+            return;
         }
 
         protected override bool OnPush()
         {
-            GameWorld.Root.GetComponent<UIComponent>().ShowGroup(Define);
+            NavigationGroupEntity entity = GetEntity();
+            entity?.Show();
             return true;
         }
 

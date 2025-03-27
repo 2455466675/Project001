@@ -48,7 +48,7 @@ namespace Game
                 InputType = InputType.Move,
                 Vector2Value = new UnityEngine.Vector2(x, y)
             };
-            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
+            DoAction(context);
         }
         private void OnSubmit() 
         {
@@ -56,7 +56,7 @@ namespace Game
             {
                 InputType = InputType.Submit,
             };
-            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
+            DoAction(context);
         }
         private void OnCancel() 
         {
@@ -64,7 +64,7 @@ namespace Game
             {
                 InputType = InputType.Cancel,
             };
-            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
+            DoAction(context);
         }
         private void OnEsc() 
         {
@@ -72,7 +72,7 @@ namespace Game
             {
                 InputType = InputType.Esc,
             };
-            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
+            DoAction(context);
         }
         private void OnLeftShift(bool isPress) 
         {
@@ -81,7 +81,7 @@ namespace Game
                 InputType = InputType.LeftShift,
                 BoolValue = isPress
             };
-            GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
+            DoAction(context);
         }
         private void OnMap() 
         {
@@ -89,6 +89,11 @@ namespace Game
             {
                 InputType = InputType.Map,
             };
+            DoAction(context);
+        }
+
+        private void DoAction(ActionContext context) 
+        {
             GameWorld.Root.GetComponent<UIComponent>().InputAction(context);
         }
     }

@@ -36,9 +36,18 @@ namespace Navigation
             this.data = null;
         }
 
-        public object GetData()
+        public bool TryGetData<T>(out T result) where T : class
         {
-            return data;
+            if (IsBinded && data is T r) 
+            {
+                result = r;
+                return true;
+            }
+            else
+            {
+                result = default;
+                return false;                
+            }
         }
 
         public string GetStringParam() 

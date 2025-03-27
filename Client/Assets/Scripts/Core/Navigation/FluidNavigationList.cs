@@ -346,7 +346,11 @@ namespace Navigation
                 totalCount = 0;
 
                 Clear();
-                ListEmpty();
+
+                if (state == ListState.InFocused) 
+                {
+                    ListEmpty();                
+                }
                 return;
             }
 

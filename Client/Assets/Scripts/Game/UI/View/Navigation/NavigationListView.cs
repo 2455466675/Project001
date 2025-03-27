@@ -44,6 +44,12 @@ namespace Game.UI
         private void OnDestroy()
         {
             guid = -1;
+            List.OnSelectedEvent -= List_OnSelectedEvent;
+            List.OnDeselectedEvent -= List_OnDeselectedEvent;
+            List.OnSubmitEvent -= List_OnSubmitEvent;
+            List.OnMoveEvent -= List_OnMoveEvent;
+            List.OnClearItemEvent -= List_OnClearItemEvent;
+            List.OnListEmptyEvent -= List_OnListEmptyEvent;
         }
 
         protected virtual void Register()
@@ -53,6 +59,12 @@ namespace Game.UI
             List.OnSubmitEvent += List_OnSubmitEvent;
             List.OnMoveEvent += List_OnMoveEvent;
             List.OnClearItemEvent += List_OnClearItemEvent;
+            List.OnListEmptyEvent += List_OnListEmptyEvent;
+        }
+
+        private void List_OnListEmptyEvent()
+        {
+            GameWorld.Root.GetComponent<UIComponent>().InputAction(new ActionContext() { InputType = Input.InputType.Cancel });
         }
 
         private void List_OnClearItemEvent(NavigationItem obj)

@@ -32,6 +32,15 @@ namespace Game
             controller.Navigate(list_ID, moduleType, navigateIndexs);
         }
 
+        public void Close() 
+        {
+            ActionContext context = new()
+            {
+                InputType = Input.InputType.Esc,
+            };
+            InputAction(context);
+        }
+
         public NavigationGroupDefine ListDefineToGroupDefine(NavigationListDefine listDefine)
         {
             return navigationManager.ListDefineToGroupDefine(listDefine);
@@ -45,16 +54,6 @@ namespace Game
         public NavigationListEntity GetNavigationListEntity(NavigationListDefine listDefine) 
         {
             return navigationManager.GetNavigationListEntity(listDefine);
-        }
-
-        public void ShowGroup(NavigationGroupDefine define) 
-        {
-            navigationManager.ShowGroup(define);
-        }
-
-        public void HideGroup(NavigationGroupDefine define)
-        {
-            navigationManager.HideGroup(define);
         }
     }
 }

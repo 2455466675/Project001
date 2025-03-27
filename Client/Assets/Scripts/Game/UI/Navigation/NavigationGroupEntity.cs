@@ -1,4 +1,3 @@
-using Navigation;
 using System.Collections.Generic;
 
 namespace Game.UI
@@ -13,24 +12,13 @@ namespace Game.UI
 
         private Dictionary<NavigationListDefine, NavigationListEntity> lists;
 
+        private NavigationGroupDefine define;
+        private bool isLoaded;
+
         public void Init(NavigationGroupDefine define) 
         {            
-            proxy = Parent.GetComponent<NavigationProxy>().GetNavigationGroupProxy(define);
-            NavigationGroupView group = proxy.LoadGroup(define);
-
-            lists = new Dictionary<NavigationListDefine, NavigationListEntity>();
-            NavigationListView[] children = group.Children;
-            if (children != null && children.Length > 0 ) 
-            {
-                foreach (var v in children)
-                {
-                    NavigationListEntity e = CreateChild<NavigationListEntity>();
-                    lists[v.Define] = e;
-                    e.Init(v);
-                }
-            }
-
-            this.group = group;
+            this.define = define;
+            this.isLoaded = false;
         }
 
         public NavigationListEntity GetNavigationListEntity(NavigationListDefine define) 
@@ -47,17 +35,22 @@ namespace Game.UI
 
         public void Show() 
         {
-            proxy?.InFocus(group, false);
+            if (!isLoaded) 
+            {
+                Load();
+            }
+
+            proxy?.Show(group);
         }
 
         public void Hide() 
         {
-            proxy?.Exit(group);
+            proxy?.Hide(group);
         }
 
         public void Refocus() 
         {
-            proxy?.InFocus(group, true);
+            proxy?.Refocus(group);
         }
 
         public void OutFocus() 
@@ -70,6 +63,27 @@ namespace Game.UI
             UnityEngine.Object.Destroy(group);
             group = null;
             proxy = null;
+        }
+
+        private void Load() 
+        {
+            proxy = Parent.GetComponent<NavigationProxy>().GetNavigationGroupProxy(define);
+            NavigationGroupView group = proxy.LoadGroup(define);
+
+            lists = new Dictionary<NavigationListDefine, NavigationListEntity>();
+            NavigationListView[] children = group.Children;
+            if (children != null && children.Length > 0)
+            {
+                foreach (var v in children)
+                {
+                    NavigationListEntity e = CreateChild<NavigationListEntity>();
+                    e.Init(v);
+                    lists[v.Define] = e;
+                }
+            }
+
+            this.group = group;
+            isLoaded = true;
         }
     }
 }

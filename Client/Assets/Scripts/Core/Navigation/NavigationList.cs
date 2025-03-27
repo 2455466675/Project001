@@ -71,6 +71,11 @@ namespace Navigation
         public event Action<NavigationItem> OnClearItemEvent;
         public event Action<float, float, NavigationItem> OnMoveEvent;
 
+        private void OnDestroy()
+        {
+            Clear();
+        }
+
         public virtual void Init() 
         {
         }
