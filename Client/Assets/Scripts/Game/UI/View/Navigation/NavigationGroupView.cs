@@ -99,7 +99,6 @@ namespace Game.UI
 
             if (children == null || children.Length == 0)
             {
-                Debug.LogError("NavigationListView[] not Find");
                 return;
             }
 

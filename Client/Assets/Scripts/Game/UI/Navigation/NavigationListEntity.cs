@@ -5,45 +5,41 @@ namespace Game.UI
     /// </summary>
     public class NavigationListEntity : ECS.Entity
     {
-        public NavigationListDefine Define => list.Define;
         public bool IsLocked => proxy != null && proxy.IsLocked();
-
-        private NavigationListView list;
         private NavigationListProxy proxy;
 
         public void Init(NavigationListView list) 
         {
             list.Bind(Guid);
-            this.list = list;
-            proxy = Parent.Parent.GetComponent<NavigationProxy>().GetNavigationListProxy(Define);
-
+            proxy = Parent.Parent.GetComponent<NavigationProxy>().GetNavigationListProxy(list.Define);
+            proxy.Init(list);
             Awake();
             OnEnable();
         }
 
         public void Awake() 
         {
-            proxy?.Awake(list);
+            proxy?.Awake();
         }
 
         public void OnEnable() 
         {
-            proxy?.OnEnable(list);
+            proxy?.OnEnable();
         }
 
         public void OnDisable() 
         {
-            proxy?.OnDisable(list);
+            proxy?.OnDisable();
         }
 
         public void Move(float h, float v)
         {
-            proxy?.Move(list, h, v);
+            proxy?.Move(h, v);
         }
 
         public void Submit()
         {
-            proxy?.Submit(list);
+            proxy?.Submit();
         }
 
         public bool InFocus(bool isRefocus, int[] indexs = null)
@@ -54,70 +50,70 @@ namespace Game.UI
             }
             else
             {
-                return proxy.InFocus(list, isRefocus, indexs);                
+                return proxy.InFocus(isRefocus, indexs);                
             }
         }
 
         public void OutFocus()
         {
-            proxy?.OutFocus(list);
+            proxy?.OutFocus();
         }
 
         public void Exit()
         {
-            proxy?.Exit(list);
+            proxy?.Exit();
         }
 
         public void OnBindData(GameNavigationItem item)
         {
-            proxy?.OnBindData(list, item);
+            proxy?.OnBindData(item);
         }
 
         public void OnUnbindData(GameNavigationItem item)
         {
-            proxy?.OnUnbindData(list, item);
+            proxy?.OnUnbindData(item);
         }
 
         public void OnRefresh(GameNavigationItem item) 
         {
-            proxy?.OnRefresh(list, item);
+            proxy?.OnRefresh(item);
         }
 
         public void OnSelect(GameNavigationItem item) 
         {
-            proxy?.OnSelect(list, item);    
+            proxy?.OnSelect(item);    
         }
 
         public void OnDeselect(GameNavigationItem item) 
         {
-            proxy?.OnDeselect(list, item);
+            proxy?.OnDeselect(item);
         }
 
         public void OnSubmit(GameNavigationItem item) 
         {
-            proxy?.OnSubmit(list, item);
+            proxy?.OnSubmit(item);
         }
 
         public void OnMoveUp(GameNavigationItem item)
         {
-            proxy?.OnMoveUp(list, item);
+            proxy?.OnMoveUp(item);
         }
         public void OnMoveDown(GameNavigationItem item)
         {
-            proxy?.OnMoveDown(list, item);
+            proxy?.OnMoveDown(item);
         }
         public void OnMoveLeft(GameNavigationItem item)
         {
-            proxy?.OnMoveLeft(list, item);
+            proxy?.OnMoveLeft(item);
         }
         public void OnMoveRight(GameNavigationItem item)
         {
-            proxy?.OnMoveRight(list, item);
+            proxy?.OnMoveRight(item);
         }
 
         protected override void OnDestroy()
         {
-            list = null;
+            proxy?.OnDestroy();
             proxy = null;
         }
     }

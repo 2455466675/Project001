@@ -1,5 +1,4 @@
 using Config;
-using Navigation;
 using UnityEngine;
 
 namespace Game.UI
@@ -9,6 +8,8 @@ namespace Game.UI
     /// </summary>
     public class NavigationGroupProxy
     {
+        protected NavigationGroupView groupView;
+
         public NavigationGroupView LoadGroup(NavigationGroupDefine define) 
         {
             var cfg = GameWorld.Root.GetComponent<ConfigComponent>().Find<NavigationGroupCfg>((int)define);
@@ -24,51 +25,58 @@ namespace Game.UI
             }
 
             var go = GameWorld.Root.GetComponent<ResourceComponent>().LoadAndInstantiate(cfg.Path, parent);
-            return go.GetComponent<NavigationGroupView>();
+            groupView = go.GetComponent<NavigationGroupView>();
+            return groupView;
         }
 
-        public virtual void Show(NavigationGroupView group) 
+        public virtual void Show() 
         {
-            if (group == null)
+            if (groupView == null)
             {
                 return;
             }
-            group.gameObject.SetActive(true);
-            group.transform.SetAsLastSibling();
+            groupView.gameObject.SetActive(true);
+            groupView.transform.SetAsLastSibling();
         }
 
-        public virtual void Hide(NavigationGroupView group) 
+        public virtual void Hide() 
         {
-            if (group == null)
+            if (groupView == null)
             {
                 return;
             }
-            group.gameObject.SetActive(false);
-            group.transform.SetAsLastSibling();
+            groupView.gameObject.SetActive(false);
+            groupView.transform.SetAsLastSibling();
         }
 
-        public virtual void OutFocus(NavigationGroupView group) 
+        public virtual void OutFocus() 
         {
-            if (group == null)
+            if (groupView == null)
             {
                 return;
             }
-            if (group.TryGetComponent<CanvasGroup>(out var canvasGroup))
+            if (groupView.TryGetComponent<CanvasGroup>(out var canvasGroup))
             {
                 canvasGroup.alpha = 0.6f;
             }
         }
 
-        public virtual void Refocus(NavigationGroupView group) 
+        public virtual void Refocus() 
         {
-            if (group == null)
+            if (groupView == null)
             {
                 return;
             }
-            if (group.TryGetComponent<CanvasGroup>(out var canvasGroup))
+            if (groupView.TryGetComponent<CanvasGroup>(out var canvasGroup))
             {
                 canvasGroup.alpha = 1;
             }
+        }
+
+        public void OnDestroy() 
+        {
+            UnityEngine.Object.Destroy(groupView);
+            groupView = null;
         }
     }
 }

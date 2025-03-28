@@ -11,9 +11,12 @@ namespace Game
     {
         private Dictionary<Type, List<IEvent>> allEvent;
 
+        private Dictionary<Type, List<object>> actions;
+
         public void Init()
         {
             allEvent = new Dictionary<Type, List<IEvent>>();
+            actions = new Dictionary<Type, List<object>>();
 
             List<Type> types = GameWorld.Root.GetComponent<CodeComponent>().GetTypes<EventAttribute>();
             foreach (Type type in types) 
@@ -34,19 +37,49 @@ namespace Game
         public void Publish<T>(T arg) where T : struct
         {
             Type t = typeof(T);
-            if (!allEvent.ContainsKey(t)) 
+            if (allEvent.ContainsKey(t)) 
+            {
+                List<IEvent> events = allEvent[t];
+                foreach (IEvent e in events)
+                {
+                    if (e is GameEvent<T> ge)
+                    {
+                        ge.Run(arg);
+                    }
+                }
+            }
+
+            if (actions.ContainsKey(t)) 
+            {
+                List<object> events = actions[t];
+                foreach (var e in events)
+                {
+                    if (e is Action<T> a) 
+                    {
+                        a.Invoke(arg);
+                    }
+                }
+            }
+        }
+
+        public void Register<T>(Action<T> action) where T : struct
+        {
+            Type t = typeof(T);
+            if (!actions.ContainsKey(t))
+            {
+                actions.Add(t, new List<object>());
+            }
+            actions[t].Add(action);
+        }
+
+        public void Unregister<T>(Action<T> action) where T : struct 
+        {
+            Type t = typeof(T);
+            if (!actions.ContainsKey(t))
             {
                 return;
             }
-
-            List<IEvent> events = allEvent[t];
-            foreach (IEvent e in events) 
-            {
-                if (e is GameEvent<T> ge) 
-                {
-                    ge.Run(arg);
-                }
-            }
+            actions[t].Remove(action);
         }
     }
 }

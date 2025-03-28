@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using ECS;
 using System;
 using System.Collections.Generic;
@@ -5,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 namespace Game
 {
+    public struct SceneLoadingProgress 
+    {
+        public float progress;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -59,8 +65,26 @@ namespace Game
             {
                 loadingSceneId = sceneId;
                 this.loadingAction = loadingAction;
+                var e = GameWorld.Root.GetComponent<UIComponent>().GetNavigationGroupEntity(UI.NavigationGroupDefine.Loading_Group);
+                e.Show();
+                await GameWorld.Root.GetComponent<ResourceComponent>().LoadSceneAsync(entity.Path, entity.LoadSceneMode, null);
 
-                await GameWorld.Root.GetComponent<ResourceComponent>().LoadSceneAsync(entity.Path, entity.LoadSceneMode, LoadingHandler);                
+                float t = 500f;
+                float i = 500f;
+                while (i > 0f) 
+                {
+                    i -= 1f;
+                    LoadingHandler((t - i) / t);
+                    await UniTask.Yield();
+                }
+
+                await UniTask.Yield();
+                await UniTask.Yield();
+                await UniTask.Yield();
+                await UniTask.Yield();
+                await UniTask.Yield();
+
+                e.Hide();
             }
 
             PushScene(entity);
@@ -74,6 +98,7 @@ namespace Game
         private void LoadingHandler(float progress)
         {
             this.loadingAction?.Invoke(progress);
+            GameWorld.Root.GetComponent<EventComponent>().Publish(new SceneLoadingProgress() { progress = progress });
         }
 
         private void PushScene(SceneEntity entity)

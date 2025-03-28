@@ -11,14 +11,14 @@ namespace Game.UI
             return state;
         }
 
-        public override void OnEnable(NavigationListView list)
+        public override void OnEnable()
         {
             LoginSystem loginSystem = GameWorld.Root.GetComponent<SystemComponent>().LoginSystem;
             loginSystem.LockLoginGroup = true;
-            list.UpdateData(loginSystem.GetOptions());
+            listView.UpdateData(loginSystem.GetOptions());
         }
 
-        public override void OnSubmit(NavigationListView list, GameNavigationItem item)
+        public override void OnSubmit(GameNavigationItem item)
         {
             if (item.TryGetData(out LoginOption option)) 
             {

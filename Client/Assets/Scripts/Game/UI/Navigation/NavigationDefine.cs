@@ -7,7 +7,8 @@ namespace Game.UI
         Test_Group_1 = 1,
         Test_Group_2 = 2,
 
-        Login_Group  = 1001,
+        Login_Group   = 1001,
+        Loading_Group = 1002,
     }
 
     public enum NavigationListDefine

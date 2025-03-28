@@ -8,7 +8,6 @@ namespace Game.UI
     public class NavigationGroupEntity : ECS.Entity
     {
         private NavigationGroupProxy proxy;
-        private NavigationGroupView group;
 
         private Dictionary<NavigationListDefine, NavigationListEntity> lists;
 
@@ -40,28 +39,27 @@ namespace Game.UI
                 Load();
             }
 
-            proxy?.Show(group);
+            proxy?.Show();
         }
 
         public void Hide() 
         {
-            proxy?.Hide(group);
+            proxy?.Hide();
         }
 
         public void Refocus() 
         {
-            proxy?.Refocus(group);
+            proxy?.Refocus();
         }
 
         public void OutFocus() 
         {
-            proxy?.OutFocus(group);
+            proxy?.OutFocus();
         }
 
         protected override void OnDestroy()
         {
-            UnityEngine.Object.Destroy(group);
-            group = null;
+            proxy?.OnDestroy();
             proxy = null;
         }
 
@@ -82,7 +80,6 @@ namespace Game.UI
                 }
             }
 
-            this.group = group;
             isLoaded = true;
         }
     }

@@ -10,7 +10,7 @@ namespace Game
         public override void Enter()
         {            
             GameWorld.Root.GetComponent<UIComponent>().Close();
-            GameWorld.Root.GetComponent<SceneComponent>().LoadScene(10003);
+            GameWorld.Root.GetComponent<SceneComponent>().LoadSceneAsync(10003, null, null);
         }
 
         public override void Exit()

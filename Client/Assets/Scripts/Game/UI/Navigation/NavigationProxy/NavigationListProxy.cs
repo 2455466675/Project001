@@ -5,58 +5,69 @@ namespace Game.UI
     /// </summary>
     public class NavigationListProxy
     {
+        protected NavigationListView listView;
+
+        public void Init(NavigationListView listView) 
+        {
+            this.listView = listView;
+        }
+
         #region Unity生命周期
-        public virtual void Awake(NavigationListView list) 
+        public virtual void Awake() 
         {            
         }
-        public virtual void OnEnable(NavigationListView list) 
+        public virtual void OnEnable() 
         {
         }
-        public virtual void OnDisable(NavigationListView list) 
+        public virtual void OnDisable() 
         {        
+        }
+        public void OnDestroy() 
+        {
+            listView = null;
         }
         #endregion
 
         #region 导航行为
-        public virtual void Move(NavigationListView list, float h, float v)
+        public virtual void Move(float h, float v)
         {
-            if (list == null) 
+            if (listView == null) 
             {
                 return;
             }
-            list.Move(h, v);
+            listView.Move(h, v);
         }
-        public virtual void Submit(NavigationListView list)
+        public virtual void Submit()
         {
-            if (list == null)
+            if (listView == null)
             {
                 return;
             }
-            list.Submit();
+            listView.Submit();
         }
-        public virtual bool InFocus(NavigationListView list, bool isRefocus, int[] indexs = null)
+        public virtual bool InFocus(bool isRefocus, int[] indexs = null)
         {
-            if (list == null)
+            if (listView == null)
             {
                 return false;
             }
-            return list.InFocus(isRefocus, indexs);
+            return listView.InFocus(isRefocus, indexs);
         }
-        public virtual void OutFocus(NavigationListView list)
+        public virtual void OutFocus()
         {
-            if (list == null)
+            if (listView == null)
             {
                 return;
             }
-            list.OutFocus();
+            listView.OutFocus();
         }
-        public virtual void Exit(NavigationListView list) 
+        public virtual void Exit() 
         {
-            if (list == null)
+            if (listView == null)
             {
                 return;
             }
-            list.Exit();
+            listView.Exit();
         }
         public virtual bool IsLocked() 
         {
@@ -66,34 +77,34 @@ namespace Game.UI
 
         #region 列表项事件
 
-        public virtual void OnBindData(NavigationListView list, GameNavigationItem item) 
+        public virtual void OnBindData(GameNavigationItem item) 
         {
         }
-        public virtual void OnUnbindData(NavigationListView list, GameNavigationItem item)
+        public virtual void OnUnbindData(GameNavigationItem item)
         {
         }
-        public virtual void OnRefresh(NavigationListView list, GameNavigationItem item) 
+        public virtual void OnRefresh(GameNavigationItem item) 
         {
         }
-        public virtual void OnSelect(NavigationListView list, GameNavigationItem item)
+        public virtual void OnSelect(GameNavigationItem item)
         {
         }
-        public virtual void OnDeselect(NavigationListView list, GameNavigationItem item)
+        public virtual void OnDeselect(GameNavigationItem item)
         {
         }
-        public virtual void OnSubmit(NavigationListView list, GameNavigationItem item)
+        public virtual void OnSubmit(GameNavigationItem item)
         {
         }
-        public virtual void OnMoveUp(NavigationListView list, GameNavigationItem item)
+        public virtual void OnMoveUp(GameNavigationItem item)
         {
         }
-        public virtual void OnMoveDown(NavigationListView list, GameNavigationItem item)
+        public virtual void OnMoveDown(GameNavigationItem item)
         {
         }
-        public virtual void OnMoveLeft(NavigationListView list, GameNavigationItem item)
+        public virtual void OnMoveLeft(GameNavigationItem item)
         {
         }
-        public virtual void OnMoveRight(NavigationListView list, GameNavigationItem item)
+        public virtual void OnMoveRight(GameNavigationItem item)
         {
         }
         #endregion

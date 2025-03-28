@@ -17,7 +17,7 @@ namespace Game.UI
     {
         static int count;
 
-        public override void OnEnable(NavigationListView list)
+        public override void OnEnable()
         {
             //int count = Random.Range(80, 100);
 
@@ -28,20 +28,20 @@ namespace Game.UI
             {
                 data[i] = new TestData() { id = i };
             }
-            list.UpdateData(data);
+            listView.UpdateData(data);
         }
 
-        public override void OnBindData(NavigationListView list, GameNavigationItem item)
+        public override void OnBindData(GameNavigationItem item)
         {
             
         }
 
-        public override void OnUnbindData(NavigationListView list, GameNavigationItem item)
+        public override void OnUnbindData(GameNavigationItem item)
         {
 
         }
 
-        public override void OnRefresh(NavigationListView list, GameNavigationItem item)
+        public override void OnRefresh(GameNavigationItem item)
         {
             TextView view = item.GetView<TextView>();
             if (view != null)
@@ -62,7 +62,7 @@ namespace Game.UI
             }
         }
 
-        public override void OnSubmit(NavigationListView list, GameNavigationItem item)
+        public override void OnSubmit(GameNavigationItem item)
         {
             //int count = Random.Range(80, 100);
 
@@ -73,7 +73,7 @@ namespace Game.UI
             {
                 data[i] = new TestData() { id = i };
             }
-            list.UpdateData(data);
+            listView.UpdateData(data);
         }
     }
 }

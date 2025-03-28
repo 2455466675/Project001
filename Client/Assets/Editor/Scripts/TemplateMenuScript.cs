@@ -21,6 +21,27 @@ public class TemplateMenuScript
         Instantiate(path);
     }
 
+    [MenuItem("GameObject/MyUI/List/NavigationListBar")]
+    public static void CreateNavigationListBar()
+    {
+        string path = "Assets/Editor/UITemplate/NavigationListBar.prefab";
+        Instantiate(path);
+    }
+
+    [MenuItem("GameObject/MyUI/TextView")]
+    public static void CreateTextView()
+    {
+        string path = "Assets/Editor/UITemplate/TextView.prefab";
+        Instantiate(path);
+    }
+
+    [MenuItem("GameObject/MyUI/SliderView")]
+    public static void CreateSliderView()
+    {
+        string path = "Assets/Editor/UITemplate/SliderView.prefab";
+        Instantiate(path);
+    }
+
     private static void Instantiate(string path)
     {
         GameObject inst = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(path));
