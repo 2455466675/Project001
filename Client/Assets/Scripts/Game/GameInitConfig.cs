@@ -32,5 +32,9 @@ namespace Game
         /// ³¡¾°ÅäÖÃ
         /// </summary>
         public string SceneMap;
+        /// <summary>
+        /// ¾«ÁéÅäÖÃ
+        /// </summary>
+        public string SpriteMap;
     }
 }

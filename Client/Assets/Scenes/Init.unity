@@ -159,6 +159,7 @@ MonoBehaviour:
     Formula: Game/Formula
     NavigationMap: Game/NavigationMap
     SceneMap: Game/SceneMap
+    SpriteMap: Game/sprite_map
 --- !u!4 &404166798
 Transform:
   m_ObjectHideFlags: 0

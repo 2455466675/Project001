@@ -51,6 +51,15 @@ namespace Game.UI
                     view.SetTextByStr(data.ToString());                
                 }
             }
+
+            ImageView imageView = item.GetView<ImageView>();
+            if (imageView != null) 
+            {
+                if (item.TryGetData(out TestData data))
+                {
+                    imageView.SetSprite("icon_001_" + data.id);
+                }
+            }
         }
 
         public override void OnSubmit(NavigationListView list, GameNavigationItem item)

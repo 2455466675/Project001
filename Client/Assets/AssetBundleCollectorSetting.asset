@@ -24,7 +24,7 @@ MonoBehaviour:
     IgnoreDefaultType: 1
     AutoCollectShaders: 1
     Groups:
-    - GroupName: UI
+    - GroupName: Game
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -55,6 +55,14 @@ MonoBehaviour:
         UserData: 
       - CollectPath: Assets/Bundles/Battle
         CollectorGUID: 2b189709ed4af524485a74a9ca4617fb
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/Bundles/ArtRes
+        CollectorGUID: 99ffa23abaa100c49877d950106b9e98
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

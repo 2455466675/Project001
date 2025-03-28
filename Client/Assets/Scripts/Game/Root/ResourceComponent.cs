@@ -13,10 +13,11 @@ namespace Game
     public class ResourceComponent : ECS.Entity
     {
         private ResourcePackage package;
+        private SpriteManager spriteManager;
 
-        public async UniTask Init(GameInitConfig intCfg)
+        public async UniTask Init(GameInitConfig initCfg)
         {
-            string packageName = intCfg.PackageName;
+            string packageName = initCfg.PackageName;
 
             YooAssets.Initialize();
 
@@ -40,6 +41,9 @@ namespace Game
                 OfflinePlayModeParameters parameters = new OfflinePlayModeParameters();
                 await package.InitializeAsync(parameters);
             }
+
+            spriteManager = new SpriteManager();
+            spriteManager.Init(initCfg);
         }
 
         /// <summary>
@@ -113,9 +117,8 @@ namespace Game
         }
 
         public Sprite GetSprite(string spriteName)
-        {
-            MLog.Log($"spriteName:{spriteName}");
-            return null;
+        {            
+            return spriteManager.GetSprite(spriteName);
         }
     }
 }
