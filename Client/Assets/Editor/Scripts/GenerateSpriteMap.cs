@@ -101,4 +101,15 @@ public class GenerateSpriteMap : MonoBehaviour
 
         return atlasList;
     }
+
+    //private void Test()
+    //{
+    //    Texture2D tex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height, sprite.texture.format, false);
+    //    tex.SetPixels(sprite.texture.GetPixels((int)sprite.rect.xMin, (int)sprite.rect.yMin,
+    //        (int)sprite.rect.width, (int)sprite.rect.height));
+    //    tex.Apply();
+
+    //    // 写入成PNG文件
+    //    System.IO.File.WriteAllBytes(outPath + "/" + sprite.name + ".png", tex.EncodeToPNG());
+    //}
 }
