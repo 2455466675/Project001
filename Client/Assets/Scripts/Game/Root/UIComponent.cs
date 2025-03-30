@@ -14,7 +14,7 @@ namespace Game
 
         public void Init(GameInitConfig config) 
         {
-            var go = GameWorld.Root.GetComponent<ResourceComponent>().LoadAndInstantiate(config.UIRootPath, null);
+            var go = GameWorld.Root.GetComponent<ResourceComponent>().LoadAndInstantiate(config.UIRootPath, GameWorld.GameWorldObject.transform);
             Root = go.GetComponent<UIRoot>();
 
             controller = new InputController();

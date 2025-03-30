@@ -24,7 +24,6 @@ namespace Game.UI
 
         private void OnProgressUpdate(SceneLoadingProgress arg) 
         {
-            MLog.Log("arg.progress", arg.progress);
             TextView textView = groupView.GetView<TextView>();
             if (textView != null) 
             {

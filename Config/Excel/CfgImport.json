@@ -16,8 +16,8 @@
             "sheet":1
         },  
         {
-            "excel":"navigation_group.xlsx",
-            "type":"NavigationGroupCfg",
+            "excel":"panel.xlsx",
+            "type":"PanelCfg",
             "sheet":1
         },  
         {

@@ -27,11 +27,6 @@ namespace Game.UI
         public Camera UICamera;
         public List<GroupContainer> containers;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
         public Transform GetGroupContainer(GroupType type) 
         {
             if (containers == null) 

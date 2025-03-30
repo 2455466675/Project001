@@ -11,7 +11,6 @@ namespace Game
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
             GameWorld.Initialize();   
         }
 
@@ -20,11 +19,6 @@ namespace Game
             await GameWorld.Init(config);
 
             GameWorld.Root.GetComponent<EventComponent>().Publish(new GameStartEventArg());
-        }
-
-        private void Update() 
-        {
-            GameWorld.Tick(Time.deltaTime);
         }
     }
 }

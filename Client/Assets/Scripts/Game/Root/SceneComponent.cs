@@ -71,19 +71,20 @@ namespace Game
 
                 float t = 500f;
                 float i = 500f;
-                while (i > 0f) 
+                while (i > 50f) 
                 {
                     i -= 1f;
                     LoadingHandler((t - i) / t);
                     await UniTask.Yield();
                 }
-
+                await UniTask.WaitForSeconds(0.2f);
+                while (i > 0f)
+                {
+                    i -= 1f;
+                    LoadingHandler((t - i) / t);
+                    await UniTask.Yield();
+                }
                 await UniTask.Yield();
-                await UniTask.Yield();
-                await UniTask.Yield();
-                await UniTask.Yield();
-                await UniTask.Yield();
-
                 e.Hide();
             }
 

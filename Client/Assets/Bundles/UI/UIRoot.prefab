@@ -48,13 +48,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UICamera: {fileID: 7561079781440461680}
   containers:
-  - type: 0
-    transform: {fileID: 4913598445745508567}
   - type: 1
-    transform: {fileID: 2873373220752112655}
+    transform: {fileID: 4913598445745508567}
   - type: 2
-    transform: {fileID: 5608470190062600309}
+    transform: {fileID: 2873373220752112655}
   - type: 3
+    transform: {fileID: 5608470190062600309}
+  - type: 4
     transform: {fileID: 7439766021231858878}
 --- !u!1 &2954363783276760233
 GameObject:

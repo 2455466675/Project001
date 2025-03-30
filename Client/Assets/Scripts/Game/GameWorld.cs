@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using ECS;
+using UnityEngine;
 
 namespace Game
 {
@@ -9,6 +10,9 @@ namespace Game
     public class GameWorld : World
     {
         private static GameWorld instance;
+
+        public static GameObject GameWorldObject;
+
         public static Entity Root => instance.root;
 
         public static void Initialize() 
@@ -22,6 +26,9 @@ namespace Game
 
         public static async UniTask Init(GameInitConfig config) 
         {
+            GameWorldObject = new GameObject("Game");
+            GameWorldObject.AddComponent<GameWorldObject>();
+
             var resourceComponent = Root.AddComponent<ResourceComponent>();
             await resourceComponent.Init(config);
 

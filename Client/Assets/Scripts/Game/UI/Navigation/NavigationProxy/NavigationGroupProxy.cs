@@ -12,7 +12,7 @@ namespace Game.UI
 
         public NavigationGroupView LoadGroup(NavigationGroupDefine define) 
         {
-            var cfg = GameWorld.Root.GetComponent<ConfigComponent>().Find<NavigationGroupCfg>((int)define);
+            var cfg = GameWorld.Root.GetComponent<ConfigComponent>().Find<PanelCfg>((int)define);
             if (cfg == null ) 
             {
                 return null;
