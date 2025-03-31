@@ -21,6 +21,11 @@
             "sheet":1
         },  
         {
+            "excel":"actor.xlsx",
+            "type":"ActorCfg",
+            "sheet":1
+        },
+        {
             "excel":"role.xlsx",
             "type":"RoleCfg",
             "sheet":1

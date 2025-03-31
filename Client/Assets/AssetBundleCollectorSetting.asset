@@ -37,8 +37,8 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/Bundles/Character
-        CollectorGUID: b8865c14d8b1cc3468877cf2dcc56f4c
+      - CollectPath: Assets/Bundles/Actor
+        CollectorGUID: 88e511bbb03e8f640896ae7bab9d5e3d
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

@@ -1,14 +1,18 @@
+using ECS;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Game
+namespace Game.System
 {
     /// <summary>
     /// 
     /// </summary>
-    public class RoleSystem : MonoBehaviour
+    public class RoleSystem : Entity, IAwake
     {
-
+        public void Awake()
+        {
+            CharacterEntity character = CreateChild<CharacterEntity>();
+            character.AddComponent<ActorComponent>();
+        }
     }
 }

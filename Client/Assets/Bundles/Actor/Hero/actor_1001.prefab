@@ -73,8 +73,9 @@ GameObject:
   - component: {fileID: 4115199141554976644}
   - component: {fileID: 516908887459484936}
   - component: {fileID: 2555994066877888691}
+  - component: {fileID: 4471564798906123813}
   m_Layer: 0
-  m_Name: actor1001
+  m_Name: actor_1001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,6 +145,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
+--- !u!114 &4471564798906123813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7719453183051244211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f30e5cb5ef37943a993b1e6b2dde4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 2367476302467340057}
+  animator: {fileID: 1707397919405123022}
+  rigidbody2D: {fileID: 516908887459484936}
+  boxCollider2D: {fileID: 2555994066877888691}
 --- !u!1 &8896465971605461122
 GameObject:
   m_ObjectHideFlags: 0
