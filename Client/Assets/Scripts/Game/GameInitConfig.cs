@@ -20,6 +20,7 @@ namespace Game
         /// UI物体预制体路径
         /// </summary>
         public string UIRootPath;
+        public string ActorContainerPath;
         /// <summary>
         /// Formula路径
         /// </summary>

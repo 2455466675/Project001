@@ -156,6 +156,7 @@ MonoBehaviour:
     PackageName: DefaultPackage
     GameCfgFile: cfg.bytes
     UIRootPath: Assets/Bundles/UI/UIRoot
+    ActorContainerPath: Assets/Bundles/Actor/ActorContainer
     Formula: Game/Formula
     NavigationMap: Game/NavigationMap
     SceneMap: Game/SceneMap

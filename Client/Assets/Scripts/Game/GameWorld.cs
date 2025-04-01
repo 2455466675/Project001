@@ -54,7 +54,7 @@ namespace Game
             stateComponent.Init();
 
             var systemComponent = Root.AddComponent<SystemComponent>();
-            systemComponent.Init();
+            systemComponent.Init(config);
         }
 
         public static void Tick(float dt) 

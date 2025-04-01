@@ -14,11 +14,6 @@ namespace Config
         public int TEAM_LIMIT;
 
         /// <summary>
-        /// 游戏系统配置
-        /// </summary>
-        public string GAME_SYSTEM_CONFIG_PATH;
-
-        /// <summary>
         /// 角色队列跟随间隔
         /// </summary>
         public float TEAM_GAP;
