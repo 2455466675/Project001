@@ -5,7 +5,7 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-    public class NavigationGroupEntity : ECS.Entity
+    public class NavigationGroupEntity
     {
         private NavigationGroupProxy proxy;
 
@@ -57,7 +57,7 @@ namespace Game.UI
             proxy?.OutFocus();
         }
 
-        protected override void OnDestroy()
+        public void OnDestroy()
         {
             proxy?.OnDestroy();
             proxy = null;
@@ -65,7 +65,7 @@ namespace Game.UI
 
         private void Load() 
         {
-            proxy = Parent.GetComponent<NavigationProxy>().GetNavigationGroupProxy(define);
+            proxy = NavigationProxyManager.GetNavigationGroupProxy(define);
             NavigationGroupView group = proxy.LoadGroup(define);
 
             lists = new Dictionary<NavigationListDefine, NavigationListEntity>();
@@ -74,7 +74,7 @@ namespace Game.UI
             {
                 foreach (var v in children)
                 {
-                    NavigationListEntity e = CreateChild<NavigationListEntity>();
+                    NavigationListEntity e = new NavigationListEntity();
                     e.Init(v);
                     lists[v.Define] = e;
                 }

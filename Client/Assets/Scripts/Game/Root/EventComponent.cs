@@ -18,7 +18,7 @@ namespace Game
             allEvent = new Dictionary<Type, List<IEvent>>();
             actions = new Dictionary<Type, List<object>>();
 
-            List<Type> types = GameWorld.Root.GetComponent<CodeComponent>().GetTypes<EventAttribute>();
+            List<Type> types = Game.Code.GetTypes<EventAttribute>();
             foreach (Type type in types) 
             {
                 object o = Activator.CreateInstance(type);

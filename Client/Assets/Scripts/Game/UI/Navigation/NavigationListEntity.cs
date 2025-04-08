@@ -3,15 +3,15 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-    public class NavigationListEntity : ECS.Entity
+    public class NavigationListEntity
     {
         public bool IsLocked => proxy != null && proxy.IsLocked();
         private NavigationListProxy proxy;
 
         public void Init(NavigationListView list) 
         {
-            list.Bind(Guid);
-            proxy = Parent.Parent.GetComponent<NavigationProxy>().GetNavigationListProxy(list.Define);
+            //list.Bind();
+            proxy = NavigationProxyManager.GetNavigationListProxy(list.Define);
             proxy.Init(list);
             Awake();
             OnEnable();
@@ -111,7 +111,7 @@ namespace Game.UI
             proxy?.OnMoveRight(item);
         }
 
-        protected override void OnDestroy()
+        public void OnDestroy()
         {
             proxy?.OnDestroy();
             proxy = null;

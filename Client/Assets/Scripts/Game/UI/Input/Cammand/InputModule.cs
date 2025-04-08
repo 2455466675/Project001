@@ -1,0 +1,20 @@
+namespace Game.UI.Input
+{
+    public enum ModuleType 
+    {
+        Undefined = 0,
+        Basal     = 1,
+        Panel     = 2,
+        Battle    = 3,
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class InputModule : InputCammand
+    {
+        public abstract ModuleType ModuleType { get;}
+
+        public virtual void Navigate(NavigationListDefine list_ID, int[] navigateIndexs) { }
+    }
+}

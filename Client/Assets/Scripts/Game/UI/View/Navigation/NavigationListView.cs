@@ -1,5 +1,4 @@
 using Navigation;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.UI
@@ -9,24 +8,15 @@ namespace Game.UI
     /// </summary>
     public abstract class NavigationListView : View, INavigation
     {        
-        [ReadOnly]
-        [SerializeField]
-        private int guid;
-
         [SerializeField]
         private NavigationListDefine define;
         public bool IsValid => List != null;
         public NavigationListDefine Define => define;
         protected abstract NavigationList List { get; }
 
-        public void Bind(int guid) 
-        {
-            this.guid = guid;            
-        }
-
         private void OnEnable()
         {
-            NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+            NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
             e?.OnEnable();
         }
 
@@ -37,13 +27,12 @@ namespace Game.UI
                 List.Clear();            
             }
 
-            NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+            NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
             e?.OnDisable();
         }
 
         private void OnDestroy()
         {
-            guid = -1;
             List.OnSelectedEvent -= List_OnSelectedEvent;
             List.OnDeselectedEvent -= List_OnDeselectedEvent;
             List.OnSubmitEvent -= List_OnSubmitEvent;
@@ -64,7 +53,7 @@ namespace Game.UI
 
         private void List_OnListEmptyEvent()
         {
-            GameWorld.Root.GetComponent<UIComponent>().InputAction(new ActionContext() { InputType = Input.InputType.Cancel });
+            Game.UI.Back();
         }
 
         private void List_OnClearItemEvent(NavigationItem obj)
@@ -76,8 +65,8 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
-                if (e == null) 
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                if (e == null)
                 {
                     return;
                 }
@@ -105,7 +94,7 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item) 
             {
-                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
                 e?.OnSubmit(item);
             }
         }
@@ -114,7 +103,7 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
                 e?.OnDeselect(item);
             }
         }
@@ -123,7 +112,7 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
                 e?.OnSelect(item);
             }
         }
@@ -132,7 +121,7 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
                 e?.OnBindData(item);
             }
         }
@@ -141,7 +130,7 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
                 e?.OnUnbindData(item);
             }
         }
@@ -150,7 +139,7 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = GameWorld.FindEntity<NavigationListEntity>(guid);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
                 e?.OnRefresh(item);
             }
         }

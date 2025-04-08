@@ -26,7 +26,7 @@ namespace Game.UI
 
         public void OnClickTestGroup1(NavigationItem item) 
         {
-            GameWorld.Root.GetComponent<UIComponent>().Navigate(NavigationListDefine.Test_List_2);
+            //GameWorld.Root.GetComponent<UIComponent>().Navigate(NavigationListDefine.Test_List_2);
         }
     }
 }

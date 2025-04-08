@@ -1,4 +1,4 @@
-using Config;
+using Game.Config;
 using UnityEngine;
 
 namespace Game.UI
@@ -13,7 +13,7 @@ namespace Game.UI
 
         public void SetTextById(int textId)
         {
-            LanguageItem item = GameWorld.Root.GetComponent<ConfigComponent>().GetLanguageItem(textId);
+            LanguageItem item = Game.Config.GetLanguageItem(textId);
             if (item == null)
             {
                 SetTextInner(string.Empty, default);
@@ -31,7 +31,7 @@ namespace Game.UI
 
         public void SetTextByStr(string str, int colorId)
         {
-            SetTextInner(str, GameWorld.Root.GetComponent<ConfigComponent>().GetColorById(colorId));
+            SetTextInner(str, Game.Config.GetColorById(colorId));
         }
 
         public void SetTextByStr(string str, Color color)

@@ -4,10 +4,9 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
-using Game;
+using Game.Resource;
 
-
-public class GenerateSpriteMap : MonoBehaviour
+public class GenerateSpriteMap
 {
     [MenuItem("Tools/MyTools/GenerateSpriteMap")]
     public static void Generate() 

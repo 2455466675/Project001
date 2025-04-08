@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 namespace Game
 {
-    public struct SceneLoadingProgress 
-    {
-        public float progress;
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -65,7 +60,7 @@ namespace Game
             {
                 loadingSceneId = sceneId;
                 this.loadingAction = loadingAction;
-                var e = GameWorld.Root.GetComponent<UIComponent>().GetNavigationGroupEntity(UI.NavigationGroupDefine.Loading_Group);
+                var e = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Loading_Group);
                 e.Show();
                 await GameWorld.Root.GetComponent<ResourceComponent>().LoadSceneAsync(entity.Path, entity.LoadSceneMode, null);
 
@@ -99,7 +94,7 @@ namespace Game
         private void LoadingHandler(float progress)
         {
             this.loadingAction?.Invoke(progress);
-            GameWorld.Root.GetComponent<EventComponent>().Publish(new SceneLoadingProgress() { progress = progress });
+            Game.Event.Publish(new SceneLoadingProgress() { progress = progress });
         }
 
         private void PushScene(SceneEntity entity)
@@ -146,7 +141,7 @@ namespace Game
             SceneEntity entity = scenes.Find(e => e.SceneId == sceneId);
             if (entity == null)
             {
-                entity = CreateChild<SceneEntity>();
+                entity = new SceneEntity();
                 entity.Init(sceneMap.GetSceneData(sceneId));
 
                 scenes.Add(entity);

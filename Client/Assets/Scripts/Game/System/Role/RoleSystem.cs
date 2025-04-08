@@ -1,23 +1,19 @@
-using ECS;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace Game.System
 {
     /// <summary>
     /// 
     /// </summary>
-    public class RoleSystem : Entity
+    public class RoleSystem
     {
         private ActorContainer container;
 
         public void Init(GameInitConfig config)
         {
-            var go = GameWorld.Root.GetComponent<ResourceComponent>().LoadAndInstantiate(config.ActorContainerPath, GameWorld.GameWorldObject.transform);
+            var go = Game.Resource.LoadAndInstantiate(config.ActorContainerPath, Game.GameRoot.transform);
             container = go.GetComponent<ActorContainer>();
 
-            CharacterEntity character = CreateChild<CharacterEntity>();
-            character.AddComponent<ActorComponent>();
+            //CharacterEntity character = CreateChild<CharacterEntity>();
+            //character.AddComponent<ActorComponent>();
         }
     }
 }

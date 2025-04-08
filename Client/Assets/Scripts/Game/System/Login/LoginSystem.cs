@@ -1,4 +1,5 @@
 using ECS;
+using Game.State;
 
 namespace Game.System
 {
@@ -7,7 +8,7 @@ namespace Game.System
         public abstract void Execute();
     }
 
-    public class LoginSystem : Entity, IAwake
+    public class LoginSystem
     {
         #region LoginOption
 
@@ -16,8 +17,8 @@ namespace Game.System
             public override void Execute()
             {
                 MLog.Log("NewGameOption.Execute");
-                GameWorld.Root.GetComponent<SystemComponent>().LoginSystem.LockLoginGroup = false;
-                GameWorld.Root.GetComponent<StateComponent>().Switch(GameStateDefine.Playing);
+                Game.System.LoginSystem.LockLoginGroup = false;
+                Game.State.Switch(GameStateDefine.Playing);
             }
         }
 
@@ -56,7 +57,7 @@ namespace Game.System
 
         private LoginOption[] options;
 
-        public void Awake()
+        public LoginSystem()
         {
             options = new LoginOption[4];
 

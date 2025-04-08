@@ -1,0 +1,18 @@
+using System;
+using UnityEngine.InputSystem;
+
+namespace Game.UI.Input
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class SubmitActionWrapper : InputActionWrapper
+    {
+        public event Action ActionEvent;
+
+        protected override void OnStarted(InputAction.CallbackContext obj)
+        {
+            ActionEvent?.Invoke();
+        }
+    }
+}

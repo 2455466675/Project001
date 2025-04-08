@@ -12,19 +12,19 @@ namespace Game.UI
 
         public NavigationGroupView LoadGroup(NavigationGroupDefine define) 
         {
-            var cfg = GameWorld.Root.GetComponent<ConfigComponent>().Find<PanelCfg>((int)define);
+            var cfg = Game.Config.Find<PanelCfg>((int)define);
             if (cfg == null ) 
             {
                 return null;
             }
 
-            var parent = GameWorld.Root.GetComponent<UIComponent>().Root.GetGroupContainer(cfg.GroupType);
+            var parent = Game.UI.Root.GetGroupContainer(cfg.GroupType);
             if (parent == null) 
             {
                 return null;
             }
 
-            var go = GameWorld.Root.GetComponent<ResourceComponent>().LoadAndInstantiate(cfg.Path, parent);
+            var go = Game.Resource.LoadAndInstantiate(cfg.Path, parent);
             groupView = go.GetComponent<NavigationGroupView>();
             return groupView;
         }

@@ -34,7 +34,7 @@ namespace Game.UI
 
         public void OnClickTestGroup2(NavigationItem item)
         {
-            GameWorld.Root.GetComponent<UIComponent>().Navigate(NavigationListDefine.Test_List_3);
+            //GameWorld.Root.GetComponent<UIComponent>().Navigate(NavigationListDefine.Test_List_3);
         }
 
         public void OnClickTestGroup3(NavigationItem item)

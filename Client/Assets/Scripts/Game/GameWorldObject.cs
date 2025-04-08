@@ -14,7 +14,7 @@ namespace Game
 
         private void Update()
         {
-            GameWorld.Tick(Time.deltaTime);
+            //GameWorld.Tick(Time.deltaTime);
         }
     }
 }

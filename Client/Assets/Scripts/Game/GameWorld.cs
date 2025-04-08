@@ -32,29 +32,29 @@ namespace Game
             var resourceComponent = Root.AddComponent<ResourceComponent>();
             await resourceComponent.Init(config);
 
-            var configComponent = Root.AddComponent<ConfigComponent>();
-            await configComponent.Init(config);
+            //var configComponent = Root.AddComponent<ConfigComponent>();
+            //await configComponent.Init(config);
 
-            var codeComponent = Root.AddComponent<CodeComponent>();
-            codeComponent.Init();
+            //var codeComponent = Root.AddComponent<CodeComponent>();
+            //codeComponent.Init();
 
-            var eventComponent = Root.AddComponent<EventComponent>();
-            eventComponent.Init();
+            //var eventComponent = Root.AddComponent<EventComponent>();
+            //eventComponent.Init();
 
-            var inputComponent = Root.AddComponent<InputComponent>();
-            inputComponent.Init();
+            //var inputComponent = Root.AddComponent<InputComponent>();
+            //inputComponent.Init();
 
             var uiComponent = Root.AddComponent<UIComponent>();
             uiComponent.Init(config);
 
-            var sceneComponent = Root.AddComponent<SceneComponent>();
-            sceneComponent.Init(config);
+            //var sceneComponent = Root.AddComponent<SceneComponent>();
+            //sceneComponent.Init(config);
 
-            var stateComponent = Root.AddComponent<StateComponent>();
-            stateComponent.Init();
+            //var stateComponent = Root.AddComponent<StateComponent>();
+            //stateComponent.Init();
 
-            var systemComponent = Root.AddComponent<SystemComponent>();
-            systemComponent.Init(config);
+            //var systemComponent = Root.AddComponent<SystemComponent>();
+            //systemComponent.Init(config);
         }
 
         public static void Tick(float dt) 

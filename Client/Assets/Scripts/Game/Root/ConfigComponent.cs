@@ -12,13 +12,12 @@ namespace Game
     /// </summary>
     public class ConfigComponent : ECS.Entity
     {
-        public GameLanguage Language { get; private set; }
         public Formula Formula { get; private set; }
         private GameCfgData data;
 
         public async UniTask Init(GameInitConfig config)
         {
-            Formula = GameWorld.Root.GetComponent<ResourceComponent>().LoadFormRes<Formula>(config.Formula);
+            //Formula = GameWorld.Root.GetComponent<ResourceComponent>().LoadFormRes<Formula>(config.Formula);
            
             string filePath = Path.Combine(Application.streamingAssetsPath, config.GameCfgFile);
             using (FileStream stream = new FileStream(filePath, FileMode.Open))
@@ -29,7 +28,6 @@ namespace Game
                     data.Deserialize(br);
                 }
             }
-            Language = new GameLanguage();
 
             await UniTask.Yield();
         }
@@ -110,7 +108,7 @@ namespace Game
         /// <returns></returns>
         public string GetTextById(int id)
         {
-            return Language.GetTextById(id);
+            return ""; //Language.GetTextById(id);
         }
 
         /// <summary>
@@ -118,10 +116,10 @@ namespace Game
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public LanguageItem GetLanguageItem(int id)
-        {
-            return Language.GetLanguageItem(id);
-        }
+        //public LanguageItem GetLanguageItem(int id)
+        //{
+        //    return null; // Language.GetLanguageItem(id);
+        //}
 
         /// <summary>
         /// 通过id获取Color
@@ -130,7 +128,7 @@ namespace Game
         /// <returns></returns>
         public Color GetColorById(int colorId)
         {
-            return Language.GetColorById(colorId);
+            return default; // Language.GetColorById(colorId);
         }
 
         /// <summary>
@@ -140,7 +138,7 @@ namespace Game
         /// <returns></returns>
         public Color GetColorByHtmlStr(string htmlStr)
         {
-            return Language.GetColorByHtmlStr(htmlStr);
+            return default; // Language.GetColorByHtmlStr(htmlStr);
         }
     }
 }

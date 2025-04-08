@@ -1,16 +1,16 @@
-namespace Game
+namespace Game.State
 {
     /// <summary>
     /// 
     /// </summary>
-    public class GamePlayingState : GameState
+    public class GamePlayingState : StateBase
     {
         public override GameStateDefine Define => GameStateDefine.Playing;
 
         public override void Enter()
         {            
-            GameWorld.Root.GetComponent<UIComponent>().Close();
-            GameWorld.Root.GetComponent<SceneComponent>().LoadSceneAsync(10003, null, null);
+            Game.UI.Close();
+            Game.Scene.LoadSceneAsync(10003, null, null);
         }
 
         public override void Exit()

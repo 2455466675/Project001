@@ -1,71 +1,124 @@
-using Game.Input;
-using System.Collections.Generic;
-
-namespace Game.UI
+namespace Game.UI.Input
 {
+    public enum InputType
+    {
+        Move      = 0,
+        Submit    = 1,
+        Cancel    = 2,
+        Esc       = 3,
+        LeftShift = 4,
+        Map       = 5,
+    }
+
     /// <summary>
     /// 
     /// </summary>
-    public class InputController : InputCammand
+    public class InputController
     {
-        private readonly List<InputModule> modules;
+        private readonly GameInput gameInput;
+        private readonly InputModuleManager moduleManager;
 
         public InputController()
         {
-            modules = new List<InputModule>
-            {
-                new BasalInputModule(),
-                new PanelInputModule(),
-                new BattleInputModule()
-            };
+            gameInput = new GameInput();
+            gameInput.Enable();
 
-            Push(modules.Find(m => m.ModuleType == ModuleType.Basal));
+            var move = new MoveActionWrapper();
+            move.Initialize(gameInput.DefaultMap.Move);
+            move.ActionEvent += OnMove;
+
+            var submit = new SubmitActionWrapper();
+            submit.Initialize(gameInput.DefaultMap.Submit);
+            submit.ActionEvent += OnSubmit;
+
+            var cancel = new CancelActionWrapper();
+            cancel.Initialize(gameInput.DefaultMap.Cancel);
+            cancel.ActionEvent += OnCancel;
+
+            var esc = new EscActionWrapper();
+            esc.Initialize(gameInput.DefaultMap.Esc);
+            esc.ActionEvent += OnEsc;
+
+            var ls = new LeftShiftActionWrapper();
+            ls.Initialize(gameInput.DefaultMap.LeftShift);
+            ls.ActionEvent += OnLeftShift;
+
+            var map = new MapActionWrapper();
+            map.Initialize(gameInput.DefaultMap.Map);
+            map.ActionEvent += OnMap;
+
+            moduleManager = new InputModuleManager();
         }
-
-        protected override void OnInputAction(ActionContext context)
-        {
-            InputType inputType = context.InputType;
-            switch (inputType) 
-            {
-                case InputType.Cancel:
-                case InputType.Esc:
-                    if (TryPeek(out InputCammand cammand))
-                    {
-                        if (cammand.Count == 0 && !cammand.IsLocked) 
-                        {
-                            Pop();
-                        }
-                    }
-                    break;
-            }
-        }
-
+     
         public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs = null)
         {
-            InputModule module;
+            moduleManager.Navigate(list_ID, moduleType, navigateIndexs);            
+        }
 
-            if (TryPeek(out InputCammand cammand))
+        public void Back() 
+        {
+            OnCancel();
+        }
+
+        public void Close() 
+        {
+            OnEsc();
+        }
+
+        private void OnMove(float x, float y)
+        {
+            ActionContext context = new()
             {
-                module = cammand as InputModule;              
-                if (module != null) 
-                {
-                    if (moduleType == ModuleType.Undefined || module.ModuleType == moduleType)
-                    {
-                        module.Navigate(list_ID, navigateIndexs);
-                        return;
-                    }
-                }           
-            }
-
-            module = modules.Find(m => m.ModuleType == moduleType);
-            if (module == null)
+                InputType = InputType.Move,
+                Vector2Value = new UnityEngine.Vector2(x, y)
+            };
+            DoAction(context);
+        }
+        private void OnSubmit()
+        {
+            ActionContext context = new()
             {
-                MLog.Error($"InputModule is null : {moduleType}");
-                return;
-            }
+                InputType = InputType.Submit,
+            };
+            DoAction(context);
+        }
+        private void OnCancel()
+        {
+            ActionContext context = new()
+            {
+                InputType = InputType.Cancel,
+            };
+            DoAction(context);
+        }
+        private void OnEsc()
+        {
+            ActionContext context = new()
+            {
+                InputType = InputType.Esc,
+            };
+            DoAction(context);
+        }
+        private void OnLeftShift(bool isPress)
+        {
+            ActionContext context = new()
+            {
+                InputType = InputType.LeftShift,
+                BoolValue = isPress
+            };
+            DoAction(context);
+        }
+        private void OnMap()
+        {
+            ActionContext context = new()
+            {
+                InputType = InputType.Map,
+            };
+            DoAction(context);
+        }
 
-            Push(module);
-            module.Navigate(list_ID, navigateIndexs);
+        private void DoAction(ActionContext context)
+        {
+            moduleManager.InputAction(context);
         }
     }
 }

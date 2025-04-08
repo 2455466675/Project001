@@ -14,7 +14,7 @@ namespace Game.UI
                 return;
             }
 
-            Sprite sprite = GameWorld.Root.GetComponent<ResourceComponent>().GetSprite(spriteName);
+            Sprite sprite = Game.Resource.GetSprite(spriteName);
             if (sprite == null) 
             {
                 MLog.Error($"{gameObject.name} : {spriteName} not find");

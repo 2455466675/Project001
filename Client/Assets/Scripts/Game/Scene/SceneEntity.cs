@@ -1,4 +1,3 @@
-using ECS;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,7 +6,7 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public class SceneEntity : Entity
+    public class SceneEntity
     {
         public int SceneId => data.Id;
         public int BuildIndex => data.BuildIndex;

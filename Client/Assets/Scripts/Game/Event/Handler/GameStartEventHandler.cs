@@ -1,3 +1,5 @@
+using Game.State;
+
 namespace Game
 {
     public struct GameStartEventArg
@@ -13,7 +15,7 @@ namespace Game
     {
         public override void Run(GameStartEventArg arg)
         {
-            GameWorld.Root.GetComponent<StateComponent>().Switch(GameStateDefine.Login);           
+            Game.State.Switch(GameStateDefine.Login);           
         }
     }
 }

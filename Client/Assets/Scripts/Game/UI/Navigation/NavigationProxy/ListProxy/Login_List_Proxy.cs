@@ -7,15 +7,14 @@ namespace Game.UI
     {
         public override bool IsLocked()
         {
-            bool state = GameWorld.Root.GetComponent<SystemComponent>().LoginSystem.LockLoginGroup;
+            bool state = Game.System.LoginSystem.LockLoginGroup;
             return state;
         }
 
         public override void OnEnable()
         {
-            LoginSystem loginSystem = GameWorld.Root.GetComponent<SystemComponent>().LoginSystem;
-            loginSystem.LockLoginGroup = true;
-            listView.UpdateData(loginSystem.GetOptions());
+            Game.System.LoginSystem.LockLoginGroup = true;
+            listView.UpdateData(Game.System.LoginSystem.GetOptions());
         }
 
         public override void OnSubmit(GameNavigationItem item)

@@ -13,13 +13,13 @@ namespace Game.UI
         public override void Show()
         {
             base.Show();
-            GameWorld.Root.GetComponent<EventComponent>().Register<SceneLoadingProgress>(OnProgressUpdate);
+            Game.Event.Register<SceneLoadingProgress>(OnProgressUpdate);
         }
 
         public override void Hide()
         {
             base.Hide();
-            GameWorld.Root.GetComponent<EventComponent>().Unregister<SceneLoadingProgress>(OnProgressUpdate);
+            Game.Event.Unregister<SceneLoadingProgress>(OnProgressUpdate);
         }
 
         private void OnProgressUpdate(SceneLoadingProgress arg) 

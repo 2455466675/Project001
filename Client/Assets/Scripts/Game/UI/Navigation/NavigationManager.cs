@@ -13,12 +13,12 @@ namespace Game.UI
         {
             groups = new Dictionary<NavigationGroupDefine, NavigationGroupEntity>();
 
-            AddComponent<NavigationProxy>();
+            //AddComponent<NavigationProxy>();
         }
 
         public void LoadMap(string path) 
         {
-            navigationMap = GameWorld.Root.GetComponent<ResourceComponent>().LoadFormRes<NavigationMap>(path);
+            //navigationMap = GameWorld.Root.GetComponent<ResourceComponent>().LoadFormRes<NavigationMap>(path);
         }
 
         public NavigationGroupDefine ListDefineToGroupDefine(NavigationListDefine listDefine)
@@ -36,7 +36,7 @@ namespace Game.UI
             }
             else
             {
-                NavigationGroupEntity groupEntity = CreateChild<NavigationGroupEntity>();
+                NavigationGroupEntity groupEntity = new NavigationGroupEntity();
                 groupEntity.Init(define);
                 groups[define] = groupEntity;
                 return groupEntity;
