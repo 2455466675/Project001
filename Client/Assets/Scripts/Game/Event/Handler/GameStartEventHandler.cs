@@ -11,9 +11,9 @@ namespace Game
     /// 
     /// </summary>
     [Event]
-    public class GameStartEventHandler : GameEvent<GameStartEventArg>
+    public class GameStartEventHandler : EventBase<GameStartEventArg>
     {
-        public override void Run(GameStartEventArg arg)
+        public override void Invoke(GameStartEventArg arg)
         {
             Game.State.Switch(GameStateDefine.Login);           
         }

@@ -11,9 +11,9 @@ namespace Game
     /// 
     /// </summary>
     [Event]
-    public class EventTest : GameEvent<EventTestArg>
+    public class EventTest : EventBase<EventTestArg>
     {
-        public override void Run(EventTestArg arg)
+        public override void Invoke(EventTestArg arg)
         {
             MLog.Log("EventTest", arg.x, arg.y, arg.name);
         }

@@ -19,7 +19,7 @@ namespace Game.UI.Input
 
         private bool isPress;
 
-        public void Update(float dt)
+        public override void Update(float dt)
         {
             if (!isPress) 
             {

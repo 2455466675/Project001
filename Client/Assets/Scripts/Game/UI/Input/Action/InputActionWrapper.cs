@@ -17,6 +17,10 @@ namespace Game.UI.Input
             inputAction.canceled += OnCanceled;
         }
 
+        public virtual void Update(float dt) 
+        {
+        }
+
         /// <summary>
         /// 触发时机：当输入动作首次被检测到时触发（例如按下按键、移动摇杆或触控开始）。
         /// </summary>

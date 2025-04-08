@@ -18,38 +18,56 @@ namespace Game.UI.Input
         private readonly GameInput gameInput;
         private readonly InputModuleManager moduleManager;
 
+        private InputActionWrapper[] wrappers;
+
         public InputController()
         {
             gameInput = new GameInput();
             gameInput.Enable();
 
+            wrappers = new InputActionWrapper[6];
+
             var move = new MoveActionWrapper();
             move.Initialize(gameInput.DefaultMap.Move);
             move.ActionEvent += OnMove;
+            wrappers[0] = move;
 
             var submit = new SubmitActionWrapper();
             submit.Initialize(gameInput.DefaultMap.Submit);
             submit.ActionEvent += OnSubmit;
+            wrappers[1] = submit;
 
             var cancel = new CancelActionWrapper();
             cancel.Initialize(gameInput.DefaultMap.Cancel);
             cancel.ActionEvent += OnCancel;
+            wrappers[2] = cancel;
 
             var esc = new EscActionWrapper();
             esc.Initialize(gameInput.DefaultMap.Esc);
             esc.ActionEvent += OnEsc;
+            wrappers[3] = esc;
 
             var ls = new LeftShiftActionWrapper();
             ls.Initialize(gameInput.DefaultMap.LeftShift);
             ls.ActionEvent += OnLeftShift;
+            wrappers[4] = ls;
 
             var map = new MapActionWrapper();
             map.Initialize(gameInput.DefaultMap.Map);
             map.ActionEvent += OnMap;
+            wrappers[5] = map;
 
             moduleManager = new InputModuleManager();
         }
-     
+
+        public void Update(float dt)
+        {
+            for (int i = 0; i < wrappers.Length; i++) 
+            {
+                wrappers[i]?.Update(dt);
+            }
+        }
+
         public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs = null)
         {
             moduleManager.Navigate(list_ID, moduleType, navigateIndexs);            

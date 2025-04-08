@@ -18,9 +18,9 @@ namespace Game
         {
             //await GameWorld.Init(config);
 
-            //GameWorld.Root.GetComponent<EventComponent>().Publish(new GameStartEventArg());
-
             await Game.Init(config);
+
+            Game.Event.Publish(new GameStartEventArg());
         }
     }
 }

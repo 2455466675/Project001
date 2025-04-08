@@ -22,14 +22,17 @@ namespace Game.UI
 
         public NavigationListEntity GetNavigationListEntity(NavigationListDefine define) 
         {
-            if (lists.ContainsKey(define)) 
-            {
-                return lists[define];
-            }
-            else
+            if (lists == null || lists.Count == 0) 
             {
                 return null;
             }
+
+            if (!lists.ContainsKey(define)) 
+            {
+                return null;
+            }
+            
+            return lists[define];
         }
 
         public void Show() 

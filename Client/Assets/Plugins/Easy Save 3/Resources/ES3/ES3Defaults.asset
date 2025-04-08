@@ -34,9 +34,9 @@ MonoBehaviour:
     - Assembly-CSharp-firstpass
     - Eflatun.SceneReference
     - UniTask.Linq
-    - Game
     - YooAsset
     - Assembly-CSharp
+    - Game
     - Navigation
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer

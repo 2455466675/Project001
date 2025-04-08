@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Game.Code;
 using Game.Config;
 using Game.Event;
@@ -6,13 +7,12 @@ using Game.Resource;
 using Game.State;
 using Game.System;
 using Game.UI;
-using UnityEngine;
 
 namespace Game
 {
     public static class Game
     {
-        public static GameObject GameRoot { get; private set; }
+        public static GameObject Root { get; private set; }
         public static GameResource Resource { get; private set; }
         public static GameConfig Config { get; private set; }
         public static GameCode Code { get; private set; }
@@ -22,9 +22,14 @@ namespace Game
         public static GameUI UI { get; private set; }
         public static GameSystem System { get; private set; }
 
+        private static bool IsInited;
+
         public static async UniTask Init(GameInitConfig config) 
         {
-            GameRoot = new GameObject("GameRoot");
+            IsInited = false;
+
+            Root = new GameObject("GameRoot");
+            Root.AddComponent<GameRoot>();
 
             Resource = new GameResource();
             await Resource.Init(config);
@@ -47,7 +52,22 @@ namespace Game
             UI = new GameUI();
             UI.Init(config);
 
+            System = new GameSystem();
+            System.Init(config);
+
             await UniTask.Yield();
+
+            IsInited = true;
+        }
+
+        public static void Update(float dt) 
+        {
+            if (!IsInited) 
+            {
+                return;
+            }
+
+            UI.Update(dt);
         }
     }
 }

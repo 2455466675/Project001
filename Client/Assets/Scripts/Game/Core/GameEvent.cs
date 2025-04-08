@@ -38,9 +38,9 @@ namespace Game.Event
                 List<IEvent> events = allEvent[t];
                 foreach (IEvent e in events)
                 {
-                    if (e is GameEvent<T> ge)
+                    if (e is EventBase<T> ge)
                     {
-                        ge.Run(arg);
+                        ge.Invoke(arg);
                     }
                 }
             }

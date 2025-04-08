@@ -9,7 +9,7 @@ namespace Game.System
 
         public void Init(GameInitConfig config)
         {
-            var go = Game.Resource.LoadAndInstantiate(config.ActorContainerPath, Game.GameRoot.transform);
+            var go = Game.Resource.LoadAndInstantiate(config.ActorContainerPath, Game.Root.transform);
             container = go.GetComponent<ActorContainer>();
 
             //CharacterEntity character = CreateChild<CharacterEntity>();

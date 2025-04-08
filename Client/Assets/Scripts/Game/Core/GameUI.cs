@@ -11,11 +11,16 @@ namespace Game.UI
 
         public void Init(GameInitConfig config)
         {
-            var go = Game.Resource.LoadAndInstantiate(config.UIRootPath, Game.GameRoot.transform);
+            var go = Game.Resource.LoadAndInstantiate(config.UIRootPath, Game.Root.transform);
             Root = go.GetComponent<UIRoot>();
 
             inputController = new InputController();
             navigationController = new NavigationController(config.NavigationMap);
+        }
+
+        public void Update(float dt) 
+        {
+            inputController.Update(dt);
         }
 
         public void Navigate(NavigationListDefine list_ID, ModuleType moduleType = ModuleType.Undefined, int[] navigateIndexs = null)

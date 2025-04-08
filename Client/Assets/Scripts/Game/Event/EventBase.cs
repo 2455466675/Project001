@@ -10,10 +10,10 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public abstract class GameEvent<T> : IEvent where T : struct
+    public abstract class EventBase<T> : IEvent where T : struct
     {
         public Type Type => typeof(T);
 
-        public abstract void Run(T arg);
+        public abstract void Invoke(T arg);
     }
 }

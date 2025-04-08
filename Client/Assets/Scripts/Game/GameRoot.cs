@@ -5,7 +5,7 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public class GameWorldObject : MonoBehaviour
+    public class GameRoot : MonoBehaviour
     {
         private void Start()
         {
@@ -13,8 +13,8 @@ namespace Game
         }
 
         private void Update()
-        {
-            //GameWorld.Tick(Time.deltaTime);
+        {            
+            Game.Update(Time.deltaTime);
         }
     }
 }
