@@ -60,11 +60,11 @@ namespace Game.UI.Input
             moduleManager = new InputModuleManager();
         }
 
-        public void Update(float dt)
+        public void FixedUpdate(float dt)
         {
             for (int i = 0; i < wrappers.Length; i++) 
             {
-                wrappers[i]?.Update(dt);
+                wrappers[i]?.Tick(dt);
             }
         }
 

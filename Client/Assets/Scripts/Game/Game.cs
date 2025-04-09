@@ -67,7 +67,16 @@ namespace Game
                 return;
             }
 
-            UI.Update(dt);
+        }
+
+        public static void FixedUpdate(float fdt) 
+        {
+            if (!IsInited)
+            {
+                return;
+            }
+
+            UI.FixedUpdate(fdt);
         }
     }
 }

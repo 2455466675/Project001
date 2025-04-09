@@ -11,49 +11,27 @@ namespace Game.UI.Input
     {
         public event Action<float, float> ActionEvent;
 
-        private readonly float pressTime = 0.3f;
-        private float pressTimer;
-
-        private readonly float intervalTime = 0.15f;
-        private float intervalTimer;
-
         private bool isPress;
 
-        public override void Update(float dt)
+        public override void Tick(float fdt)
         {
             if (!isPress) 
             {
                 return;
             }
-
-            if (pressTimer > 0)
-            {
-                pressTimer -= dt;
-                return;
-            }
-
-            if (intervalTimer <= 0f)
-            {
-                Execute();
-                intervalTimer = intervalTime;
-            }
-            else
-            {
-                intervalTimer -= dt;
-            }
+            Execute();
         }
 
         protected override void OnStarted(InputAction.CallbackContext obj)
         {
             Execute();
-            pressTimer = pressTime;
-            intervalTimer = intervalTime;
             isPress = true;
         }
 
         protected override void OnCanceled(InputAction.CallbackContext obj)
         {
             isPress = false;
+            Execute();
         }
 
         private void Execute()

@@ -17,7 +17,11 @@ namespace Game.UI.Input
             inputAction.canceled += OnCanceled;
         }
 
-        public virtual void Update(float dt) 
+        /// <summary>
+        /// FixedUpdate
+        /// </summary>
+        /// <param name="fdt"></param>
+        public virtual void Tick(float fdt) 
         {
         }
 

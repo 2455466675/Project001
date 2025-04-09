@@ -16,5 +16,10 @@ namespace Game
         {            
             Game.Update(Time.deltaTime);
         }
+
+        private void FixedUpdate()
+        {
+            Game.FixedUpdate(Time.fixedDeltaTime);
+        }
     }
 }

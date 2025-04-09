@@ -18,9 +18,9 @@ namespace Game.UI
             navigationController = new NavigationController(config.NavigationMap);
         }
 
-        public void Update(float dt) 
+        public void FixedUpdate(float dt) 
         {
-            inputController.Update(dt);
+            inputController.FixedUpdate(dt);
         }
 
         public void Navigate(NavigationListDefine list_ID, ModuleType moduleType = ModuleType.Undefined, int[] navigateIndexs = null)

@@ -53,11 +53,8 @@ namespace Navigation
     {
         [SerializeField]
         protected ListType listType;
-        //[SerializeField]
         protected int minIndex;
-        //[SerializeField]
         protected int maxIndex;
-        //[SerializeField]
         protected int pointer;
         protected bool isInit;
         protected ListState state;
@@ -71,9 +68,40 @@ namespace Navigation
         public event Action<NavigationItem> OnClearItemEvent;
         public event Action<float, float, NavigationItem> OnMoveEvent;
 
+        [SerializeField]
+        [Range(0.2f, 1f)]
+        private float pressTime = 0.3f; //长按时间
+        private float pressTimer;
+
+        [SerializeField]
+        [Range(0.1f, 1f)]
+        private float intervalTime = 0.15f; //长按后每次更新间隔
+        private float intervalTimer;
+
+        private bool isPress;
+        private bool CanMove => pressTimer <= 0f && intervalTimer <= 0f;
+
         private void OnDestroy()
         {
             Clear();
+        }
+
+        private void FixedUpdate()
+        {
+            if (!isPress) 
+            {
+                return;
+            }
+
+            if (pressTimer > 0f)
+            {
+                pressTimer -= Time.fixedDeltaTime;
+            }
+
+            if (intervalTimer > 0f)
+            {
+                intervalTimer -= Time.fixedDeltaTime;
+            }            
         }
 
         public virtual void Init() 
@@ -86,8 +114,28 @@ namespace Navigation
 
         public void Move(float h, float v)
         {
-            MoveCurrent(h, v);
-            OnMove(h, v);
+            if (h == 0f && v == 0f) 
+            {
+                isPress = false;          
+                return;
+            }
+            
+            if (!isPress) 
+            {
+                MoveInner(h, v);
+                isPress = true;
+                pressTimer = pressTime;
+                intervalTimer = 0f;
+            }
+            else
+            {
+                if (!CanMove)
+                {
+                    return;
+                }
+                MoveInner(h, v);
+                intervalTimer = intervalTime;
+            }            
         }
 
         public void Submit()
@@ -107,6 +155,7 @@ namespace Navigation
         public void OutFocus()
         {
             state = ListState.OutFocused;
+            isPress = false;
             OutFocusCurrent();
         }
 
@@ -115,6 +164,7 @@ namespace Navigation
             state = ListState.Closed;
             DeselectCurrent();
             current = null;
+            isPress = false;
             OnExit();
         }
 
@@ -243,6 +293,12 @@ namespace Navigation
                     OnMoveEvent?.Invoke(h, v, item);
                 }
             }
+        }
+
+        private void MoveInner(float h, float v)
+        {
+            MoveCurrent(h, v);
+            OnMove(h, v);
         }
     }
 }
