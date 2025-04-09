@@ -5,15 +5,15 @@ namespace Game.System
     /// </summary>
     public class RoleSystem
     {
-        private ActorContainer container;
+        public ActorContainer Container { get; private set; }
 
         public void Init(GameInitConfig config)
         {
             var go = Game.Resource.LoadAndInstantiate(config.ActorContainerPath, Game.Root.transform);
-            container = go.GetComponent<ActorContainer>();
+            Container = go.GetComponent<ActorContainer>();
 
-            //CharacterEntity character = CreateChild<CharacterEntity>();
-            //character.AddComponent<ActorComponent>();
+            Character character = new Character();
+            character.Init(810001);
         }
     }
 }

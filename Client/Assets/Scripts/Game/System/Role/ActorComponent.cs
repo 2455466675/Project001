@@ -1,8 +1,11 @@
-using ECS;
+
+
+using Config;
+using UnityEngine;
 
 namespace Game.System
 {
-    public class ActorComponent : Entity
+    public class ActorComponent
     {
         public int id;
 
@@ -15,7 +18,9 @@ namespace Game.System
 
         public void Refresh() 
         {
-            
+            ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
+            GameObject go = Game.Resource.LoadAndInstantiate(cfg.PrefabPath, Game.System.RoleSystem.Container.transform);
+            actor = go.GetComponent<Actor>();
         }
 
         public void PlayAction() 
@@ -23,7 +28,7 @@ namespace Game.System
             
         }
 
-        protected override void OnDestroy()
+        protected void OnDestroy()
         {
             actor = null;
         }
