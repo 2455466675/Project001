@@ -74,7 +74,7 @@ namespace Game.Resource
         public async UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object
         {
             AssetHandle handle = package.LoadAssetAsync<T>(path);
-            await handle;
+            await handle.Task;
             return handle.GetAssetObject<T>();
         }
 
