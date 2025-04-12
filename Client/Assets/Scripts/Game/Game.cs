@@ -77,6 +77,7 @@ namespace Game
             }
 
             UI.FixedUpdate(fdt);
+            System.FixedUpdate(fdt);
         }
     }
 }

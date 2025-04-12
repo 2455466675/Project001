@@ -12,5 +12,10 @@ namespace Game.System
             RoleSystem = new RoleSystem();
             RoleSystem.Init(config);
         }
+
+        public void FixedUpdate(float fdt) 
+        {
+            RoleSystem.FixedUpdate(fdt);
+        }
     }
 }

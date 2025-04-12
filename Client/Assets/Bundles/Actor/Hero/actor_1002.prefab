@@ -244,6 +244,8 @@ GameObject:
   - component: {fileID: 881175840646527619}
   - component: {fileID: 5072236382586647198}
   - component: {fileID: 6955697201107584817}
+  - component: {fileID: 7166758778922920393}
+  - component: {fileID: 5610290956022813483}
   m_Layer: 0
   m_Name: actor_1002
   m_TagString: Untagged
@@ -315,3 +317,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
+--- !u!114 &7166758778922920393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165927471500244920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f30e5cb5ef37943a993b1e6b2dde4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 7041047716624192996}
+  animator: {fileID: 8280654135856090372}
+  rigidbody2D: {fileID: 5072236382586647198}
+  boxCollider2D: {fileID: 6955697201107584817}
+  actionDriver: {fileID: 5610290956022813483}
+--- !u!114 &5610290956022813483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165927471500244920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60586d0d81e01fa4da4cb76b4f3b3ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 6669284193516686391, guid: 20c53aeef0aeaf646a822efda286b234, type: 3}
