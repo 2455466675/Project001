@@ -15,6 +15,12 @@ namespace Game.UI.Input
                 case InputType.Esc:
                    // GameWorld.Root.GetComponent<UIComponent>().Navigate(NavigationListDefine.Test_List_1, ModuleType.Panel);
                     break;
+                case InputType.Move:
+                    Game.System.RoleSystem.Move(context.Vector2Value.x, context.Vector2Value.y);
+                    break;
+                case InputType.LeftShift:
+                    Game.System.RoleSystem.Run(context.BoolValue);
+                    break;
             }
         }
 

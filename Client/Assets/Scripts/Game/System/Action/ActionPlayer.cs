@@ -24,9 +24,10 @@ namespace Game.System
             private bool isExecuted;
             private readonly ActionCommandBase command;
 
-            public Command(ActionCommandBase command) 
+            public Command(ActionPlayer player, ActionCommandBase command) 
             {
                 this.command = command;
+                this.command.SetPlayer(player);
                 isExecuted = false;
             }
 
@@ -46,6 +47,9 @@ namespace Game.System
                 return command.Priority.CompareTo(other.command.Priority);
             }
         }
+
+        public Actor Actor { get; private set; }
+        public object UserData { get; private set; }
 
         public bool IsIdle => state == ActionPlayerState.Idle;
         public bool IsProcessing => state == ActionPlayerState.Processing;
@@ -84,7 +88,7 @@ namespace Game.System
             this.commands = new Command[length];
             for (int i = 0; i < length; i++) 
             {
-                this.commands[i] = new Command(commands[i]);                
+                this.commands[i] = new Command(this, commands[i]);                
             }
         }
 
@@ -94,10 +98,13 @@ namespace Game.System
             return handle;
         }
 
-        public void Start() 
+        public void Start(Actor actor, object userData) 
         {
             if (!IsIdle) return;
+
             state = ActionPlayerState.Processing;
+            Actor = actor;
+            UserData = userData;
 
             Init();
             Run();
@@ -126,39 +133,15 @@ namespace Game.System
             }
             
             completionSource?.TrySetResult();
+            Actor = null;
+            UserData = null;
         }
 
-        private void Run() 
-        {
-            for (int i = 0; i < commands.Length; i++)
-            {
-                Command cmd = commands[i];
-                if (!cmd.IsExecuted && cmd.Timepoint <= timer)
-                {
-                    cmd.Execute();
-                }
-            }
-        }
-
-        private void CheckComplete() 
-        {
-            if (duration < 0f) 
-            {
-                return;
-            }
-
-            if (timer >= duration)
-            {
-                Complete();
-            }
-        }
-
-        private void Init() 
+        private void Init()
         {
             timer = 0f;
 
             float duration = 0f;
-
             for (int i = 0; i < commands.Length; i++)
             {
                 Command cmd = commands[i];
@@ -176,10 +159,41 @@ namespace Game.System
                 float t = cmd.Timepoint + cmd.Duration;
                 duration = Math.Max(duration, t);
             }
-
             this.duration = duration;
 
             Array.Sort(commands, (a, b) => b.CompareTo(a));
+        }
+
+        private void Run() 
+        {
+            for (int i = 0; i < commands.Length; i++)
+            {
+                Command cmd = commands[i];
+                if (!cmd.IsExecuted && cmd.Timepoint <= timer)
+                {
+                    try
+                    {
+                        cmd.Execute();
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }                    
+                }
+            }
+        }
+
+        private void CheckComplete() 
+        {
+            if (duration < 0f) 
+            {
+                return;
+            }
+
+            if (timer >= duration)
+            {
+                Complete();
+            }
         }
     }
 }

@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 516908887459484936}
   - component: {fileID: 2555994066877888691}
   - component: {fileID: 4471564798906123813}
+  - component: {fileID: 7766540547052269007}
   m_Layer: 0
   m_Name: actor_1001
   m_TagString: Untagged
@@ -161,6 +162,20 @@ MonoBehaviour:
   animator: {fileID: 1707397919405123022}
   rigidbody2D: {fileID: 516908887459484936}
   boxCollider2D: {fileID: 2555994066877888691}
+  actionDriver: {fileID: 7766540547052269007}
+--- !u!114 &7766540547052269007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7719453183051244211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60586d0d81e01fa4da4cb76b4f3b3ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 6669284193516686391, guid: 20c53aeef0aeaf646a822efda286b234, type: 3}
 --- !u!1 &8896465971605461122
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -26,17 +27,28 @@ namespace Game.System
                 ActionItemBase[] temp = items.Where(a => a != null).ToArray();
 
                 int count = temp.Length;
-
                 for (int i = 0; i < count; i++)
                 {
                     ActionItemBase item = items[i];
-
                     commands.Add(item.CreateCommand());
                 }
             }
                   
             ActionPlayer player = new ActionPlayer(commands.ToArray());
             return player;
+        }
+
+        [Button("Init")]
+        public void Init() 
+        {
+#if UNITY_EDITOR
+            items = GetComponentsInChildren<ActionItemBase>();
+
+            if (string.IsNullOrEmpty(actionName)) 
+            {
+                actionName = gameObject.name;
+            }
+#endif
         }
     }
 }

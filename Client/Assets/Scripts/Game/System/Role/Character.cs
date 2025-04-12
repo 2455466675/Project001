@@ -19,5 +19,15 @@ namespace Game.System
             actorComponent.Init(cfg.ActorId);
             actorComponent.Refresh();
         }
+
+        public void Move(float x, float y) 
+        {
+            actorComponent.Move(x, y);
+        }
+
+        public void Run(bool isRunning)
+        {
+            actorComponent.Run(isRunning);
+        }
     }
 }

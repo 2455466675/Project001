@@ -5,10 +5,17 @@ namespace Game.System
     /// </summary>
     public class ActionCommandBase
     {
-        private ActionItemBase item;
         public int Priority => item != null ? item.Priority : 0;
         public float Timepoint => item != null ? item.Timepoint : -1f;
         public float Duration => item != null ? item.Duration : 0f;
+
+        private ActionItemBase item;
+        protected ActionPlayer Player { get; private set; }
+
+        public void SetPlayer(ActionPlayer player) 
+        {
+            Player = player;
+        }
 
         public void SetActionItem(ActionItemBase item) 
         {
@@ -23,6 +30,8 @@ namespace Game.System
         public void Complete()
         {
             OnComplete();
+            item = null;
+            Player = null;
         }
 
         protected T GetActionItem<T>() where T : ActionItemBase 

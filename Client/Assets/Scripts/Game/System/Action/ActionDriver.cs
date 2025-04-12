@@ -8,6 +8,9 @@ namespace Game.System
     /// </summary>
     public class ActionDriver : MonoBehaviour
     {
+        [SerializeField]
+        private ActionSource source;
+
         private List<ActionPlayer> newPlayers;
         private List<ActionPlayer> oldPlayers;
         private List<ActionPlayer> players;
@@ -19,12 +22,21 @@ namespace Game.System
             players = new List<ActionPlayer>();
         }
 
-        public ActionHandle PlayAction(string actionName) 
+        public ActionHandle PlayAction(string actionName, Actor actor, object userData) 
         {
-            ActorAction action = null;
+            if (source == null) 
+            {
+                return null;
+            }
+
+            ActorAction action = source.FindAction(actionName);
+            if (action == null) 
+            {
+                return null;
+            }
 
             ActionPlayer player = action.CreatePlayer();
-            player.Start();
+            player.Start(actor, userData);
 
             if (player.IsProcessing) 
             {

@@ -5,6 +5,6 @@ namespace Game.System
     /// </summary>
     public class ActionCommand<T> : ActionCommandBase where T : ActionItemBase
     {
-        protected T ActionItem => GetActionItem<T>();
+        protected T Item => GetActionItem<T>();
     }
 }

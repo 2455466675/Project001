@@ -37,10 +37,10 @@ MonoBehaviour:
     - YooAsset
     - Assembly-CSharp
     - Game
-    - GameConfig
     - Navigation
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
+    - GameConfig
     - UniTask.TextMeshPro
     - UniTask.Addressables
     - Eflatun.SceneReference.Editor
