@@ -1,26 +1,7 @@
-using System;
 using System.Collections.Generic;
 
 namespace Game.System
 {
-    public class UnitArchType 
-    {
-        public List<Type> types;
-
-        public void F() 
-        {
-            foreach (var type in types) 
-            {
-                if (type.IsSubclassOf(typeof(UnitComponent))) 
-                {
-                    
-                }
-
-                Activator.CreateInstance(type);
-            }
-        }
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -28,9 +9,8 @@ namespace Game.System
     {
         public ActorContainer Container { get; private set; }
 
-        private Character character;
-
-        private List<Character> characters;
+        private int uidGenerator;
+        private Dictionary<int, RoleUnit> units;
 
         private HashSet<IFixedUpdateComponent> fixedUpdateComponents;
         private List<IFixedUpdateComponent> newfixedUpdateComponents;
@@ -38,37 +18,14 @@ namespace Game.System
 
         public void Init(GameInitConfig config)
         {
+            uidGenerator = 10000;
+            units = new Dictionary<int, RoleUnit>();
             fixedUpdateComponents = new HashSet<IFixedUpdateComponent>();
             newfixedUpdateComponents = new List<IFixedUpdateComponent>();
             oldfixedUpdateComponents = new List<IFixedUpdateComponent>();
 
             var go = Game.Resource.LoadAndInstantiate(config.ActorContainerPath, Game.Root.transform);
-            Container = go.GetComponent<ActorContainer>();
-
-            characters = new List<Character>();
-
-            Character character = new Character();
-            character.Init(810001);
-            this.character = character;
-
-            characters.Add(character);
-
-            for (int i = 2; i < 5; i++) 
-            {
-                Character c = new Character();
-                c.Init(810000 + i);
-                characters.Add(c);
-            }
-        }
-
-        public void Move(float x, float y) 
-        {
-            character.Move(x, y);
-        }
-
-        public void Run(bool isRunning)
-        {
-            character.Run(isRunning);
+            Container = go.GetComponent<ActorContainer>();        
         }
 
         public void FixedUpdate(float fdt) 
@@ -97,14 +54,29 @@ namespace Game.System
             }
         }
 
-        public RoleUnit CreateUnit()
+        public T CreateUnit<T>() where T : RoleUnit, new()
         {
-            return default;
+            int uid = ++uidGenerator;
+            T unit = new();
+            unit.Constructor(this, uid);
+            units.Add(uid, unit);
+            return unit;
         }
 
-        public T CreateComponent<T>() where T : UnitComponent, new()
+        public void DestroyUnit(int uid) 
+        {            
+            if (!units.ContainsKey(uid)) 
+            {
+                return;
+            }
+
+            units.Remove(uid);
+        }
+
+        public T CreateComponent<T>(RoleUnit unit) where T : UnitComponent, new()
         {
-            T component = new();
+            T component = new();            
+            component.Constructor(unit);
             if (component is IAwakeComponent a) 
             {
                 a.Awake();
@@ -127,6 +99,7 @@ namespace Game.System
             {
                 return;
             }
+            component.Destroy();
             oldfixedUpdateComponents.Add(u);
         }
     }

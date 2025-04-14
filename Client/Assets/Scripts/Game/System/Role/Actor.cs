@@ -8,9 +8,12 @@ namespace Game.System
         
         public Animator animator;
 
-        public new Rigidbody2D rigidbody2D;
+        [SerializeField]
+        private Rigidbody2D m_rigidbody2D;
+        public Rigidbody2D Rigidbody2D => m_rigidbody2D;
 
         public BoxCollider2D boxCollider2D;
+
 
         [SerializeField]
         private ActionDriver actionDriver;

@@ -7,12 +7,17 @@ namespace Game.System
     /// 
     /// </summary>
     public class RoleUnit
-    {        
+    {
+        public int Uid { get; private set; }
+        private RoleSystem roleSystem;
         private Dictionary<Type, UnitComponent> components;
 
-        public RoleUnit() 
+        public void Constructor(RoleSystem roleSystem, int uid) 
         {
+            this.Uid = uid;
+            this.roleSystem = roleSystem;
             components = new Dictionary<Type, UnitComponent>();
+            OnConstructor();
         }
 
         public T AddComponent<T>() where T : UnitComponent, new()
@@ -24,7 +29,7 @@ namespace Game.System
             }
             else
             {
-                T component = new();
+                T component = roleSystem.CreateComponent<T>(this);
                 components.Add(type, component);
                 return component;
             }                   
@@ -43,14 +48,19 @@ namespace Game.System
             }
         }
 
-        public void RemoveComponent<T>() where T : UnitComponent 
+        public void Destroy() 
         {
-            Type type = typeof(T);
-            if (!components.ContainsKey(type))
+            foreach (var component in components.Values) 
             {
-                return;
+                roleSystem.DestroyComponent(component);
             }
-            components.Remove(type);
+            components.Clear();
+            roleSystem.DestroyUnit(this.Uid);
+            roleSystem = null;
+        }
+
+        protected virtual void OnConstructor()
+        {
         }
     }
 }

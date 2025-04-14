@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Game.System
 {
     /// <summary>
@@ -9,6 +5,26 @@ namespace Game.System
     /// </summary>
     public class UnitComponent
     {
+        private RoleUnit unit;
 
+        public void Constructor(RoleUnit unit) 
+        {
+            this.unit = unit;
+        }
+
+        public T GetComponent<T>() where T : UnitComponent
+        {
+            return unit.GetComponent<T>();
+        }
+
+        public void Destroy() 
+        {
+            OnDestroy();
+            unit = null;
+        }
+
+        protected virtual void OnDestroy() 
+        {
+        }
     }
 }

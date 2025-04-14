@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Formula
   m_EditorClassIdentifier: 
   TEAM_LIMIT: 4
-  GAME_SYSTEM_CONFIG_PATH: Assets/Bundles/Common/GameSystemConfig
-  TEAM_GAP: 0.6
+  TEAM_GAP: 0.5

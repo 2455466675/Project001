@@ -11,12 +11,11 @@ namespace Game
 
         private void Awake()
         {
-            //GameWorld.Initialize();   
+            Application.targetFrameRate = 30;
         }
 
         private async void Start()
         {
-            //await GameWorld.Init(config);
 
             await Game.Init(config);
 

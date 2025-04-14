@@ -13,12 +13,12 @@ namespace Game.System
         protected override void OnExecute()
         {
             Actor actor = Player.Actor;
-            if (actor == null || actor.rigidbody2D == null) 
+            if (actor == null || actor.Rigidbody2D == null) 
             {
                 return;
             }
             float speed = 0f;
-            actor.rigidbody2D.velocity = (1f + speed) * Item.speedRate * Item.direction;
+            actor.Rigidbody2D.velocity = (1f + speed) * Item.speedRate * Item.direction;
         }
     }
 }

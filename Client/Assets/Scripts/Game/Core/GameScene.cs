@@ -65,21 +65,16 @@ namespace Game
                 e.Show();
                 await Game.Resource.LoadSceneAsync(entity.Path, entity.LoadSceneMode, null);
 
-                float t = 500f;
-                float i = 500f;
-                while (i > 50f)
-                {
-                    i -= 1f;
-                    LoadingHandler((t - i) / t);
-                    await UniTask.Yield();
-                }
-                await UniTask.WaitForSeconds(0.2f);
+                float t = 100f;
+                float i = 100f;
                 while (i > 0f)
                 {
                     i -= 1f;
                     LoadingHandler((t - i) / t);
                     await UniTask.Yield();
                 }
+                LoadingHandler(1f);
+                await UniTask.Yield();
                 await UniTask.Yield();
                 e.Hide();
             }

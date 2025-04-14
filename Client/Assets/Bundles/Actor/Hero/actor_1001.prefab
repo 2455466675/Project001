@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 2367476302467340057}
   animator: {fileID: 1707397919405123022}
-  rigidbody2D: {fileID: 516908887459484936}
+  m_rigidbody2D: {fileID: 516908887459484936}
   boxCollider2D: {fileID: 2555994066877888691}
   actionDriver: {fileID: 7766540547052269007}
 --- !u!114 &7766540547052269007
