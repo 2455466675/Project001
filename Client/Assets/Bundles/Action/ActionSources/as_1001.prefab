@@ -878,7 +878,7 @@ MonoBehaviour:
   priority: 0
   timepoint: 0
   duration: 0
-  speedRate: 1
+  speedRate: 1.25
   direction: {x: -1, y: 0}
 --- !u!1 &2598904803858533891
 GameObject:
@@ -1671,7 +1671,7 @@ MonoBehaviour:
   priority: 0
   timepoint: 0
   duration: 0
-  speedRate: 1
+  speedRate: 1.25
   direction: {x: 0, y: 1}
 --- !u!1 &5301700336219868594
 GameObject:
@@ -2245,7 +2245,7 @@ MonoBehaviour:
   priority: 0
   timepoint: 0
   duration: 0
-  speedRate: 1
+  speedRate: 1.25
   direction: {x: 1, y: 0}
 --- !u!1 &6412204447285925466
 GameObject:
@@ -2685,7 +2685,7 @@ MonoBehaviour:
   priority: 0
   timepoint: 0
   duration: 0
-  speedRate: 1
+  speedRate: 1.25
   direction: {x: 0, y: -1}
 --- !u!1 &8063580223267238987
 GameObject:

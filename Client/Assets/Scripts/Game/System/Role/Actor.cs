@@ -18,13 +18,14 @@ namespace Game.System
         [SerializeField]
         private ActionDriver actionDriver;
 
-        public ActionHandle PlayAction(string actionName, object userData = null) 
+        public ActionHandle PlayAction(int hash, object userData) 
         {
             if (actionDriver == null) 
             {
                 return null;
             }
-            return actionDriver.PlayAction(actionName, this, userData);
+            ActionHandle handle = actionDriver.PlayAction(hash, this, userData);
+            return handle;
         }
     }
 }

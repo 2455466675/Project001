@@ -10,7 +10,7 @@ namespace Game.System
     /// </summary>
     public class ActorAction : MonoBehaviour
     {
-        public string ActionName => actionName;
+        public int ActionNameHash => Common.StringToHash(actionName);
 
         [SerializeField]
         private string actionName;
@@ -34,7 +34,7 @@ namespace Game.System
                 }
             }
                   
-            ActionPlayer player = new ActionPlayer(commands.ToArray());
+            ActionPlayer player = new ActionPlayer(ActionNameHash, commands.ToArray());
             return player;
         }
 

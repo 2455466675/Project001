@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.System
 {
@@ -16,7 +15,7 @@ namespace Game.System
         {
             units = new List<PartyUnit>();
 
-            for (int i = 1; i < 3; i++)
+            for (int i = 1; i < 5; i++)
             {
                 PartyUnit unit = Game.System.RoleSystem.CreateUnit<PartyUnit>();
                 unit.Init(810000 + i);
@@ -32,20 +31,17 @@ namespace Game.System
             {
                 PartyUnit unit = units[i];
 
-                QueueableComponent queueableComponent = unit.GetComponent<QueueableComponent>();
-                queueableComponent.IsLeader = i == 0;
-
-                ActorComponent actorComponent = unit.GetComponent<ActorComponent>();
-                actorComponent.SetRigidbodyEnable(i == 0);
+                PartyComponent partyComponent = unit.GetComponent<PartyComponent>();
+                partyComponent.SetIsLeader(i == 0);
 
                 if (i > 0) 
                 {            
-                    queueableComponent.Prev = units[i - 1].GetComponent<QueueableComponent>();
+                    partyComponent.SetPrev(units[i - 1].GetComponent<PartyComponent>());
                 }
                 
                 if (i < units.Count - 1)
                 {
-                    queueableComponent.Next = units[i + 1].GetComponent<QueueableComponent>();
+                    partyComponent.SetNext(units[i + 1].GetComponent<PartyComponent>());
                 }
             }
         }

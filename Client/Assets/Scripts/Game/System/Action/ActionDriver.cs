@@ -22,23 +22,22 @@ namespace Game.System
             players = new List<ActionPlayer>();
         }
 
-        public ActionHandle PlayAction(string actionName, Actor actor, object userData) 
+        public ActionHandle PlayAction(int hash, Actor actor, object userData)
         {
-            if (source == null) 
+            if (source == null)
+            {
+                return null;
+            }
+            
+            ActionPlayer player = source.CreatePlayer(hash);
+            if (player == null) 
             {
                 return null;
             }
 
-            ActorAction action = source.FindAction(actionName);
-            if (action == null) 
-            {
-                return null;
-            }
-
-            ActionPlayer player = action.CreatePlayer();
             player.Start(actor, userData);
 
-            if (player.IsProcessing) 
+            if (player.IsProcessing)
             {
                 newPlayers.Add(player);
             }
@@ -94,9 +93,9 @@ namespace Game.System
                     player.Complete();
                 }
             }
+            players.Clear();
             newPlayers.Clear();
             oldPlayers.Clear();
-            players.Clear();
         }
     }
 }

@@ -1,6 +1,4 @@
 using Config;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Game.System
 {
@@ -11,10 +9,10 @@ namespace Game.System
     {
         private ActorComponent actorComponent;
         private MotorComponent motorComponent;
-
+        
         protected override void OnConstructor()
         {
-            AddComponent<QueueableComponent>();
+            AddComponent<PartyComponent>();
             actorComponent = AddComponent<ActorComponent>();
             motorComponent = AddComponent<MotorComponent>();
         }

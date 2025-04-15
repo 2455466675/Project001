@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using UnityEngine;
 using PT = UnityEngine.AnimatorControllerParameterType;
 
 namespace Game.System
@@ -16,6 +17,19 @@ namespace Game.System
 
         [ShowIf("parameterType", PT.Bool)]
         public bool boolValue;
+
+        private int parameterHash = -1;
+        public int ParameterHash
+        {
+            get 
+            {
+                if (parameterHash < 0) 
+                {
+                    parameterHash = Animator.StringToHash(parameter);
+                }
+                return parameterHash;
+            }
+        }
     }
 
     public class AnimatorActionCommand : ActionCommand<AnimatorAction>
@@ -28,8 +42,8 @@ namespace Game.System
                 return;
             }
 
-            string parameter = Item.parameter;
-            if (string.IsNullOrEmpty(parameter)) 
+            int hash = Item.ParameterHash;
+            if (hash < 0) 
             {
                 return;
             }
@@ -38,16 +52,16 @@ namespace Game.System
             switch (pt)
             {
                 case PT.Float:
-                    actor.animator.SetFloat(parameter, Item.floatValue);
+                    actor.animator.SetFloat(hash, Item.floatValue);
                     break;
                 case PT.Int:
-                    actor.animator.SetInteger(parameter, Item.intValue);
+                    actor.animator.SetInteger(hash, Item.intValue);
                     break;
                 case PT.Bool:
-                    actor.animator.SetBool(parameter, Item.boolValue);
+                    actor.animator.SetBool(hash, Item.boolValue);
                     break;
                 case PT.Trigger:
-                    actor.animator.SetTrigger(parameter);
+                    actor.animator.SetTrigger(hash);
                     break;
                 default:
                     break;

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace Game.System
@@ -33,8 +32,29 @@ namespace Game.System
     /// </summary>
     public class MotorComponent : UnitComponent, IAwakeComponent, IFixedUpdateComponent
     {
+        private static readonly int walkUpHash = Common.StringToHash("WalkUp");
+        private static readonly int walkDownHash = Common.StringToHash("WalkDown");
+        private static readonly int walkLeftHash = Common.StringToHash("WalkLeft");
+        private static readonly int walkRightHash = Common.StringToHash("WalkRight");
+        private static readonly int runUpHash = Common.StringToHash("RunUp");
+        private static readonly int runDownHash = Common.StringToHash("RunDown");
+        private static readonly int runLeftHash = Common.StringToHash("RunLeft");
+        private static readonly int runRightHash = Common.StringToHash("RunRight");
+        private static readonly int idleUpHash = Common.StringToHash("IdleUp");
+        private static readonly int idleDownHash = Common.StringToHash("IdleDown");
+        private static readonly int idleLeftHash = Common.StringToHash("IdleLeft");
+        private static readonly int idleRightHash = Common.StringToHash("IdleRight");
+        private static readonly int followWalkUpHash = Common.StringToHash("FollowWalkUp");
+        private static readonly int followWalkDownHash = Common.StringToHash("FollowWalkDown");
+        private static readonly int followWalkLeftHash = Common.StringToHash("FollowWalkLeft");
+        private static readonly int followWalkRightHash = Common.StringToHash("FollowWalkRight");
+        private static readonly int followRunUpHash = Common.StringToHash("FollowRunUp");
+        private static readonly int followRunDownHash = Common.StringToHash("FollowRunDown");
+        private static readonly int followRunLeftHash = Common.StringToHash("FollowRunLeft");
+        private static readonly int followRunRightHash = Common.StringToHash("FollowRunRight");
+
         private ActorComponent actorComponent;
-        private QueueableComponent queueable;
+        private PartyComponent partyComponent;
 
         private float dirX;
         private float dirY;
@@ -58,7 +78,7 @@ namespace Game.System
 
         public void Awake()
         {
-            queueable = GetComponent<QueueableComponent>();
+            partyComponent = GetComponent<PartyComponent>();
             actorComponent = GetComponent<ActorComponent>();
             dirX = 0f;
             dirY = -1f;
@@ -70,8 +90,15 @@ namespace Game.System
 
         public void Move(float x, float y)
         {
+            MoveType moveType = DoAction(x, y);
+            Transmit(moveType);
+            Block();
+        }
+
+        private MoveType DoAction(float x, float y)
+        {
             MoveType moveType;
-            string actionName;
+            int actionHash;
 
             if (x != 0)
             {
@@ -79,12 +106,12 @@ namespace Game.System
                 {
                     if (isRunning)
                     {
-                        actionName = "RunRight";
+                        actionHash = runRightHash;
                         moveType = MoveType.RunRight;
                     }
                     else
                     {
-                        actionName = "WalkRight";
+                        actionHash = walkRightHash;
                         moveType = MoveType.WalkRight;
                     }
                 }
@@ -92,12 +119,12 @@ namespace Game.System
                 {
                     if (isRunning)
                     {
-                        actionName = "RunLeft";
+                        actionHash = runLeftHash;
                         moveType = MoveType.RunLeft;
                     }
                     else
                     {
-                        actionName = "WalkLeft";
+                        actionHash = walkLeftHash;
                         moveType = MoveType.WalkLeft;
                     }
                 }
@@ -109,12 +136,12 @@ namespace Game.System
                 {
                     if (isRunning)
                     {
-                        actionName = "RunUp";
+                        actionHash = runUpHash;
                         moveType = MoveType.RunUp;
                     }
                     else
                     {
-                        actionName = "WalkUp";
+                        actionHash = walkUpHash;
                         moveType = MoveType.WalkUp;
                     }
                 }
@@ -122,12 +149,12 @@ namespace Game.System
                 {
                     if (isRunning)
                     {
-                        actionName = "RunDown";
+                        actionHash = runDownHash;
                         moveType = MoveType.RunDown;
                     }
                     else
                     {
-                        actionName = "WalkDown";
+                        actionHash = walkDownHash;
                         moveType = MoveType.WalkDown;
                     }
                 }
@@ -139,12 +166,12 @@ namespace Game.System
                 {
                     if (dirX < 0f)
                     {
-                        actionName = "IdleLeft";
+                        actionHash = idleLeftHash;
                         moveType = MoveType.IdleLeft;
                     }
                     else
                     {
-                        actionName = "IdleRight";
+                        actionHash = idleRightHash;
                         moveType = MoveType.IdleRight;
                     }
                 }
@@ -152,12 +179,12 @@ namespace Game.System
                 {
                     if (dirY < 0f)
                     {
-                        actionName = "IdleDown";
+                        actionHash = idleDownHash;
                         moveType = MoveType.IdleDown;
                     }
                     else
                     {
-                        actionName = "IdleUp";
+                        actionHash = idleUpHash;
                         moveType = MoveType.IdleUp;
                     }
                 }
@@ -168,35 +195,48 @@ namespace Game.System
             dirX = x;
             dirY = y;
 
-            actorComponent.PlayAction(actionName);
+            actorComponent.PlayAction(actionHash);
+            return moveType;
+        }
+
+        private void Transmit(MoveType moveType) 
+        {
+            Vector2 pos = actorComponent.GetPosition();
+            partyComponent.TransmitTrace(new MoveTrace() { moveType = moveType, x = pos.x, y = pos.y });
+        }
+
+        private void Block() 
+        {
+            if (!isMoving)
+            {
+                return;
+            }
 
             Vector2 pos = actorComponent.GetPosition();
-
             if (lastX != 0 || lastY != 0)
             {
-                if (isMoving)
+                float _x = pos.x - lastX;
+                float _y = pos.y - lastY;
+                if (_x * _x + _y * _y < 0.01f)
                 {
-                    float _x = pos.x - lastX;
-                    float _y = pos.y - lastY;
-                    if (_x * _x + _y * _y < 0.01f)
+                    if (frame < 5)
                     {
-                        if (frame < 5)
-                        {
-                            frame++;
-                        }
-                        else
-                        {
-                            isMoving = false;
-                            frame = 0;
-                        }
+                        frame++;
                     }
+                    else
+                    {
+                        isMoving = false;
+                        frame = 0;
+                    }
+                }
+                else
+                {
+                    frame = 0;
                 }
             }
 
             lastX = pos.x;
             lastY = pos.y;
-
-            queueable.TransmitTrace(new MoveTrace() { moveType = moveType, x = pos.x, y = pos.y });
         }
 
         public void Run(bool isRunning)
@@ -204,14 +244,13 @@ namespace Game.System
             this.isRunning = isRunning;
         }
 
-        public bool PushTrace(MoveTrace trace)
+        public void PushTrace(MoveTrace trace)
         {
             if (trace.moveType == MoveType.IdleDown || trace.moveType == MoveType.IdleUp || trace.moveType == MoveType.IdleLeft || trace.moveType == MoveType.IdleRight)
             {
-                return false;
+                return;
             }
 
-            //计算与上一个点的距离
             float d = 0f;
             if (traces.Count > 0)
             {
@@ -239,7 +278,7 @@ namespace Game.System
 
                 if (d < 0.01f)
                 {
-                    return false;
+                    return;
                 }
             }
             trace.deltaDistance = d;
@@ -247,8 +286,6 @@ namespace Game.System
             traces.Add(trace);
             distance += d;
             isMoving = true;
-
-            return true;
         }
 
         /// <summary>
@@ -261,19 +298,19 @@ namespace Game.System
                 return;
             }
 
-            if (queueable.IsLeader)
+            if (partyComponent.IsLeader)
             {
                 return;
             }
 
-            if (distance >= gap) //距离前置角色一定距离时，开始跟随
+            if (distance >= gap)
             {
                 MoveToNextTrace();
                 isMoving = true;
             }
             else
             {
-                if (queueable.Prev.GetComponent<MotorComponent>().isMoving)   //如果前置角色已经开始移动了就不再停止
+                if (partyComponent.Prev.GetComponent<MotorComponent>().isMoving)
                 {
                     return;
                 }
@@ -283,34 +320,33 @@ namespace Game.System
                     return;
                 }
 
-                string actionName;
+                int actionHash;
 
                 if (dirX != 0f)
                 {
                     if (dirX < 0f)
-                    {
-                        actionName = "IdleLeft";
+                    {                        
+                        actionHash = idleLeftHash;
                     }
                     else
                     {
-                        actionName = "IdleRight";
+                        actionHash = idleRightHash;
                     }
                 }
                 else
                 {
                     if (dirY < 0f)
                     {
-                        actionName = "IdleDown";
+                        actionHash = idleDownHash;
                     }
                     else
                     {
-                        actionName = "IdleUp";
+                        actionHash = idleUpHash;
                     }
                 }
 
-                actorComponent.PlayAction(actionName);
+                actorComponent.PlayAction(actionHash);
                 isMoving = false;
-                MLog.Log($"actionName:{actionName}");
             }
         }
 
@@ -327,39 +363,38 @@ namespace Game.System
             MoveTrace trace = traces[0];
             MoveType moveType = trace.moveType;
 
-            string acName = string.Empty;
+            int actionNameHash = 0;
             if (moveType == MoveType.WalkUp || moveType == MoveType.RunUp)
             {
-                acName = isRunning ? "FollowRunUp" : "FollowWalkUp";
+                actionNameHash = isRunning ? followRunUpHash : followWalkUpHash;
                 dirX = 0;
                 dirY = 1;
             }
             else if (moveType == MoveType.WalkDown || moveType == MoveType.RunDown)
             {
-                acName = isRunning ? "FollowRunDown" : "FollowWalkDown";
+                actionNameHash = isRunning ? followRunDownHash : followWalkDownHash;
                 dirX = 0;
                 dirY = -1;
             }
             else if (moveType == MoveType.WalkLeft || moveType == MoveType.RunLeft)
             {
-                acName = isRunning ? "FollowRunLeft" : "FollowWalkLeft";
+                actionNameHash = isRunning ? followRunLeftHash : followWalkLeftHash;
                 dirX = -1;
                 dirY = 0;
             }
             else if (moveType == MoveType.WalkRight || moveType == MoveType.RunRight)
-            {
-                acName = isRunning ? "FollowRunRight" : "FollowWalkRight";
+            {             
+                actionNameHash = isRunning ? followRunRightHash : followWalkRightHash;
                 dirX = 1;
                 dirY = 0;
             }
 
-            MLog.Log($"MoveToNextTrace : {acName}, {trace.x}, {trace.y}");
+            actorComponent.PlayAction(actionNameHash);
+            actorComponent.SetPosition(new Vector2(trace.x, trace.y));
+            partyComponent.TransmitTrace(trace);
+
             distance -= trace.deltaDistance;
             traces.RemoveAt(0);
-
-            actorComponent.PlayAction(acName);
-            actorComponent.SetPosition(new Vector2(trace.x, trace.y));
-            queueable.TransmitTrace(trace);
         }
 
         public void FixedUpdate(float dt)

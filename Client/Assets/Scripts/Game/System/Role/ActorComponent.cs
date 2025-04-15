@@ -20,9 +20,9 @@ namespace Game.System
             actor = go.GetComponent<Actor>();
         }
       
-        public void PlayAction(string actionName) 
+        public void PlayAction(int hash, object userData = null) 
         {
-            actor.PlayAction(actionName);
+            actor.PlayAction(hash, userData);
         }
 
         public Vector2 GetPosition() 

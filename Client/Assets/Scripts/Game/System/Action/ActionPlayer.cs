@@ -48,6 +48,7 @@ namespace Game.System
             }
         }
 
+        public int ActionNameHash { get; private set; }
         public Actor Actor { get; private set; }
         public object UserData { get; private set; }
 
@@ -79,8 +80,9 @@ namespace Game.System
         private ActionPlayerState state;
         private readonly Command[] commands;
 
-        public ActionPlayer(ActionCommandBase[] commands) 
+        public ActionPlayer(int actionNameHash, ActionCommandBase[] commands) 
         {
+            ActionNameHash = actionNameHash;
             state = ActionPlayerState.Idle;
 
             int length = commands != null ? commands.Length : 0;
@@ -133,6 +135,7 @@ namespace Game.System
             }
             
             completionSource?.TrySetResult();
+            completionSource = null;
             Actor = null;
             UserData = null;
         }
