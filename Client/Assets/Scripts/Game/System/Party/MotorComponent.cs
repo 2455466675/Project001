@@ -100,67 +100,7 @@ namespace Game.System
             MoveType moveType;
             int actionHash;
 
-            if (x != 0)
-            {
-                if (x > 0)
-                {
-                    if (isRunning)
-                    {
-                        actionHash = runRightHash;
-                        moveType = MoveType.RunRight;
-                    }
-                    else
-                    {
-                        actionHash = walkRightHash;
-                        moveType = MoveType.WalkRight;
-                    }
-                }
-                else
-                {
-                    if (isRunning)
-                    {
-                        actionHash = runLeftHash;
-                        moveType = MoveType.RunLeft;
-                    }
-                    else
-                    {
-                        actionHash = walkLeftHash;
-                        moveType = MoveType.WalkLeft;
-                    }
-                }
-                isMoving = true;
-            }
-            else if (y != 0)
-            {
-                if (y > 0)
-                {
-                    if (isRunning)
-                    {
-                        actionHash = runUpHash;
-                        moveType = MoveType.RunUp;
-                    }
-                    else
-                    {
-                        actionHash = walkUpHash;
-                        moveType = MoveType.WalkUp;
-                    }
-                }
-                else
-                {
-                    if (isRunning)
-                    {
-                        actionHash = runDownHash;
-                        moveType = MoveType.RunDown;
-                    }
-                    else
-                    {
-                        actionHash = walkDownHash;
-                        moveType = MoveType.WalkDown;
-                    }
-                }
-                isMoving = true;
-            }
-            else
+            if (x == 0f && y == 0f) 
             {
                 if (dirX != 0f)
                 {
@@ -191,10 +131,72 @@ namespace Game.System
 
                 isMoving = false;
             }
-
-            dirX = x;
-            dirY = y;
-
+            else
+            {
+                if (x != 0)
+                {
+                    if (x > 0)
+                    {
+                        if (isRunning)
+                        {
+                            actionHash = runRightHash;
+                            moveType = MoveType.RunRight;
+                        }
+                        else
+                        {
+                            actionHash = walkRightHash;
+                            moveType = MoveType.WalkRight;
+                        }
+                    }
+                    else
+                    {
+                        if (isRunning)
+                        {
+                            actionHash = runLeftHash;
+                            moveType = MoveType.RunLeft;
+                        }
+                        else
+                        {
+                            actionHash = walkLeftHash;
+                            moveType = MoveType.WalkLeft;
+                        }
+                    }
+                    isMoving = true;
+                }
+                else
+                {
+                    if (y > 0)
+                    {
+                        if (isRunning)
+                        {
+                            actionHash = runUpHash;
+                            moveType = MoveType.RunUp;
+                        }
+                        else
+                        {
+                            actionHash = walkUpHash;
+                            moveType = MoveType.WalkUp;
+                        }
+                    }
+                    else
+                    {
+                        if (isRunning)
+                        {
+                            actionHash = runDownHash;
+                            moveType = MoveType.RunDown;
+                        }
+                        else
+                        {
+                            actionHash = walkDownHash;
+                            moveType = MoveType.WalkDown;
+                        }
+                    }
+                }
+                dirX = x;
+                dirY = y;
+                isMoving = true;
+            }
+            
             actorComponent.PlayAction(actionHash);
             return moveType;
         }
@@ -219,7 +221,7 @@ namespace Game.System
                 float _y = pos.y - lastY;
                 if (_x * _x + _y * _y < 0.01f)
                 {
-                    if (frame < 5)
+                    if (frame < 3)
                     {
                         frame++;
                     }

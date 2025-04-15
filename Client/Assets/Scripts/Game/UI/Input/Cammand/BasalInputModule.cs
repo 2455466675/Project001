@@ -7,13 +7,19 @@ namespace Game.UI.Input
     {
         public override ModuleType ModuleType => ModuleType.Basal;
 
+        protected override void OnSink()
+        {
+            Game.System.PartySystem.Move(0f, 0f);
+            Game.System.PartySystem.Run(false);
+        }
+
         protected override void OnInputAction(ActionContext context)
         {
             InputType inputType = context.InputType;
             switch (inputType)
             {
                 case InputType.Esc:
-                   // GameWorld.Root.GetComponent<UIComponent>().Navigate(NavigationListDefine.Test_List_1, ModuleType.Panel);
+                    Game.UI.Navigate(NavigationListDefine.Test_List_1, ModuleType.Panel);
                     break;
                 case InputType.Move:
                     Game.System.PartySystem.Move(context.Vector2Value.x, context.Vector2Value.y);
