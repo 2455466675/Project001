@@ -19,7 +19,7 @@ namespace Game.UI.Input
             switch (inputType)
             {
                 case InputType.Esc:
-                    Game.UI.Navigate(NavigationListDefine.Test_List_1, ModuleType.Panel);
+                    Game.UI.Navigate(NavigationListDefine.Overview_Menu_List, ModuleType.Panel);
                     break;
                 case InputType.Move:
                     Game.System.PartySystem.Move(context.Vector2Value.x, context.Vector2Value.y);

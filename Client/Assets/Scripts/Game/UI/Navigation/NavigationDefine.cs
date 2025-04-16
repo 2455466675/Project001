@@ -7,9 +7,10 @@ namespace Game.UI
         Test_Group_1 = 1,
         Test_Group_2 = 2,
 
-        Login_Group   = 1001,
-        Loading_Group = 1002,
-        GM_Group      = 1003,
+        Login_Group    = 1001,
+        Loading_Group  = 1002,
+        GM_Group       = 1003,
+        Overview_Group = 1004,
     }
 
     public enum NavigationListDefine
@@ -23,5 +24,6 @@ namespace Game.UI
         Login_List   = 10011,
         GM_Menu_List = 10021,
         GM_Item_List = 10022,
+        Overview_Menu_List = 10031,
     }
 }

@@ -28,10 +28,17 @@ public class TemplateMenuScript
         Instantiate(path);
     }
 
-    [MenuItem("GameObject/MyUI/TextView")]
+    [MenuItem("GameObject/MyUI/Text/TextView")]
     public static void CreateTextView()
     {
         string path = "Assets/Editor/UITemplate/TextView.prefab";
+        Instantiate(path);
+    }
+
+    [MenuItem("GameObject/MyUI/Text/StaticTextView")]
+    public static void CreateStaticTextView()
+    {
+        string path = "Assets/Editor/UITemplate/StaticTextView.prefab";
         Instantiate(path);
     }
 

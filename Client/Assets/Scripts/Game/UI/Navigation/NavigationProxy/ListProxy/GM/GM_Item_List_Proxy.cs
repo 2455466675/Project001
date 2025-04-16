@@ -24,6 +24,14 @@ namespace Game.UI
             }
         }
 
+        public override void OnSubmit(GameNavigationItem item)
+        {
+            if (item.TryGetData(out GM_Item result))
+            {
+                Game.GM.Submit(result);
+            }
+        }
+
         private void OnCurrentMenuChanged(CurrentMenuChanged arg) 
         {
             GM_Menu menu = arg.menu;

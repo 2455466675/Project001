@@ -2,6 +2,7 @@ using Config;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Game
 {
@@ -51,13 +52,14 @@ namespace Game
 
     public class GameCommand
     {
-        private List<GM_Menu> menus;
-
+        private GM_Cmds cmds;
         private GM_Menu current;
+        private List<GM_Menu> menus;
 
         public void Init() 
         {
             menus = new List<GM_Menu>();
+            cmds = new GM_Cmds();
 
             Dictionary<GM_Menu_Type, GM_Menu> tempMap = new Dictionary<GM_Menu_Type, GM_Menu>();
             GM_Menu all = null;
@@ -95,6 +97,37 @@ namespace Game
         {
             current = menu;
             Game.Event.Publish(new CurrentMenuChanged() { menu = current });
+        }
+
+        public void Submit(GM_Item item) 
+        {
+            if (item == null) 
+            {
+                return;
+            }
+
+            string cmd = item.Cfg.Cmd;
+            if (string.IsNullOrEmpty(cmd)) 
+            {
+                return;
+            }
+
+            Type type = cmds.GetType();
+            MethodInfo method = type.GetMethod(cmd);
+            if (method == null)
+            {
+                return;
+            }
+            string args = item.Cfg.Args;
+            try
+            {
+                MLog.Log($"--- GM Execute --- {cmd} : {args}");
+                method.Invoke(cmds, new object[] { args });
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }            
         }
     }
 }

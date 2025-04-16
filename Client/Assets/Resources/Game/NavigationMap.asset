@@ -25,3 +25,5 @@ MonoBehaviour:
     groupDefine: 1003
   - listDefine: 10022
     groupDefine: 1003
+  - listDefine: 10031
+    groupDefine: 1004

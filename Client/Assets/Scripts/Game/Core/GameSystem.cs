@@ -5,14 +5,19 @@ namespace Game.System
     {
         public LoginSystem LoginSystem { get; private set; }
         public RoleSystem RoleSystem { get; private set; }
-
+        public OverviewSystem OverviewSystem { get; private set; }
         public PartySystem PartySystem { get; private set; }
 
         public void Init(GameInitConfig config)
         {
             LoginSystem = new LoginSystem();
+            LoginSystem.Init();
+
             RoleSystem = new RoleSystem();
             RoleSystem.Init(config);
+
+            OverviewSystem = new OverviewSystem();
+            OverviewSystem.Init();
 
             PartySystem = new PartySystem();
             PartySystem.Init();

@@ -10,11 +10,8 @@ namespace Game.UI
 
         public void Init(NavigationListView list) 
         {
-            //list.Bind();
             proxy = NavigationProxyManager.GetNavigationListProxy(list.Define);
             proxy.Init(list);
-            Awake();
-            OnEnable();
         }
 
         public void Awake() 

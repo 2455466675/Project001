@@ -1,4 +1,3 @@
-using ECS;
 using Game.State;
 
 namespace Game.System
@@ -57,7 +56,7 @@ namespace Game.System
 
         private LoginOption[] options;
 
-        public LoginSystem()
+        public void Init()
         {
             options = new LoginOption[4];
 

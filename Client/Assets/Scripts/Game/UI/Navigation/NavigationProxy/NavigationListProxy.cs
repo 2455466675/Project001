@@ -16,9 +16,17 @@ namespace Game.UI
         public virtual void Awake() 
         {            
         }
+        /// <summary>
+        /// 等同于Unity的OnEnable();
+        /// 在这里注册数据
+        /// </summary>
         public virtual void OnEnable() 
         {
         }
+        /// <summary>
+        /// 等同于Unity的OnDisable();
+        /// 在这里取消注册
+        /// </summary>
         public virtual void OnDisable() 
         {        
         }
@@ -76,34 +84,76 @@ namespace Game.UI
         #endregion
 
         #region 列表项事件
-
+        /// <summary>
+        /// 列表项绑定了数据时
+        /// 在这里注册事件相关
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnBindData(GameNavigationItem item) 
         {
         }
+        /// <summary>
+        /// 列表项取消了数据绑定
+        /// 在这里取消事件注册
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnUnbindData(GameNavigationItem item)
         {
         }
+        /// <summary>
+        /// 刷新列表项
+        /// 在这里更新列表项的view
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnRefresh(GameNavigationItem item) 
         {
         }
+        /// <summary>
+        /// 列表项被选中时
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnSelect(GameNavigationItem item)
         {
         }
+        /// <summary>
+        /// 列表项取消选中时
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnDeselect(GameNavigationItem item)
         {
         }
+        /// <summary>
+        /// 列表项“确定”
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnSubmit(GameNavigationItem item)
         {
         }
+        /// <summary>
+        /// 当选中此列表项时，输入了向上移动的指令
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnMoveUp(GameNavigationItem item)
         {
         }
+        /// <summary>
+        /// 当选中此列表项时，输入了向下移动的指令
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnMoveDown(GameNavigationItem item)
         {
         }
+        /// <summary>
+        /// 当选中此列表项时，输入了向左移动的指令
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnMoveLeft(GameNavigationItem item)
         {
         }
+        /// <summary>
+        /// 当选中此列表项时，输入了向右移动的指令
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void OnMoveRight(GameNavigationItem item)
         {
         }
