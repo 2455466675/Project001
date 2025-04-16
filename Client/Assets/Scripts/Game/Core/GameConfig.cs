@@ -70,12 +70,12 @@ namespace Game.Config
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public List<T> FindAll<T>() where T : class, ICfg
+        public T[] FindAll<T>() where T : class, ICfg
         {
             Type t = typeof(T);
             if (!data.CfgDatas.ContainsKey(t))
             {
-                return null;
+                return new T[0];
             }
 
             var container = data.CfgDatas[t] as CfgContainerBase<T>;
@@ -88,12 +88,12 @@ namespace Game.Config
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public List<T> FindAll<T>(Func<T, bool> func) where T : class, ICfg
+        public T[] FindAll<T>(Func<T, bool> func) where T : class, ICfg
         {
             Type t = typeof(T);
             if (!data.CfgDatas.ContainsKey(t))
             {
-                return null;
+                return new T[0];
             }
 
             var container = data.CfgDatas[t] as CfgContainerBase<T>;

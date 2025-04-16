@@ -22,6 +22,8 @@ namespace Game
         public static GameUI UI { get; private set; }
         public static GameSystem System { get; private set; }
 
+        public static GameCommand GM { get; private set; }
+
         private static bool IsInited;
 
         public static async UniTask Init(GameInitConfig config) 
@@ -54,6 +56,9 @@ namespace Game
 
             System = new GameSystem();
             System.Init(config);
+
+            GM = new GameCommand();
+            GM.Init();
 
             await UniTask.Yield();
 

@@ -23,7 +23,7 @@ namespace Game.UI
             inputController.FixedUpdate(dt);
         }
 
-        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType = ModuleType.Undefined, int[] navigateIndexs = null)
+        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType = ModuleType.Panel, int[] navigateIndexs = null)
         {
             inputController.Navigate(list_ID, moduleType, navigateIndexs);
         }

@@ -65,8 +65,8 @@ namespace Game
                 e.Show();
                 await Game.Resource.LoadSceneAsync(entity.Path, entity.LoadSceneMode, null);
 
-                float t = 100f;
-                float i = 100f;
+                float t = 50f;
+                float i = 50f;
                 while (i > 0f)
                 {
                     i -= 1f;

@@ -12,19 +12,25 @@ namespace Config
 	public partial class GmCfg : ICfg
 	{
 		public int Id {get; private set;} 
+		public int Class {get; private set;} 
 		public string Name {get; private set;} 
-		public string Cmds {get; private set;} 
+		public string Cmd {get; private set;} 
+		public string Args {get; private set;} 
 		public void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
+			Class = reader.ReadInt32();
 			Name = reader.ReadString();
-			Cmds = reader.ReadString();
+			Cmd = reader.ReadString();
+			Args = reader.ReadString();
 		}
 		public void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
+			writer.Write(Class);
 			writer.Write(Name);
-			writer.Write(Cmds);
+			writer.Write(Cmd);
+			writer.Write(Args);
 		}
 	}
 

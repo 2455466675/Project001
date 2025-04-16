@@ -42,22 +42,22 @@ namespace Config
             return CfgMap.Values.Where(func).FirstOrDefault();
         }
 
-        public virtual List<T> FindAll()
+        public virtual T[] FindAll()
         {
             if (CfgMap == null)
             {
-                return null;
+                return new T[0];
             }
-            return CfgMap.Values.ToList();
+            return CfgMap.Values.ToArray();
         }
 
-        public virtual List<T> FindAll(Func<T, bool> func)
+        public virtual T[] FindAll(Func<T, bool> func)
         {
             if (CfgMap == null)
             {
-                return null;
+                return new T[0];
             }
-            return CfgMap.Values.Where(func).ToList();
+            return CfgMap.Values.Where(func).ToArray();
         }
     }
 }

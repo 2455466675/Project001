@@ -7,6 +7,7 @@ namespace Game.System
     /// </summary>
     public class PartyUnit : RoleUnit
     {
+        public HeroCfg Config { get; private set; }
         private ActorComponent actorComponent;
         private MotorComponent motorComponent;
         
@@ -22,6 +23,7 @@ namespace Game.System
             HeroCfg cfg = Game.Config.Find<HeroCfg>(id);
             actorComponent.Init(cfg.ActorId);
             actorComponent.Refresh();
+            Config = cfg;
         }
 
         public void Move(float x, float y)

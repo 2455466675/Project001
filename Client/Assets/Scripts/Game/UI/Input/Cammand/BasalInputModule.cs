@@ -27,6 +27,9 @@ namespace Game.UI.Input
                 case InputType.LeftShift:
                     Game.System.PartySystem.Run(context.BoolValue);
                     break;
+                case InputType.GM:
+                    Game.UI.Navigate(NavigationListDefine.GM_Menu_List, ModuleType.Panel);
+                    break;
             }
         }
 

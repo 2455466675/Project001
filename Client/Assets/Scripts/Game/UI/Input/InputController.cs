@@ -1,3 +1,5 @@
+using System;
+
 namespace Game.UI.Input
 {
     public enum InputType
@@ -8,6 +10,7 @@ namespace Game.UI.Input
         Esc       = 3,
         LeftShift = 4,
         Map       = 5,
+        GM        = 6,
     }
 
     /// <summary>
@@ -25,7 +28,7 @@ namespace Game.UI.Input
             gameInput = new GameInput();
             gameInput.Enable();
 
-            wrappers = new InputActionWrapper[6];
+            wrappers = new InputActionWrapper[Enum.GetValues(typeof(InputType)).Length];
 
             var move = new MoveActionWrapper();
             move.Initialize(gameInput.DefaultMap.Move);
@@ -56,6 +59,11 @@ namespace Game.UI.Input
             map.Initialize(gameInput.DefaultMap.Map);
             map.ActionEvent += OnMap;
             wrappers[5] = map;
+
+            var gm = new GMActionWrapper();
+            gm.Initialize(gameInput.DefaultMap.GM);
+            gm.ActionEvent += OnGM;
+            wrappers[6] = gm;
 
             moduleManager = new InputModuleManager();
         }
@@ -130,6 +138,15 @@ namespace Game.UI.Input
             ActionContext context = new()
             {
                 InputType = InputType.Map,
+            };
+            DoAction(context);
+        }
+
+        private void OnGM() 
+        {
+            ActionContext context = new()
+            {
+                InputType = InputType.GM,
             };
             DoAction(context);
         }

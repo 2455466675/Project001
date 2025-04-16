@@ -11,6 +11,57 @@ namespace Game.UI
         [SerializeField]
         private ViewEntity[] views;
 
+        public bool TryGetView<T>(out T view) where T : View
+        {
+            if (views != null)
+            {
+                Type t = typeof(T);
+                for (int i = 0; i < views.Length; i++)
+                {
+                    var ve = views[i];
+                    if (ve == null || ve.view == null)
+                    {
+                        continue;
+                    }
+
+                    if (ve.view.GetType() == t)
+                    {
+                        view = ve.view as T;
+                        return true;
+                    }
+                }
+            }
+
+            view = null;
+            return false;
+        }
+
+        public bool TryGetView<T>(string key, out T view) where T : View 
+        {
+            if (views != null)
+            {
+                Type t = typeof(T);
+
+                for (int i = 0; i < views.Length; i++)
+                {
+                    var ve = views[i];
+                    if (ve == null || ve.view == null)
+                    {
+                        continue;
+                    }
+
+                    if (ve.view.GetType() == t && ve.key == key)
+                    {
+                        view = ve.view as T;
+                        return true;
+                    }
+                }
+            }
+
+            view = null;
+            return false;
+        }
+
         public T GetView<T>() where T : View
         {
             if (views == null)

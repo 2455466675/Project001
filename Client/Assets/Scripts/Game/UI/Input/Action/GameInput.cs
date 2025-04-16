@@ -82,6 +82,15 @@ namespace Game.UI.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GM"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0e4b568-8c11-48a9-b8be-7f6737f84609"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -282,6 +291,17 @@ namespace Game.UI.Input
                     ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5f9a02e-6a3d-495e-aad2-a9cd356d9201"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GM"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -296,6 +316,7 @@ namespace Game.UI.Input
             m_DefaultMap_Esc = m_DefaultMap.FindAction("Esc", throwIfNotFound: true);
             m_DefaultMap_LeftShift = m_DefaultMap.FindAction("LeftShift", throwIfNotFound: true);
             m_DefaultMap_Map = m_DefaultMap.FindAction("Map", throwIfNotFound: true);
+            m_DefaultMap_GM = m_DefaultMap.FindAction("GM", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -363,6 +384,7 @@ namespace Game.UI.Input
         private readonly InputAction m_DefaultMap_Esc;
         private readonly InputAction m_DefaultMap_LeftShift;
         private readonly InputAction m_DefaultMap_Map;
+        private readonly InputAction m_DefaultMap_GM;
         public struct DefaultMapActions
         {
             private @GameInput m_Wrapper;
@@ -373,6 +395,7 @@ namespace Game.UI.Input
             public InputAction @Esc => m_Wrapper.m_DefaultMap_Esc;
             public InputAction @LeftShift => m_Wrapper.m_DefaultMap_LeftShift;
             public InputAction @Map => m_Wrapper.m_DefaultMap_Map;
+            public InputAction @GM => m_Wrapper.m_DefaultMap_GM;
             public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -400,6 +423,9 @@ namespace Game.UI.Input
                 @Map.started += instance.OnMap;
                 @Map.performed += instance.OnMap;
                 @Map.canceled += instance.OnMap;
+                @GM.started += instance.OnGM;
+                @GM.performed += instance.OnGM;
+                @GM.canceled += instance.OnGM;
             }
 
             private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -422,6 +448,9 @@ namespace Game.UI.Input
                 @Map.started -= instance.OnMap;
                 @Map.performed -= instance.OnMap;
                 @Map.canceled -= instance.OnMap;
+                @GM.started -= instance.OnGM;
+                @GM.performed -= instance.OnGM;
+                @GM.canceled -= instance.OnGM;
             }
 
             public void RemoveCallbacks(IDefaultMapActions instance)
@@ -447,6 +476,7 @@ namespace Game.UI.Input
             void OnEsc(InputAction.CallbackContext context);
             void OnLeftShift(InputAction.CallbackContext context);
             void OnMap(InputAction.CallbackContext context);
+            void OnGM(InputAction.CallbackContext context);
         }
     }
 }
