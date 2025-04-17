@@ -42,12 +42,12 @@ namespace Config
 			var _ColorCfgContainer = new ColorCfgContainer();
 			_ColorCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(ColorCfg), _ColorCfgContainer);
-			var _OverviewMenuCfgContainer = new OverviewMenuCfgContainer();
-			_OverviewMenuCfgContainer.Deserialize(reader);
-			CfgDatas.Add(typeof(OverviewMenuCfg), _OverviewMenuCfgContainer);
 			var _MonsterCfgContainer = new MonsterCfgContainer();
 			_MonsterCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(MonsterCfg), _MonsterCfgContainer);
+			var _BackpackCfgContainer = new BackpackCfgContainer();
+			_BackpackCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(BackpackCfg), _BackpackCfgContainer);
 			var _BattleRoleActionCfgContainer = new BattleRoleActionCfgContainer();
 			_BattleRoleActionCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(BattleRoleActionCfg), _BattleRoleActionCfgContainer);

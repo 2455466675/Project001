@@ -27,5 +27,11 @@ namespace Game
                 return hash;
             }            
         }
+
+        private static SnowflakeGenerator snowflakeGenerator = new SnowflakeGenerator(1L, 1L);
+        public static long GenerateUid() 
+        {
+            return snowflakeGenerator.NextId();
+        }
     }
 }

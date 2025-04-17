@@ -46,13 +46,13 @@
             "sheet":1
         },
         {
-            "excel":"overview_menu.xlsx",
-            "type":"OverviewMenuCfg",
+            "excel":"monster.xlsx",
+            "type":"MonsterCfg",
             "sheet":1
         },
         {
-            "excel":"monster.xlsx",
-            "type":"MonsterCfg",
+            "excel":"backpack.xlsx",
+            "type":"BackpackCfg",
             "sheet":1
         },
         {

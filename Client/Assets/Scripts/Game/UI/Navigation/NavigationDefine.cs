@@ -11,6 +11,7 @@ namespace Game.UI
         Loading_Group  = 1002,
         GM_Group       = 1003,
         Overview_Group = 1004,
+        Backpack_Group = 1005,
     }
 
     public enum NavigationListDefine
@@ -25,5 +26,7 @@ namespace Game.UI
         GM_Menu_List = 10021,
         GM_Item_List = 10022,
         Overview_Menu_List = 10031,
+        Backpack_Menu_List = 10041,
+        Backpack_Item_List = 10042,
     }
 }
