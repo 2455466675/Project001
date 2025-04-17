@@ -12,15 +12,19 @@ namespace Config
 	public partial class ItemCfg : ICfg
 	{
 		public int Id {get; private set;} 
-		public string Name {get; private set;} 
+		public int Name {get; private set;} 
 		public string Icon {get; private set;} 
-		public string Desc {get; private set;} 
+		public int Desc {get; private set;} 
+		public int Backpack {get; private set;} 
+		public bool Heap {get; private set;} 
 		public void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
-			Name = reader.ReadString();
+			Name = reader.ReadInt32();
 			Icon = reader.ReadString();
-			Desc = reader.ReadString();
+			Desc = reader.ReadInt32();
+			Backpack = reader.ReadInt32();
+			Heap = reader.ReadBoolean();
 		}
 		public void Serialize(BinaryWriter writer)
 		{
@@ -28,6 +32,8 @@ namespace Config
 			writer.Write(Name);
 			writer.Write(Icon);
 			writer.Write(Desc);
+			writer.Write(Backpack);
+			writer.Write(Heap);
 		}
 	}
 

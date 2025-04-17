@@ -12,5 +12,10 @@ namespace Game.UI
         {
             MLog.Log("Overview_Menu_List_Proxy OnSubmit");
         }
+
+        public override void OutFocus()
+        {
+            base.OutFocus();
+        }
     }
 }
