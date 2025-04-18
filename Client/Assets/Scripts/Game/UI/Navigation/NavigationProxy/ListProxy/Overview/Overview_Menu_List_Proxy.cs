@@ -1,3 +1,5 @@
+using Game.System;
+
 namespace Game.UI
 {
     [ListProxy(NavigationListDefine.Overview_Menu_List)]
@@ -11,6 +13,10 @@ namespace Game.UI
         public override void OnSubmit(GameNavigationItem item)
         {
             MLog.Log("Overview_Menu_List_Proxy OnSubmit");
+            if (item.TryGetData(out OverviewMenuBase menu)) 
+            {
+                menu.Execute();
+            }
         }
 
         public override void OutFocus()

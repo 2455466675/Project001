@@ -12,6 +12,7 @@ namespace Game.System
         public void Init(GameInitConfig config)
         {
             InventorySystem = new InventorySystem();
+            InventorySystem.Init();
 
             LoginSystem = new LoginSystem();
             LoginSystem.Init();

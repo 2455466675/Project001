@@ -1,6 +1,7 @@
 using Config;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.System
 {
@@ -34,6 +35,11 @@ namespace Game.System
         public void Clear() 
         {
             items.Clear();
+        }
+
+        public InventoryItem[] GetItems() 
+        {
+            return items.ToArray();
         }
     }
 }

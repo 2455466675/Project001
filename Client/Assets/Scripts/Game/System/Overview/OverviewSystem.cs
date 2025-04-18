@@ -7,11 +7,11 @@ namespace Game.System
 
     public class OverviewSystem
     {
-        private class OverviewMenu_Item : OverviewMenuBase
+        private class OverviewMenu_Backpack : OverviewMenuBase
         {
             public override void Execute()
             {
-                
+                Game.UI.Navigate(UI.NavigationListDefine.Backpack_Menu_List);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Game.System
         {
             menus = new OverviewMenuBase[6];
 
-            menus[0] = new OverviewMenu_Item();
+            menus[0] = new OverviewMenu_Backpack();
             menus[1] = new OverviewMenu_Party();
             menus[2] = new OverviewMenu_Skill();
             menus[3] = new OverviewMenu_Job();

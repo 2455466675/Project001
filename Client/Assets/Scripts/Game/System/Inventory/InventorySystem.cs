@@ -1,8 +1,14 @@
 using Config;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.System
 {
+    public struct SelectBackpackMenu
+    {
+        public Backpack backpack;
+    }
+
     public struct ItemBuffer 
     {
         public long uid;
@@ -26,6 +32,16 @@ namespace Game.System
             {
                 BackpackType type = (BackpackType)cfg.Type;
                 backpacks.Add(type, new Backpack(cfg));
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                UpdateItem(new ItemBuffer() { id = 200001 , uid = Common.GenerateUid(), deltaCount = 1});                
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                UpdateItem(new ItemBuffer() { id = 200002, uid = Common.GenerateUid(), deltaCount = 1 });
             }
         }
 
@@ -87,6 +103,16 @@ namespace Game.System
                     backpack.Add(item);
                 }
             }         
+        }
+
+        public Backpack[] GetBackpacks() 
+        {
+            return backpacks.Values.ToArray();
+        }    
+        
+        public void OnSelectBackpack(Backpack backpack) 
+        {
+            Game.Event.Publish(new SelectBackpackMenu() { backpack = backpack });
         }
     }
 }
