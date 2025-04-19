@@ -1,9 +1,7 @@
 namespace Game
 {
-    public enum BackpackType
+    public enum InventoryItemType
     {
-        New = 999,
-        All = 998,
         Normal = 1,
         Weapon = 2,
         Helmet = 3,

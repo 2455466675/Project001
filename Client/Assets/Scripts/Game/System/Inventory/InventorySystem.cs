@@ -4,6 +4,11 @@ using System.Linq;
 
 namespace Game.System
 {
+    public struct InventoryDataChanged
+    {
+                
+    }
+
     public struct SelectBackpackMenu
     {
         public Backpack backpack;
@@ -19,18 +24,18 @@ namespace Game.System
     public class InventorySystem
     {
         private Dictionary<long, InventoryItem> items;
-        private Dictionary<BackpackType, Backpack> backpacks;
+        private Dictionary<InventoryItemType, Backpack> backpacks;
 
         public void Init() 
         {
             items = new Dictionary<long, InventoryItem>();
-            backpacks = new Dictionary<BackpackType, Backpack>();
+            backpacks = new Dictionary<InventoryItemType, Backpack>();
 
             BackpackCfg[] cfgs = Game.Config.FindAll<BackpackCfg>();
 
             foreach (var cfg in cfgs)
             {
-                BackpackType type = (BackpackType)cfg.Type;
+                InventoryItemType type = (InventoryItemType)cfg.Type;
                 backpacks.Add(type, new Backpack(cfg));
             }
 
@@ -42,6 +47,55 @@ namespace Game.System
             for (int i = 0; i < 10; i++)
             {
                 UpdateItem(new ItemBuffer() { id = 200002, uid = Common.GenerateUid(), deltaCount = 1 });
+            }
+        }
+
+        public void IncrementItem(int id, int count) 
+        {
+            if (count <= 0) 
+            {
+                return;
+            }
+
+            ItemCfg cfg = Game.Config.Find<ItemCfg>(id);
+            if (cfg == null)
+            {
+                MLog.Error($"ItemCfg is null : {id}");
+                return;
+            }
+
+            bool isHeap = cfg.Heap;
+            long key = isHeap ? id : Common.GenerateUid();
+
+            if (isHeap && items.ContainsKey(key))
+            {
+                InventoryItem item = items[key];
+                item.UpdateCount(count);
+            }
+            else
+            {
+                InventoryItem item = new InventoryItem(cfg, count);
+                items.Add(key, item);
+            }
+        }
+
+        public void DecrementItem(long uid, int count) 
+        {
+            if (!items.ContainsKey(uid))
+            {
+                return;
+            }
+                
+            count = GameMathf.Abs(count);
+
+            InventoryItem item = items[uid];           
+            if (item.Count > count) 
+            {
+                item.UpdateCount(count *= -1);            
+            }
+            else
+            {
+                items.Remove(uid);                
             }
         }
 
@@ -62,15 +116,6 @@ namespace Game.System
                 return;
             }
 
-            BackpackType type = (BackpackType)cfg.Backpack;
-            if (!backpacks.ContainsKey(type))
-            {
-                MLog.Error($"BackpackType is undefined : {cfg.Backpack}");
-                return;
-            }
-
-            Backpack backpack = backpacks[type];
-
             bool isHeap = cfg.Heap;
             long key = isHeap ? id : uid;
             if (deltaCount < 0) 
@@ -85,8 +130,7 @@ namespace Game.System
 
                 if (item.Count <= 0)
                 {
-                    items.Remove(id);
-                    backpack.Remove(item);
+                    items.Remove(key);
                 }
             }
             else
@@ -97,10 +141,9 @@ namespace Game.System
                 }
                 else
                 {  
-                    buffer.deltaCount = isHeap ? deltaCount : 1;
-                    InventoryItem item = new InventoryItem(buffer, cfg);
-                    items.Add(key, item);
-                    backpack.Add(item);
+                    //buffer.deltaCount = isHeap ? deltaCount : 1;
+                    //InventoryItem item = new InventoryItem(buffer, cfg);
+                    //items.Add(key, item);
                 }
             }         
         }

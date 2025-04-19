@@ -10,7 +10,7 @@ namespace Game.System
     /// </summary>
     public class Backpack
     {
-        public BackpackType Type { get; private set; }
+        public InventoryItemType Type { get; private set; }
         public BackpackCfg Cfg { get; private set; }
 
         private HashSet<InventoryItem> items;
@@ -18,7 +18,7 @@ namespace Game.System
         public Backpack(BackpackCfg cfg) 
         {
             this.Cfg = cfg;
-            this.Type = (BackpackType)cfg.Type;
+            this.Type = (InventoryItemType)cfg.Type;
             items = new HashSet<InventoryItem>();
         }
 

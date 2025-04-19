@@ -15,10 +15,15 @@ namespace Game.System
         private int count;
         private ItemCfg config;
 
-        public InventoryItem(ItemBuffer buffer, ItemCfg cfg)
+        public InventoryItem(ItemCfg config, int count)
         {
-            count = buffer.deltaCount;
-            config = cfg;
+            this.count = count;
+            this.config = config;
+        }
+
+        public void UpdateCount(int deltaCount) 
+        {
+            count += deltaCount;
         }
 
         public void Update(ItemBuffer buffer)
