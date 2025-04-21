@@ -10,14 +10,14 @@ namespace Game.UI
     {
         public override void OnEnable()
         {
-            listView.UpdateData(Game.System.InventorySystem.GetBackpacks());
+            //listView.UpdateData(Game.System.InventorySystem.GetBackpacks());
         }
 
         public override void OnSelect(GameNavigationItem item)
         {
             if (item.TryGetData(out Backpack backpack)) 
             {
-                Game.System.InventorySystem.OnSelectBackpack(backpack);
+               // Game.System.InventorySystem.OnSelectBackpack(backpack);
             }
         }
 

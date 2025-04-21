@@ -1,28 +1,51 @@
 using Config;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.System
 {
-    public struct InventoryDataChanged
+    public struct InventoryAdd
     {
-                
+        public long[] items;
     }
 
-    public struct SelectBackpackMenu
+    public struct InventoryUpdate
     {
-        public Backpack backpack;
+        public long[] items;
+    }
+
+    public struct InventoryRemove
+    {
+        public long[] items;
     }
 
     public struct ItemBuffer 
     {
-        public long uid;
         public int id;
-        public int deltaCount;
+        public int count;
+    }
+
+    public struct ItemBuffer2
+    {
+        public long uid;
+        public int count;
     }
 
     public class InventorySystem
     {
+        public enum ItemChangedType
+        {
+            Error,
+            Add,
+            Update,
+            Remove,
+        }
+
+        public struct ItemChangedResult
+        {
+            public ItemChangedType type;
+            public long uid;
+        }
+
         private Dictionary<long, InventoryItem> items;
         private Dictionary<InventoryItemType, Backpack> backpacks;
 
@@ -39,29 +62,114 @@ namespace Game.System
                 backpacks.Add(type, new Backpack(cfg));
             }
 
-            for (int i = 0; i < 20; i++)
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    UpdateItem(new ItemBuffer() { id = 200001 , uid = Common.GenerateUid(), deltaCount = 1});                
+            //}
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    UpdateItem(new ItemBuffer() { id = 200002, uid = Common.GenerateUid(), deltaCount = 1 });
+            //}
+        }
+
+        public void Increment(ItemBuffer[] items) 
+        {
+            Dictionary<int, int> temp = new Dictionary<int, int>();
+
+            for (int i = 0; i < items.Length; i++) 
             {
-                UpdateItem(new ItemBuffer() { id = 200001 , uid = Common.GenerateUid(), deltaCount = 1});                
+                ItemBuffer item = items[i];
+                int id = item.id;
+                int count = item.count;
+                if (temp.ContainsKey(id)) 
+                {
+                    temp[id] += count;
+                }
+                else
+                {
+                    temp[id] = count;
+                }
             }
 
-            for (int i = 0; i < 10; i++)
+            List<long> add = new List<long>();
+            List<long> update = new List<long>();
+
+            foreach (var item in temp)
             {
-                UpdateItem(new ItemBuffer() { id = 200002, uid = Common.GenerateUid(), deltaCount = 1 });
+                ItemChangedResult result = IncrementItem(item.Key, item.Value);
+                if (result.type == ItemChangedType.Add) 
+                {
+                    add.Add(result.uid);
+                }
+                else if (result.type == ItemChangedType.Update)
+                {
+                    update.Add(result.uid);
+                }
+            }
+
+            if (add.Count > 0) 
+            {
+                Game.Event.Publish(new InventoryAdd() { items = add.ToArray() });
+            }
+
+            if (update.Count > 0)
+            {
+                Game.Event.Publish(new InventoryUpdate() { items = update.ToArray() });
             }
         }
 
-        public void IncrementItem(int id, int count) 
+        public void Decrement(ItemBuffer2[] items) 
         {
+            Dictionary<long, int> temp = new Dictionary<long, int>();
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                ItemBuffer2 item = items[i];
+                long uid = item.uid;
+                int count = GameMathf.Abs(item.count);
+                if (temp.ContainsKey(uid))
+                {
+                    temp[uid] += count;
+                }
+                else
+                {
+                    temp[uid] = count;
+                }
+            }
+
+            List<long> remove = new List<long>();
+
+            foreach (var item in temp)
+            {
+                ItemChangedResult result = DecrementItem(item.Key, item.Value);
+                if (result.type == ItemChangedType.Remove)
+                {
+                    remove.Add(result.uid);
+                }
+            }
+
+            if (remove.Count > 0) 
+            {
+                Game.Event.Publish(new InventoryRemove() { items = remove.ToArray() });
+            }
+        }
+
+        private ItemChangedResult IncrementItem(int id, int count) 
+        {
+            ItemChangedResult result = new ItemChangedResult();
             if (count <= 0) 
             {
-                return;
+                result.type = ItemChangedType.Error;
+                return result;
             }
 
             ItemCfg cfg = Game.Config.Find<ItemCfg>(id);
             if (cfg == null)
             {
                 MLog.Error($"ItemCfg is null : {id}");
-                return;
+                result.type = ItemChangedType.Error;
+                return result;
             }
 
             bool isHeap = cfg.Heap;
@@ -69,21 +177,28 @@ namespace Game.System
 
             if (isHeap && items.ContainsKey(key))
             {
+                result.type = ItemChangedType.Update;
                 InventoryItem item = items[key];
                 item.UpdateCount(count);
             }
             else
             {
+                result.type = ItemChangedType.Add;
                 InventoryItem item = new InventoryItem(cfg, count);
                 items.Add(key, item);
             }
+
+            result.uid = key;
+            return result;
         }
 
-        public void DecrementItem(long uid, int count) 
+        private ItemChangedResult DecrementItem(long uid, int count) 
         {
+            ItemChangedResult result = new ItemChangedResult();
             if (!items.ContainsKey(uid))
             {
-                return;
+                result.type = ItemChangedType.Error;
+                return result;
             }
                 
             count = GameMathf.Abs(count);
@@ -91,71 +206,17 @@ namespace Game.System
             InventoryItem item = items[uid];           
             if (item.Count > count) 
             {
+                result.type = ItemChangedType.Update;
                 item.UpdateCount(count *= -1);            
             }
             else
             {
+                result.type = ItemChangedType.Remove;
                 items.Remove(uid);                
             }
-        }
 
-        public void UpdateItem(ItemBuffer buffer) 
-        {
-            int deltaCount = buffer.deltaCount;
-            if (deltaCount == 0) 
-            {
-                return;
-            }
-
-            long uid = buffer.uid;
-            int id = buffer.id;
-            ItemCfg cfg = Game.Config.Find<ItemCfg>(id);
-            if (cfg == null) 
-            {
-                MLog.Error($"ItemCfg is null : {id}");
-                return;
-            }
-
-            bool isHeap = cfg.Heap;
-            long key = isHeap ? id : uid;
-            if (deltaCount < 0) 
-            {               
-                if (!items.ContainsKey(key))
-                {
-                    return;
-                }
-
-                InventoryItem item = items[key];
-                item.Update(buffer);
-
-                if (item.Count <= 0)
-                {
-                    items.Remove(key);
-                }
-            }
-            else
-            {
-                if (isHeap && items.ContainsKey(id))
-                {
-                    items[id].Update(buffer);
-                }
-                else
-                {  
-                    //buffer.deltaCount = isHeap ? deltaCount : 1;
-                    //InventoryItem item = new InventoryItem(buffer, cfg);
-                    //items.Add(key, item);
-                }
-            }         
-        }
-
-        public Backpack[] GetBackpacks() 
-        {
-            return backpacks.Values.ToArray();
-        }    
-        
-        public void OnSelectBackpack(Backpack backpack) 
-        {
-            Game.Event.Publish(new SelectBackpackMenu() { backpack = backpack });
+            result.uid = uid;
+            return result;
         }
     }
 }

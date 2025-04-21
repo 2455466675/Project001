@@ -25,10 +25,5 @@ namespace Game.System
         {
             count += deltaCount;
         }
-
-        public void Update(ItemBuffer buffer)
-        {
-            count += buffer.deltaCount;
-        }
     }
 }
