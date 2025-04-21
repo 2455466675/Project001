@@ -10,29 +10,29 @@ namespace Game.UI
     {
         public override void OnEnable()
         {
-            //Game.Event.Register<SelectBackpackMenu>(OnSelectBackpackMenuChanged);
+            Game.Event.Register<OnSelectBackpackCompartmentArg>(OnSelectBackpackMenuChanged);
         }
 
         public override void OnDisable() 
         {
-            //Game.Event.Unregister<SelectBackpackMenu>(OnSelectBackpackMenuChanged);
+            Game.Event.Unregister<OnSelectBackpackCompartmentArg>(OnSelectBackpackMenuChanged);
         }
 
         public override void OnRefresh(GameNavigationItem item)
         {
-            if (item.TryGetData(out InventoryItem inventoryItem)) 
+            if (item.TryGetData(out BackpackItem backpackItem)) 
             {
                 if (item.TryGetView(out TextView view)) 
                 {
-                    string name = Game.Config.GetTextById(inventoryItem.Config.Name);
-                    view.SetTextByStr($"{name} X {inventoryItem.Count}");
+                    string name = Game.Config.GetTextById(backpackItem.Item.Config.Name);
+                    view.SetTextByStr($"{name} X {backpackItem.Item.Count}");
                 }
             }
         }
 
-        //private void OnSelectBackpackMenuChanged(SelectBackpackMenu menu) 
-        //{
-        //    listView.UpdateData(menu.backpack.GetItems());
-        //}
+        private void OnSelectBackpackMenuChanged(OnSelectBackpackCompartmentArg arg)
+        {
+            listView.UpdateData(arg.compartment.GetItems());
+        }
     }
 }

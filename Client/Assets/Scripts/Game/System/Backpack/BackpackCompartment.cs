@@ -11,24 +11,24 @@ namespace Game.System
 
         public BackpackCfg Cfg { get; private set; }
 
-        private HashSet<BackpackItem> items;
+        private Dictionary<long, BackpackItem> items;
 
         public BackpackCompartment(BackpackCfg cfg)
         {
             this.Cfg = cfg;
             this.Type = (BackpackCompartmentType)cfg.Type;
-            items = new HashSet<BackpackItem>();
+            items = new Dictionary<long, BackpackItem>();
         }
 
         public void Add(InventoryItem item)
         {
             BackpackItem backpackItem = new BackpackItem(item);
-            items.Add(backpackItem);
+            items.Add(item.Uid, backpackItem);
         }
 
-        public void Remove(InventoryItem item)
+        public void Remove(long uid)
         {
-            //items.Remove(item);
+            items.Remove(uid);
         }
 
         public void Clear()
@@ -38,7 +38,7 @@ namespace Game.System
 
         public BackpackItem[] GetItems()
         {
-            return items.ToArray();
+            return items.Values.ToArray();
         }
     }
 }

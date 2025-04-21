@@ -93,6 +93,7 @@ namespace Navigation
             if (totalCount <= 0 || totalCount <= itemCount)
             {
                 Hide();
+                this.value = 0;
             }
             else
             {

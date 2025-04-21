@@ -10,6 +10,7 @@ namespace Navigation
     /// </summary>
     public class FluidNavigationList : NavigationList
     {
+        #region Alignment
         private interface IAlignment
         {
             int MovePointer(float h, float v, int pointer, int max);
@@ -228,6 +229,7 @@ namespace Navigation
                 return index;
             }
         }
+        #endregion
 
         [SerializeField]
         [ShowIf("listType", ListType.Vertical)]
@@ -315,15 +317,11 @@ namespace Navigation
 
         public override void Clear()
         {
-            foreach (var kv in items)
-            {
-                NavigationItem item = kv.Value;
-                if (item.IsBinded)
-                {
-                    ClearItem(item);
-                }
-                item.SetActive(false);
-            }
+            minIndex = -1;
+            maxIndex = -1;
+            pointer = 0;
+            totalCount = 0;
+            OnListChanged();
         }
 
         public void UpdateItemCount(int count)
@@ -340,13 +338,7 @@ namespace Navigation
 
             if (count == 0)
             {
-                minIndex = 0;
-                maxIndex = 0;
-                pointer = 0;
-                totalCount = 0;
-
                 Clear();
-
                 if (state == ListState.InFocused) 
                 {
                     ListEmpty();                
@@ -534,7 +526,7 @@ namespace Navigation
 
         private void OnListChanged()
         {
-            int length = maxIndex - minIndex + 1;
+            int length = (maxIndex < 0 || minIndex < 0) ? 0 : maxIndex - minIndex + 1;
             NavigationItem[] lts = new NavigationItem[length];
 
             foreach (var kv in items)

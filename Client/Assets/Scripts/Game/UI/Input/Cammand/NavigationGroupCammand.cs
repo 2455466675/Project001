@@ -14,7 +14,7 @@ namespace Game.UI
             Define = define;
         }
 
-        protected override void OnPop()
+        protected override void OnPop(bool isPopAll = false)
         {
             NavigationGroupEntity entity = GetEntity();
             entity?.Hide();
@@ -28,7 +28,7 @@ namespace Game.UI
             return true;
         }
 
-        protected override bool OnRise()
+        protected override bool OnRise(bool isPopAll = false)
         {
             var entity = GetEntity();
             entity?.Refocus();

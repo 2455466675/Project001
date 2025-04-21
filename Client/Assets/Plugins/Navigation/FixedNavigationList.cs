@@ -40,6 +40,16 @@ namespace Navigation
         private bool IsMultiple => index != null && index.Length > 1;
         private bool IsGrid => listType == ListType.Grid;
 
+        public NavigationItem GetItem(int index)
+        {
+            if (index < 0 || index >= items.Count)
+            {
+                return null;
+            }
+
+            return items[index];
+        }
+
         public override void Init()
         {
             if (isInit) 
@@ -69,23 +79,22 @@ namespace Navigation
 
         public override void Clear()
         {
-            foreach (var item in items)
+            if (items == null || items.Count == 0) 
             {
-                if (item.IsBinded) 
+                return;
+            }
+
+            for (int i = 0; i < items.Count; i++) 
+            { 
+                var item = items[i];
+                if (item != null) 
                 {
-                    ClearItem(item);
+                    if (item.IsBinded)
+                    {
+                        ClearItem(item);
+                    }
                 }
             }
-        }
-
-        public NavigationItem GetItem(int index) 
-        {
-            if (index < 0 || index >= items.Count) 
-            {
-                return null; 
-            }
-
-            return items[index];
         }
 
         protected override void OnExit()

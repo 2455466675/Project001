@@ -24,7 +24,7 @@ namespace Game.UI
         {
             if(List != null) 
             {
-                List.Clear();            
+                List.Clear();        
             }
 
             NavigationListEntity e = Game.UI.GetNavigationListEntity(define);

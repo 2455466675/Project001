@@ -5,6 +5,11 @@ using System.Linq;
 
 namespace Game.System
 {
+    public struct OnSelectBackpackCompartmentArg
+    {
+        public BackpackCompartment compartment;
+    }
+
     public enum BackpackCompartmentType
     {
         New = 999,
@@ -23,6 +28,9 @@ namespace Game.System
     {
         private Dictionary<BackpackCompartmentType, BackpackCompartment> compartments;
 
+        private BackpackCompartment allCompartment;
+        private BackpackCompartment newCompartment;
+
         public void Init() 
         {
             compartments = new Dictionary<BackpackCompartmentType, BackpackCompartment>();
@@ -31,8 +39,64 @@ namespace Game.System
             foreach (var cfg in cfgs)
             {
                 BackpackCompartmentType type = (BackpackCompartmentType)cfg.Type;
-                compartments.Add(type, new BackpackCompartment(cfg));
+                BackpackCompartment compartment = new BackpackCompartment(cfg);
+                compartments.Add(type, compartment);
+                if (type == BackpackCompartmentType.All) 
+                {
+                    allCompartment = compartment;
+                }
+                if (type == BackpackCompartmentType.New) 
+                { 
+                    newCompartment = compartment;
+                }
             }
+        }
+
+        public void OnAdd(long uid) 
+        {
+            var item = Game.System.InventorySystem.GetItem(uid);
+            if (item == null)
+            {
+                MLog.Error($"item is null : {uid}");
+                return;
+            }
+
+            var compartment = GetBackpackCompartment(item.Type);
+            if (compartment == null) 
+            {
+                MLog.Error($"compartment is null : {item.Type}");
+                return;
+            }
+
+            compartment.Add(item);
+            allCompartment.Add(item);
+            newCompartment.Add(item);
+        }
+
+        public void OnUpdate(long uid) 
+        {
+            
+        }
+
+        public void OnRemove(long uid) 
+        {
+            var item = Game.System.InventorySystem.GetItem(uid);
+            if (item == null)
+            {
+                MLog.Error($"item is null : {uid}");
+                return;
+            }
+
+            var compartment = GetBackpackCompartment(item.Type);
+            if (compartment == null)
+            {
+                MLog.Error($"compartment is null : {item.Type}");
+                return;
+            }
+
+            compartment.Remove(uid);
+            allCompartment.Remove(uid);
+            newCompartment.Remove(uid);
         }
 
         public BackpackCompartment[] GetCompartments()
@@ -42,7 +106,32 @@ namespace Game.System
 
         public void OnSelectCompartment(BackpackCompartment compartment)
         {
-            
+            Game.Event.Publish(new OnSelectBackpackCompartmentArg() { compartment = compartment});
+        }
+
+        private BackpackCompartment GetBackpackCompartment(InventoryItemType type)
+        {
+            BackpackCompartmentType t = (BackpackCompartmentType)type;
+            if (compartments.ContainsKey(t))
+            {
+                return compartments[t];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private BackpackCompartment GetBackpackCompartment(BackpackCompartmentType type) 
+        {
+            if (compartments.ContainsKey(type)) 
+            {
+                return compartments[type];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

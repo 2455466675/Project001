@@ -81,11 +81,6 @@ namespace Navigation
         private bool isPress;
         private bool CanMove => pressTimer <= 0f && intervalTimer <= 0f;
 
-        private void OnDestroy()
-        {
-            Clear();
-        }
-
         private void FixedUpdate()
         {
             if (!isPress) 
@@ -109,7 +104,7 @@ namespace Navigation
         }
 
         public virtual void Clear() 
-        {        
+        {
         }
 
         public void Move(float h, float v)
