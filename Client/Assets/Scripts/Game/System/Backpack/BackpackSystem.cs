@@ -2,6 +2,7 @@ using Config;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using static Game.System.InventorySystem;
 
 namespace Game.System
 {
@@ -54,6 +55,7 @@ namespace Game.System
 
         public void OnAdd(long uid) 
         {
+            MLog.Log($"OnAdd : {uid}");
             var item = Game.System.InventorySystem.GetItem(uid);
             if (item == null)
             {
@@ -75,22 +77,37 @@ namespace Game.System
 
         public void OnUpdate(long uid) 
         {
-            
-        }
-
-        public void OnRemove(long uid) 
-        {
+            MLog.Log($"OnUpdate : {uid}");
             var item = Game.System.InventorySystem.GetItem(uid);
             if (item == null)
             {
                 MLog.Error($"item is null : {uid}");
                 return;
             }
-
             var compartment = GetBackpackCompartment(item.Type);
             if (compartment == null)
             {
                 MLog.Error($"compartment is null : {item.Type}");
+                return;
+            }
+
+            compartment.Update(uid);
+        }
+
+        public void OnRemove(long uid, int id) 
+        {
+            MLog.Log($"OnRemove : {uid}, {id}");
+            ItemCfg cfg = Game.Config.Find<ItemCfg>(id);
+            if (cfg == null)
+            {
+                MLog.Error($"ItemCfg is null : {id}");
+                return;
+            }
+
+            var compartment = GetBackpackCompartment((BackpackCompartmentType)cfg.Backpack);
+            if (compartment == null)
+            {
+                MLog.Error($"compartment is null : {cfg.Backpack}");
                 return;
             }
 

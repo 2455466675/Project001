@@ -15,12 +15,12 @@ namespace Game.UI
             FluidListView view = GetView<FluidListView>("FluidNavigationList");
             if (view != null)
             {
-                List<object> list = new List<object>();
-                for (int i = 0; i < 32; i++)
-                {
-                    list.Add(i);
-                }
-                view.UpdateData(list.ToArray());
+                //List<object> list = new List<object>();
+                //for (int i = 0; i < 32; i++)
+                //{
+                //    list.Add(i);
+                //}
+                //view.UpdateData(list.ToArray());
             }
         }
 

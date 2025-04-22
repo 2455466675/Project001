@@ -7,7 +7,7 @@ namespace Game.UI
     {
         protected override NavigationList List => list;
 
-        private object[] data;
+        private INavigationItemData[] data;
 
         [SerializeField]
         private FluidNavigationList list;
@@ -21,7 +21,13 @@ namespace Game.UI
             }
         }
 
-        public override void UpdateData(object[] data) 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            data = null;
+        }
+
+        public override void UpdateData(INavigationItemData[] data) 
         {
             this.data = data;
             if (list != null) 

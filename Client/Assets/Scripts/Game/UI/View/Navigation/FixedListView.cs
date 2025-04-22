@@ -19,7 +19,7 @@ namespace Game.UI
             }
         }
 
-        public override void UpdateData(object[] data)
+        public override void UpdateData(INavigationItemData[] data)
         {            
             if (list == null) 
             {

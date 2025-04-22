@@ -21,14 +21,14 @@ namespace Game.UI
         {
             //int count = Random.Range(80, 100);
 
-            count = 10;
+            //count = 10;
 
-            TestData[] data = new TestData[count];
-            for (int i = 0; i < count; i++)
-            {
-                data[i] = new TestData() { id = i };
-            }
-            listView.UpdateData(data);
+            //TestData[] data = new TestData[count];
+            //for (int i = 0; i < count; i++)
+            //{
+            //    data[i] = new TestData() { id = i };
+            //}
+            //listView.UpdateData(data);
         }
 
         public override void OnBindData(GameNavigationItem item)
@@ -66,14 +66,14 @@ namespace Game.UI
         {
             //int count = Random.Range(80, 100);
 
-            count = count - 3;
-            count = Mathf.Max(count, 0);
-            TestData[] data = new TestData[count];
-            for (int i = 0; i < count; i++)
-            {
-                data[i] = new TestData() { id = i };
-            }
-            listView.UpdateData(data);
+            //count = count - 3;
+            //count = Mathf.Max(count, 0);
+            //TestData[] data = new TestData[count];
+            //for (int i = 0; i < count; i++)
+            //{
+            //    data[i] = new TestData() { id = i };
+            //}
+            //listView.UpdateData(data);
         }
     }
 }

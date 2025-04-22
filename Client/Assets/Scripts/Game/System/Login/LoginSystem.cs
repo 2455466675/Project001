@@ -2,7 +2,7 @@ using Game.State;
 
 namespace Game.System
 {
-    public abstract class LoginOption 
+    public abstract class LoginOption : GameNavigationItemData
     {
         public abstract void Execute();
     }

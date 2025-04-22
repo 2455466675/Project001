@@ -14,7 +14,7 @@ namespace Game.UI
         public override void OnEnable()
         {
             Game.System.LoginSystem.LockLoginGroup = true;
-            listView.UpdateData(Game.System.LoginSystem.GetOptions());
+            UpdateData(Game.System.LoginSystem.GetOptions());
         }
 
         public override void OnSubmit(GameNavigationItem item)

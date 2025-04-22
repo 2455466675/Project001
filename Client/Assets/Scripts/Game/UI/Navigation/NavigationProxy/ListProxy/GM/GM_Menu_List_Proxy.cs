@@ -5,7 +5,7 @@ namespace Game.UI
     {
         public override void OnEnable()
         {
-            listView.UpdateData(Game.GM.GetMenus());
+            UpdateData(Game.GM.GetMenus());
         }
 
         public override void OnSelect(GameNavigationItem item)

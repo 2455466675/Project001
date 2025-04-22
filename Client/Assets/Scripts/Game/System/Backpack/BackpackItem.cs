@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-
 namespace Game.System
 {
-    public class BackpackItem
+    public class BackpackItem : GameNavigationItemData
     {
         public InventoryItem Item { get; private set; }
 

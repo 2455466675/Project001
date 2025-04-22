@@ -30,9 +30,24 @@ namespace Game.UI
             }
         }
 
+        public override void OnSubmit(GameNavigationItem item)
+        {
+            if (item.TryGetData(out BackpackItem backpackItem))
+            {
+                InventoryItemData2[] items = new InventoryItemData2[1];
+
+                items[0] = new InventoryItemData2()
+                {
+                    uid = backpackItem.Item.Uid,
+                    count = 1
+                };
+                Game.System.InventorySystem.Decrement(items);
+            }
+        }
+
         private void OnSelectBackpackMenuChanged(OnSelectBackpackCompartmentArg arg)
         {
-            listView.UpdateData(arg.compartment.GetItems());
+            UpdateData(arg.compartment.GetItems());
         }
     }
 }

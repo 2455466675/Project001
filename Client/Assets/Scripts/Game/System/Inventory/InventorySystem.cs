@@ -6,29 +6,35 @@ namespace Game.System
 {
     public struct InventoryAdd
     {
-        public long[] items;
+        public InventoryItemData3[] items;
     }
 
     public struct InventoryUpdate
     {
-        public long[] items;
+        public InventoryItemData3[] items;
     }
 
     public struct InventoryRemove
     {
-        public long[] items;
+        public InventoryItemData3[] items;
     }
 
     public struct InventoryItemData 
     {
-        public int id;
+        public int id;        
         public int count;
     }
 
     public struct InventoryItemData2
-    {
+    {        
         public long uid;
         public int count;
+    }
+
+    public struct InventoryItemData3
+    {
+        public int id;
+        public long uid;        
     }
 
     public class InventorySystem
@@ -45,6 +51,7 @@ namespace Game.System
         {
             public ItemChangedType type;
             public long uid;
+            public int id;
         }
 
         private Dictionary<long, InventoryItem> items;
@@ -68,24 +75,21 @@ namespace Game.System
 
         public void Increment(InventoryItemData[] items) 
         {
-            List<long> add = new List<long>();
-            List<long> update = new List<long>();
+            List<InventoryItemData3> add = new List<InventoryItemData3>();
+            List<InventoryItemData3> update = new List<InventoryItemData3>();
 
             foreach (var item in items)
             {
                 ItemChangedResult result = IncrementItem(item.id, item.count);
                 if (result.type == ItemChangedType.Add) 
                 {
-                    add.Add(result.uid);
+                    add.Add(new InventoryItemData3() { id = result.id, uid = result.uid });
                 }
                 else if (result.type == ItemChangedType.Update)
                 {
-                    update.Add(result.uid);
+                    update.Add(new InventoryItemData3() { id = result.id, uid = result.uid });
                 }
             }
-
-            add = add.Distinct().ToList();
-            update = update.Distinct().ToList();
 
             if (add.Count > 0) 
             {
@@ -100,18 +104,26 @@ namespace Game.System
 
         public void Decrement(InventoryItemData2[] items) 
         {
-            List<long> remove = new List<long>();
+            List<InventoryItemData3> remove = new List<InventoryItemData3>();
+            List<InventoryItemData3> update = new List<InventoryItemData3>();
 
             foreach (var item in items)
             {
                 ItemChangedResult result = DecrementItem(item.uid, item.count);
                 if (result.type == ItemChangedType.Remove)
                 {
-                    remove.Add(result.uid);
+                    remove.Add(new InventoryItemData3() { id = result.id, uid = result.uid });
+                }
+                else if (result.type == ItemChangedType.Update)
+                {
+                    update.Add(new InventoryItemData3() { id = result.id, uid = result.uid });
                 }
             }
 
-            remove = remove.Distinct().ToList();
+            if (update.Count > 0)
+            {
+                Game.Event.Publish(new InventoryUpdate() { items = update.ToArray() });
+            }
 
             if (remove.Count > 0) 
             {
@@ -152,6 +164,7 @@ namespace Game.System
                 items.Add(uid, item);
             }
 
+            result.id = id;
             result.uid = uid;
             return result;
         }
@@ -167,10 +180,20 @@ namespace Game.System
                 
             count = GameMathf.Abs(count);
 
-            InventoryItem item = items[uid];                       
+            InventoryItem item = items[uid];
+            result.id = item.Id;
             result.uid = uid;
-            result.type = item.Count > count ? ItemChangedType.Update : ItemChangedType.Remove;
-            item.UpdateCount(count *= -1);
+         
+            if (item.Count > count)
+            {
+                item.UpdateCount(count *= -1);
+                result.type = ItemChangedType.Update;
+            }
+            else
+            {
+                result.type = ItemChangedType.Remove;
+                items.Remove(uid);
+            }
 
             return result;
         }

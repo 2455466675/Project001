@@ -5,10 +5,10 @@ namespace Game.System
     {
         public override void Invoke(InventoryAdd arg)
         {
-            long[] items = arg.items;
+            var items = arg.items;
             for (int i = 0; i < items.Length; i++) 
             {
-                Game.System.BackpackSystem.OnAdd(items[i]);
+                Game.System.BackpackSystem.OnAdd(items[i].uid);
             }
         }
     }
@@ -18,10 +18,10 @@ namespace Game.System
     {
         public override void Invoke(InventoryUpdate arg)
         {
-            long[] items = arg.items;
+            var items = arg.items;
             for (int i = 0; i < items.Length; i++)
             {
-                Game.System.BackpackSystem.OnUpdate(items[i]);
+                Game.System.BackpackSystem.OnUpdate(items[i].uid);
             }
         }
     }
@@ -31,10 +31,10 @@ namespace Game.System
     {
         public override void Invoke(InventoryRemove arg)
         {
-            long[] items = arg.items;
+            var items = arg.items;
             for (int i = 0; i < items.Length; i++)
             {
-                Game.System.BackpackSystem.OnRemove(items[i]);
+                Game.System.BackpackSystem.OnRemove(items[i].uid, items[i].id);
             }
         }
     }

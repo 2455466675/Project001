@@ -1,6 +1,6 @@
 namespace Game.System
 {
-    public abstract class OverviewMenuBase
+    public abstract class OverviewMenuBase : GameNavigationItemData
     {
         public abstract void Execute();
     }

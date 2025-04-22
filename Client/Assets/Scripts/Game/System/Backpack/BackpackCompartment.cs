@@ -1,11 +1,10 @@
 using Config;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.System
 { 
-    public class BackpackCompartment
+    public class BackpackCompartment : GameNavigationItemData
     {
         public BackpackCompartmentType Type;
 
@@ -24,6 +23,14 @@ namespace Game.System
         {
             BackpackItem backpackItem = new BackpackItem(item);
             items.Add(item.Uid, backpackItem);
+        }
+
+        public void Update(long uid) 
+        {
+            if (items.TryGetValue(uid, out BackpackItem backpackItem)) 
+            {
+                backpackItem.Refresh();
+            }
         }
 
         public void Remove(long uid)

@@ -20,7 +20,7 @@ namespace Game.UI
             e?.OnEnable();
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             if(List != null) 
             {
@@ -121,8 +121,10 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
-                e?.OnBindData(item);
+                //NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                //e?.OnBindData(item);
+
+                obj.OnRefreshEvent += Obj_OnRefreshEvent;
             }
         }
 
@@ -130,9 +132,16 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
-                e?.OnUnbindData(item);
+                //NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                //e?.OnUnbindData(item);
+
+                obj.OnRefreshEvent -= Obj_OnRefreshEvent;
             }
+        }
+
+        private void Obj_OnRefreshEvent(NavigationItem obj)
+        {
+            OnItemRefresh(obj);
         }
 
         protected void OnItemRefresh(NavigationItem obj) 
@@ -144,7 +153,7 @@ namespace Game.UI
             }
         }
 
-        public abstract void UpdateData(object[] data);
+        public abstract void UpdateData(INavigationItemData[] data);
 
         public void Move(float h, float v)
         {

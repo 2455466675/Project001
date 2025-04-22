@@ -4,6 +4,8 @@ namespace Game
 {
     public static class GameMathf
     {
+        public static double PI => Math.PI;
+
         public static int Max(int a, int b)
         {
             return (a > b) ? a : b;

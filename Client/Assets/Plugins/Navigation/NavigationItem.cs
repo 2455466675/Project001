@@ -1,19 +1,27 @@
+using System;
 using UnityEngine;
 
 namespace Navigation
 {
+    public interface IRefreshable 
+    {
+        public void Refresh();
+    }
+
     /// <summary>
     /// 
     /// </summary>
-    public class NavigationItem : MonoBehaviour
+    public class NavigationItem : MonoBehaviour , IRefreshable
     {
-        private object data;
+        private INavigationItemData data;
         [SerializeField]
         private string param;
 
         public bool IsBinded => data is not null;
         public int Index { get; private set; }
         public virtual bool IsValid => true;
+
+        public event Action<NavigationItem> OnRefreshEvent;
 
         /// <summary>
         /// Ñ¡ÔñÆ÷
@@ -26,14 +34,21 @@ namespace Navigation
         [SerializeField]
         private NavigationItemEvent @event;
 
-        public void BindData(object data) 
+        public void BindData(INavigationItemData data) 
         {            
             this.data = data;
+            this.data.Bind(this);
         }
 
         public void UnbindData() 
         {
+            this.data.Unbind(this);
             this.data = null;
+        }
+
+        public void Refresh() 
+        {
+            OnRefreshEvent?.Invoke(this);
         }
 
         public bool TryGetData<T>(out T result) where T : class

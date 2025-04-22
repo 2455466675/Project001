@@ -1,3 +1,5 @@
+using Navigation;
+
 namespace Game.UI
 {
     /// <summary>
@@ -10,6 +12,18 @@ namespace Game.UI
         public void Init(NavigationListView listView) 
         {
             this.listView = listView;
+        }
+
+        public void UpdateData(INavigationItemData[] datas) 
+        {
+            datas ??= new INavigationItemData[0];
+            datas = FilterData(datas);
+            listView.UpdateData(datas);
+        }
+
+        protected virtual INavigationItemData[] FilterData(INavigationItemData[] datas) 
+        {
+            return datas;
         }
 
         #region UnityÉúÃüÖÜÆÚ

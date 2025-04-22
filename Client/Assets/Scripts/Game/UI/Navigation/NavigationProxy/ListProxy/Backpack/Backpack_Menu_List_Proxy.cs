@@ -10,7 +10,7 @@ namespace Game.UI
     {
         public override void OnEnable()
         {
-            listView.UpdateData(Game.System.BackpackSystem.GetCompartments());
+            UpdateData(Game.System.BackpackSystem.GetCompartments());
         }
 
         public override void OnSelect(GameNavigationItem item)

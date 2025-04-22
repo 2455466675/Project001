@@ -35,14 +35,7 @@ namespace Game.UI
         private void OnCurrentMenuChanged(CurrentMenuChanged arg) 
         {
             GM_Menu menu = arg.menu;
-            if (menu == null) 
-            {
-                listView.UpdateData(new object[0]);
-            }
-            else
-            {
-                listView.UpdateData(menu.GetItems());
-            }
+            UpdateData(menu.GetItems());
         }
     }
 }
