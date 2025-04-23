@@ -6,7 +6,9 @@ namespace Game.System
 { 
     public class BackpackCompartment : GameNavigationItemData
     {
-        public BackpackCompartmentType Type;
+        public BackpackCompartmentType Type { get; private set; }
+
+        public int Count => items.Count;
 
         public BackpackCfg Cfg { get; private set; }
 

@@ -1,14 +1,13 @@
 using Config;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Game.System.InventorySystem;
 
 namespace Game.System
 {
-    public struct OnSelectBackpackCompartmentArg
+    public struct BackpackItemsChangedArg
     {
-        public BackpackCompartment compartment;
+        public BackpackItem[] items;
     }
 
     public enum BackpackCompartmentType
@@ -32,6 +31,8 @@ namespace Game.System
         private BackpackCompartment allCompartment;
         private BackpackCompartment newCompartment;
 
+        private BackpackCompartment currentCompartment;
+
         public void Init() 
         {
             compartments = new Dictionary<BackpackCompartmentType, BackpackCompartment>();
@@ -53,67 +54,96 @@ namespace Game.System
             }
         }
 
-        public void OnAdd(long uid) 
+        public void OnAdd(InventoryItemData3[] datas) 
         {
-            MLog.Log($"OnAdd : {uid}");
-            var item = Game.System.InventorySystem.GetItem(uid);
-            if (item == null)
+            List<BackpackCompartmentType> changedTyps = new List<BackpackCompartmentType>();
+            changedTyps.Add(BackpackCompartmentType.All);
+            changedTyps.Add(BackpackCompartmentType.New);
+
+            for (int i = 0; i < datas.Length; i++)
             {
-                MLog.Error($"item is null : {uid}");
-                return;
+                long uid = datas[i].uid;
+                var item = Game.System.InventorySystem.GetItem(uid);
+                if (item == null)
+                {
+                    MLog.Error($"item is null : {uid}");
+                    continue;
+                }
+
+                var compartment = GetBackpackCompartment(item.Type);
+                if (compartment == null)
+                {
+                    MLog.Error($"compartment is null : {item.Type}");
+                    continue;
+                }
+
+                compartment.Add(item);
+                allCompartment.Add(item);
+                newCompartment.Add(item);
+
+                changedTyps.Add(compartment.Type);
             }
 
-            var compartment = GetBackpackCompartment(item.Type);
-            if (compartment == null) 
-            {
-                MLog.Error($"compartment is null : {item.Type}");
-                return;
-            }
-
-            compartment.Add(item);
-            allCompartment.Add(item);
-            newCompartment.Add(item);
+            OnItemsChanged(changedTyps);
         }
 
-        public void OnUpdate(long uid) 
+        public void OnUpdate(InventoryItemData3[] datas) 
         {
-            MLog.Log($"OnUpdate : {uid}");
-            var item = Game.System.InventorySystem.GetItem(uid);
-            if (item == null)
+            for (int i = 0; i < datas.Length; i++) 
             {
-                MLog.Error($"item is null : {uid}");
-                return;
-            }
-            var compartment = GetBackpackCompartment(item.Type);
-            if (compartment == null)
-            {
-                MLog.Error($"compartment is null : {item.Type}");
-                return;
-            }
+                long uid = datas[i].uid;
+                var item = Game.System.InventorySystem.GetItem(uid);
+                if (item == null)
+                {
+                    MLog.Error($"item is null : {uid}");
+                    continue;
+                }
+                var compartment = GetBackpackCompartment(item.Type);
+                if (compartment == null)
+                {
+                    MLog.Error($"compartment is null : {item.Type}");
+                    continue;
+                }
 
-            compartment.Update(uid);
+                compartment.Update(uid);
+                allCompartment.Update(uid);
+                newCompartment.Update(uid);
+            }
         }
 
-        public void OnRemove(long uid, int id) 
+        public void OnRemove(InventoryItemData3[] datas) 
         {
-            MLog.Log($"OnRemove : {uid}, {id}");
-            ItemCfg cfg = Game.Config.Find<ItemCfg>(id);
-            if (cfg == null)
+            List<BackpackCompartmentType> changedTyps = new List<BackpackCompartmentType>();
+            changedTyps.Add(BackpackCompartmentType.All);
+            changedTyps.Add(BackpackCompartmentType.New);
+
+            for (int i = 0; i < datas.Length; i++) 
             {
-                MLog.Error($"ItemCfg is null : {id}");
-                return;
+                long uid = datas[i].uid;
+                int id = datas[i].id;
+
+                ItemCfg cfg = Game.Config.Find<ItemCfg>(id);
+                if (cfg == null)
+                {
+                    MLog.Error($"ItemCfg is null : {id}");
+                    continue;
+                }
+
+                var compartment = GetBackpackCompartment((BackpackCompartmentType)cfg.Backpack);
+                if (compartment == null)
+                {
+                    MLog.Error($"compartment is null : {cfg.Backpack}");
+                    continue;
+                }
+
+                compartment.Remove(uid);
+                allCompartment.Remove(uid);
+                newCompartment.Remove(uid);
+
+                changedTyps.Add(compartment.Type);
             }
 
-            var compartment = GetBackpackCompartment((BackpackCompartmentType)cfg.Backpack);
-            if (compartment == null)
-            {
-                MLog.Error($"compartment is null : {cfg.Backpack}");
-                return;
-            }
-
-            compartment.Remove(uid);
-            allCompartment.Remove(uid);
-            newCompartment.Remove(uid);
+            OnItemsChanged(changedTyps);
         }
 
         public BackpackCompartment[] GetCompartments()
@@ -123,7 +153,35 @@ namespace Game.System
 
         public void OnSelectCompartment(BackpackCompartment compartment)
         {
-            Game.Event.Publish(new OnSelectBackpackCompartmentArg() { compartment = compartment});
+            currentCompartment = compartment;            
+            PublishItemsChanged();
+        }
+
+        private void OnItemsChanged(List<BackpackCompartmentType> compartmentTypes)
+        {
+            if (currentCompartment == null) 
+            {
+                return;
+            }
+
+            if (compartmentTypes == null || compartmentTypes.Count == 0) 
+            {
+                return;
+            }
+
+            if (compartmentTypes.Contains(currentCompartment.Type)) 
+            {
+                PublishItemsChanged();
+            }
+        }
+
+        private void PublishItemsChanged() 
+        {
+            if (currentCompartment == null) 
+            {
+                return;
+            }
+            Game.Event.Publish(new BackpackItemsChangedArg() { items = currentCompartment.GetItems() });
         }
 
         private BackpackCompartment GetBackpackCompartment(InventoryItemType type)

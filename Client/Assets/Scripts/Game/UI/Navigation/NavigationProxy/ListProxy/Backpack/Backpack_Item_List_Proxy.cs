@@ -10,12 +10,12 @@ namespace Game.UI
     {
         public override void OnEnable()
         {
-            Game.Event.Register<OnSelectBackpackCompartmentArg>(OnSelectBackpackMenuChanged);
+            Game.Event.Register<BackpackItemsChangedArg>(BackpackSystem_BackpackItemsChangedHandler);
         }
 
         public override void OnDisable() 
         {
-            Game.Event.Unregister<OnSelectBackpackCompartmentArg>(OnSelectBackpackMenuChanged);
+            Game.Event.Unregister<BackpackItemsChangedArg>(BackpackSystem_BackpackItemsChangedHandler);
         }
 
         public override void OnRefresh(GameNavigationItem item)
@@ -45,9 +45,9 @@ namespace Game.UI
             }
         }
 
-        private void OnSelectBackpackMenuChanged(OnSelectBackpackCompartmentArg arg)
+        private void BackpackSystem_BackpackItemsChangedHandler(BackpackItemsChangedArg obj)
         {
-            UpdateData(arg.compartment.GetItems());
+            UpdateData(obj.items);
         }
     }
 }

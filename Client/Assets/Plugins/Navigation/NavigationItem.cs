@@ -44,6 +44,7 @@ namespace Navigation
         {
             this.data.Unbind(this);
             this.data = null;
+            OnRefreshEvent = null;
         }
 
         public void Refresh() 
@@ -91,10 +92,6 @@ namespace Navigation
         internal void SetActive(bool active)
         {
             gameObject.SetActive(active);
-            if (!active && IsBinded) 
-            {
-                UnbindData();
-            }
         }
 
         internal void SetIndex(int index)
