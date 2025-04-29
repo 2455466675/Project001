@@ -16,16 +16,16 @@ namespace Navigation
         private FluidNavigationList list;
 
         [SerializeField]
-        private float showDuration;
-        private float showDurationer;
-
-        [SerializeField]
-        private int tickCount;
+        private int tickCount;  //连续几次触发才显示滑动条
         private int tickCounter;
 
         [SerializeField]
-        private float tickInterval;
+        private float tickInterval; //连续检测时间
         private float tickIntervaler;
+
+        [SerializeField]
+        private float showDuration; //滑动条显示持续时间
+        private float showDurationer;
 
         [SerializeField]
         private float fadeIn;
@@ -35,13 +35,17 @@ namespace Navigation
         private float size;
         private float value;
 
+        private bool isInFocus;
         private bool isShow;
 
         private void Awake()
         {
             if (list != null) 
             {
-                list.OnListChangedEvent += List_OnListChangedEvent; ;
+                list.OnListChangedEvent += List_OnListChangedEvent;
+                list.OnListInFocusEvent += List_OnListInFocusEvent;
+                list.OnListOutFocusEvent += List_OnListOutFocusEvent;
+                list.OnListExitEvent += List_OnListExitEvent;
             }
 
             StartCoroutine(HideFade(0f, 0f));
@@ -49,7 +53,12 @@ namespace Navigation
 
         private void Update()
         {
-            if (tickCounter <= 0) 
+            if (!isInFocus)
+            {
+                return;
+            }
+
+            if (tickCounter <= 0)
             {
                 Hide();
                 return;
@@ -73,7 +82,7 @@ namespace Navigation
                 {
                     Show();
                     SetSize(size);
-                    SetValue(value);                    
+                    SetValue(value);
                     showDurationer -= Time.deltaTime;
                 }
                 else
@@ -81,11 +90,16 @@ namespace Navigation
                     tickCounter = 0;
                     tickIntervaler = 0f;
                 }
-            }                        
+            }
         }
 
         private void List_OnListChangedEvent(ListChangedEventArgs obj)
         {
+            if (!isInFocus) 
+            {
+                return;
+            }
+
             int minIndex = obj.MinIndex;
             int itemCount = obj.ItemCount;
             int totalCount = obj.TotalCount;
@@ -94,12 +108,13 @@ namespace Navigation
             {
                 Hide();
                 this.value = 0;
+                tickCounter = 0;
+                tickIntervaler = 0f;
             }
             else
             {
                 float size = (1f * itemCount) / totalCount;
                 float value = (1f * minIndex) / (totalCount - itemCount);
-
                 if (this.value != value)
                 {
                     this.size = size;
@@ -111,12 +126,33 @@ namespace Navigation
             }
         }
 
+        private void List_OnListOutFocusEvent()
+        {
+            isInFocus = false;
+        }
+
+        private void List_OnListInFocusEvent()
+        {
+            isInFocus = true;
+        }
+
+        private void List_OnListExitEvent()
+        {
+            isInFocus = false;
+            Hide();
+            this.value = 0f;
+            tickCounter = 0;
+            tickIntervaler = 0f;
+            showDurationer = 0f;
+        }
+
         private void Show() 
         {
             if (isShow)
             {
                 return;
             }
+            isShow = true;
             StartCoroutine(ShowFade(1f, fadeIn));
         }
 
@@ -126,8 +162,6 @@ namespace Navigation
             {
                 yield break;
             }
-
-            isShow = true;
 
             float start = canvasGroup.alpha;
 
@@ -147,7 +181,7 @@ namespace Navigation
             {
                 return;
             }
-
+            isShow = false;
             StartCoroutine(HideFade(0f, fadeOut));
         }
 
@@ -157,8 +191,6 @@ namespace Navigation
             {
                 yield break;
             }
-
-            isShow = false;
 
             float start = canvasGroup.alpha;
 

@@ -46,16 +46,16 @@ namespace Game
             Event.Init();
 
             Scene = new GameScene();
-            Scene.Init(config);
+            Scene.Init();
 
             State = new GameState();
             State.Init();
 
             UI = new GameUI();
-            UI.Init(config);
+            UI.Init();
 
             System = new GameSystem();
-            System.Init(config);
+            System.Init();
 
             GM = new GameCommand();
             GM.Init();

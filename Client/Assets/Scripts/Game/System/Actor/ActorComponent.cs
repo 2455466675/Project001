@@ -16,7 +16,7 @@ namespace Game.System
         public void Refresh() 
         {
             ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
-            GameObject go = Game.Resource.LoadAndInstantiate(cfg.PrefabPath, Game.System.RoleSystem.Container.transform);
+            GameObject go = Game.Resource.LoadAndInstantiate(cfg.PrefabPath, Game.System.ActorManager.Container.transform);
             actor = go.GetComponent<Actor>();
         }
       
@@ -41,7 +41,7 @@ namespace Game.System
             actor.Rigidbody2D.bodyType = active ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
         }
 
-        protected override void OnDestroy()
+        protected override void OnDestroyComponent()
         {
             actor = null;
         }

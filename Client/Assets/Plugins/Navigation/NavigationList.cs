@@ -61,6 +61,9 @@ namespace Navigation
 
         private NavigationItem[] current;
 
+        public event Action OnListInFocusEvent;
+        public event Action OnListOutFocusEvent;
+        public event Action OnListExitEvent;
         public event Action OnListEmptyEvent;
         public event Action<NavigationItem> OnSelectedEvent;
         public event Action<NavigationItem> OnDeselectedEvent;
@@ -144,7 +147,12 @@ namespace Navigation
             {
                 indexs = new int[] { 0 };
             }
-            return OnInFocus(isRefocus, indexs);
+            bool r = OnInFocus(isRefocus, indexs);
+            if (r) 
+            {
+                OnListInFocusEvent?.Invoke();
+            }
+            return r;
         }
 
         public void OutFocus()
@@ -152,6 +160,7 @@ namespace Navigation
             state = ListState.OutFocused;
             isPress = false;
             OutFocusCurrent();
+            OnListOutFocusEvent?.Invoke();
         }
 
         public void Exit()
@@ -161,6 +170,7 @@ namespace Navigation
             current = null;
             isPress = false;
             OnExit();
+            OnListExitEvent?.Invoke();
         }
 
         protected virtual void OnMove(float h, float v) 

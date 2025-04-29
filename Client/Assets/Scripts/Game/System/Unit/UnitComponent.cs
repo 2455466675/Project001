@@ -5,11 +5,16 @@ namespace Game.System
     /// </summary>
     public class UnitComponent
     {
-        private RoleUnit unit;
+        private UnitBase unit;
 
-        public void Constructor(RoleUnit unit) 
+        internal void InitComponent(UnitBase unit) 
         {
             this.unit = unit;
+        }
+        internal void Destroy() 
+        {
+            OnDestroyComponent();
+            unit = null;
         }
 
         public T GetComponent<T>() where T : UnitComponent
@@ -17,13 +22,8 @@ namespace Game.System
             return unit.GetComponent<T>();
         }
 
-        public void Destroy() 
-        {
-            OnDestroy();
-            unit = null;
-        }
 
-        protected virtual void OnDestroy() 
+        protected virtual void OnDestroyComponent() 
         {
         }
     }

@@ -82,7 +82,7 @@ namespace Game.System
             actorComponent = GetComponent<ActorComponent>();
             dirX = 0f;
             dirY = -1f;
-            gap = Game.Config.Formula.TEAM_GAP;
+            gap = Game.Config.Formula.PartyUnitGap;
             frame = 0;
             isRunning = false;
             traces = new List<MoveTrace>();

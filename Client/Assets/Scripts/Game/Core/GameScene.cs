@@ -19,14 +19,14 @@ namespace Game
         private Action<float> loadingAction;
         private int loadingSceneId;
 
-        public void Init(GameInitConfig config)
+        public void Init()
         {
             loadingSceneId = -1;
 
             scenes = new List<SceneEntity>();
             activatedScenes = new Stack<SceneEntity>();
 
-            sceneMap = Game.Resource.LoadFormRes<SceneMap>(config.SceneMap);
+            sceneMap = Game.Resource.LoadFormRes<SceneMap>(Game.Config.Formula.SceneMap);
         }
 
         public void LoadScene(int sceneId)

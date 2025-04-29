@@ -3,24 +3,27 @@ namespace Game.System
 {
     public class GameSystem
     {
+        public UnitManager UnitManager { get; private set; }
+        public ActorManager ActorManager { get; private set; }
         public InventorySystem InventorySystem { get; private set; }
         public LoginSystem LoginSystem { get; private set; }
-        public RoleSystem RoleSystem { get; private set; }
         public PartySystem PartySystem { get; private set; }
-
         public BackpackSystem BackpackSystem { get; private set; }
         public OverviewSystem OverviewSystem { get; private set; }
 
-        public void Init(GameInitConfig config)
+        public void Init()
         {
+            UnitManager = new UnitManager();
+            UnitManager.Init();
+
+            ActorManager = new ActorManager();
+            ActorManager.Init();
+
             InventorySystem = new InventorySystem();
             InventorySystem.Init();
 
             LoginSystem = new LoginSystem();
             LoginSystem.Init();
-
-            RoleSystem = new RoleSystem();
-            RoleSystem.Init(config);
 
             PartySystem = new PartySystem();
             PartySystem.Init();
@@ -36,7 +39,7 @@ namespace Game.System
 
         public void FixedUpdate(float fdt) 
         {
-            RoleSystem.FixedUpdate(fdt);
+            UnitManager.FixedUpdate(fdt);
         }
     }
 }

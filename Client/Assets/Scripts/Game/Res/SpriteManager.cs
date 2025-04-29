@@ -26,9 +26,9 @@ namespace Game.Resource
         private Dictionary<string, SpriteItem> data;
         private Dictionary<string, SpriteAtlas> spriteAtlas;
 
-        public void Init(GameInitConfig initCfg) 
+        public SpriteManager(string mapPath)
         {
-            TextAsset asset = Game.Resource.LoadFormRes<TextAsset>(initCfg.SpriteMap);
+            TextAsset asset = Game.Resource.LoadFormRes<TextAsset>(mapPath);
             if (asset != null) 
             {
                 SpriteMap map = JsonConvert.DeserializeObject<SpriteMap>(asset.text);

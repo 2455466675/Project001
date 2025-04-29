@@ -39,8 +39,7 @@ namespace Game.Resource
                 await package.InitializeAsync(parameters);
             }
 
-            spriteManager = new SpriteManager();
-            spriteManager.Init(initCfg);
+            spriteManager = new SpriteManager(initCfg.SpriteMap);
         }
 
         /// <summary>

@@ -5,27 +5,22 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-    public class RoleSystem
+    public class UnitManager
     {
-        public ActorContainer Container { get; private set; }
-
         private int uidGenerator;
-        private Dictionary<int, RoleUnit> units;
+        private Dictionary<int, UnitBase> units;
 
         private HashSet<IFixedUpdateComponent> fixedUpdateComponents;
         private List<IFixedUpdateComponent> newfixedUpdateComponents;
         private List<IFixedUpdateComponent> oldfixedUpdateComponents;
 
-        public void Init(GameInitConfig config)
+        public void Init()
         {
             uidGenerator = 10000;
-            units = new Dictionary<int, RoleUnit>();
+            units = new Dictionary<int, UnitBase>();
             fixedUpdateComponents = new HashSet<IFixedUpdateComponent>();
             newfixedUpdateComponents = new List<IFixedUpdateComponent>();
-            oldfixedUpdateComponents = new List<IFixedUpdateComponent>();
-
-            var go = Game.Resource.LoadAndInstantiate(config.ActorContainerPath, Game.Root.transform);
-            Container = go.GetComponent<ActorContainer>();        
+            oldfixedUpdateComponents = new List<IFixedUpdateComponent>();    
         }
 
         public void FixedUpdate(float fdt) 
@@ -54,11 +49,11 @@ namespace Game.System
             }
         }
 
-        public T CreateUnit<T>() where T : RoleUnit, new()
+        public T CreateUnit<T>() where T : UnitBase, new()
         {
             int uid = ++uidGenerator;
             T unit = new();
-            unit.Constructor(this, uid);
+            unit.InitUnit(this, uid);
             units.Add(uid, unit);
             return unit;
         }
@@ -70,17 +65,24 @@ namespace Game.System
                 return;
             }
 
+            UnitBase unit = units[uid];
+            unit.Destroy();
             units.Remove(uid);
         }
 
-        public T CreateComponent<T>(RoleUnit unit) where T : UnitComponent, new()
+        internal T CreateComponent<T>(UnitBase unit, bool isSilent) where T : UnitComponent, new()
         {
             T component = new();            
-            component.Constructor(unit);
-            if (component is IAwakeComponent a) 
+            component.InitComponent(unit);
+
+            if (!isSilent) 
             {
-                a.Awake();
+                if (component is IAwakeComponent a) 
+                {
+                    a.Awake();
+                }            
             }
+
             if (component is IFixedUpdateComponent u) 
             {
                 newfixedUpdateComponents.Add(u);
@@ -88,19 +90,19 @@ namespace Game.System
             return component;
         }
 
-        public void DestroyComponent(UnitComponent component) 
+        internal void DestroyComponent(UnitComponent component) 
         {
             if (component == null)
             {
                 return;
             }
 
-            if (component is not IFixedUpdateComponent u) 
-            {
-                return;
-            }
             component.Destroy();
-            oldfixedUpdateComponents.Add(u);
+
+            if (component is IFixedUpdateComponent u) 
+            {
+                oldfixedUpdateComponents.Add(u);                
+            }
         }
     }
 }

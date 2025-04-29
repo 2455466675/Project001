@@ -5,17 +5,16 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-    public class PartyUnit : RoleUnit
+    public class PartyUnit : UnitArchetype<PartyComponent, ActorComponent, MotorComponent>
     {
         public HeroCfg Config { get; private set; }
         private ActorComponent actorComponent;
         private MotorComponent motorComponent;
         
-        protected override void OnConstructor()
+        protected override void OnInitUnit()
         {
-            AddComponent<PartyComponent>();
-            actorComponent = AddComponent<ActorComponent>();
-            motorComponent = AddComponent<MotorComponent>();
+            actorComponent = GetComponent<ActorComponent>();
+            motorComponent = GetComponent<MotorComponent>();
         }
 
         public void Init(int id)

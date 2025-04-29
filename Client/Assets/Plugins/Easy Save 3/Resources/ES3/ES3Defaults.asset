@@ -29,7 +29,6 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - ECS
     - UniTask
     - Assembly-CSharp-firstpass
     - Eflatun.SceneReference
@@ -42,6 +41,7 @@ MonoBehaviour:
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
     - UniTask.TextMeshPro
+    - GameUnit
     - UniTask.Addressables
     - Eflatun.SceneReference.Editor
     - PsdPlugin

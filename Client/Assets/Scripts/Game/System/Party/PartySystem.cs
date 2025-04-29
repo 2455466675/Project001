@@ -17,7 +17,7 @@ namespace Game.System
 
             for (int i = 1; i < 5; i++)
             {
-                PartyUnit unit = Game.System.RoleSystem.CreateUnit<PartyUnit>();
+                PartyUnit unit = Game.System.UnitManager.CreateUnit<PartyUnit>();
                 unit.Init(810000 + i);
                 units.Add(unit);
 
