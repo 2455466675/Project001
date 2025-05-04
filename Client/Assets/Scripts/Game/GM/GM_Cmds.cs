@@ -4,12 +4,13 @@ namespace Game
     {
         public void GM_Test(string arg) 
         {
-            MLog.Log($"GM_Test : {arg}");
+            
         }
 
         public void GM_Battle(string arg) 
         {
-            MLog.Log($"GM_Battle : {arg}");
+            Game.UI.Close();
+            Game.System.BattleSystem.EnterBattle();
         }
     }
 }

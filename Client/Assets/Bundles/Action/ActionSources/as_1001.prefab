@@ -72,10 +72,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &1846886333931205321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,10 +93,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &3713227911869144168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +114,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &6025625812112558592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,10 +135,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &3699685074766644263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,10 +229,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &2504579236736280941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,10 +250,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &2868072099384251511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,10 +271,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &4619903671227797446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,10 +292,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &2921848072295327325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,10 +386,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &8541634529828964905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,10 +407,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &4336926870819173101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,10 +428,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &7597441213334006849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,10 +449,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &1198720402764840889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,10 +541,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &935687764956800242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,10 +562,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &842596348924326419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,10 +583,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &3451276761568042647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,10 +604,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!1 &1445210912787940575
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,10 +679,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &304368950945329597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,10 +700,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &5436778749242736193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,10 +721,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &6474275853090795977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,10 +742,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!1 &2307147906415967625
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,10 +819,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &7291693414140723370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,10 +840,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &1311871701868947683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,10 +861,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &596654870883845823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,10 +882,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &1668601968741039248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,10 +1061,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &5257245895963574630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,10 +1082,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &2914866634973387250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,10 +1103,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &3046169104225062838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1097,10 +1124,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &189849548637476615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,10 +1216,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &68903791333376995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,10 +1237,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &6765473614133568358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1228,10 +1258,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &1529771873040944054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,10 +1279,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!1 &4680544569905590101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,10 +1354,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &1759950623424495165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1342,10 +1375,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &2382630285443830084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1362,10 +1396,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &1056538761738273753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,10 +1417,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!1 &4949192096187942597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,10 +1492,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &8861652125174105873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1476,10 +1513,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &4862642710572828791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,10 +1534,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &345672559749116635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1516,10 +1555,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!1 &5078409310811831926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,10 +1632,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &8029349403765464873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1612,10 +1653,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &1954107464099358004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,10 +1674,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &5368018645683512047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,10 +1695,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &236105328167368850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1743,10 +1787,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &6725320708212409524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,10 +1808,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &5799831010534553808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,10 +1829,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &3461564492513518017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,10 +1850,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!1 &5929088714609642527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,10 +1927,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &1328414346736835326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1899,10 +1948,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &8018175254658962223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1919,10 +1969,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &1229197895537920972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1939,10 +1990,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &8004721092105273994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2030,10 +2082,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &5903898686162433470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2050,10 +2103,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &7520163422597323766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2070,10 +2124,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &3990707381530424047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2090,10 +2145,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!1 &6292147280237603574
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,10 +2222,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &8129406452137818940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2186,10 +2243,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &1345256001521860998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2206,10 +2264,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!114 &1387457995175016802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2226,10 +2285,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &5166901305163144285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2319,10 +2379,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &4523555922203110019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2339,10 +2400,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &5002424332162721301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2359,10 +2421,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &2245701086159464361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2379,10 +2442,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &8972636679182778574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2470,10 +2534,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &7195312323206821189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2490,10 +2555,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &723098956119065697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2510,10 +2576,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &6058356936613502419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2530,10 +2597,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 1
   boolValue: 0
+  layer: 0
 --- !u!1 &8027865449608063662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2606,10 +2674,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &4709926625027290439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2626,10 +2695,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &9175447458779427622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2646,10 +2716,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &5814351920501614434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2666,10 +2737,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &6706628520441528421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2759,10 +2831,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &2962959394945338132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2779,10 +2852,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 1
+  layer: 0
 --- !u!114 &8871499693644792596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2799,10 +2873,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &410508908738811684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2819,10 +2894,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &7396307924692348669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2912,10 +2988,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsMove
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &7416604892047785219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2932,10 +3009,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: IsRun
-  parameterType: 4
+  animationType: 4
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &1275563838011703364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,10 +3030,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirX
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: -1
   boolValue: 0
+  layer: 0
 --- !u!114 &7165285266964257588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2972,10 +3051,11 @@ MonoBehaviour:
   timepoint: 0
   duration: 0
   parameter: DirY
-  parameterType: 1
+  animationType: 1
   intValue: 0
   floatValue: 0
   boolValue: 0
+  layer: 0
 --- !u!114 &2861288868369654786
 MonoBehaviour:
   m_ObjectHideFlags: 0

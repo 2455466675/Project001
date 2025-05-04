@@ -1,12 +1,11 @@
-using Config;
 using UnityEngine;
 
 namespace Game.System
 {
-    public class ActorComponent : UnitComponent
+    public abstract class ActorComponent : UnitComponent
     {
-        private int id;
-        private Actor actor;
+        protected int id;
+        protected Actor actor;
 
         public void Init(int id) 
         {
@@ -14,10 +13,9 @@ namespace Game.System
         }
 
         public void Refresh() 
-        {
-            ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
-            GameObject go = Game.Resource.LoadAndInstantiate(cfg.PrefabPath, Game.System.ActorManager.Container.transform);
-            actor = go.GetComponent<Actor>();
+        {            
+            actor = Game.System.ActorManager.CreateActor(id);
+            actor.SetParent(GetActorNode());
         }
       
         public void PlayAction(int hash, object userData = null) 
@@ -41,8 +39,11 @@ namespace Game.System
             actor.Rigidbody2D.bodyType = active ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
         }
 
+        protected abstract Transform GetActorNode();
+
         protected override void OnDestroyComponent()
         {
+            Game.System.ActorManager.RecycleActor(actor);
             actor = null;
         }
     }

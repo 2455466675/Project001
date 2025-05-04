@@ -11,6 +11,8 @@ namespace Game.System
         public BackpackSystem BackpackSystem { get; private set; }
         public OverviewSystem OverviewSystem { get; private set; }
 
+        public BattleSystem BattleSystem { get; private set; }
+
         public void Init()
         {
             UnitManager = new UnitManager();
@@ -33,6 +35,9 @@ namespace Game.System
 
             OverviewSystem = new OverviewSystem();
             OverviewSystem.Init();
+
+            BattleSystem = new BattleSystem();
+            BattleSystem.Init();
 
             InventorySystem.Test();
         }

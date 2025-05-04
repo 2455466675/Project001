@@ -17,14 +17,14 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype : UnitArchetypeBase
+    public abstract class UnitArchetype : UnitArchetypeBase
     {
         internal override void InitArchetype(UnitManager unitSystem)
         {          
         }
     }
 
-    public class UnitArchetype<C> : UnitArchetypeBase
+    public abstract class UnitArchetype<C> : UnitArchetypeBase
         where C : UnitComponent, new()
     {
         internal override void InitArchetype(UnitManager unitSystem)
@@ -37,7 +37,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2> : UnitArchetypeBase
         where C1 : UnitComponent, new() 
         where C2 : UnitComponent, new()
     {
@@ -52,7 +52,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()
@@ -69,7 +69,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3, C4> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3, C4> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()
@@ -88,7 +88,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3, C4, C5> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3, C4, C5> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()
@@ -109,7 +109,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3, C4, C5, C6> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3, C4, C5, C6> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()
@@ -132,7 +132,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3, C4, C5, C6, C7> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3, C4, C5, C6, C7> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()
@@ -157,7 +157,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3, C4, C5, C6, C7, C8> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3, C4, C5, C6, C7, C8> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()
@@ -184,7 +184,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3, C4, C5, C6, C7, C8, C9> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3, C4, C5, C6, C7, C8, C9> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()
@@ -213,7 +213,7 @@ namespace Game.System
         }
     }
 
-    public class UnitArchetype<C1, C2, C3, C4, C5, C6, C7, C8, C9, C10> : UnitArchetypeBase
+    public abstract class UnitArchetype<C1, C2, C3, C4, C5, C6, C7, C8, C9, C10> : UnitArchetypeBase
         where C1 : UnitComponent, new()
         where C2 : UnitComponent, new()
         where C3 : UnitComponent, new()

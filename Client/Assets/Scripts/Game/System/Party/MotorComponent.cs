@@ -56,17 +56,40 @@ namespace Game.System
         private ActorComponent actorComponent;
         private PartyComponent partyComponent;
 
+        private bool isRunning;
+        public bool IsRunning
+        {
+            get
+            {
+                return isRunning;
+            }
+            private set
+            {
+                isRunning = value;
+            }
+        }
+
+        private bool isMoving;
+        public bool IsMoving
+        {
+            get
+            {
+                return isMoving;
+            }
+            private set
+            {
+                isMoving = value;
+            }
+        }
+
         private float dirX;
         private float dirY;
 
         private float lastX;
         private float lastY;
 
-        private bool isRunning;
-        private bool isMoving;
-
         private float gap;
-        private int frame;
+        private int blockFrame;
         /// <summary>
         /// ¾àÀëÇ°ÖÃ½ÇÉ«µÄ¾àÀë
         /// </summary>
@@ -82,9 +105,10 @@ namespace Game.System
             actorComponent = GetComponent<ActorComponent>();
             dirX = 0f;
             dirY = -1f;
+
             gap = Game.Config.Formula.PartyUnitGap;
-            frame = 0;
-            isRunning = false;
+            blockFrame = 0;
+            IsRunning = false;
             traces = new List<MoveTrace>();
         }
 
@@ -129,7 +153,7 @@ namespace Game.System
                     }
                 }
 
-                isMoving = false;
+                IsMoving = false;
             }
             else
             {
@@ -137,7 +161,7 @@ namespace Game.System
                 {
                     if (x > 0)
                     {
-                        if (isRunning)
+                        if (IsRunning)
                         {
                             actionHash = runRightHash;
                             moveType = MoveType.RunRight;
@@ -150,7 +174,7 @@ namespace Game.System
                     }
                     else
                     {
-                        if (isRunning)
+                        if (IsRunning)
                         {
                             actionHash = runLeftHash;
                             moveType = MoveType.RunLeft;
@@ -161,13 +185,13 @@ namespace Game.System
                             moveType = MoveType.WalkLeft;
                         }
                     }
-                    isMoving = true;
+                    IsMoving = true;
                 }
                 else
                 {
                     if (y > 0)
                     {
-                        if (isRunning)
+                        if (IsRunning)
                         {
                             actionHash = runUpHash;
                             moveType = MoveType.RunUp;
@@ -180,7 +204,7 @@ namespace Game.System
                     }
                     else
                     {
-                        if (isRunning)
+                        if (IsRunning)
                         {
                             actionHash = runDownHash;
                             moveType = MoveType.RunDown;
@@ -194,7 +218,7 @@ namespace Game.System
                 }
                 dirX = x;
                 dirY = y;
-                isMoving = true;
+                IsMoving = true;
             }
             
             actorComponent.PlayAction(actionHash);
@@ -207,43 +231,41 @@ namespace Game.System
             partyComponent.TransmitTrace(new MoveTrace() { moveType = moveType, x = pos.x, y = pos.y });
         }
 
+        /// <summary>
+        /// ¼ì²â×²Ç½
+        /// </summary>
         private void Block() 
         {
-            if (!isMoving)
+            if (!IsMoving)
             {
                 return;
             }
 
             Vector2 pos = actorComponent.GetPosition();
-            if (lastX != 0 || lastY != 0)
-            {
-                float _x = pos.x - lastX;
-                float _y = pos.y - lastY;
-                if (_x * _x + _y * _y < 0.01f)
-                {
-                    if (frame < 3)
-                    {
-                        frame++;
-                    }
-                    else
-                    {
-                        isMoving = false;
-                        frame = 0;
-                    }
-                }
-                else
-                {
-                    frame = 0;
-                }
-            }
+
+            float _x = lastX;
+            float _y = lastY;
 
             lastX = pos.x;
             lastY = pos.y;
+
+            float x = lastX - _x;
+            float y = lastY - _y;
+            float d = (x * x + y * y);
+            if (d < 0.0001f)
+            {
+                blockFrame++;
+                IsMoving = blockFrame < 5;
+            }
+            else
+            {
+                blockFrame = 0;
+            }
         }
 
         public void Run(bool isRunning)
         {
-            this.isRunning = isRunning;
+            this.IsRunning = isRunning;
         }
 
         public void PushTrace(MoveTrace trace)
@@ -287,7 +309,7 @@ namespace Game.System
 
             traces.Add(trace);
             distance += d;
-            isMoving = true;
+            IsMoving = true;
         }
 
         /// <summary>
@@ -295,7 +317,7 @@ namespace Game.System
         /// </summary>
         private void Follow()
         {
-            if (!isMoving)
+            if (!IsMoving)
             {
                 return;
             }
@@ -308,16 +330,16 @@ namespace Game.System
             if (distance >= gap)
             {
                 MoveToNextTrace();
-                isMoving = true;
+                IsMoving = true;
             }
             else
             {
-                if (partyComponent.Prev.GetComponent<MotorComponent>().isMoving)
+                if (partyComponent.Prev.GetComponent<MotorComponent>().IsMoving)
                 {
                     return;
                 }
 
-                if (!isMoving)
+                if (!IsMoving)
                 {
                     return;
                 }
@@ -348,7 +370,7 @@ namespace Game.System
                 }
 
                 actorComponent.PlayAction(actionHash);
-                isMoving = false;
+                IsMoving = false;
             }
         }
 
@@ -368,25 +390,25 @@ namespace Game.System
             int actionNameHash = 0;
             if (moveType == MoveType.WalkUp || moveType == MoveType.RunUp)
             {
-                actionNameHash = isRunning ? followRunUpHash : followWalkUpHash;
+                actionNameHash = IsRunning ? followRunUpHash : followWalkUpHash;
                 dirX = 0;
                 dirY = 1;
             }
             else if (moveType == MoveType.WalkDown || moveType == MoveType.RunDown)
             {
-                actionNameHash = isRunning ? followRunDownHash : followWalkDownHash;
+                actionNameHash = IsRunning ? followRunDownHash : followWalkDownHash;
                 dirX = 0;
                 dirY = -1;
             }
             else if (moveType == MoveType.WalkLeft || moveType == MoveType.RunLeft)
             {
-                actionNameHash = isRunning ? followRunLeftHash : followWalkLeftHash;
+                actionNameHash = IsRunning ? followRunLeftHash : followWalkLeftHash;
                 dirX = -1;
                 dirY = 0;
             }
             else if (moveType == MoveType.WalkRight || moveType == MoveType.RunRight)
             {             
-                actionNameHash = isRunning ? followRunRightHash : followWalkRightHash;
+                actionNameHash = IsRunning ? followRunRightHash : followWalkRightHash;
                 dirX = 1;
                 dirY = 0;
             }

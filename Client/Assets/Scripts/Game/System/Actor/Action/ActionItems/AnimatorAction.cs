@@ -4,19 +4,31 @@ using PT = UnityEngine.AnimatorControllerParameterType;
 
 namespace Game.System
 {
+    public enum AnimatorActionType 
+    {
+        ParameterFloat = PT.Float,
+        ParameterInt = PT.Int,
+        ParameterBool = PT.Bool,
+        ParameterTrigger = PT.Trigger,
+        Play = 99,
+    }
+
     public class AnimatorAction : ActionItem<AnimatorActionCommand>
     {
         public string parameter;
-        public PT parameterType = PT.Float;
+        public AnimatorActionType animationType = AnimatorActionType.ParameterFloat;
 
-        [ShowIf("parameterType", PT.Int)]
+        [ShowIf("animationType", AnimatorActionType.ParameterInt)]
         public int intValue;
 
-        [ShowIf("parameterType", PT.Float)]
+        [ShowIf("animationType", AnimatorActionType.ParameterFloat)]
         public float floatValue;
 
-        [ShowIf("parameterType", PT.Bool)]
+        [ShowIf("animationType", AnimatorActionType.ParameterBool)]
         public bool boolValue;
+
+        [ShowIf("animationType", AnimatorActionType.Play)]
+        public int layer;
 
         private int parameterHash = -1;
         public int ParameterHash
@@ -48,22 +60,26 @@ namespace Game.System
                 return;
             }
 
-            PT pt = Item.parameterType;
-            switch (pt)
+            AnimatorActionType at = Item.animationType;
+            switch (at)
             {
-                case PT.Float:
+                case AnimatorActionType.ParameterFloat:
                     actor.animator.SetFloat(hash, Item.floatValue);
                     break;
-                case PT.Int:
+                case AnimatorActionType.ParameterInt:
                     actor.animator.SetInteger(hash, Item.intValue);
                     break;
-                case PT.Bool:
+                case AnimatorActionType.ParameterBool:
                     actor.animator.SetBool(hash, Item.boolValue);
                     break;
-                case PT.Trigger:
-                    actor.animator.SetTrigger(hash);
+                case AnimatorActionType.ParameterTrigger:
+                    actor.animator.SetTrigger(hash);                    
+                    break;
+                case AnimatorActionType.Play:
+                    actor.animator.Play(hash, Item.layer);
                     break;
                 default:
+                    Debug.LogError("无效的动画参数类型");
                     break;
             }
         }

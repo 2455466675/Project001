@@ -15,7 +15,7 @@ namespace Game.System
         {
             units = new List<PartyUnit>();
 
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i <= 4; i++)
             {
                 PartyUnit unit = Game.System.UnitManager.CreateUnit<PartyUnit>();
                 unit.Init(810000 + i);

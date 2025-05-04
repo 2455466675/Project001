@@ -26,11 +26,6 @@
             "sheet":1
         },
         {
-            "excel":"role.xlsx",
-            "type":"RoleCfg",
-            "sheet":1
-        },
-        {
             "excel":"hero.xlsx",
             "type":"HeroCfg",
             "sheet":1

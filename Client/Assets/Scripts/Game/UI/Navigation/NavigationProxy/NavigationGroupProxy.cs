@@ -8,25 +8,40 @@ namespace Game.UI
     /// </summary>
     public class NavigationGroupProxy
     {
+        public NavigationListView[] Children
+        {
+            get
+            {
+                if (groupView == null)
+
+                {
+                    return new NavigationListView[0];
+                }
+                else
+                {
+                    return groupView.Children;
+                }
+            }
+        }
+
         protected NavigationGroupView groupView;
 
-        public NavigationGroupView LoadGroup(NavigationGroupDefine define) 
+        public virtual void LoadGroup(NavigationGroupDefine define) 
         {
             var cfg = Game.Config.Find<PanelCfg>((int)define);
             if (cfg == null ) 
             {
-                return null;
+                return;
             }
 
             var parent = Game.UI.Root.GetGroupContainer(cfg.GroupType);
             if (parent == null) 
             {
-                return null;
+                return;
             }
 
             var go = Game.Resource.LoadAndInstantiate(cfg.Path, parent);
             groupView = go.GetComponent<NavigationGroupView>();
-            return groupView;
         }
 
         public virtual void Show() 

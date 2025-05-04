@@ -162,6 +162,7 @@ MonoBehaviour:
   animator: {fileID: 1707397919405123022}
   m_rigidbody2D: {fileID: 516908887459484936}
   boxCollider2D: {fileID: 2555994066877888691}
+  bones: {fileID: 7130956710455953610}
   actionDriver: {fileID: 7766540547052269007}
 --- !u!114 &7766540547052269007
 MonoBehaviour:
@@ -185,6 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8207612303231044672}
+  - component: {fileID: 7130956710455953610}
   m_Layer: 0
   m_Name: bones
   m_TagString: Untagged
@@ -210,6 +212,22 @@ Transform:
   m_Father: {fileID: 4115199141554976644}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7130956710455953610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8896465971605461122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa121af02ff33274783988ea25259528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bones:
+  - {fileID: 806451046735046763}
+  - {fileID: 4901063645280012976}
+  - {fileID: 6200276928910816767}
 --- !u!1 &8998665243625262458
 GameObject:
   m_ObjectHideFlags: 0

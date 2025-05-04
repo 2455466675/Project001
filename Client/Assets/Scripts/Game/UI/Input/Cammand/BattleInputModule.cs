@@ -7,9 +7,20 @@ namespace Game.UI.Input
     {
         public override ModuleType ModuleType => ModuleType.Battle;
 
-        public override void Navigate(NavigationListDefine list_ID, int[] navigateIndexs)
+        protected override void OnInputAction(ActionContext context)
         {
-            
+            InputType inputType = context.InputType;
+            switch (inputType)
+            {
+                case InputType.Cancel:
+                    Pop();
+                    break;
+                case InputType.Esc:
+                    //PopAll();
+                    break;
+                case InputType.Map:
+                    break;
+            }
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Game
             if (logs == null || logs.Length <= 0)
             {
                 return;
-            }      
-            Debug.Log(string.Join(" ", logs));
+            }
+            Debug.Log($"<color=#1D802D>---Log---</color>{string.Join(" ", logs)}");
         }
 
         public static void Error(object error)

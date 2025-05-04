@@ -17,4 +17,4 @@ MonoBehaviour:
   NavigationMap: Game/NavigationMap
   SceneMap: Game/SceneMap
   PartyLimit: 4
-  PartyUnitGap: 0.6
+  PartyUnitGap: 0.5

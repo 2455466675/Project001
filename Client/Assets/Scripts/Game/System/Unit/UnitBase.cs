@@ -10,13 +10,13 @@ namespace Game.System
     {
         public int Uid { get; private set; }
         private UnitManager unitSystem;
-        private Dictionary<Type, UnitComponent> components;
+        private List<UnitComponent> components;
 
         internal void InitUnit(UnitManager unitSystem, int uid) 
         {
             this.Uid = uid;
             this.unitSystem = unitSystem;
-            components = new Dictionary<Type, UnitComponent>();
+            components = new List<UnitComponent>();
             InitArchetype(unitSystem);
             OnInitUnit();
         }
@@ -25,7 +25,7 @@ namespace Game.System
         {
             OnDestroyUnit();
 
-            foreach (var component in components.Values)
+            foreach (var component in components)
             {
                 unitSystem.DestroyComponent(component);
             }
@@ -35,17 +35,15 @@ namespace Game.System
 
         internal T AddComponentInner<T>(bool isSilent) where T : UnitComponent, new()
         {
-            Type type = typeof(T);
-            if (components.ContainsKey(type))
+            T component = GetComponent<T>();
+
+            if (component == null) 
             {
-                return components[type] as T;
+                component = unitSystem.CreateComponent<T>(this, isSilent);
+                components.Add(component);
             }
-            else
-            {
-                T component = unitSystem.CreateComponent<T>(this, isSilent);
-                components.Add(type, component);
-                return component;
-            }
+
+            return component;
         }
 
         internal virtual void InitArchetype(UnitManager unitSystem)
@@ -60,15 +58,16 @@ namespace Game.System
 
         public T GetComponent<T>() where T : UnitComponent 
         {
-            Type type = typeof(T);
-            if (components.ContainsKey(type)) 
+            for (int i = 0; i < components.Count; i++) 
             {
-                return components[type] as T;
+                UnitComponent component = components[i];
+                if (component is T) 
+                {
+                    return component as T;
+                }
             }
-            else
-            {
-                return default;
-            }
+
+            return default;
         }
 
         protected virtual void OnInitUnit()

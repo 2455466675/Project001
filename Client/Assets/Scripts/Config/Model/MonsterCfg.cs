@@ -13,23 +13,20 @@ namespace Config
 	{
 		public int Id {get; private set;} 
 		public string Name {get; private set;} 
-		public string PrefabPath {get; private set;} 
-		public int RoleType {get; private set;} 
+		public int ActorId {get; private set;} 
 		public string HeadIcon {get; private set;} 
 		public void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
 			Name = reader.ReadString();
-			PrefabPath = reader.ReadString();
-			RoleType = reader.ReadInt32();
+			ActorId = reader.ReadInt32();
 			HeadIcon = reader.ReadString();
 		}
 		public void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
 			writer.Write(Name);
-			writer.Write(PrefabPath);
-			writer.Write(RoleType);
+			writer.Write(ActorId);
 			writer.Write(HeadIcon);
 		}
 	}

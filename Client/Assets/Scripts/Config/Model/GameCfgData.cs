@@ -30,9 +30,6 @@ namespace Config
 			var _ActorCfgContainer = new ActorCfgContainer();
 			_ActorCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(ActorCfg), _ActorCfgContainer);
-			var _RoleCfgContainer = new RoleCfgContainer();
-			_RoleCfgContainer.Deserialize(reader);
-			CfgDatas.Add(typeof(RoleCfg), _RoleCfgContainer);
 			var _HeroCfgContainer = new HeroCfgContainer();
 			_HeroCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(HeroCfg), _HeroCfgContainer);

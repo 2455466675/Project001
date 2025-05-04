@@ -69,10 +69,10 @@ namespace Game.UI
         private void Load() 
         {
             proxy = NavigationProxyManager.GetNavigationGroupProxy(define);
-            NavigationGroupView group = proxy.LoadGroup(define);
+            proxy.LoadGroup(define);
+            NavigationListView[] children = proxy.Children;
 
             lists = new Dictionary<NavigationListDefine, NavigationListEntity>();
-            NavigationListView[] children = group.Children;
             if (children != null && children.Length > 0)
             {
                 foreach (var v in children)

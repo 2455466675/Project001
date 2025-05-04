@@ -5,7 +5,7 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-    public class PartyUnit : UnitArchetype<PartyComponent, ActorComponent, MotorComponent>
+    public class PartyUnit : UnitArchetype<PartyComponent, SceneActorComponent, MotorComponent>
     {
         public HeroCfg Config { get; private set; }
         private ActorComponent actorComponent;

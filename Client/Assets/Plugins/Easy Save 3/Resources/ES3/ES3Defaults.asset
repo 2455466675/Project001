@@ -40,8 +40,8 @@ MonoBehaviour:
     - Navigation
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
-    - UniTask.TextMeshPro
     - GameUnit
+    - UniTask.TextMeshPro
     - UniTask.Addressables
     - Eflatun.SceneReference.Editor
     - PsdPlugin
