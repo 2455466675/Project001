@@ -14,8 +14,17 @@ namespace Game.System
 
         public void Refresh() 
         {            
+            if (actor != null) 
+            {
+                Game.System.ActorManager.RecycleActor(actor);
+                actor = null;
+            }
+
             actor = Game.System.ActorManager.CreateActor(id);
             actor.SetParent(GetActorNode());
+            actor.transform.localPosition = Vector3.zero;
+            actor.transform.localRotation = Quaternion.identity;
+            actor.transform.localScale = Vector3.one;
         }
       
         public void PlayAction(int hash, object userData = null) 

@@ -16,7 +16,8 @@ namespace Game.UI.Input
                     Pop();
                     break;
                 case InputType.Esc:
-                    //PopAll();
+                    PopAll();
+                    Game.Scene.UnloadBattleScene();
                     break;
                 case InputType.Map:
                     break;

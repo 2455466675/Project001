@@ -21,5 +21,23 @@ namespace Game.UI
             MLog.Log("Battle_Units_Group_Proxy LoadGroup");
             groupView = go.GetComponent<NavigationGroupView>();
         }
+
+        public override void Show()
+        {
+            if (groupView == null)
+            {
+                return;
+            }
+            groupView.gameObject.SetActive(true);
+        }
+
+        public override void Hide()
+        {
+            if (groupView == null)
+            {
+                return;
+            }
+            groupView.gameObject.SetActive(false);
+        }
     }
 }

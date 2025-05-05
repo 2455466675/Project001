@@ -9,9 +9,16 @@ namespace Game.System
     /// </summary>
     public class BattleActorComponent : ActorComponent
     {
+        private Transform node;
+
+        public void SetNode(Transform node) 
+        {
+            this.node = node;
+        }
+
         protected override Transform GetActorNode()
         {
-            throw new global::System.NotImplementedException();
+            return node;    
         }
     }
 }

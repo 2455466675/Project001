@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
+using UnityEditor.SearchService;
 
 namespace Game
 {
@@ -27,6 +28,16 @@ namespace Game
             activatedScenes = new Stack<SceneEntity>();
 
             sceneMap = Game.Resource.LoadFormRes<SceneMap>(Game.Config.Formula.SceneMap);
+        }
+
+        public void LoadBattleScene(Action cb) 
+        {
+            LoadSceneAsync(10002, null, cb);
+        }
+
+        public void UnloadBattleScene() 
+        {
+            PopScene();
         }
 
         public void LoadScene(int sceneId)

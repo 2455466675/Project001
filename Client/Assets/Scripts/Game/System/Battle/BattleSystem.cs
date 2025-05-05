@@ -8,18 +8,56 @@ namespace Game.System
     /// </summary>
     public class BattleSystem
     {
+        private List<BattleUnit> heroes;
+        private List<BattleUnit> enemies;
+
         public void Init() 
         {
+            enemies = new List<BattleUnit>();
+            heroes = new List<BattleUnit>();
+
+            for (int i = 0; i < 4; i++) 
+            {
+                BattleUnit unit = Game.System.UnitManager.CreateUnit<BattleUnit>();
+                unit.AddComponent<BattleHeroComponent>();
+                unit.Init(i);
+                heroes.Add(unit);
+            }
+
+            for (int i = 0; i < 9; i++) 
+            {
+                BattleUnit unit = Game.System.UnitManager.CreateUnit<BattleUnit>();
+                unit.AddComponent<BattleMonsterComponent>();
+                unit.Init(i + 4);
+                enemies.Add(unit);
+            }
+        }
+
+        public BattleUnit[] GetEnemies() 
+        {
+            return enemies.ToArray();
         }
 
         public void EnterBattle() 
         {
-            Game.Scene.LoadSceneAsync(10002, null, OnEnterScene);
+            Game.Scene.LoadBattleScene(OnEnterScene);
         }
 
         private void OnEnterScene() 
         {
             MLog.Log("OnEnterScene");
+
+            List<int> testMonster = new List<int>()
+            {
+                300001, 0, 300002, 0, 300003, 0, 300004, 0, 300005
+            };
+
+            for (int i = 0; i < testMonster.Count; i++) 
+            {
+                BattleUnit unit = enemies[i];
+                unit.Reuse(testMonster[i]);
+            }
+
             Game.UI.Navigate(UI.NavigationListDefine.Battle_Enemy_Unit_List, UI.Input.ModuleType.Battle);
         }
     }

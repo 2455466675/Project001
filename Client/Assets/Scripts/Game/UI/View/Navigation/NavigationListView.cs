@@ -121,8 +121,8 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                //NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
-                //e?.OnBindData(item);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                e?.OnBindData(item);
 
                 obj.OnRefreshEvent += Obj_OnRefreshEvent;
             }
@@ -132,8 +132,8 @@ namespace Game.UI
         {
             if (obj != null && obj is GameNavigationItem item)
             {
-                //NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
-                //e?.OnUnbindData(item);
+                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                e?.OnUnbindData(item);
 
                 obj.OnRefreshEvent -= Obj_OnRefreshEvent;
             }
