@@ -26,20 +26,7 @@ namespace Game.UI
         {
             if (item.TryGetData(out BattleUnit unit)) 
             {
-                if (item.TryGetView(out BattleActorView view)) 
-                {
-                    BattleActorComponent bac = unit.GetComponent<BattleActorComponent>();
-                    if (bac != null) 
-                    {
-                        bac.SetNode(view.transform);
-
-                        if (unit.State == BattleUnitState.Alive) 
-                        {
-                            bac.Refresh();
-                        }                        
-                    }
-                }
-
+                unit.Attach(item as BattleNavigationItem);
                 MLog.Log("OnBindData", unit.BattleId);
             }
         }

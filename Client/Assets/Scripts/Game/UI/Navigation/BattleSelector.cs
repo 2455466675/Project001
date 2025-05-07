@@ -1,3 +1,4 @@
+using Game.System;
 using Navigation;
 using UnityEngine;
 
@@ -10,6 +11,12 @@ namespace Game.UI
     {
         [SerializeField]
         private GameObject finger;
+
+        [SerializeField]
+        private BattleActorView actorView;
+
+        [SerializeField]
+        private Vector2 offest;
 
         public override void OnSelect()
         {
@@ -32,7 +39,19 @@ namespace Game.UI
             {
                 return;
             }
-            finger.SetActive(state);
+
+            if (state) 
+            {
+                Transform bone = actorView.GetBone(ActorBoneDefine.Center);
+                Vector3 bonePos = transform.InverseTransformPoint(bone.position);
+
+                finger.transform.localPosition = bonePos + (Vector3)offest;
+                finger.SetActive(true);
+            }
+            else
+            {
+                finger.SetActive(false);                
+            }
         }
     }
 }

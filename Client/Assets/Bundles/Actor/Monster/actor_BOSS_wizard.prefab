@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f30e5cb5ef37943a993b1e6b2dde4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   spriteRenderer: {fileID: 5339550401177637544}
   animator: {fileID: 7965858821288718081}
   m_rigidbody2D: {fileID: 0}

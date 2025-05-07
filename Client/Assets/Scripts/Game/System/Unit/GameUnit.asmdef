@@ -1,3 +1,16 @@
 {
-	"name": "GameUnit"
+    "name": "GameUnit",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1db3f3122cb4c254d8e8606308633bc7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

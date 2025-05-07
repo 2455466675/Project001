@@ -1,6 +1,4 @@
 using Game.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.System
@@ -11,5 +9,20 @@ namespace Game.System
     public class BattleActorView : View
     {
         private Actor actor;
+
+        public void SetActor(Actor actor) 
+        {
+            this.actor = actor;
+        }
+
+        public Transform GetBone(string boneName) 
+        {
+            if (actor == null) 
+            {
+                return transform;
+            }
+
+            return actor.GetBone(boneName);
+        }
     }
 }

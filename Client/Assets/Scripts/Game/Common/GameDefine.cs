@@ -11,4 +11,11 @@ namespace Game
         Accessory = 7,
         Core = 8,
     }
+
+    public static class ActorBoneDefine 
+    {
+        public static string Top = "top";
+        public static string Center = "center";
+        public static string Bottom = "bottom";
+    }
 }

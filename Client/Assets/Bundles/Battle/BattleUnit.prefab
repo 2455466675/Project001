@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finger: {fileID: 3346917823849569158}
+  actorView: {fileID: 4900466135326869390}
+  offest: {x: -0.5, y: 0}
 --- !u!1 &3346917823849569158
 GameObject:
   m_ObjectHideFlags: 0

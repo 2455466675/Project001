@@ -1,9 +1,8 @@
-using Navigation;
 using System.Collections.Generic;
 
-namespace Game
+namespace Navigation
 {
-    public class GameNavigationItemData : INavigationItemData
+    public class NavigationItemData : INavigationItemData
     {
         private readonly HashSet<IRefreshable> objs = new HashSet<IRefreshable>();
 

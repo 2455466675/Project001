@@ -1,10 +1,11 @@
 using Config;
+using Navigation;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.System
 { 
-    public class BackpackCompartment : GameNavigationItemData
+    public class BackpackCompartment : NavigationItemData
     {
         public BackpackCompartmentType Type { get; private set; }
 

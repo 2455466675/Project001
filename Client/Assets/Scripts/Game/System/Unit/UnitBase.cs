@@ -1,4 +1,4 @@
-using System;
+using Navigation;
 using System.Collections.Generic;
 
 namespace Game.System
@@ -6,7 +6,7 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-    public abstract class UnitBase
+    public abstract class UnitBase : NavigationItemData
     {
         public int Uid { get; private set; }
         private UnitManager unitSystem;

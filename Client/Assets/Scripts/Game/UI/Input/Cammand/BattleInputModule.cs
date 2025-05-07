@@ -17,7 +17,7 @@ namespace Game.UI.Input
                     break;
                 case InputType.Esc:
                     PopAll();
-                    Game.Scene.UnloadBattleScene();
+                    Game.System.BattleSystem.ExitBattle();
                     break;
                 case InputType.Map:
                     break;

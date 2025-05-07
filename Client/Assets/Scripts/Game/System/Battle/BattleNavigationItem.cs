@@ -1,7 +1,6 @@
 using Game.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.System
 {
@@ -10,6 +9,17 @@ namespace Game.System
     /// </summary>
     public class BattleNavigationItem : GameNavigationItem
     {
+        public override bool IsValid 
+        {
+            get 
+            {
+                if (TryGetData(out BattleUnit unit)) 
+                {
+                    return unit.State == BattleUnitState.Alive;
+                }
 
+                return false;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Config;
+using Navigation;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -17,7 +18,7 @@ namespace Game
         Other  = 2,
     }
 
-    public class GM_Item : GameNavigationItemData
+    public class GM_Item : NavigationItemData
     {
         public GmCfg Cfg { get; private set; }
 
@@ -27,7 +28,7 @@ namespace Game
         }
     }
 
-    public class GM_Menu : GameNavigationItemData
+    public class GM_Menu : NavigationItemData
     {
         public GM_Menu_Type Type { get; private set; }
         private List<GM_Item> items;        

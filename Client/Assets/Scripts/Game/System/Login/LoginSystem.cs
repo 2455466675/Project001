@@ -1,8 +1,9 @@
 using Game.State;
+using Navigation;
 
 namespace Game.System
 {
-    public abstract class LoginOption : GameNavigationItemData
+    public abstract class LoginOption : NavigationItemData
     {
         public abstract void Execute();
     }

@@ -33,6 +33,16 @@ namespace Game.System
             
         }
 
+        public Transform GetBone(string boneName) 
+        {
+            if (bones == null) 
+            {
+                return transform;
+            }
+
+            return bones.GetBone(boneName);
+        }
+
         public ActionHandle PlayAction(int hash, object userData) 
         {
             if (actionDriver == null) 

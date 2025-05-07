@@ -43,6 +43,17 @@ namespace Game.System
             Game.Scene.LoadBattleScene(OnEnterScene);
         }
 
+        public void ExitBattle() 
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                BattleUnit unit = enemies[i];
+                unit.Clear();
+            }
+
+            Game.Scene.UnloadBattleScene();
+        }
+
         private void OnEnterScene() 
         {
             MLog.Log("OnEnterScene");
@@ -55,7 +66,7 @@ namespace Game.System
             for (int i = 0; i < testMonster.Count; i++) 
             {
                 BattleUnit unit = enemies[i];
-                unit.Reuse(testMonster[i]);
+                unit.Reset(testMonster[i]);
             }
 
             Game.UI.Navigate(UI.NavigationListDefine.Battle_Enemy_Unit_List, UI.Input.ModuleType.Battle);

@@ -68,8 +68,12 @@ namespace Game.System
                 pool.Add(id, queue);
             }
 
-            actor.Unuse();
             queue.Enqueue(actor);
+            actor.Unuse();
+            actor.SetParent(actorContainer.ActorPool);
+            actor.transform.localPosition = Vector3.zero;
+            actor.transform.localRotation = Quaternion.identity;
+            actor.transform.localScale = Vector3.one;
         }
     }
 }

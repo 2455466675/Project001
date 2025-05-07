@@ -21,7 +21,7 @@ namespace Game.System
         {
             HeroCfg cfg = Game.Config.Find<HeroCfg>(id);
             actorComponent.Init(cfg.ActorId);
-            actorComponent.Refresh();
+            actorComponent.RefreshActor();
             Config = cfg;
         }
 

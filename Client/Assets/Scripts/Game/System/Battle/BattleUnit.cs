@@ -1,35 +1,6 @@
-using Config;
-using Navigation;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Game.System
 {
-    public abstract class BattleCampComponent : UnitComponent
-    {
-        public virtual void Reuse(int cfgId) 
-        {
-        }       
-    }
-
-    public class BattleHeroComponent : BattleCampComponent
-    {
-        public override void Reuse(int cfgId)
-        {
-            HeroCfg cfg = Game.Config.Find<HeroCfg>(cfgId);
-            GetComponent<ActorComponent>().Init(cfg.ActorId);
-        }
-    }
-
-    public class BattleMonsterComponent : BattleCampComponent 
-    {
-        public override void Reuse(int cfgId)
-        {
-            MonsterCfg cfg = Game.Config.Find<MonsterCfg>(cfgId);
-            GetComponent<ActorComponent>().Init(cfg.ActorId);
-        }
-    }
-
     public enum BattleUnitState 
     {
         Empty = 0,
@@ -40,7 +11,7 @@ namespace Game.System
     /// <summary>
     /// 
     /// </summary>
-    public class BattleUnit : UnitArchetype<BattleActorComponent>, INavigationItemData
+    public class BattleUnit : UnitArchetype<BattleActorComponent, BattleNodeComponent>
     {
         public int BattleId { get; private set; }
 
@@ -52,7 +23,7 @@ namespace Game.System
             State = BattleUnitState.Empty;
         }
 
-        public void Reuse(int cfgId) 
+        public void Reset(int cfgId) 
         {
             if (cfgId == 0) 
             {
@@ -60,19 +31,29 @@ namespace Game.System
             }
             else
             {
-                GetComponent<BattleCampComponent>().Reuse(cfgId);
+                GetComponent<BattleCampComponent>().Reset(cfgId);
                 State = BattleUnitState.Alive;
             }
         }
 
-        public void Bind(IRefreshable obj)
+        //绑定战斗点位
+        public void Attach(BattleNavigationItem node)
         {
+            GetComponent<BattleNodeComponent>().Attach(node);
 
+            if (State == BattleUnitState.Alive)
+            {
+                BattleActorComponent bac = GetComponent<BattleActorComponent>();
+                bac.RefreshActor();
+            }
         }
 
-        public void Unbind(IRefreshable obj)
+        public void Clear() 
         {
+            State = BattleUnitState.Empty;
 
+            GetComponent<BattleNodeComponent>().Clear();
+            GetComponent<BattleActorComponent>().Clear();
         }
     }
 }
