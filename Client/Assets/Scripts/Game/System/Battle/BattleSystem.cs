@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -69,7 +70,23 @@ namespace Game.System
                 unit.Reset(testMonster[i]);
             }
 
-            Game.UI.Navigate(UI.NavigationListDefine.Battle_Enemy_Unit_List, UI.Input.ModuleType.Battle);
+            var groupEntity = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Units_Group);
+            groupEntity.Show();
+
+            Test().Forget();
+        }
+
+        private async UniTaskVoid Test() 
+        {
+            List<UniTask> tasks = new List<UniTask>();
+
+            foreach (var unit in enemies)
+            {
+                UniTask task = unit.RefreshActorAsync();
+                tasks.Add(task);
+            }
+
+            await UniTask.WhenAll(tasks);
         }
     }
 }

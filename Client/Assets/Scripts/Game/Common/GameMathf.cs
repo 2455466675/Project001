@@ -35,5 +35,18 @@ namespace Game
         {
             return Math.Abs(f);
         }
+
+        private static Random random = new Random();
+
+        /// <summary>
+        /// [min, max)
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static int Random(int min, int max)
+        {
+            return random.Next(min, max);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Config;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,6 +42,29 @@ namespace Game.System
             {
                 ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
                 GameObject go = Game.Resource.LoadAndInstantiate(cfg.PrefabPath, actorContainer.ActorPool);
+                actor = go.GetComponent<Actor>();
+            }
+
+            actor.Reuse(id);
+            return actor;
+        }
+
+        public async UniTask<Actor> CreateActorAsync(int id)
+        {
+            Actor actor = null;
+
+            if (pool.TryGetValue(id, out Queue<Actor> queue))
+            {
+                if (queue.Count > 0)
+                {
+                    actor = queue.Dequeue();
+                }
+            }
+
+            if (actor == null)
+            {
+                ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
+                GameObject go = await Game.Resource.LoadAndInstantiateAsync(cfg.PrefabPath, actorContainer.ActorPool);
                 actor = go.GetComponent<Actor>();
             }
 

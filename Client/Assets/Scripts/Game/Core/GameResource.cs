@@ -95,6 +95,12 @@ namespace Game.Resource
             return GoHelper.Instantiate(obj, parent);
         }
 
+        public async UniTask<GameObject> LoadAndInstantiateAsync(string path, Transform parent)
+        {
+            GameObject obj = await LoadAssetAsync<GameObject>(path);
+            return GoHelper.Instantiate(obj, parent);
+        }
+
         public Scene LoadScene(string sceneName, LoadSceneMode mode)
         {
             SceneManager.LoadScene(sceneName, mode);

@@ -1,4 +1,6 @@
 
+using Cysharp.Threading.Tasks;
+
 namespace Game.System
 {
     public enum BattleUnitState 
@@ -36,24 +38,32 @@ namespace Game.System
             }
         }
 
-        //绑定战斗点位
-        public void Attach(BattleNavigationItem node)
-        {
-            GetComponent<BattleNodeComponent>().Attach(node);
-
-            if (State == BattleUnitState.Alive)
-            {
-                BattleActorComponent bac = GetComponent<BattleActorComponent>();
-                bac.RefreshActor();
-            }
-        }
-
         public void Clear() 
         {
             State = BattleUnitState.Empty;
 
             GetComponent<BattleNodeComponent>().Clear();
             GetComponent<BattleActorComponent>().Clear();
+        }
+
+        public void Attach(BattleNavigationItem node)
+        {
+            GetComponent<BattleNodeComponent>().Attach(node);
+
+            //if (State == BattleUnitState.Alive)
+            //{
+            //    BattleActorComponent bac = GetComponent<BattleActorComponent>();
+            //    bac.RefreshActorAsync().Forget();
+            //}
+        }
+
+        public async UniTask RefreshActorAsync() 
+        {
+            if (State == BattleUnitState.Alive)
+            {
+                BattleActorComponent bac = GetComponent<BattleActorComponent>();
+                await bac.RefreshActorAsync();
+            }
         }
     }
 }

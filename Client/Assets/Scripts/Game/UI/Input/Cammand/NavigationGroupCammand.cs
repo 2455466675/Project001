@@ -16,14 +16,13 @@ namespace Game.UI
 
         protected override void OnPop(bool isPopAll = false)
         {
-            NavigationGroupEntity entity = GetEntity();
+            var entity = GetEntity();
             entity?.Hide();
-            return;
         }
 
         protected override bool OnPush()
         {
-            NavigationGroupEntity entity = GetEntity();
+            var entity = GetEntity();
             entity?.Show();
             return true;
         }

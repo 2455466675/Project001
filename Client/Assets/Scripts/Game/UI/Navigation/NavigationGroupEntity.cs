@@ -83,12 +83,11 @@ namespace Game.UI
                 }
             }
 
-            //list第一次Awake和OnEnable在Group实例化的时候就已经执行了，那时proxy还未初始化，会执行失败
-            //在这里手动调用初次Awake，OnEnable；后续的生命周期和unity一致
             foreach (var e in lists.Values)
             {
                 e.Awake();
             }
+
             foreach (var e in lists.Values)
             {
                 e.OnEnable();

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 
@@ -36,7 +37,34 @@ namespace Game.System
             actor.transform.localScale = Vector3.one;
             OnRefreshActorEvent?.Invoke(actor);
         }
-      
+
+        public async UniTask RefreshActorAsync()
+        {
+            if (actor != null)
+            {
+                if (actor.id == id)
+                {
+                    return;
+                }
+                else
+                {
+                    RecycleActor();
+                }
+            }
+
+            MLog.Log("a-RefreshActorAsync", id);
+            await UniTask.WaitForSeconds(GameMathf.Random(1, 10));
+
+            actor = await Game.System.ActorManager.CreateActorAsync(id);
+
+            MLog.Log("b-RefreshActorAsync", id);
+            actor.SetParent(GetActorNode());
+            actor.transform.localPosition = Vector3.zero;
+            actor.transform.localRotation = Quaternion.identity;
+            actor.transform.localScale = Vector3.one;
+            OnRefreshActorEvent?.Invoke(actor);
+        }
+
         public void RecycleActor() 
         {
             if (actor == null) 

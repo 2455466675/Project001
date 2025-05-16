@@ -13,7 +13,7 @@ namespace Game
             {
                 return;
             }
-            Debug.Log($"<color=#1D802D>---Log---</color>{string.Join(" ", logs)}");
+            Debug.Log($"<color=#1D802D>[frameCount:{Time.frameCount}]---Message---</color>{string.Join(" ", logs)}");
         }
 
         public static void Error(object error)
