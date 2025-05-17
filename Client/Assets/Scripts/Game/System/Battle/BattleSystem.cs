@@ -1,8 +1,7 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 
-namespace Game.System
+namespace Game.GSystem
 {
     /// <summary>
     /// 
@@ -41,7 +40,7 @@ namespace Game.System
 
         public void EnterBattle() 
         {
-            Game.Scene.LoadBattleScene(OnEnterScene);
+            Enter().Forget();
         }
 
         public void ExitBattle() 
@@ -55,29 +54,37 @@ namespace Game.System
             Game.Scene.UnloadBattleScene();
         }
 
-        private void OnEnterScene() 
+        private async UniTaskVoid Enter() 
         {
-            MLog.Log("OnEnterScene");
+            await PreEnter();
+
+            Game.Scene.LoadBattleScene();
+
+            await EndEnter();
+        }
+
+        private async UniTask PreEnter() 
+        {
+            await PlayTransitionAnim();
 
             List<int> testMonster = new List<int>()
             {
                 300001, 0, 300002, 0, 300003, 0, 300004, 0, 300005
             };
 
-            for (int i = 0; i < testMonster.Count; i++) 
+            for (int i = 0; i < testMonster.Count; i++)
             {
                 BattleUnit unit = enemies[i];
                 unit.Reset(testMonster[i]);
             }
+        }
+
+        private async UniTask EndEnter()
+        {
 
             var groupEntity = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Units_Group);
             groupEntity.Show();
 
-            Test().Forget();
-        }
-
-        private async UniTaskVoid Test() 
-        {
             List<UniTask> tasks = new List<UniTask>();
 
             foreach (var unit in enemies)
@@ -87,6 +94,34 @@ namespace Game.System
             }
 
             await UniTask.WhenAll(tasks);
+
+            await StopTransitionAnim();
+        }
+
+        private async UniTask PlayTransitionAnim() 
+        {
+            var e = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Loading_Group);
+            e.Show();
+
+            await GameMathf.Lerp(1f, -0.1f, 0.5f, (v) =>
+            {
+                Game.Event.Publish(new SceneLoadingProgress() { progress = v });
+            }, GameMathf.Easing.Linear);
+
+            await UniTask.Yield();
+        }
+
+        private async UniTask StopTransitionAnim() 
+        {
+            await GameMathf.Lerp(-0.1f, 1f, 0.5f, (v) =>
+            {
+                Game.Event.Publish(new SceneLoadingProgress() { progress = v });
+            }, GameMathf.Easing.EaseInQuad);
+
+            await UniTask.Yield();
+
+            var e = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Loading_Group);
+            e.Hide();
         }
     }
 }

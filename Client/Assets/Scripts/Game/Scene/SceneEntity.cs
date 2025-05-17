@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +12,10 @@ namespace Game
     {
         public int SceneId => data.Id;
         public int BuildIndex => data.BuildIndex;
-        public string Name => data.Name;
-        public string Path => data.Path;
-        public LoadSceneMode LoadSceneMode => data.LoadSceneMode;
+        public bool IsLoaded => Scene.isLoaded;
         public Scene Scene => data.LoadedScene;
+        private string Path => data.Path;
+        private LoadSceneMode LoadSceneMode => data.LoadSceneMode;
 
         private SceneData data;
 
@@ -29,6 +31,40 @@ namespace Game
             {
                 obj.SetActive(active);
             }
+        }
+
+        public void LoadScene() 
+        {
+            if (IsLoaded) 
+            {
+                return;
+            }
+            SceneManager.LoadScene(Path, LoadSceneMode);
+        }
+
+        public async UniTask LoadSceneAsync(Action<float> action)
+        {
+            if (IsLoaded)
+            {
+                action?.Invoke(1f);
+                return;
+            }
+
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(Path, LoadSceneMode);
+            while (!asyncLoad.isDone)
+            {
+                action?.Invoke(asyncLoad.progress);
+                await UniTask.Yield();
+            }
+        }
+
+        public void UnloadScene() 
+        {
+            if (!IsLoaded) 
+            {
+                return;
+            }
+            SceneManager.UnloadSceneAsync(Path);
         }
     }
 }

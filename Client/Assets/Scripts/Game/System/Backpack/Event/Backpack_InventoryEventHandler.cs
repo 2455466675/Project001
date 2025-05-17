@@ -1,4 +1,4 @@
-namespace Game.System
+namespace Game.GSystem
 {
     [Event]
     public class Backpack_InventoryAddHandler : EventBase<InventoryAdd>

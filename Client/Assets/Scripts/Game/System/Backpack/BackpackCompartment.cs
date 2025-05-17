@@ -3,7 +3,7 @@ using Navigation;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Game.System
+namespace Game.GSystem
 { 
     public class BackpackCompartment : NavigationItemData
     {

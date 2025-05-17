@@ -5,7 +5,7 @@ using Game.Config;
 using Game.Event;
 using Game.Resource;
 using Game.State;
-using Game.System;
+using Game.GSystem;
 using Game.UI;
 
 namespace Game

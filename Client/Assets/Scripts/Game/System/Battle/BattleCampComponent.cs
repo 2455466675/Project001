@@ -1,6 +1,6 @@
 using Config;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public abstract class BattleCampComponent : UnitComponent
     {

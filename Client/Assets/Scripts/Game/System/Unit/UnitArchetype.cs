@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public abstract class UnitArchetypeBase : UnitBase
     {

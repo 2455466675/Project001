@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using PT = UnityEngine.AnimatorControllerParameterType;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public enum AnimatorActionType 
     {

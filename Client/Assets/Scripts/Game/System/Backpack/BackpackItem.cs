@@ -1,6 +1,6 @@
 using Navigation;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public class BackpackItem : NavigationItemData
     {

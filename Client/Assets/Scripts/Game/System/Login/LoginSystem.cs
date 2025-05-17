@@ -1,7 +1,7 @@
 using Game.State;
 using Navigation;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public abstract class LoginOption : NavigationItemData
     {

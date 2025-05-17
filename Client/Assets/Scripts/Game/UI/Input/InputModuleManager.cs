@@ -39,7 +39,7 @@ namespace Game.UI.Input
             }
         }
 
-        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs = null)
+        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs, object intent)
         {
             InputModule module;
 
@@ -50,7 +50,7 @@ namespace Game.UI.Input
                 {
                     if (moduleType == ModuleType.Undefined || module.ModuleType == moduleType)
                     {
-                        module.Navigate(list_ID, navigateIndexs);
+                        module.Navigate(list_ID, navigateIndexs, intent);
                         return;
                     }
                 }
@@ -64,7 +64,7 @@ namespace Game.UI.Input
             }
 
             Push(module);
-            module.Navigate(list_ID, navigateIndexs);
+            module.Navigate(list_ID, navigateIndexs, intent);
         }
     }
 }

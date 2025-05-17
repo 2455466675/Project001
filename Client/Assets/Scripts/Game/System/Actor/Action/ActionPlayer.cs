@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public enum ActionPlayerState 
     {

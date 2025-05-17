@@ -13,7 +13,7 @@ namespace Game.UI.Input
             Game.System.PartySystem.Run(false);
         }
 
-        public override void Navigate(NavigationListDefine list_ID, int[] navigateIndexs)
+        public override void Navigate(NavigationListDefine list_ID, int[] navigateIndexs, object intent)
         {
             MLog.Error("BasalInputModule输入模式不支持此功能");
         }

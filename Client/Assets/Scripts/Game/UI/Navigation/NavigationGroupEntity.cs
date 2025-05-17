@@ -35,13 +35,13 @@ namespace Game.UI
             return lists[define];
         }
 
-        public void Show() 
+        public void Show(object intent = null) 
         {
             if (!isLoaded) 
             {
                 Load();
             }
-
+            proxy?.SetIntent(intent);
             proxy?.Show();
         }
 

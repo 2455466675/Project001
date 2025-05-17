@@ -1,5 +1,5 @@
 
-namespace Game.System
+namespace Game.GSystem
 {
     public class GameSystem
     {

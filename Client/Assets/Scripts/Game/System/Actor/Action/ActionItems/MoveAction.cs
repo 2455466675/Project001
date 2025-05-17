@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public class MoveAction : ActionItem<MoveActionCommand>
     {

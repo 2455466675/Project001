@@ -15,7 +15,7 @@ namespace Game.UI.Input
     {
         public abstract ModuleType ModuleType { get;}
 
-        public virtual void Navigate(NavigationListDefine list_ID, int[] navigateIndexs) 
+        public virtual void Navigate(NavigationListDefine list_ID, int[] navigateIndexs, object intent) 
         {
             NavigationGroupDefine groupDefine = Game.UI.ListDefineToGroupDefine(list_ID);
             if (groupDefine == NavigationGroupDefine.Undefined)
@@ -43,7 +43,7 @@ namespace Game.UI.Input
                 }
             }
 
-            groupCammand = new NavigationGroupCammand(groupDefine);
+            groupCammand = new NavigationGroupCammand(groupDefine, intent);
             Push(groupCammand);
             groupCammand.Push(listCammand);
         }

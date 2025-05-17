@@ -1,7 +1,7 @@
 
 using Cysharp.Threading.Tasks;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public enum BattleUnitState 
     {

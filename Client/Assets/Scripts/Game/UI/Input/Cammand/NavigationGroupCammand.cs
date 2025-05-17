@@ -9,9 +9,12 @@ namespace Game.UI
     {
         public NavigationGroupDefine Define { get; private set; }
 
-        public NavigationGroupCammand(NavigationGroupDefine define)
+        private object intent;
+
+        public NavigationGroupCammand(NavigationGroupDefine define, object intent = null)
         {
             Define = define;
+            this.intent = intent;
         }
 
         protected override void OnPop(bool isPopAll = false)
@@ -23,7 +26,7 @@ namespace Game.UI
         protected override bool OnPush()
         {
             var entity = GetEntity();
-            entity?.Show();
+            entity?.Show(intent);
             return true;
         }
 

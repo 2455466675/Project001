@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public abstract class ActorComponent : UnitComponent
     {
@@ -53,7 +53,7 @@ namespace Game.System
             }
 
             MLog.Log("a-RefreshActorAsync", id);
-            await UniTask.WaitForSeconds(GameMathf.Random(1, 10));
+            //await UniTask.WaitForSeconds(GameMathf.Random(1, 10));
 
             actor = await Game.System.ActorManager.CreateActorAsync(id);
 

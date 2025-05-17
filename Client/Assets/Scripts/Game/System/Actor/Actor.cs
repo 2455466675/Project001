@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public class Actor : MonoBehaviour
     {

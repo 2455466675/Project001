@@ -14,6 +14,7 @@ namespace Game.UI
         Backpack_Group = 1005,
 
         Battle_Units_Group   = 1006,
+        Battle_Loading_Group = 1007,
     }
 
     public enum NavigationListDefine

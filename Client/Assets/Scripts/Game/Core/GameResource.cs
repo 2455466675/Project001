@@ -1,8 +1,6 @@
-using System;
 using System.Linq;
 using YooAsset;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 
 namespace Game.Resource
@@ -99,23 +97,6 @@ namespace Game.Resource
         {
             GameObject obj = await LoadAssetAsync<GameObject>(path);
             return GoHelper.Instantiate(obj, parent);
-        }
-
-        public Scene LoadScene(string sceneName, LoadSceneMode mode)
-        {
-            SceneManager.LoadScene(sceneName, mode);
-            return SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
-        }
-
-        public async UniTask<Scene> LoadSceneAsync(string sceneName, LoadSceneMode mode, Action<float> action)
-        {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, mode);
-            while (!asyncLoad.isDone)
-            {
-                action?.Invoke(asyncLoad.progress);
-                await UniTask.Yield();
-            }
-            return SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
         }
 
         public Sprite GetSprite(string spriteName)

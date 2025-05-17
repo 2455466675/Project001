@@ -76,9 +76,9 @@ namespace Game.UI.Input
             }
         }
 
-        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs = null)
+        public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs, object intent)
         {
-            moduleManager.Navigate(list_ID, moduleType, navigateIndexs);            
+            moduleManager.Navigate(list_ID, moduleType, navigateIndexs, intent);            
         }
 
         public void Back() 

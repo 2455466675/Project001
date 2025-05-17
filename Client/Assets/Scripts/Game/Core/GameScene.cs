@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
-using UnityEditor.SearchService;
 
 namespace Game
 {
@@ -13,31 +12,43 @@ namespace Game
 
     public class GameScene
     {
+        private const int MinLoadFrame = 20;
+
         private SceneMap sceneMap;
         private List<SceneEntity> scenes;
-        private Stack<SceneEntity> activatedScenes;
 
-        private Action<float> loadingAction;
+        private SceneEntity mainScene;
+        private SceneEntity battleScene;
+
         private int loadingSceneId;
+        private int loadFrameCount;
 
         public void Init()
         {
             loadingSceneId = -1;
-
             scenes = new List<SceneEntity>();
-            activatedScenes = new Stack<SceneEntity>();
-
             sceneMap = Game.Resource.LoadFormRes<SceneMap>(Game.Config.Formula.SceneMap);
         }
-
-        public void LoadBattleScene(Action cb) 
+        public void LoadBattleScene() 
         {
-            LoadSceneAsync(10002, null, cb);
+            mainScene.SetActive(false);
+            battleScene.SetActive(true);
+            SceneManager.SetActiveScene(battleScene.Scene);
         }
 
         public void UnloadBattleScene() 
         {
-            PopScene();
+            SceneManager.SetActiveScene(mainScene.Scene);
+            mainScene.SetActive(true);
+            battleScene.SetActive(false);
+        }
+
+        public async UniTask PreloadBattleScene()
+        {
+            SceneEntity entity = FindOrCreateSceneEntity(10002);            
+            await entity.LoadSceneAsync(null);
+            entity.SetActive(false);
+            battleScene = entity;
         }
 
         public void LoadScene(int sceneId)
@@ -47,18 +58,17 @@ namespace Game
                 MLog.Error("有一个正在加载中的场景:" + loadingSceneId);
                 return;
             }
-
-            SceneEntity entity = FindOrCreateSceneEntity(sceneId);
-
-            if (!entity.Scene.isLoaded)
+            if (mainScene != null && mainScene.SceneId == sceneId)
             {
-                Game.Resource.LoadScene(entity.Path, entity.LoadSceneMode);
+                return;
             }
-
-            PushScene(entity);
+            SceneEntity entity = FindOrCreateSceneEntity(sceneId);
+            entity.LoadScene();            
+            mainScene?.UnloadScene();
+            mainScene = entity;
         }
 
-        public async void LoadSceneAsync(int sceneId, Action<float> loadingAction, Action loadEndAction)
+        public async UniTaskVoid LoadSceneAsync(int sceneId, Action loadStartAction, Action loadEndAction, List<UniTask> tasks, int minLoadFrame = MinLoadFrame) 
         {
             if (loadingSceneId > 0)
             {
@@ -66,83 +76,54 @@ namespace Game
                 return;
             }
 
-            SceneEntity entity = FindOrCreateSceneEntity(sceneId);
-
-            if (!entity.Scene.isLoaded)
-            {
-                loadingSceneId = sceneId;
-                this.loadingAction = loadingAction;
-                var e = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Loading_Group);
-                e.Show();
-                await Game.Resource.LoadSceneAsync(entity.Path, entity.LoadSceneMode, null);
-
-                float t = 50f;
-                float i = 50f;
-                while (i > 0f)
-                {
-                    i -= 1f;
-                    LoadingHandler((t - i) / t);
-                    await UniTask.Yield();
-                }
-                LoadingHandler(1f);
-                await UniTask.Yield();
-                await UniTask.Yield();
-                e.Hide();
-            }
-
-            PushScene(entity);
-
-            loadEndAction?.Invoke();
-
-            this.loadingAction = null;
-            loadingSceneId = -1;
-        }
-
-        private void LoadingHandler(float progress)
-        {
-            this.loadingAction?.Invoke(progress);
-            Game.Event.Publish(new SceneLoadingProgress() { progress = progress });
-        }
-
-        private void PushScene(SceneEntity entity)
-        {
-            entity.SetActive(true);
-
-            if (entity.LoadSceneMode == LoadSceneMode.Single)
-            {
-                activatedScenes.Clear();
-            }
-            else
-            {
-                if (activatedScenes.TryPeek(out SceneEntity s))
-                {
-                    s.SetActive(false);
-                }
-                SceneManager.SetActiveScene(entity.Scene);
-            }
-
-            activatedScenes.Push(entity);
-        }
-
-        private void PopScene()
-        {
-            if (activatedScenes.Count <= 1)
+            if (mainScene != null && mainScene.SceneId == sceneId) 
             {
                 return;
             }
 
-            if (activatedScenes.TryPop(out SceneEntity s1))
+            loadStartAction?.Invoke();
+
+            loadingSceneId = sceneId;
+            loadFrameCount = 0;
+
+            SceneEntity entity = FindOrCreateSceneEntity(sceneId);
+            await entity.LoadSceneAsync((p) =>
             {
-                s1?.SetActive(false);
+                TickLoadProgress(minLoadFrame, (int)(minLoadFrame * 0.5f), 1);
+            });
+
+            mainScene?.UnloadScene();
+            mainScene = entity;
+
+            if (tasks != null && tasks.Count > 0) 
+            {
+                int step = GameMathf.Max(1, (minLoadFrame - loadFrameCount) / tasks.Count);
+
+                for (int i = 0; i < tasks.Count; i++)
+                {
+                    UniTask task = tasks[i];
+                    await task;
+                    TickLoadProgress(minLoadFrame, (int)(minLoadFrame * 0.9f), step);
+                }                
             }
 
-            if (activatedScenes.TryPeek(out SceneEntity s2))
+            while (loadFrameCount < minLoadFrame)
             {
-                SceneManager.SetActiveScene(s2.Scene);
-                s2.SetActive(true);
+                await UniTask.Yield();
+                TickLoadProgress(minLoadFrame, minLoadFrame, 1);
             }
+
+            loadingSceneId = -1;
+            loadEndAction?.Invoke();
         }
 
+        private void TickLoadProgress(int max, int limit, int step) 
+        {
+            loadFrameCount = GameMathf.Min(limit, loadFrameCount + step);
+            float progress = loadFrameCount * 1.0f / max;
+            Game.Event.Publish(new SceneLoadingProgress() { progress = progress });
+        }
+    
         private SceneEntity FindOrCreateSceneEntity(int sceneId)
         {
             SceneEntity entity = scenes.Find(e => e.SceneId == sceneId);

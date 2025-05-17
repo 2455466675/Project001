@@ -26,6 +26,17 @@ namespace Game.UI
 
         protected NavigationGroupView groupView;
 
+        private object intent;
+        public object GetIntent() 
+        {
+            return intent;
+        }
+
+        public void SetIntent(object intent) 
+        {
+            this.intent = intent;
+        }
+
         public virtual void LoadGroup(NavigationGroupDefine define) 
         {
             var cfg = Game.Config.Find<PanelCfg>((int)define);

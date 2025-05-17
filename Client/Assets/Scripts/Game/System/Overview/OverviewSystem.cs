@@ -1,6 +1,6 @@
 using Navigation;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public abstract class OverviewMenuBase : NavigationItemData
     {

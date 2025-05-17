@@ -1,7 +1,7 @@
 using Game.UI;
 using UnityEngine;
 
-namespace Game.System
+namespace Game.GSystem
 {
     /// <summary>
     /// 

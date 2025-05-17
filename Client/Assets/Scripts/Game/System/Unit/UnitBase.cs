@@ -1,7 +1,7 @@
 using Navigation;
 using System.Collections.Generic;
 
-namespace Game.System
+namespace Game.GSystem
 {
     /// <summary>
     /// 

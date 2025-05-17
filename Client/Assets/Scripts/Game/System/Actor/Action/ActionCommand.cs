@@ -1,4 +1,4 @@
-namespace Game.System
+namespace Game.GSystem
 {
     /// <summary>
     /// 

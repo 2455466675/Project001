@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public enum MoveType 
     {

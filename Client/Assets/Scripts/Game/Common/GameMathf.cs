@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 
 namespace Game
@@ -37,7 +38,6 @@ namespace Game
         }
 
         private static Random random = new Random();
-
         /// <summary>
         /// [min, max)
         /// </summary>
@@ -48,5 +48,54 @@ namespace Game
         {
             return random.Next(min, max);
         }
+
+        public static float Lerp(float startValue, float endValue, float t) 
+        {
+            return UnityEngine.Mathf.Lerp(startValue, endValue, t);
+        }
+
+        public static float Pow(float f, float p) 
+        {
+            return UnityEngine.Mathf.Pow(f, p);
+        }
+
+        public static async UniTask Lerp(float startValue, float endValue, float duration, Action<float> onValueChanged, EasingFunction easingFunction = null)
+        {
+            easingFunction ??= Easing.Linear;
+
+            float elapsedTime = 0f;
+            onValueChanged?.Invoke(startValue);
+
+            while (elapsedTime < duration)
+            {        
+                float t = elapsedTime / duration;
+                t = easingFunction(t);
+                float value = Lerp(startValue, endValue, t);
+
+                onValueChanged?.Invoke(value);
+
+                await UniTask.Yield(PlayerLoopTiming.Update);
+                elapsedTime += UnityEngine.Time.deltaTime;
+            }
+
+            onValueChanged?.Invoke(endValue);
+        }
+
+        // 缓动函数定义
+        public static class Easing
+        {
+            public static float Linear(float t) => t;
+            // 加速入场
+            public static float EaseInQuad(float t) => t * t;
+            // 减速退场 
+            public static float EaseOutQuad(float t) => 1 - (1 - t) * (1 - t);
+            // 组合效果
+            public static float EaseInOutQuad(float t) => t < 0.5 ? 2 * t * t : 1 - Pow(-2 * t + 2, 2) / 2;
+            //三次缓动（Cubic）
+            public static float EaseInCubic(float t) => t * t * t;
+            public static float EaseOutCubic(float t) => 1 - Pow(1 - t, 3);
+        }
+
+        public delegate float EasingFunction(float t);
     }
 }

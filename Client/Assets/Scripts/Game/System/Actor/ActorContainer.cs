@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.System
+namespace Game.GSystem
 {
     public class ActorContainer : MonoBehaviour
     {

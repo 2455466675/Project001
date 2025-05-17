@@ -2,7 +2,7 @@ using Game.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Game.System
+namespace Game.GSystem
 {
     /// <summary>
     /// 
