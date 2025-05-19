@@ -31,6 +31,7 @@ namespace Game
         }
         public void LoadBattleScene() 
         {
+            Game.System.ActorManager.SetActive(false);
             mainScene.SetActive(false);
             battleScene.SetActive(true);
             SceneManager.SetActiveScene(battleScene.Scene);
@@ -39,8 +40,9 @@ namespace Game
         public void UnloadBattleScene() 
         {
             SceneManager.SetActiveScene(mainScene.Scene);
-            mainScene.SetActive(true);
             battleScene.SetActive(false);
+            mainScene.SetActive(true);
+            Game.System.ActorManager.SetActive(true);
         }
 
         public async UniTask PreloadBattleScene()

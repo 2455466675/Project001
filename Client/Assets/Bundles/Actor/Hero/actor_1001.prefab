@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f30e5cb5ef37943a993b1e6b2dde4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   spriteRenderer: {fileID: 2367476302467340057}
   animator: {fileID: 1707397919405123022}
   m_rigidbody2D: {fileID: 516908887459484936}
@@ -176,7 +177,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60586d0d81e01fa4da4cb76b4f3b3ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 6669284193516686391, guid: 20c53aeef0aeaf646a822efda286b234, type: 3}
+  sources:
+  - {fileID: 6669284193516686391, guid: 20c53aeef0aeaf646a822efda286b234, type: 3}
+  - {fileID: 7065902620540750852, guid: 98c32b334a9ce15459c41550ff5fbece, type: 3}
 --- !u!1 &8896465971605461122
 GameObject:
   m_ObjectHideFlags: 0

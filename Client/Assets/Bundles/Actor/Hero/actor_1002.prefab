@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f30e5cb5ef37943a993b1e6b2dde4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   spriteRenderer: {fileID: 7041047716624192996}
   animator: {fileID: 8280654135856090372}
   m_rigidbody2D: {fileID: 5072236382586647198}
@@ -364,4 +365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60586d0d81e01fa4da4cb76b4f3b3ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 6669284193516686391, guid: 20c53aeef0aeaf646a822efda286b234, type: 3}
+  sources:
+  - {fileID: 6669284193516686391, guid: 20c53aeef0aeaf646a822efda286b234, type: 3}
+  - {fileID: 7065902620540750852, guid: 98c32b334a9ce15459c41550ff5fbece, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
   - id: 10001
-    loadSceneMode: 1
+    loadSceneMode: 0
     reference:
       asset: {fileID: 102900000, guid: aae9ae996d7648646a6001712312559b, type: 3}
       guid: aae9ae996d7648646a6001712312559b

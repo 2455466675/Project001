@@ -9,7 +9,7 @@ namespace Game.GSystem
     public class ActionDriver : MonoBehaviour
     {
         [SerializeField]
-        private ActionSource source;
+        private ActionSource[] sources;
 
         private List<ActionPlayer> newPlayers;
         private List<ActionPlayer> oldPlayers;
@@ -23,13 +23,8 @@ namespace Game.GSystem
         }
 
         public ActionHandle PlayAction(int hash, Actor actor, object userData)
-        {
-            if (source == null)
-            {
-                return null;
-            }
-            
-            ActionPlayer player = source.CreatePlayer(hash);
+        {        
+            ActionPlayer player = GetActionPlayer(hash);
             if (player == null) 
             {
                 return null;
@@ -43,6 +38,29 @@ namespace Game.GSystem
             }
 
             return player.CreateHandle();
+        }
+
+        private ActionPlayer GetActionPlayer(int hash) 
+        {
+            if (sources == null || sources.Length == 0)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < sources.Length; i++)
+            {
+                ActionSource source = sources[i];
+                if (source != null) 
+                {
+                    ActionPlayer player = source.CreatePlayer(hash);
+                    if (player != null)
+                    {
+                        return player;
+                    }
+                }
+            }
+
+            return null;
         }
 
         private void Update()

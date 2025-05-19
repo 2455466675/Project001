@@ -49,12 +49,6 @@ namespace Game.GSystem
         public void Attach(BattleNavigationItem node)
         {
             GetComponent<BattleNodeComponent>().Attach(node);
-
-            //if (State == BattleUnitState.Alive)
-            //{
-            //    BattleActorComponent bac = GetComponent<BattleActorComponent>();
-            //    bac.RefreshActorAsync().Forget();
-            //}
         }
 
         public async UniTask RefreshActorAsync() 
@@ -64,6 +58,11 @@ namespace Game.GSystem
                 BattleActorComponent bac = GetComponent<BattleActorComponent>();
                 await bac.RefreshActorAsync();
             }
+        }
+
+        public ActionHandle PlayAction(int hash, object userData = null) 
+        {
+            return GetComponent<ActorComponent>().PlayAction(hash, userData);
         }
     }
 }

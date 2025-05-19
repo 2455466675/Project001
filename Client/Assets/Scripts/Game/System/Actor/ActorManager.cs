@@ -26,6 +26,11 @@ namespace Game.GSystem
             return actorContainer.SceneUnit;
         }
 
+        public void SetActive(bool active) 
+        {
+            actorContainer.SceneUnit.gameObject.SetActive(active);
+        }
+
         public Actor CreateActor(int id) 
         {
             Actor actor = null;

@@ -38,6 +38,11 @@ namespace Game.GSystem
             return enemies.ToArray();
         }
 
+        public BattleUnit[] GetHeroes()
+        {
+            return heroes.ToArray();
+        }
+
         public void EnterBattle() 
         {
             Enter().Forget();
@@ -56,14 +61,18 @@ namespace Game.GSystem
 
         private async UniTaskVoid Enter() 
         {
-            await PreEnter();
+            await PreLoad();
 
             Game.Scene.LoadBattleScene();
 
-            await EndEnter();
+            await EndLoad();
+
+            await Appear();
+
+            MLog.Log("Enter end");
         }
 
-        private async UniTask PreEnter() 
+        private async UniTask PreLoad() 
         {
             await PlayTransitionAnim();
 
@@ -77,9 +86,20 @@ namespace Game.GSystem
                 BattleUnit unit = enemies[i];
                 unit.Reset(testMonster[i]);
             }
+
+            List<int> testHero = new List<int>()
+            {
+                810001, 810002, 810003, 810004
+            };
+
+            for (int i = 0;i < testHero.Count; i++) 
+            {
+                BattleUnit unit = heroes[i];
+                unit.Reset(testHero[i]);
+            }
         }
 
-        private async UniTask EndEnter()
+        private async UniTask EndLoad()
         {
 
             var groupEntity = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Units_Group);
@@ -88,6 +108,12 @@ namespace Game.GSystem
             List<UniTask> tasks = new List<UniTask>();
 
             foreach (var unit in enemies)
+            {
+                UniTask task = unit.RefreshActorAsync();
+                tasks.Add(task);
+            }
+
+            foreach (var unit in heroes)
             {
                 UniTask task = unit.RefreshActorAsync();
                 tasks.Add(task);
@@ -122,6 +148,19 @@ namespace Game.GSystem
 
             var e = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Loading_Group);
             e.Hide();
+        }
+
+        private async UniTask Appear() 
+        {
+            List<UniTask> tasks = new List<UniTask>();
+
+            foreach (var unit in heroes)
+            {
+                ActionHandle handle = unit.PlayAction(Common.StringToHash("Appear"));
+                tasks.Add(handle.Task);
+            }
+
+            await UniTask.WhenAll(tasks);
         }
     }
 }

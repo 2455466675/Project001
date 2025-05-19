@@ -76,9 +76,9 @@ namespace Game.GSystem
             actor = null;
         }
 
-        public void PlayAction(int hash, object userData = null) 
+        public ActionHandle PlayAction(int hash, object userData = null) 
         {
-            actor.PlayAction(hash, userData);
+            return actor.PlayAction(hash, userData);
         }
 
         public Vector2 GetPosition() 
