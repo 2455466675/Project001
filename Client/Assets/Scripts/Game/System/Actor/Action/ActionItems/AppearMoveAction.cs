@@ -24,8 +24,9 @@ namespace Game.GSystem
         {
             AppearMoveAction item = Item;
             Actor actor = Player.Actor;
-            actor.transform.localPosition = item.startPos;
-            actor.transform.DOLocalMove(item.endPos, item.moveTime).SetEase(item.ease);
+            //actor.transform.localPosition = item.startPos;
+            //actor.transform.DOLocalMove(item.endPos, item.moveTime).SetEase(item.ease);
+            //actor.animator.Play("attack_002");
         }
     }
 }

@@ -16,5 +16,10 @@ namespace Game.GSystem
         {
             this.player = player;
         }
+
+        public void Stop() 
+        {
+            player?.Complete();
+        }
     }
 }

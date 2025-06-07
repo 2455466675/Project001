@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 874034724649888031}
   - component: {fileID: 4028876289627795231}
   - component: {fileID: 513132707007062608}
+  - component: {fileID: 3069840819415135114}
   m_Layer: 0
   m_Name: Appear
   m_TagString: Untagged
@@ -94,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Appear
   items:
-  - {fileID: 513132707007062608}
+  - {fileID: 3069840819415135114}
 --- !u!114 &513132707007062608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +113,27 @@ MonoBehaviour:
   duration: 1.5
   posType: 0
   ease: 5
-  startPos: {x: 3, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
   moveTime: 1
+--- !u!114 &3069840819415135114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4139167533820470066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ce304f203e84748b11c9980de77ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 0
+  timepoint: 0
+  duration: 5
+  parameter: battle_idle
+  animationType: 99
+  intValue: 0
+  floatValue: 0
+  boolValue: 0
+  layer: 0

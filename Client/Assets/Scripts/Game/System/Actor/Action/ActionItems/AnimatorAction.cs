@@ -30,58 +30,97 @@ namespace Game.GSystem
         [ShowIf("animationType", AnimatorActionType.Play)]
         public int layer;
 
-        private int parameterHash = -1;
         public int ParameterHash
         {
             get 
             {
-                if (parameterHash < 0) 
-                {
-                    parameterHash = Animator.StringToHash(parameter);
-                }
-                return parameterHash;
+                return Animator.StringToHash(parameter);
             }
         }
     }
 
     public class AnimatorActionCommand : ActionCommand<AnimatorAction>
     {
+        private bool isLoop;
+        private int lastState;
+
         protected override void OnExecute()
         {
             Actor actor = Player.Actor;
-            if (actor == null || actor.animator == null) 
+            if (actor == null) 
+            {
+                return;
+            }
+
+            Animator animator = actor.animator;
+            if (animator == null)
             {
                 return;
             }
 
             int hash = Item.ParameterHash;
-            if (hash < 0) 
-            {
-                return;
-            }
 
             AnimatorActionType at = Item.animationType;
             switch (at)
             {
                 case AnimatorActionType.ParameterFloat:
-                    actor.animator.SetFloat(hash, Item.floatValue);
+                    animator.SetFloat(hash, Item.floatValue);
                     break;
                 case AnimatorActionType.ParameterInt:
-                    actor.animator.SetInteger(hash, Item.intValue);
+                    animator.SetInteger(hash, Item.intValue);
                     break;
                 case AnimatorActionType.ParameterBool:
-                    actor.animator.SetBool(hash, Item.boolValue);
+                    animator.SetBool(hash, Item.boolValue);
                     break;
                 case AnimatorActionType.ParameterTrigger:
-                    actor.animator.SetTrigger(hash);                    
+                    animator.SetTrigger(hash);                    
                     break;
                 case AnimatorActionType.Play:
-                    actor.animator.Play(hash, Item.layer);
+                    AnimatorStateInfo last = animator.GetCurrentAnimatorStateInfo(0);
+                    animator.Play(hash, Item.layer);
+                    AnimatorStateInfo curr = animator.GetCurrentAnimatorStateInfo(0);
+                    if (curr.loop) 
+                    {
+                        isLoop = true;                   
+                        lastState = last.shortNameHash;
+                    }
+                    else
+                    {
+                        isLoop = false;
+                    }
                     break;
                 default:
                     Debug.LogError("无效的动画参数类型");
                     break;
             }
+        }
+
+        protected override void OnComplete()
+        {
+            Actor actor = Player.Actor;
+            if (actor == null)
+            {
+                return;
+            }
+
+            Animator animator = actor.animator;
+            if (animator == null)
+            {
+                return;
+            }
+
+            AnimatorActionType at = Item.animationType;
+            if (at != AnimatorActionType.Play) 
+            {
+                return;
+            }
+
+            if (!isLoop) 
+            {
+                return;
+            }
+
+            animator.Play(lastState, Item.layer);
         }
     }
 }

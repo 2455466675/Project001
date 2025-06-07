@@ -31,22 +31,22 @@ MonoBehaviour:
     assemblyNames:
     - UniTask
     - Assembly-CSharp-firstpass
-    - Eflatun.SceneReference
     - UniTask.Linq
     - YooAsset
-    - Assembly-CSharp
     - Game
+    - Eflatun.SceneReference
     - GameConfig
     - Navigation
     - UniTask.DOTween
-    - Sirenix.OdinInspector.CompatibilityLayer
+    - Assembly-CSharp
     - GameUnit
-    - UniTask.TextMeshPro
     - UniTask.Addressables
+    - Sirenix.OdinInspector.CompatibilityLayer
+    - UniTask.TextMeshPro
     - Eflatun.SceneReference.Editor
     - PsdPlugin
-    - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - YooAsset.Editor
+    - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - UniTask.Editor
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
