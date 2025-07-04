@@ -7,17 +7,13 @@ namespace Game.GSystem
     {
         [ReadOnly]
         public int id;
-
-        public SpriteRenderer spriteRenderer;
-        
+        public SpriteRenderer spriteRenderer;       
         public Animator animator;
-
+        public AnimatorController animatorController;
         [SerializeField]
         private Rigidbody2D m_rigidbody2D;
         public Rigidbody2D Rigidbody2D => m_rigidbody2D;
-
         public BoxCollider2D boxCollider2D;
-
         public ActorBones bones;
 
         [SerializeField]
@@ -26,11 +22,14 @@ namespace Game.GSystem
         public void Reuse(int id) 
         {
             this.id = id;
+            if (animator != null && animatorController != null)
+            {
+                animator.runtimeAnimatorController = animatorController.DefaultController;
+            }
         }
 
         public void Unuse() 
         {
-            
         }
 
         public Transform GetBone(string boneName) 

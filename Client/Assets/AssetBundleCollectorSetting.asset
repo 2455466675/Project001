@@ -37,14 +37,6 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/Bundles/Actor
-        CollectorGUID: 88e511bbb03e8f640896ae7bab9d5e3d
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
       - CollectPath: Assets/Bundles/Common
         CollectorGUID: 64629ba08ce11e5458b362d44ca21f97
         CollectorType: 0
@@ -67,5 +59,13 @@ MonoBehaviour:
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/Bundles/Actor
+        CollectorGUID: 88e511bbb03e8f640896ae7bab9d5e3d
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 
