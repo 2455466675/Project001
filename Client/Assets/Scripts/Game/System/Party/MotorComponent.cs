@@ -390,25 +390,29 @@ namespace Game.GSystem
             int actionNameHash = 0;
             if (moveType == MoveType.WalkUp || moveType == MoveType.RunUp)
             {
-                actionNameHash = IsRunning ? followRunUpHash : followWalkUpHash;
+                //actionNameHash = IsRunning ? followRunUpHash : followWalkUpHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunUp ? followRunUpHash : followWalkUpHash;
                 dirX = 0;
                 dirY = 1;
             }
             else if (moveType == MoveType.WalkDown || moveType == MoveType.RunDown)
             {
-                actionNameHash = IsRunning ? followRunDownHash : followWalkDownHash;
+                //actionNameHash = IsRunning ? followRunDownHash : followWalkDownHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunDown ? followRunDownHash : followWalkDownHash;
                 dirX = 0;
                 dirY = -1;
             }
             else if (moveType == MoveType.WalkLeft || moveType == MoveType.RunLeft)
             {
-                actionNameHash = IsRunning ? followRunLeftHash : followWalkLeftHash;
+                //actionNameHash = IsRunning ? followRunLeftHash : followWalkLeftHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunLeft ? followRunLeftHash : followWalkLeftHash;
                 dirX = -1;
                 dirY = 0;
             }
             else if (moveType == MoveType.WalkRight || moveType == MoveType.RunRight)
             {             
-                actionNameHash = IsRunning ? followRunRightHash : followWalkRightHash;
+                //actionNameHash = IsRunning ? followRunRightHash : followWalkRightHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunRight ? followRunRightHash : followWalkRightHash;
                 dirX = 1;
                 dirY = 0;
             }
