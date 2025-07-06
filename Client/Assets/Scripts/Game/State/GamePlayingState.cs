@@ -16,6 +16,7 @@ namespace Game.State
         
             List<UniTask> tasks = new List<UniTask>();
             tasks.Add(Game.Scene.PreloadBattleScene());
+            tasks.Add(Game.System.PartySystem.RefreshActor());
 
             Game.Scene.LoadSceneAsync(10003, OnStartLoad, OnEndLoad, tasks).Forget();
         }

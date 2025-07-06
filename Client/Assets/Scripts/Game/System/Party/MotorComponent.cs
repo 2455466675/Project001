@@ -24,6 +24,7 @@ namespace Game.GSystem
         public MoveType moveType;
         public float x;
         public float y;
+        public float z;
         public float deltaDistance;
     }
 
@@ -82,11 +83,23 @@ namespace Game.GSystem
             }
         }
 
-        private float dirX;
-        private float dirY;
+        /// <summary>
+        /// 当前方向H
+        /// </summary>
+        private float dirH;
+        /// <summary>
+        /// 当前方向V
+        /// </summary>
+        private float dirV;
 
+        /// <summary>
+        /// 上一帧的位置X
+        /// </summary>
         private float lastX;
-        private float lastY;
+        /// <summary>
+        /// 上一帧的位置Z
+        /// </summary>
+        private float lastZ;
 
         private float gap;
         private int blockFrame;
@@ -103,32 +116,32 @@ namespace Game.GSystem
         {
             partyComponent = GetComponent<PartyComponent>();
             actorComponent = GetComponent<ActorComponent>();
-            dirX = 0f;
-            dirY = -1f;
+            dirH = 0f;
+            dirV = -1f;
 
-            gap = Game.Config.Formula.PartyUnitGap;
+            gap = Game.Config.Formula.GetFloatValue("PartyUnitGap");
             blockFrame = 0;
             IsRunning = false;
             traces = new List<MoveTrace>();
         }
 
-        public void Move(float x, float y)
+        public void Move(float h, float v)
         {
-            MoveType moveType = DoAction(x, y);
+            MoveType moveType = DoAction(h, v);
             Transmit(moveType);
             Block();
         }
 
-        private MoveType DoAction(float x, float y)
+        private MoveType DoAction(float h, float v)
         {
             MoveType moveType;
             int actionHash;
 
-            if (x == 0f && y == 0f) 
+            if (h == 0f && v == 0f) 
             {
-                if (dirX != 0f)
+                if (dirH != 0f)
                 {
-                    if (dirX < 0f)
+                    if (dirH < 0f)
                     {
                         actionHash = idleLeftHash;
                         moveType = MoveType.IdleLeft;
@@ -141,7 +154,7 @@ namespace Game.GSystem
                 }
                 else
                 {
-                    if (dirY < 0f)
+                    if (dirV < 0f)
                     {
                         actionHash = idleDownHash;
                         moveType = MoveType.IdleDown;
@@ -157,9 +170,9 @@ namespace Game.GSystem
             }
             else
             {
-                if (x != 0)
+                if (h != 0)
                 {
-                    if (x > 0)
+                    if (h > 0)
                     {
                         if (IsRunning)
                         {
@@ -189,7 +202,7 @@ namespace Game.GSystem
                 }
                 else
                 {
-                    if (y > 0)
+                    if (v > 0)
                     {
                         if (IsRunning)
                         {
@@ -216,8 +229,8 @@ namespace Game.GSystem
                         }
                     }
                 }
-                dirX = x;
-                dirY = y;
+                dirH = h;
+                dirV = v;
                 IsMoving = true;
             }
             
@@ -227,8 +240,8 @@ namespace Game.GSystem
 
         private void Transmit(MoveType moveType) 
         {
-            Vector2 pos = actorComponent.GetPosition();
-            partyComponent.TransmitTrace(new MoveTrace() { moveType = moveType, x = pos.x, y = pos.y });
+            Vector3 pos = actorComponent.GetPosition();
+            partyComponent.TransmitTrace(new MoveTrace() { moveType = moveType, x = pos.x, y = pos.y, z = pos.z });
         }
 
         /// <summary>
@@ -241,17 +254,17 @@ namespace Game.GSystem
                 return;
             }
 
-            Vector2 pos = actorComponent.GetPosition();
+            Vector3 pos = actorComponent.GetPosition();
 
             float _x = lastX;
-            float _y = lastY;
+            float _z = lastZ;
 
             lastX = pos.x;
-            lastY = pos.y;
+            lastZ = pos.z;
 
             float x = lastX - _x;
-            float y = lastY - _y;
-            float d = (x * x + y * y);
+            float z = lastZ - _z;
+            float d = (x * x + z * z);
             if (d < 0.0001f)
             {
                 blockFrame++;
@@ -283,11 +296,11 @@ namespace Game.GSystem
 
                 if (moveType == MoveType.WalkUp || moveType == MoveType.RunUp)
                 {
-                    d = trace.y - last.y;
+                    d = trace.z - last.z;
                 }
                 else if (moveType == MoveType.WalkDown || moveType == MoveType.RunDown)
                 {
-                    d = trace.y - last.y;
+                    d = trace.z - last.z;
                 }
                 else if (moveType == MoveType.WalkLeft || moveType == MoveType.RunLeft)
                 {
@@ -346,9 +359,9 @@ namespace Game.GSystem
 
                 int actionHash;
 
-                if (dirX != 0f)
+                if (dirH != 0f)
                 {
-                    if (dirX < 0f)
+                    if (dirH < 0f)
                     {                        
                         actionHash = idleLeftHash;
                     }
@@ -359,7 +372,7 @@ namespace Game.GSystem
                 }
                 else
                 {
-                    if (dirY < 0f)
+                    if (dirV < 0f)
                     {
                         actionHash = idleDownHash;
                     }
@@ -392,33 +405,33 @@ namespace Game.GSystem
             {
                 //actionNameHash = IsRunning ? followRunUpHash : followWalkUpHash;
                 actionNameHash = IsRunning && moveType == MoveType.RunUp ? followRunUpHash : followWalkUpHash;
-                dirX = 0;
-                dirY = 1;
+                dirH = 0;
+                dirV = 1;
             }
             else if (moveType == MoveType.WalkDown || moveType == MoveType.RunDown)
             {
                 //actionNameHash = IsRunning ? followRunDownHash : followWalkDownHash;
                 actionNameHash = IsRunning && moveType == MoveType.RunDown ? followRunDownHash : followWalkDownHash;
-                dirX = 0;
-                dirY = -1;
+                dirH = 0;
+                dirV = -1;
             }
             else if (moveType == MoveType.WalkLeft || moveType == MoveType.RunLeft)
             {
                 //actionNameHash = IsRunning ? followRunLeftHash : followWalkLeftHash;
                 actionNameHash = IsRunning && moveType == MoveType.RunLeft ? followRunLeftHash : followWalkLeftHash;
-                dirX = -1;
-                dirY = 0;
+                dirH = -1;
+                dirV = 0;
             }
             else if (moveType == MoveType.WalkRight || moveType == MoveType.RunRight)
             {             
                 //actionNameHash = IsRunning ? followRunRightHash : followWalkRightHash;
                 actionNameHash = IsRunning && moveType == MoveType.RunRight ? followRunRightHash : followWalkRightHash;
-                dirX = 1;
-                dirY = 0;
+                dirH = 1;
+                dirV = 0;
             }
 
             actorComponent.PlayAction(actionNameHash);
-            actorComponent.SetPosition(new Vector2(trace.x, trace.y));
+            actorComponent.SetPosition(new Vector3(trace.x, trace.y, trace.z));
             partyComponent.TransmitTrace(trace);
 
             distance -= trace.deltaDistance;

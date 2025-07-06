@@ -10,25 +10,24 @@ namespace Game.GSystem
     /// </summary>
     public class ActorManager
     {
-        private ActorContainer actorContainer;
+        private ActorRoot actorRoot;
         private Dictionary<int, Queue<Actor>> pool;
 
         public void Init()
         {
             pool = new Dictionary<int, Queue<Actor>>();
-
-            var go = Game.Resource.LoadAndInstantiate(Game.Config.Formula.ActorContainerPath, Game.Root.transform);
-            actorContainer = go.GetComponent<ActorContainer>();
+          
+            actorRoot = Game.Root.ActorRoot;
         }
 
         public Transform GetScentUnitContainer() 
         {
-            return actorContainer.SceneUnit;
+            return actorRoot.SceneUnit;
         }
 
         public void SetActive(bool active) 
         {
-            actorContainer.SceneUnit.gameObject.SetActive(active);
+            actorRoot.SceneUnit.gameObject.SetActive(active);
         }
 
         public Actor CreateActor(int id) 
@@ -46,7 +45,7 @@ namespace Game.GSystem
             if (actor == null) 
             {
                 ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
-                GameObject go = Game.Resource.LoadAndInstantiate(cfg.PrefabPath, actorContainer.ActorPool);
+                GameObject go = Game.Resource.LoadAndInstantiate(cfg.PrefabPath, actorRoot.ActorPool);
                 actor = go.GetComponent<Actor>();
             }
 
@@ -69,7 +68,7 @@ namespace Game.GSystem
             if (actor == null)
             {
                 ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
-                GameObject go = await Game.Resource.LoadAndInstantiateAsync(cfg.PrefabPath, actorContainer.ActorPool);
+                GameObject go = await Game.Resource.LoadAndInstantiateAsync(cfg.PrefabPath, actorRoot.ActorPool);
                 actor = go.GetComponent<Actor>();
             }
 
@@ -99,7 +98,7 @@ namespace Game.GSystem
 
             queue.Enqueue(actor);
             actor.Unuse();
-            actor.SetParent(actorContainer.ActorPool);
+            actor.SetParent(actorRoot.ActorPool);
             actor.transform.localPosition = Vector3.zero;
             actor.transform.localRotation = Quaternion.identity;
             actor.transform.localScale = Vector3.one;

@@ -1,3 +1,5 @@
+using Game.GSystem;
+using Game.UI;
 using UnityEngine;
 
 namespace Game
@@ -7,6 +9,8 @@ namespace Game
     /// </summary>
     public class GameRoot : MonoBehaviour
     {
+        public UIRoot UIRoot;
+        public ActorRoot ActorRoot;
         private void Start()
         {
             DontDestroyOnLoad(gameObject);

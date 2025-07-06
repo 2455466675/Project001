@@ -46,6 +46,7 @@ MonoBehaviour:
     - Eflatun.SceneReference.Editor
     - PsdPlugin
     - YooAsset.Editor
+    - PPv2URPConverters
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - UniTask.Editor
     - Sirenix.OdinInspector.Modules.UnityMathematics

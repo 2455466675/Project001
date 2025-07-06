@@ -78,23 +78,39 @@ namespace Game.GSystem
 
         public ActionHandle PlayAction(int hash, object userData = null) 
         {
+            if (actor == null)
+            {
+                return null;
+            }
             return actor.PlayAction(hash, userData);
         }
 
-        public Vector2 GetPosition() 
+        public Vector3 GetPosition() 
         {
-            return actor.Rigidbody2D.position;
+            if (actor == null)
+            {
+                return Vector3.zero;
+            }
+            return actor.Rigidbody.position;
         }
 
-        public void SetPosition(Vector2 pos) 
+        public void SetPosition(Vector3 pos) 
         {
-            actor.Rigidbody2D.MovePosition(pos);
+            if (actor == null)
+            {
+                return;
+            }
+            actor.Rigidbody.MovePosition(pos);
         }
 
         public void SetRigidbodyEnable(bool active) 
         {
-            actor.boxCollider2D.enabled = active;
-            actor.Rigidbody2D.bodyType = active ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
+            if (actor == null)
+            {
+                return;
+            }
+            actor.boxCollider.enabled = active;
+            actor.Rigidbody.isKinematic = !active;
         }
 
         protected abstract Transform GetActorNode();

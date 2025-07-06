@@ -11,9 +11,9 @@ namespace Game.GSystem
         public Animator animator;
         public AnimatorController animatorController;
         [SerializeField]
-        private Rigidbody2D m_rigidbody2D;
-        public Rigidbody2D Rigidbody2D => m_rigidbody2D;
-        public BoxCollider2D boxCollider2D;
+        private Rigidbody m_rigidbody;
+        public Rigidbody Rigidbody => m_rigidbody;
+        public BoxCollider boxCollider;
         public ActorBones bones;
 
         [SerializeField]
@@ -70,14 +70,14 @@ namespace Game.GSystem
                 animator = GetComponentInChildren<Animator>();
             }
 
-            if (m_rigidbody2D == null) 
+            if (m_rigidbody == null) 
             {
-                m_rigidbody2D = GetComponentInChildren<Rigidbody2D>();
+                m_rigidbody = GetComponentInChildren<Rigidbody>();
             }
 
-            if (boxCollider2D == null) 
+            if (boxCollider == null) 
             {
-                boxCollider2D = GetComponentInChildren<BoxCollider2D>();
+                boxCollider = GetComponentInChildren<BoxCollider>();
             }
 
             if (bones == null)

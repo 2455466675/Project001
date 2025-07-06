@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -25,6 +26,15 @@ namespace Game.GSystem
                 {
                     this.leader = unit;
                 }                
+            }   
+        }
+
+        public async UniTask RefreshActor() 
+        {
+            for (int i = 0; i < units.Count; i++)
+            {
+                PartyUnit unit = units[i];
+                await unit.GetComponent<ActorComponent>().RefreshActorAsync();
             }
 
             for (int i = 0; i < units.Count; i++)
@@ -34,11 +44,11 @@ namespace Game.GSystem
                 PartyComponent partyComponent = unit.GetComponent<PartyComponent>();
                 partyComponent.SetIsLeader(i == 0);
 
-                if (i > 0) 
-                {            
+                if (i > 0)
+                {
                     partyComponent.SetPrev(units[i - 1].GetComponent<PartyComponent>());
                 }
-                
+
                 if (i < units.Count - 1)
                 {
                     partyComponent.SetNext(units[i + 1].GetComponent<PartyComponent>());

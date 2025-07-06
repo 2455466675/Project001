@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Config
@@ -8,27 +9,101 @@ namespace Config
     [CreateAssetMenu(menuName= "MyMenu/Create Formula")]
 	public class Formula : ScriptableObject
 	{
-        /// <summary>
-        /// UI物体预制体路径
-        /// </summary>
-        public string UIRootPath;
-        public string ActorContainerPath;
-        /// <summary>
-        /// ui导航配置
-        /// </summary>
-        public string NavigationMap;
-        /// <summary>
-        /// 场景配置
-        /// </summary>
-        public string SceneMap;
-        /// <summary>
-        /// 队伍人数上限
-        /// </summary>
-        public int PartyLimit;
-        /// <summary>
-        /// 角色队列跟随间隔
-        /// </summary>
-        public float PartyUnitGap;
-	}
+        [Serializable]
+        private class FormulaItem 
+        {
+            public string desc;
+            public string key;
+            public string value;
+        }
+
+        [SerializeField]
+        private FormulaItem[] items;
+
+        public string GetStringValue(string key) 
+        {
+            if (items == null || items.Length == 0) 
+            {
+                return string.Empty;   
+            }
+
+            FormulaItem item = Array.Find(items, x => x.key == key);
+            if (item == null) 
+            {
+                return string.Empty;
+            }
+
+            return item.value;
+        }
+
+        public int GetIntValue(string key) 
+        {
+            if (items == null || items.Length == 0)
+            {
+                return 0;
+            }
+
+            FormulaItem item = Array.Find(items, x => x.key == key);
+            if (item == null)
+            {
+                return 0;
+            }
+
+            if (int.TryParse(item.value, out int value)) 
+            {
+                return value;
+            }
+            else
+            {
+                return 0;
+            }           
+        }
+
+        public float GetFloatValue(string key)
+        {
+            if (items == null || items.Length == 0)
+            {
+                return 0f;
+            }
+
+            FormulaItem item = Array.Find(items, x => x.key == key);
+            if (item == null)
+            {
+                return 0f;
+            }
+
+            if (float.TryParse(item.value, out float value))
+            {
+                return value;
+            }
+            else
+            {
+                return 0f;
+            }
+        }
+
+        public bool GetBoolValue(string key)
+        {
+            if (items == null || items.Length == 0)
+            {
+                return false;
+            }
+
+            FormulaItem item = Array.Find(items, x => x.key == key);
+            if (item == null)
+            {
+                return false;
+            }
+
+            if (bool.TryParse(item.value, out bool value))
+            {
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
 

@@ -15,7 +15,7 @@ namespace Game
 {
     public static class Game
     {
-        public static GameObject Root { get; private set; }
+        public static GameRoot Root { get; set; }
         public static GameResource Resource { get; private set; }
         public static GameConfig Config { get; private set; }
         public static GameCode Code { get; private set; }
@@ -33,8 +33,8 @@ namespace Game
         {
             IsInited = false;
 
-            Root = new GameObject("GameRoot");
-            Root.AddComponent<GameRoot>();
+            //Root = new GameObject("GameRoot");
+            //Root.AddComponent<GameRoot>();
 
             Resource = new GameResource();
             await Resource.Init(config);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.GSystem
 {
-    public class ActorContainer : MonoBehaviour
+    public class ActorRoot : MonoBehaviour
     {
         [SerializeField]
         private Transform actorPool;

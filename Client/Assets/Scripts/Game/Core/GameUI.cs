@@ -10,12 +10,11 @@ namespace Game.UI
         private NavigationController navigationController;
 
         public void Init()
-        {
-            var go = Game.Resource.LoadAndInstantiate(Game.Config.Formula.UIRootPath, Game.Root.transform);
-            Root = go.GetComponent<UIRoot>();
+        {         
+            Root = Game.Root.UIRoot;
 
             inputController = new InputController();
-            navigationController = new NavigationController(Game.Config.Formula.NavigationMap);
+            navigationController = new NavigationController(Game.Config.Formula.GetStringValue("NavigationMap"));//.NavigationMap);
         }
 
         public void FixedUpdate(float dt) 

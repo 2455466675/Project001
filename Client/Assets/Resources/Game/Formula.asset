@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff33c08d4b5d51b4a815a8a59bd7f912, type: 3}
   m_Name: Formula
   m_EditorClassIdentifier: 
-  UIRootPath: Assets/Bundles/UI/UIRoot
-  ActorContainerPath: Assets/Bundles/Actor/ActorContainer
-  NavigationMap: Game/NavigationMap
-  SceneMap: Game/SceneMap
-  PartyLimit: 4
-  PartyUnitGap: 0.5
+  items:
+  - desc: "ui\u5BFC\u822A\u914D\u7F6E"
+    key: NavigationMap
+    value: Game/NavigationMap
+  - desc: "\u573A\u666F\u914D\u7F6E"
+    key: SceneMap
+    value: Game/SceneMap
+  - desc: "\u961F\u4F0D\u4EBA\u6570\u4E0A\u9650"
+    key: PartyLimit
+    value: 4
+  - desc: "\u89D2\u8272\u961F\u5217\u8DDF\u968F\u95F4\u9694"
+    key: PartyUnitGap
+    value: 0.5

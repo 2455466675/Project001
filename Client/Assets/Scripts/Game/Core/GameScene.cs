@@ -27,7 +27,7 @@ namespace Game
         {
             loadingSceneId = -1;
             scenes = new List<SceneEntity>();
-            sceneMap = Game.Resource.LoadFormRes<SceneMap>(Game.Config.Formula.SceneMap);
+            sceneMap = Game.Resource.LoadFormRes<SceneMap>(Game.Config.Formula.GetStringValue("SceneMap"));
         }
         public void LoadBattleScene() 
         {

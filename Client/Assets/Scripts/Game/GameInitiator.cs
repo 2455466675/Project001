@@ -16,7 +16,7 @@ namespace Game
 
         private async void Start()
         {
-
+            Game.Root = FindFirstObjectByType<GameRoot>();
             await Game.Init(config);
 
             Game.Event.Publish(new GameStartEventArg());
