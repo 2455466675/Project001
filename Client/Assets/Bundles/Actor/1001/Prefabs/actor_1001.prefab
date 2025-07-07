@@ -150,7 +150,7 @@ MonoBehaviour:
   defaultController: 0
   animators:
   - type: 0
-    animator: {fileID: 9100000, guid: 1d62a2f4e10ac2142a92b83bde9e2f36, type: 2}
+    animator: {fileID: 9100000, guid: 6fdaf8f4494a17c4f856b81fa5445783, type: 2}
 --- !u!54 &8895283908519216394
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -357,7 +357,7 @@ Animator:
   m_GameObject: {fileID: 9081316072473413829}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1d62a2f4e10ac2142a92b83bde9e2f36, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6fdaf8f4494a17c4f856b81fa5445783, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
