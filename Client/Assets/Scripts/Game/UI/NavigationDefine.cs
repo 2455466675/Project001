@@ -32,6 +32,7 @@ namespace Game.UI
         Backpack_Menu_List = 10041,
         Backpack_Item_List = 10042,
 
+        Battle_Grid = 10050,
         Battle_Enemy_Unit_List = 10051,
         Battle_Player_Unit_List = 10052,
     }

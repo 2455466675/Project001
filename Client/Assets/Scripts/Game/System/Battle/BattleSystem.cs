@@ -61,21 +61,21 @@ namespace Game.GSystem
 
         private async UniTaskVoid Enter() 
         {
-            await PreLoad();
+            await PlayTransitionAnim();
+            //await PreLoad();
 
             Game.Scene.LoadBattleScene();
 
-            await EndLoad();
+            //await EndLoad();
 
-            await Appear();
+            await StopTransitionAnim();
+            //await Appear();
 
             MLog.Log("Enter end");
         }
 
         private async UniTask PreLoad() 
         {
-            await PlayTransitionAnim();
-
             List<int> testMonster = new List<int>()
             {
                 300001, 0, 300002, 0, 300003, 0, 300004, 0, 300005
@@ -97,6 +97,8 @@ namespace Game.GSystem
                 BattleUnit unit = heroes[i];
                 unit.Reset(testHero[i]);
             }
+
+            await UniTask.Yield();
         }
 
         private async UniTask EndLoad()
@@ -120,8 +122,6 @@ namespace Game.GSystem
             }
 
             await UniTask.WhenAll(tasks);
-
-            await StopTransitionAnim();
         }
 
         private async UniTask PlayTransitionAnim() 

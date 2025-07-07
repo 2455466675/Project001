@@ -43,7 +43,12 @@ namespace Game.GSystem
 
         private void OnRefreshActor(Actor obj)
         {
-            if (this.node.TryGetView(out BattleActorView view))
+            if (node == null) 
+            {
+                return;
+            }
+
+            if (node.TryGetView(out BattleActorView view))
             {
                 view.SetActor(obj);
             }

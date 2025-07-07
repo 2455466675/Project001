@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game.UI
 {
+    [RequireComponent(typeof(FixedNavigationList))]
     public class FixedListView : NavigationListView
     {
         protected override NavigationList List => list;
