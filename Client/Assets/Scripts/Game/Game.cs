@@ -27,7 +27,7 @@ namespace Game
 
         public static GameCommand GM { get; private set; }
 
-        private static bool IsInited;
+        public static bool IsInited;
 
         public static async UniTask Init(GameInitConfig config) 
         {

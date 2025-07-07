@@ -12,6 +12,8 @@ namespace Game.GSystem
         private List<PartyUnit> units;
         private PartyUnit leader;
 
+        public PartyUnit Leader => this.leader;
+
         public void Init() 
         {
             units = new List<PartyUnit>();

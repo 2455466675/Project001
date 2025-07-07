@@ -7,6 +7,8 @@ namespace Game.State
         private List<StateBase> states;
         private StateBase currentState;
 
+        public bool IsPlaying => currentState != null && currentState.Define == GameStateDefine.Playing;
+
         public void Init()
         {
             states = new List<StateBase>
