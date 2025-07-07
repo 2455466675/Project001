@@ -18,7 +18,7 @@ namespace Game.UI
     [CreateAssetMenu(menuName= "MyMenu/Create NavigationMap")]
     public class NavigationMap : ScriptableObject
     {
-        [ReadOnly]
+        //[ReadOnly]
         [SerializeField]
         private List<ListGroupMap> list;
 
@@ -56,10 +56,10 @@ namespace Game.UI
             }
         }
 
-        [Button("Clear")]
-        private void Clear() 
-        {
-            list?.Clear();
-        }
+        //[Button("Clear")]
+        //private void Clear() 
+        //{
+        //    list?.Clear();
+        //}
     }
 }

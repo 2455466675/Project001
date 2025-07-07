@@ -20,7 +20,7 @@ namespace Game.UI
 
         private void OnProgressUpdate(SceneLoadingProgress arg)
         {
-            var view = groupView.GetView<SceneTransitionalMatView>();
+            var view = GetView<SceneTransitionalMatView>();
             if (view == null)
             {
                 return;

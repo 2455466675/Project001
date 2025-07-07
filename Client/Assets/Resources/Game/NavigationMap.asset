@@ -31,9 +31,5 @@ MonoBehaviour:
     groupDefine: 1005
   - listDefine: 10042
     groupDefine: 1005
-  - listDefine: 10051
-    groupDefine: 1006
-  - listDefine: 10052
-    groupDefine: 1006
   - listDefine: 10050
     groupDefine: 1006

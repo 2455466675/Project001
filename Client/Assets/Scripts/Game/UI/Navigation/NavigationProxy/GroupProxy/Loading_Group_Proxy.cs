@@ -24,13 +24,13 @@ namespace Game.UI
 
         private void OnProgressUpdate(SceneLoadingProgress arg) 
         {
-            TextView textView = groupView.GetView<TextView>();
+            TextView textView = GetView<TextView>();
             if (textView != null) 
             {
                 textView.SetTextByStr($"{Mathf.Min(100, Mathf.FloorToInt(arg.progress * 100))}%", 3);
             }
 
-            SliderView sliderView = groupView.GetView<SliderView>();
+            SliderView sliderView = GetView<SliderView>();
             if (sliderView != null) 
             {
                 sliderView.SetValue(arg.progress);

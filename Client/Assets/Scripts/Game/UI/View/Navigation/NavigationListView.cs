@@ -92,28 +92,49 @@ namespace Game.UI
 
         private void List_OnSubmitEvent(NavigationItem obj)
         {
-            if (obj != null && obj is GameNavigationItem item) 
+            if (obj != null) 
             {
-                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
-                e?.OnSubmit(item);
+                if (obj is GameNavigationItem item) 
+                {
+                    NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                    e?.OnSubmit(item);
+                }
+                else
+                {
+                    Debug.LogError("item is not GameNavigationItem");  
+                }
             }
         }
 
         private void List_OnDeselectedEvent(NavigationItem obj)
         {
-            if (obj != null && obj is GameNavigationItem item)
+            if (obj != null)
             {
-                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
-                e?.OnDeselect(item);
+                if (obj is GameNavigationItem item)
+                {
+                    NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                    e?.OnDeselect(item);
+                }
+                else
+                {
+                    Debug.LogError("item is not GameNavigationItem");
+                }
             }
         }
 
         private void List_OnSelectedEvent(NavigationItem obj)
         {
-            if (obj != null && obj is GameNavigationItem item)
+            if (obj != null)
             {
-                NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
-                e?.OnSelect(item);
+                if (obj is GameNavigationItem item)
+                {
+                    NavigationListEntity e = Game.UI.GetNavigationListEntity(define);
+                    e?.OnSelect(item);
+                }
+                else
+                {
+                    Debug.LogError("item is not GameNavigationItem");
+                }
             }
         }
 

@@ -37,6 +37,26 @@ namespace Game.UI
             this.intent = intent;
         }
 
+        public T GetView<T>() where T : View 
+        {
+            if (groupView == null)
+            {
+                return default;
+            }
+
+            return groupView.GetView<T>();
+        }
+
+        public T GetView<T>(string key) where T : View         
+        {
+            if (groupView == null)
+            {
+                return default;
+            }
+
+            return groupView.GetView<T>(key);
+        }
+
         public virtual void LoadGroup(NavigationGroupDefine define) 
         {
             var cfg = Game.Config.Find<PanelCfg>((int)define);

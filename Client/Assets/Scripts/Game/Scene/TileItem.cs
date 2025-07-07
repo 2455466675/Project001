@@ -1,11 +1,11 @@
-using Navigation;
+using Game.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game 
 {
-    public class TileItem : NavigationItem
+    public class TileItem : GameNavigationItem
     {
         [SerializeField]
         private SpriteRenderer baseTile;
