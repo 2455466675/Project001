@@ -106,7 +106,7 @@ namespace Game.GSystem
             var item = view.GetTileItem(10, 6);
             var unit = GetBattleUnit(0);
             unit.GetComponent<ActorComponent>().SetRigidbodyEnable(false);
-            unit.GetComponent<ActorComponent>().SetLocalPosition(item.transform.position);
+            unit.GetComponent<ActorComponent>().SetLocalPosition(item.transform.localPosition);
             unit.GetComponent<ActorComponent>().SetLocalRotation(70f);
         }
 
