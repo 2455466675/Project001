@@ -1,20 +1,21 @@
 using Config;
+using Game.Event;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.GSystem
 {
-    public struct InventoryAdd
+    public struct InventoryAddEventArgs : IEventArgs
     {
         public InventoryItemData3[] items;
     }
 
-    public struct InventoryUpdate
+    public struct InventoryUpdateEventArgs : IEventArgs
     {
         public InventoryItemData3[] items;
     }
 
-    public struct InventoryRemove
+    public struct InventoryRemoveEventArgs : IEventArgs
     {
         public InventoryItemData3[] items;
     }
@@ -93,12 +94,12 @@ namespace Game.GSystem
 
             if (add.Count > 0) 
             {
-                Game.Event.Publish(new InventoryAdd() { items = add.ToArray() });
+                Game.Event.Publish(new InventoryAddEventArgs() { items = add.ToArray() });
             }
 
             if (update.Count > 0)
             {
-                Game.Event.Publish(new InventoryUpdate() { items = update.ToArray() });
+                Game.Event.Publish(new InventoryUpdateEventArgs() { items = update.ToArray() });
             }
         }
 
@@ -122,12 +123,12 @@ namespace Game.GSystem
 
             if (update.Count > 0)
             {
-                Game.Event.Publish(new InventoryUpdate() { items = update.ToArray() });
+                Game.Event.Publish(new InventoryUpdateEventArgs() { items = update.ToArray() });
             }
 
             if (remove.Count > 0) 
             {
-                Game.Event.Publish(new InventoryRemove() { items = remove.ToArray() });
+                Game.Event.Publish(new InventoryRemoveEventArgs() { items = remove.ToArray() });
             }
         }
 

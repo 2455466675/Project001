@@ -8,10 +8,10 @@ namespace Game.UI
         public bool IsLocked => proxy != null && proxy.IsLocked();
         private NavigationListProxy proxy;
 
-        public void Init(NavigationListView list) 
+        public void Init(NavigationListView view, NavigationGroupProxy parent) 
         {
-            proxy = NavigationProxyManager.GetNavigationListProxy(list.Define);
-            proxy.Init(list);
+            proxy = NavigationProxyManager.GetNavigationListProxy(view.Define);
+            proxy.Init(view, parent);
         }
 
         public void Awake() 

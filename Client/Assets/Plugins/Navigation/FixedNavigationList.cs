@@ -64,12 +64,6 @@ namespace Navigation
                 return;
             }
 
-            items.RemoveAll(x => x == null);
-            for (int i = 0; i < items.Count; i++)
-            {
-                items[i].SetIndex(i);
-            }
-
             pointer = 0;
             minIndex = 0;
             maxIndex = items.Count - 1;
@@ -133,13 +127,56 @@ namespace Navigation
             int index = -1;
             if (v > 0)
             {
-                bool minus = !IsGrid || childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
-                index = MovePointVertical(pointer, minus);
+                if (IsGrid) 
+                {
+                    if (isLoop) 
+                    {
+                        bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
+                        index = MovePointVertical(pointer, minus);
+                    }
+                    else
+                    {
+                        if ((pointer + 1) % rowCount == 0) 
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            index = MovePointVertical(pointer, false);                            
+                        }
+                    }
+                }
+                else
+                {
+                    index = MovePointVertical(pointer, true);                    
+                }
+
             }
             else if (v < 0)
             {
-                bool minus = !IsGrid || childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
-                index = MovePointVertical(pointer, !minus);
+                if (IsGrid)
+                {
+                    if (isLoop) 
+                    {
+                        bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
+                        index = MovePointVertical(pointer, !minus);                    
+                    }
+                    else
+                    {
+                        if (pointer % rowCount == 0)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            index = MovePointVertical(pointer, true);
+                        }
+                    }
+                }
+                else
+                {
+                    index = MovePointVertical(pointer, false);                    
+                }
             }
             else if (h < 0)
             {
@@ -364,6 +401,11 @@ namespace Navigation
         private void InitGroup()
         {
             items = GetComponentsInChildren<NavigationItem>().ToList();
+            items.RemoveAll(x => x == null);
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].SetIndex(i);
+            }
         }
     }
 }

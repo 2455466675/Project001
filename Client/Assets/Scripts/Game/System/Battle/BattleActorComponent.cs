@@ -9,8 +9,8 @@ namespace Game.GSystem
     {
         protected override Transform GetActorNode()
         {
-            BattleNodeComponent bnc = GetComponent<BattleNodeComponent>();
-            return bnc.GetActorNode();    
+            var root = Game.System.BattleSystem.GetBattleSceneView<BattleUnitRootView>();
+            return root.transform;    
         }
 
         public void Clear() 

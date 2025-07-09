@@ -19,9 +19,9 @@ namespace Game.GSystem
 
         public BattleUnitState State { get; private set; }
 
-        public void Init(int id) 
+        public void Init(int battleId) 
         {
-            BattleId = id;
+            BattleId = battleId;
             State = BattleUnitState.Empty;
         }
 

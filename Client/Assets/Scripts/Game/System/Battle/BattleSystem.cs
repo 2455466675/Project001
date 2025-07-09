@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using Game.UI.Input;
+using Game.UI;
 using System.Collections.Generic;
 
 namespace Game.GSystem
@@ -8,20 +10,22 @@ namespace Game.GSystem
     /// </summary>
     public class BattleSystem
     {
-        private List<BattleUnit> heroes;
-        private List<BattleUnit> enemies;
+        public bool IsBattle { get; private set; }
+
+        private List<BattleUnit> units;
+
+        private Battle_Units_Group_Proxy proxy;
 
         public void Init() 
         {
-            enemies = new List<BattleUnit>();
-            heroes = new List<BattleUnit>();
+            units = new List<BattleUnit>();
 
             for (int i = 0; i < 4; i++) 
             {
                 BattleUnit unit = Game.System.UnitManager.CreateUnit<BattleUnit>();
                 unit.AddComponent<BattleHeroComponent>();
                 unit.Init(i);
-                heroes.Add(unit);
+                units.Add(unit);
             }
 
             for (int i = 0; i < 9; i++) 
@@ -29,18 +33,37 @@ namespace Game.GSystem
                 BattleUnit unit = Game.System.UnitManager.CreateUnit<BattleUnit>();
                 unit.AddComponent<BattleMonsterComponent>();
                 unit.Init(i + 4);
-                enemies.Add(unit);
+                units.Add(unit);
             }
         }
 
         public BattleUnit[] GetEnemies() 
         {
-            return enemies.ToArray();
+            return null;
         }
 
         public BattleUnit[] GetHeroes()
         {
-            return heroes.ToArray();
+            return null;
+        }
+
+        public BattleUnit GetBattleUnit(int battleId) 
+        {
+            return units.Find(u => u.BattleId == battleId);
+        }
+
+        public void SetProxy(Battle_Units_Group_Proxy proxy) 
+        {
+            this.proxy = proxy;
+        }
+        
+        public T GetBattleSceneView<T>() where T : View
+        {
+            if (proxy == null) 
+            {
+                return default;
+            }
+            return proxy.GetView<T>();
         }
 
         public void EnterBattle() 
@@ -50,51 +73,64 @@ namespace Game.GSystem
 
         public void ExitBattle() 
         {
-            for (int i = 0; i < enemies.Count; i++)
+            for (int i = 0; i < units.Count; i++)
             {
-                BattleUnit unit = enemies[i];
+                BattleUnit unit = units[i];
                 unit.Clear();
             }
 
             Game.Scene.UnloadBattleScene();
+
+            IsBattle = false;
         }
 
         private async UniTaskVoid Enter() 
         {
             await PlayTransitionAnim();
-            //await PreLoad();
+            await PreLoad();
 
             Game.Scene.LoadBattleScene();
 
-            //await EndLoad();
+            await EndLoad();
 
             await StopTransitionAnim();
             //await Appear();
 
             MLog.Log("Enter end");
+
+            IsBattle = true;
+
+            Game.UI.Navigate(NavigationListDefine.Battle_Grid, ModuleType.Battle, new int[] {54});
+
+            var view = GetBattleSceneView<SceneGridView>();
+            var item = view.GetTileItem(10, 6);
+            var unit = GetBattleUnit(0);
+            unit.GetComponent<ActorComponent>().SetRigidbodyEnable(false);
+            unit.GetComponent<ActorComponent>().SetLocalPosition(item.transform.position);
+            unit.GetComponent<ActorComponent>().SetLocalRotation(70f);
         }
 
         private async UniTask PreLoad() 
         {
-            List<int> testMonster = new List<int>()
-            {
-                300001, 0, 300002, 0, 300003, 0, 300004, 0, 300005
-            };
+            //List<int> testMonster = new List<int>()
+            //{
+            //    300001, 0, 300002, 0, 300003, 0, 300004, 0, 300005
+            //};
 
-            for (int i = 0; i < testMonster.Count; i++)
-            {
-                BattleUnit unit = enemies[i];
-                unit.Reset(testMonster[i]);
-            }
+            //for (int i = 0; i < testMonster.Count; i++)
+            //{
+            //    BattleUnit unit = enemies[i];
+            //    unit.Reset(testMonster[i]);
+            //}
 
             List<int> testHero = new List<int>()
             {
-                810001, 810002, 810003, 810004
+                810001,// 810002, 810003, 810004
             };
 
-            for (int i = 0;i < testHero.Count; i++) 
+            for (int i = 0; i < testHero.Count; i++) 
             {
-                BattleUnit unit = heroes[i];
+                BattleUnit unit = units[i];
                 unit.Reset(testHero[i]);
             }
 
@@ -109,13 +145,7 @@ namespace Game.GSystem
 
             List<UniTask> tasks = new List<UniTask>();
 
-            foreach (var unit in enemies)
-            {
-                UniTask task = unit.RefreshActorAsync();
-                tasks.Add(task);
-            }
-
-            foreach (var unit in heroes)
+            foreach (var unit in units)
             {
                 UniTask task = unit.RefreshActorAsync();
                 tasks.Add(task);
@@ -131,7 +161,7 @@ namespace Game.GSystem
 
             await GameMathf.Lerp(1f, -0.1f, 0.5f, (v) =>
             {
-                Game.Event.Publish(new SceneLoadingProgress() { progress = v });
+                Game.Event.Publish(new SceneLoadingProgressEventArgs() { progress = v });
             }, GameMathf.Easing.Linear);
 
             await UniTask.Yield();
@@ -141,7 +171,7 @@ namespace Game.GSystem
         {
             await GameMathf.Lerp(-0.1f, 1f, 0.5f, (v) =>
             {
-                Game.Event.Publish(new SceneLoadingProgress() { progress = v });
+                Game.Event.Publish(new SceneLoadingProgressEventArgs() { progress = v });
             }, GameMathf.Easing.EaseInQuad);
 
             await UniTask.Yield();
@@ -154,7 +184,7 @@ namespace Game.GSystem
         {
             List<UniTask> tasks = new List<UniTask>();
 
-            foreach (var unit in heroes)
+            foreach (var unit in units)
             {
                 ActionHandle handle = unit.PlayAction(Common.StringToHash("Appear"));
                 tasks.Add(handle.Task);

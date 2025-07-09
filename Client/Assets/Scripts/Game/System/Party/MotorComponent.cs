@@ -431,7 +431,7 @@ namespace Game.GSystem
             }
 
             actorComponent.PlayAction(actionNameHash);
-            actorComponent.SetPosition(new Vector3(trace.x, trace.y, trace.z));
+            actorComponent.MovePosition(new Vector3(trace.x, trace.y, trace.z));
             partyComponent.TransmitTrace(trace);
 
             distance -= trace.deltaDistance;

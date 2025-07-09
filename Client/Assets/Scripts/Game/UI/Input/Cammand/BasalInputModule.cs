@@ -36,7 +36,6 @@ namespace Game.UI.Input
                     Game.UI.Navigate(NavigationListDefine.GM_Menu_List, ModuleType.Panel);
                     break;
                 case InputType.Map:
-                    Game.UI.Navigate(NavigationListDefine.Battle_Grid, ModuleType.Battle);
                     break;
             }
         }

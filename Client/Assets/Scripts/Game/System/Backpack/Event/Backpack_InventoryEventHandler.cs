@@ -1,9 +1,9 @@
 namespace Game.GSystem
 {
     [Event]
-    public class Backpack_InventoryAddHandler : EventBase<InventoryAdd>
+    public class Backpack_InventoryAddHandler : EventBase<InventoryAddEventArgs>
     {
-        public override void Invoke(InventoryAdd arg)
+        public override void Invoke(InventoryAddEventArgs arg)
         {
             var items = arg.items;
             Game.System.BackpackSystem.OnAdd(items);
@@ -11,9 +11,9 @@ namespace Game.GSystem
     }
 
     [Event]
-    public class Backpack_InventoryUpdateHandler : EventBase<InventoryUpdate>
+    public class Backpack_InventoryUpdateHandler : EventBase<InventoryUpdateEventArgs>
     {
-        public override void Invoke(InventoryUpdate arg)
+        public override void Invoke(InventoryUpdateEventArgs arg)
         {
             var items = arg.items;
             Game.System.BackpackSystem.OnUpdate(items);
@@ -21,9 +21,9 @@ namespace Game.GSystem
     }
 
     [Event]
-    public class Backpack_InventoryRemoveHandler : EventBase<InventoryRemove>
+    public class Backpack_InventoryRemoveHandler : EventBase<InventoryRemoveEventArgs>
     {
-        public override void Invoke(InventoryRemove arg)
+        public override void Invoke(InventoryRemoveEventArgs arg)
         {
             var items = arg.items;
             Game.System.BackpackSystem.OnRemove(items);

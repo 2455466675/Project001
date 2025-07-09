@@ -79,7 +79,7 @@ namespace Game.UI
                 {
                     NavigationListEntity e = new NavigationListEntity();
                     lists[v.Define] = e;
-                    e.Init(v);
+                    e.Init(v, proxy);
                 }
             }
 

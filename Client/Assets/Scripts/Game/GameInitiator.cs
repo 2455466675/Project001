@@ -19,7 +19,7 @@ namespace Game
             Game.Root = FindFirstObjectByType<GameRoot>();
             await Game.Init(config);
 
-            Game.Event.Publish(new GameStartEventArg());
+            Game.Event.Publish(new GameStartEventArgs());
         }
     }
 }

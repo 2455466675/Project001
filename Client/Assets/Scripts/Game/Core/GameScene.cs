@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
+using Game.Event;
 
 namespace Game
 {
-    public struct SceneLoadingProgress
+    public struct SceneLoadingProgressEventArgs : IEventArgs
     {
         public float progress;
     }
@@ -123,7 +124,7 @@ namespace Game
         {
             loadFrameCount = GameMathf.Min(limit, loadFrameCount + step);
             float progress = loadFrameCount * 1.0f / max;
-            Game.Event.Publish(new SceneLoadingProgress() { progress = progress });
+            Game.Event.Publish(new SceneLoadingProgressEventArgs() { progress = progress });
         }
     
         private SceneEntity FindOrCreateSceneEntity(int sceneId)

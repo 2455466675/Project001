@@ -1,11 +1,12 @@
 using Config;
+using Game.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.GSystem
 {
-    public struct BackpackItemsChangedArg
+    public struct BackpackItemsChangedArgs : IEventArgs
     {
         public BackpackItem[] items;
     }
@@ -181,7 +182,7 @@ namespace Game.GSystem
             {
                 return;
             }
-            Game.Event.Publish(new BackpackItemsChangedArg() { items = currentCompartment.GetItems() });
+            Game.Event.Publish(new BackpackItemsChangedArgs() { items = currentCompartment.GetItems() });
         }
 
         private BackpackCompartment GetBackpackCompartment(InventoryItemType type)

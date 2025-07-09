@@ -9,16 +9,16 @@ namespace Game.UI
         public override void Show()
         {
             base.Show();
-            Game.Event.Register<SceneLoadingProgress>(OnProgressUpdate);
+            Game.Event.Register<SceneLoadingProgressEventArgs>(OnProgressUpdate);
         }
 
         public override void Hide()
         {
             base.Hide();
-            Game.Event.Unregister<SceneLoadingProgress>(OnProgressUpdate);
+            Game.Event.Unregister<SceneLoadingProgressEventArgs>(OnProgressUpdate);
         }
 
-        private void OnProgressUpdate(SceneLoadingProgress arg)
+        private void OnProgressUpdate(SceneLoadingProgressEventArgs arg)
         {
             var view = GetView<SceneTransitionalMatView>();
             if (view == null)

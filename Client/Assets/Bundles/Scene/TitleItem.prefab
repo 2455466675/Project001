@@ -49,10 +49,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c47cc13f5fc5f4290b2eec0d4da19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  param: 
+  selector: {fileID: 0}
+  event: {fileID: 0}
+  views: []
   baseTile: {fileID: 1301563455764702636}
   redTile: {fileID: 1301563456465467852}
   yellowTile: {fileID: 1301563456202660829}
   blueTile: {fileID: 1301563457098786578}
+  borderTile: {fileID: 1079244400007740412}
 --- !u!1 &1301563455764702626
 GameObject:
   m_ObjectHideFlags: 0

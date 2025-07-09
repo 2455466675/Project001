@@ -1,6 +1,8 @@
+using Game.Event;
+
 namespace Game
 {
-    public struct EventTestArg 
+    public struct EventTestEventArgs : IEventArgs
     {
         public int x;
         public int y;
@@ -11,9 +13,9 @@ namespace Game
     /// 
     /// </summary>
     [Event]
-    public class EventTest : EventBase<EventTestArg>
+    public class EventTest : EventBase<EventTestEventArgs>
     {
-        public override void Invoke(EventTestArg arg)
+        public override void Invoke(EventTestEventArgs arg)
         {
             MLog.Log("EventTest", arg.x, arg.y, arg.name);
         }

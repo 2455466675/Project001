@@ -9,8 +9,17 @@ namespace Game
     /// </summary>
     public class GameRoot : MonoBehaviour
     {
-        public UIRoot UIRoot;
-        public ActorRoot ActorRoot;
+        public UIRoot UIRoot => uiRoot; 
+        public ActorRoot ActorRoot => actorRoot;
+        public MainCamera MainCamera => mainCamera;
+
+        [SerializeField]
+        private UIRoot uiRoot;
+        [SerializeField]
+        private ActorRoot actorRoot;
+        [SerializeField]
+        private MainCamera mainCamera;
+
         private void Start()
         {
             DontDestroyOnLoad(gameObject);

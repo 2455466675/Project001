@@ -1,3 +1,4 @@
+using Game.Event;
 using Game.GSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,11 @@ using UnityEngine;
 
 namespace Game.UI
 {
+    public struct OnBattleGridSelectChangedEventArgs : IEventArgs
+    {
+        public TileItem tileItem;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -34,6 +40,15 @@ namespace Game.UI
         public override void OnSelect(GameNavigationItem item)
         {
             MLog.Log("Battle_Grid_Proxy OnSelect");
+            TileItem tileItem = item as TileItem;
+            tileItem.SetState(true);
+            Game.Event.Publish(new OnBattleGridSelectChangedEventArgs() { tileItem = tileItem });
+        }
+
+        public override void OnDeselect(GameNavigationItem item)
+        {
+            TileItem tileItem = item as TileItem;
+            tileItem.SetState(false);
         }
     }
 }

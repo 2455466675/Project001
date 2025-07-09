@@ -7,18 +7,23 @@ namespace Game.UI
     /// </summary>
     public class NavigationListProxy
     {
-        protected NavigationListView listView;
+        private NavigationListView m_view;
+        protected NavigationListView ListView => m_view;
 
-        public void Init(NavigationListView listView) 
+        private NavigationGroupProxy m_parent;
+        protected NavigationGroupProxy Parent => m_parent;
+
+        public void Init(NavigationListView view, NavigationGroupProxy parent) 
         {
-            this.listView = listView;
+            this.m_view = view;
+            this.m_parent = parent;
         }
 
         public void UpdateData(INavigationItemData[] datas) 
         {
             datas ??= new INavigationItemData[0];
             datas = FilterData(datas);
-            listView.UpdateData(datas);
+            ListView.UpdateData(datas);
         }
 
         protected virtual INavigationItemData[] FilterData(INavigationItemData[] datas) 
@@ -46,50 +51,51 @@ namespace Game.UI
         }
         public void OnDestroy() 
         {
-            listView = null;
+            m_view = null;
+            m_parent = null;
         }
         #endregion
 
         #region µ¼º½ÐÐÎª
         public virtual void Move(float h, float v)
         {
-            if (listView == null) 
+            if (ListView == null) 
             {
                 return;
             }
-            listView.Move(h, v);
+            ListView.Move(h, v);
         }
         public virtual void Submit()
         {
-            if (listView == null)
+            if (ListView == null)
             {
                 return;
             }
-            listView.Submit();
+            ListView.Submit();
         }
         public virtual bool InFocus(bool isRefocus, int[] indexs = null)
         {
-            if (listView == null)
+            if (ListView == null)
             {
                 return false;
             }
-            return listView.InFocus(isRefocus, indexs);
+            return ListView.InFocus(isRefocus, indexs);
         }
         public virtual void OutFocus()
         {
-            if (listView == null)
+            if (ListView == null)
             {
                 return;
             }
-            listView.OutFocus();
+            ListView.OutFocus();
         }
         public virtual void Exit() 
         {
-            if (listView == null)
+            if (ListView == null)
             {
                 return;
             }
-            listView.Exit();
+            ListView.Exit();
         }
         public virtual bool IsLocked() 
         {

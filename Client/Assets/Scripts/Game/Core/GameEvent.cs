@@ -3,6 +3,15 @@ using System.Collections.Generic;
 
 namespace Game.Event
 {
+    public interface IEventArgs 
+    {
+    }
+
+    public struct B : IEventArgs
+    {
+    
+    }
+
     public class GameEvent
     {
         private Dictionary<Type, List<IEvent>> allEvent;
@@ -30,7 +39,7 @@ namespace Game.Event
             }
         }
 
-        public void Publish<T>(T arg) where T : struct
+        public void Publish<T>(T arg) where T : IEventArgs
         {
             Type t = typeof(T);
             if (allEvent.ContainsKey(t))
@@ -58,7 +67,7 @@ namespace Game.Event
             }
         }
 
-        public void Register<T>(Action<T> action) where T : struct
+        public void Register<T>(Action<T> action) where T : IEventArgs
         {
             Type t = typeof(T);
             if (!actions.ContainsKey(t))
@@ -68,7 +77,7 @@ namespace Game.Event
             actions[t].Add(action);
         }
 
-        public void Unregister<T>(Action<T> action) where T : struct
+        public void Unregister<T>(Action<T> action) where T : IEventArgs
         {
             Type t = typeof(T);
             if (!actions.ContainsKey(t))

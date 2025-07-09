@@ -94,13 +94,31 @@ namespace Game.GSystem
             return actor.Rigidbody.position;
         }
 
-        public void SetPosition(Vector3 pos) 
+        public void MovePosition(Vector3 pos) 
         {
             if (actor == null)
             {
                 return;
             }
             actor.Rigidbody.MovePosition(pos);
+        }
+
+        public void SetLocalPosition(Vector3 pos) 
+        {
+            if (actor == null)
+            {
+                return;
+            }
+            actor.transform.localPosition = pos;
+        }
+
+        public void SetLocalRotation(float x) 
+        {
+            if (actor == null)
+            {
+                return;
+            }
+            actor.transform.localRotation = Quaternion.AngleAxis(x, Vector3.right);
         }
 
         public void SetRigidbodyEnable(bool active) 

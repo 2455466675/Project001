@@ -29,6 +29,9 @@ namespace Game.UI
                 return;
             }
             groupView.gameObject.SetActive(true);
+
+            Game.Event.Register<OnBattleGridSelectChangedEventArgs>(OnBattleGridSelectChanged);
+            Game.System.BattleSystem.SetProxy(this);
         }
 
         public override void Hide()
@@ -38,6 +41,18 @@ namespace Game.UI
                 return;
             }
             groupView.gameObject.SetActive(false);
+            Game.System.BattleSystem.SetProxy(null);
+        }
+
+        private void OnBattleGridSelectChanged(OnBattleGridSelectChangedEventArgs args) 
+        {
+            TileItem item  = args.tileItem;
+            Vector3 pos = item.transform.position;
+            SelectArrowView view = GetView<SelectArrowView>();
+            view.SetPosition(pos);
+
+            Game.Root.MainCamera.SetPosition(new Vector3(6, 6, 0));
+            Game.Root.MainCamera.SetRotation(Quaternion.AngleAxis(70f, Vector3.right));
         }
     }
 }

@@ -144,7 +144,7 @@ namespace Game.UI
                 View view = result[i];
 
                 ViewEntity entity = new ViewEntity();
-                entity.key = view.gameObject.name;
+                entity.key = string.Format("{0}_{1}", view.gameObject.name, view.GetType().Name);
                 entity.view = view;
                 temp.Add(entity);
             }

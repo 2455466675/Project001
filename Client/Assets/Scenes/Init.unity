@@ -301,8 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49827fab58edbb4cbe17880b424964c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIRoot: {fileID: 1778280214}
-  ActorRoot: {fileID: 1247948788}
+  uiRoot: {fileID: 1778280214}
+  actorRoot: {fileID: 1247948788}
+  mainCamera: {fileID: 1555224396}
 --- !u!1001 &1247948787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -522,11 +523,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5614583410189841229, guid: c6e14272f7d9d1f49aede882b70b2e1a, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5614583410189841229, guid: c6e14272f7d9d1f49aede882b70b2e1a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 5614583410189841229, guid: c6e14272f7d9d1f49aede882b70b2e1a, type: 3}
       propertyPath: m_LocalPosition.y

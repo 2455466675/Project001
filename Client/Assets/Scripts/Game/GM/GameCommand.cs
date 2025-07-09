@@ -1,4 +1,5 @@
 using Config;
+using Game.Event;
 using Navigation;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Reflection;
 
 namespace Game
 {
-    public struct CurrentMenuChanged 
+    public struct CurrentMenuChangedEventArgs : IEventArgs
     {
         public GM_Menu menu;
     }
@@ -96,7 +97,7 @@ namespace Game
         public void Select(GM_Menu menu) 
         {
             current = menu;
-            Game.Event.Publish(new CurrentMenuChanged() { menu = current });
+            Game.Event.Publish(new CurrentMenuChangedEventArgs() { menu = current });
         }
 
         public void Submit(GM_Item item) 

@@ -1,3 +1,4 @@
+using Game.Event;
 using System;
 
 namespace Game
@@ -10,7 +11,7 @@ namespace Game
     /// <summary>
     /// 
     /// </summary>
-    public abstract class EventBase<T> : IEvent where T : struct
+    public abstract class EventBase<T> : IEvent where T : IEventArgs
     {
         public Type Type => typeof(T);
 

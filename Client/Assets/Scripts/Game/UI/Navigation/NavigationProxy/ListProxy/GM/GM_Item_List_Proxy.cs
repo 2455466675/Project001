@@ -5,12 +5,12 @@ namespace Game.UI
     {
         public override void OnEnable()
         {
-            Game.Event.Register<CurrentMenuChanged>(OnCurrentMenuChanged);
+            Game.Event.Register<CurrentMenuChangedEventArgs>(OnCurrentMenuChanged);
         }
 
         public override void OnDisable()
         {
-            Game.Event.Unregister<CurrentMenuChanged>(OnCurrentMenuChanged);
+            Game.Event.Unregister<CurrentMenuChangedEventArgs>(OnCurrentMenuChanged);
         }
 
         public override void OnRefresh(GameNavigationItem item)
@@ -32,7 +32,7 @@ namespace Game.UI
             }
         }
 
-        private void OnCurrentMenuChanged(CurrentMenuChanged arg) 
+        private void OnCurrentMenuChanged(CurrentMenuChangedEventArgs arg) 
         {
             GM_Menu menu = arg.menu;
             UpdateData(menu.GetItems());

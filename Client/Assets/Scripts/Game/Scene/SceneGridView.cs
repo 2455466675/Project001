@@ -1,11 +1,10 @@
+using Game.UI;
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game 
 {
-    public class SceneGrid : MonoBehaviour
+    public class SceneGridView : View
     {
         [SerializeField]
         private int row;
@@ -19,34 +18,46 @@ namespace Game
         [SerializeField]
         private TileItem tileItem;
 
-        private TileItem[,] tiles;
+        [SerializeField]
+        private TileItem[] items;
+
+        public TileItem GetTileItem(int x, int y) 
+        {
+            int index = (x * row) + y;
+            if (index < 0 || index >= items.Length)
+            {
+                return null;
+            }
+            return items[index];
+        }
 
         [Button("Init")]
         private void Init() 
         {
+#if UNITY_EDITOR            
             int childCount = transform.childCount;
             for (int i = childCount - 1; i >= 0; i--) 
             {                
                 DestroyImmediate(transform.GetChild(i).gameObject);
             }
 
-            tiles = new TileItem[row, col];
+            items = new TileItem[col * row];
 
-            int count = row * col;
             for (int i = 0; i < col; i++)
             {
-                for (int j = 0; j < row; j++) 
+                for (int j = 0; j < row; j++)
                 {
                     TileItem item = Instantiate(tileItem, transform);
 
-                    float x = w * j;
-                    float z = h * i;
+                    float x = w * i;
+                    float z = h * j;
 
                     item.transform.localPosition = new Vector3(x, 0, z);
-                    item.name = string.Format("TileItem:({0},{1})", j, i);
-                    tiles[j, i] = item;
+                    item.SetIndex(i, j);
+                    items[(i * row) + j] = item;
                 }
-            }            
+            }
+#endif
         }
     }
 }
