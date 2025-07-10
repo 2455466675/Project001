@@ -108,6 +108,8 @@ namespace Game.GSystem
             unit.GetComponent<ActorComponent>().SetRigidbodyEnable(false);
             unit.GetComponent<ActorComponent>().SetLocalPosition(item.transform.localPosition);
             unit.GetComponent<ActorComponent>().SetLocalRotation(70f);
+            unit.GetComponent<BattleTransformComponent>().SetPosition(10, 6);
+
         }
 
         private async UniTask PreLoad() 

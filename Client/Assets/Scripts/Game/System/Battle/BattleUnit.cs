@@ -13,7 +13,7 @@ namespace Game.GSystem
     /// <summary>
     /// 
     /// </summary>
-    public class BattleUnit : UnitArchetype<BattleActorComponent, BattleNodeComponent>
+    public class BattleUnit : UnitArchetype<BattleActorComponent, BattleNodeComponent, BattleTransformComponent>
     {
         public int BattleId { get; private set; }
 

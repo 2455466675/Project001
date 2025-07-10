@@ -75,9 +75,9 @@ namespace Game
             return items[index];
         }
 
-        public List<(int, int)> ReachableRange(int startX, int startY, int step) 
+        public List<Vector2Int> ReachableRange(int startX, int startY, int step) 
         {
-            List<(int, int)> result = new List<(int, int)>();
+            List<Vector2Int> result = new List<Vector2Int>();
             if (!CheckIndexValid(startX, startY))
             {
                 return result;
@@ -129,7 +129,7 @@ namespace Game
 
                         Node neighborNode = new Node(nx, ny, 0, 0, null);
                         temp.Enqueue(neighborNode);
-                        result.Add((nx, ny));
+                        result.Add(new Vector2Int(nx, ny));
                     }
                 }
                 openList = temp;
@@ -138,11 +138,11 @@ namespace Game
             return result;
         }
 
-        public List<(int, int)> AStarPath(int startX, int startY, int targetX, int targetY) 
+        public List<Vector2Int> AStarPath(int startX, int startY, int targetX, int targetY) 
         {
             if (!CheckIndexValid(startX, startY) || !CheckIndexValid(targetX, targetY)) 
             {
-                return new List<(int, int)>();
+                return new List<Vector2Int>();
             }
 
             bool[,] closeList = new bool[col, row];
@@ -194,7 +194,7 @@ namespace Game
                 }
             }
 
-            return new List<(int, int)>();
+            return new List<Vector2Int>();
         }
 
         private bool CheckIndexValid(int x, int y) 
@@ -218,12 +218,12 @@ namespace Game
             return GameMathf.Abs(startX - targetX) + Math.Abs(startY - targetY);
         }
 
-        private static List<(int, int)> ReconstructPath(Node node)
+        private List<Vector2Int> ReconstructPath(Node node)
         {
-            List<(int, int)> path = new List<(int, int)>();
+            List<Vector2Int> path = new List<Vector2Int>();
             while (node != null)
             {
-                path.Add((node.X, node.Y));
+                path.Add(new Vector2Int(node.X, node.Y));
                 node = node.Parent;
             }
             path.Reverse();

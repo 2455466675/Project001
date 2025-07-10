@@ -94,6 +94,15 @@ namespace Game.GSystem
             return actor.Rigidbody.position;
         }
 
+        public Vector3 GetLocalPosition()
+        {
+            if (actor == null)
+            {
+                return Vector3.zero;
+            }
+            return actor.transform.localPosition;
+        }
+
         public void MovePosition(Vector3 pos) 
         {
             if (actor == null)
