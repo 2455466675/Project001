@@ -25,21 +25,6 @@ namespace Game.GSystem
               
         public void SetPosition(int x, int y) 
         {
-            if (x < pX) 
-            {
-                if (dir == UnitDirection.Right) 
-                {
-                    dir = UnitDirection.Left;
-                }
-            }
-            else if (x > pX)
-            {
-                if (dir == UnitDirection.Left)
-                {
-                    dir = UnitDirection.Right;
-                }
-            }
-
             pX = x; 
             pY = y;            
         }
@@ -53,27 +38,7 @@ namespace Game.GSystem
         {
             ActorComponent actor = GetComponent<ActorComponent>();
 
-            Vector2Int endPoint = path[^1];
-
-            if (endPoint.x < pX) 
-            {
-                actor.PlayAction(Common.StringToHash("FollowRunLeft"));
-            }
-            else if (endPoint.x > pX)
-            {
-                actor.PlayAction(Common.StringToHash("FollowRunRight"));
-            }
-            else
-            {
-                if (IsLeft)
-                {
-                    actor.PlayAction(Common.StringToHash("FollowRunLeft"));
-                }
-                else
-                {
-                    actor.PlayAction(Common.StringToHash("FollowRunRight"));
-                }
-            }
+            UnitDirection direction = this.dir;
 
             for (int i = 0; i < path.Count; i++)
             {
@@ -88,7 +53,40 @@ namespace Game.GSystem
                 {
                     Vector3 ap = actor.GetLocalPosition();
 
-                    int d = GameMathf.Abs(point.x - path[i - 1].x) + GameMathf.Abs(point.y - path[i - 1].y);
+                    Vector2Int beforPoint = path[i - 1];
+
+                    int j = i;
+
+                    while (j <= path.Count - 1) 
+                    {
+                        Vector2Int p = path[j];
+
+                        if (p.x > beforPoint.x)
+                        {
+                            direction = UnitDirection.Right;
+                            break;
+                        }
+                        else if (p.x < beforPoint.x)
+                        {
+                            direction = UnitDirection.Left;
+                            break;
+                        }
+                        else
+                        {
+                            j++;
+                        }
+                    }
+                    
+                    if (direction == UnitDirection.Right)
+                    {
+                        actor.PlayAction(Common.StringToHash("FollowRunRight"));
+                    }
+                    else if (direction == UnitDirection.Left)
+                    {
+                        actor.PlayAction(Common.StringToHash("FollowRunLeft"));
+                    }
+
+                    int d = GameMathf.Abs(point.x - beforPoint.x) + GameMathf.Abs(point.y - beforPoint.y);
 
                     float t = 0.2f * d;
                     float t1 = t;
@@ -106,27 +104,18 @@ namespace Game.GSystem
                 //await UniTask.Yield();
             }
 
-            if (endPoint.x < pX)
-            {                
-                actor.PlayAction(Common.StringToHash("IdleLeft"));
-            }
-            else if (endPoint.x > pX)
+            if (direction == UnitDirection.Right)
             {
                 actor.PlayAction(Common.StringToHash("IdleRight"));
             }
-            else
+            else if (direction == UnitDirection.Left)
             {
-                if (IsLeft)
-                {                    
-                    actor.PlayAction(Common.StringToHash("IdleLeft"));
-                }
-                else
-                {
-                    actor.PlayAction(Common.StringToHash("IdleRight"));
-                }
+                actor.PlayAction(Common.StringToHash("IdleLeft"));
             }
 
+            Vector2Int endPoint = path[^1];
             SetPosition(endPoint.x, endPoint.y);
+            this.dir = direction;
         }
     }
 }

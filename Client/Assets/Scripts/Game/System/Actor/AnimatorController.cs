@@ -16,11 +16,10 @@ namespace Game.GSystem
     {
         [SerializeField]
         private AnimatorControllerType defaultController;
-
         [SerializeField]
         private ControllerItem[] animators;
 
-        public RuntimeAnimatorController DefaultController => GetController(defaultController);
+        public AnimatorControllerType DefaultController => defaultController;
 
         public RuntimeAnimatorController GetController(AnimatorControllerType type) 
         {

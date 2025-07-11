@@ -105,6 +105,7 @@ namespace Game.GSystem
             var view = GetBattleSceneView<SceneGridView>();
             var item = view.GetTileItem(10, 6);
             var unit = GetBattleUnit(0);
+            unit.GetComponent<ActorComponent>().SwitchAnimatorController(AnimatorControllerType.Battle);
             unit.GetComponent<ActorComponent>().SetRigidbodyEnable(false);
             unit.GetComponent<ActorComponent>().SetLocalPosition(item.transform.localPosition);
             unit.GetComponent<ActorComponent>().SetLocalRotation(70f);

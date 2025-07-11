@@ -151,6 +151,8 @@ MonoBehaviour:
   animators:
   - type: 0
     animator: {fileID: 9100000, guid: 83f13846a0e15d342a57a9d0b643f79e, type: 2}
+  - type: 1
+    animator: {fileID: 9100000, guid: 30a170d4eb830fe45885a07657624e4c, type: 2}
 --- !u!54 &8895283908519216394
 Rigidbody:
   m_ObjectHideFlags: 0

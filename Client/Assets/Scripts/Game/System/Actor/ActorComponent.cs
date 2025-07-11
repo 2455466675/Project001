@@ -85,6 +85,15 @@ namespace Game.GSystem
             return actor.PlayAction(hash, userData);
         }
 
+        public void SwitchAnimatorController(AnimatorControllerType controllerType) 
+        {
+            if (actor == null)
+            {
+                return;
+            }
+            actor.SwitchAnimatorController(controllerType);
+        }
+
         public Vector3 GetPosition() 
         {
             if (actor == null)

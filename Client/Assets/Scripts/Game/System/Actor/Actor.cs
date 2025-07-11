@@ -22,14 +22,28 @@ namespace Game.GSystem
         public void Reuse(int id) 
         {
             this.id = id;
-            if (animator != null && animatorController != null)
+            if (animatorController != null)
             {
-                animator.runtimeAnimatorController = animatorController.DefaultController;
-            }
+                SwitchAnimatorController(animatorController.DefaultController);
+            }            
         }
 
         public void Unuse() 
         {
+        }
+
+        public void SwitchAnimatorController(AnimatorControllerType controllerType) 
+        {        
+            if (animator == null || animatorController == null) 
+            {
+                return;
+            }
+            RuntimeAnimatorController controller = animatorController.GetController(controllerType);
+            if (controller == null) 
+            {
+                return;
+            }
+            animator.runtimeAnimatorController = controller;
         }
 
         public Transform GetBone(string boneName) 
