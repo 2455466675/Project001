@@ -79,11 +79,11 @@ namespace Game.GSystem
                     
                     if (direction == UnitDirection.Right)
                     {
-                        actor.PlayAction(Common.StringToHash("FollowRunRight"));
+                        actor.PlayAction(Common.StringToHash("AnimatorRunRight"));
                     }
                     else if (direction == UnitDirection.Left)
                     {
-                        actor.PlayAction(Common.StringToHash("FollowRunLeft"));
+                        actor.PlayAction(Common.StringToHash("AnimatorRunLeft"));
                     }
 
                     int d = GameMathf.Abs(point.x - beforPoint.x) + GameMathf.Abs(point.y - beforPoint.y);
@@ -92,10 +92,10 @@ namespace Game.GSystem
                     float t1 = t;
                     while (t1 > 0f)
                     {
+                        t1 -= Time.deltaTime * speed;
                         Vector3 r = Vector3.Lerp(ap, pp, 1 - t1 / t);
                         actor.SetLocalPosition(r);
                         await UniTask.Yield();
-                        t1 -= Time.deltaTime * speed;
                     }
 
                     actor.SetLocalPosition(pp);
@@ -106,11 +106,11 @@ namespace Game.GSystem
 
             if (direction == UnitDirection.Right)
             {
-                actor.PlayAction(Common.StringToHash("IdleRight"));
+                actor.PlayAction(Common.StringToHash("AnimatorIdleRight"));
             }
             else if (direction == UnitDirection.Left)
             {
-                actor.PlayAction(Common.StringToHash("IdleLeft"));
+                actor.PlayAction(Common.StringToHash("AnimatorIdleLeft"));
             }
 
             Vector2Int endPoint = path[^1];

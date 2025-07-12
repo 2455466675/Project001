@@ -76,6 +76,17 @@ namespace Game.GSystem
             actor = null;
         }
 
+        public ActionHandle PlayAction(string actionName, object userData = null)
+        {
+            if (string.IsNullOrEmpty(actionName)) 
+            {
+                return null;
+            }
+
+            int hash = Common.StringToHash(actionName);
+            return PlayAction(hash, userData);
+        }
+
         public ActionHandle PlayAction(int hash, object userData = null) 
         {
             if (actor == null)

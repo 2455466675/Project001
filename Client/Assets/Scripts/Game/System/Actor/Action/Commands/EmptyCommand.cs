@@ -3,12 +3,12 @@ namespace Game.GSystem
     /// <summary>
     /// 
     /// </summary>
-    public class EmptyAction : ActionItem<EmptyActionCommand>
+    public class EmptyCommand : ActionCommand<EmptyCommandExecutor>
     {
 
     }
 
-    public class EmptyActionCommand : ActionCommand<EmptyAction> 
+    public class EmptyCommandExecutor : ActionCommandExecutor<EmptyCommand> 
     {
         protected override void OnExecute()
         {

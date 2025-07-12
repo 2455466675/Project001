@@ -16,25 +16,25 @@ namespace Game.GSystem
         private string actionName;
 
         [SerializeField]
-        private ActionItemBase[] items;
+        private ActionCommand[] commands;
 
         public ActionPlayer CreatePlayer()
         {
-            List<ActionCommandBase> commands = new List<ActionCommandBase>();
+            List<ActionCommandExecutor> executors = new List<ActionCommandExecutor>();
 
-            if (items != null) 
+            if (this.commands != null) 
             {
-                ActionItemBase[] temp = items.Where(a => a != null).ToArray();
+                ActionCommand[] temp = this.commands.Where(a => a != null).ToArray();
 
                 int count = temp.Length;
                 for (int i = 0; i < count; i++)
                 {
-                    ActionItemBase item = items[i];
-                    commands.Add(item.CreateCommand());
+                    ActionCommand cmd = this.commands[i];
+                    executors.Add(cmd.CreateExecutor());
                 }
             }
                   
-            ActionPlayer player = new ActionPlayer(ActionNameHash, commands.ToArray());
+            ActionPlayer player = new ActionPlayer(ActionNameHash, executors.ToArray());
             return player;
         }
 
@@ -42,7 +42,7 @@ namespace Game.GSystem
         public void Init() 
         {
 #if UNITY_EDITOR
-            items = GetComponentsInChildren<ActionItemBase>();
+            commands = GetComponentsInChildren<ActionCommand>();
 
             if (string.IsNullOrEmpty(actionName)) 
             {

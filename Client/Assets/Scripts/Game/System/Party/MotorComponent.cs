@@ -33,26 +33,28 @@ namespace Game.GSystem
     /// </summary>
     public class MotorComponent : UnitComponent, IAwakeComponent, IFixedUpdateComponent
     {
-        private static readonly int walkUpHash = Common.StringToHash("WalkUp");
-        private static readonly int walkDownHash = Common.StringToHash("WalkDown");
-        private static readonly int walkLeftHash = Common.StringToHash("WalkLeft");
-        private static readonly int walkRightHash = Common.StringToHash("WalkRight");
-        private static readonly int runUpHash = Common.StringToHash("RunUp");
-        private static readonly int runDownHash = Common.StringToHash("RunDown");
-        private static readonly int runLeftHash = Common.StringToHash("RunLeft");
-        private static readonly int runRightHash = Common.StringToHash("RunRight");
-        private static readonly int idleUpHash = Common.StringToHash("IdleUp");
-        private static readonly int idleDownHash = Common.StringToHash("IdleDown");
-        private static readonly int idleLeftHash = Common.StringToHash("IdleLeft");
-        private static readonly int idleRightHash = Common.StringToHash("IdleRight");
-        private static readonly int followWalkUpHash = Common.StringToHash("FollowWalkUp");
-        private static readonly int followWalkDownHash = Common.StringToHash("FollowWalkDown");
-        private static readonly int followWalkLeftHash = Common.StringToHash("FollowWalkLeft");
-        private static readonly int followWalkRightHash = Common.StringToHash("FollowWalkRight");
-        private static readonly int followRunUpHash = Common.StringToHash("FollowRunUp");
-        private static readonly int followRunDownHash = Common.StringToHash("FollowRunDown");
-        private static readonly int followRunLeftHash = Common.StringToHash("FollowRunLeft");
-        private static readonly int followRunRightHash = Common.StringToHash("FollowRunRight");
+        private static readonly int velocityWalkUpHash = Common.StringToHash("VelocityWalkUp");
+        private static readonly int velocityWalkDownHash = Common.StringToHash("VelocityWalkDown");
+        private static readonly int velocityWalkLeftHash = Common.StringToHash("VelocityWalkLeft");
+        private static readonly int velocityWalkRightHash = Common.StringToHash("VelocityWalkRight");
+        private static readonly int velocityRunUpHash = Common.StringToHash("VelocityRunUp");
+        private static readonly int velocityRunDownHash = Common.StringToHash("VelocityRunDown");
+        private static readonly int velocityRunLeftHash = Common.StringToHash("VelocityRunLeft");
+        private static readonly int velocityRunRightHash = Common.StringToHash("VelocityRunRight");
+        private static readonly int velocityIdleHash = Common.StringToHash("VelocityIdle");
+
+        private static readonly int animatorIdleUpHash = Common.StringToHash("AnimatorIdleUp");
+        private static readonly int animatorIdleDownHash = Common.StringToHash("AnimatorIdleDown");
+        private static readonly int animatorIdleLeftHash = Common.StringToHash("AnimatorIdleLeft");
+        private static readonly int animatorIdleRightHash = Common.StringToHash("AnimatorIdleRight");
+        private static readonly int animatorWalkUpHash = Common.StringToHash("AnimatorWalkUp");
+        private static readonly int animatorWalkDownHash = Common.StringToHash("AnimatorWalkDown");
+        private static readonly int animatorWalkLeftHash = Common.StringToHash("AnimatorWalkLeft");
+        private static readonly int animatorWalkRightHash = Common.StringToHash("AnimatorWalkRight");
+        private static readonly int animatorRunUpHash = Common.StringToHash("AnimatorRunUp");
+        private static readonly int animatorRunDownHash = Common.StringToHash("AnimatorRunDown");
+        private static readonly int animatorRunLeftHash = Common.StringToHash("AnimatorRunLeft");
+        private static readonly int animatorRunRightHash = Common.StringToHash("AnimatorRunRight");
 
         private ActorComponent actorComponent;
         private PartyComponent partyComponent;
@@ -135,7 +137,8 @@ namespace Game.GSystem
         private MoveType DoAction(float h, float v)
         {
             MoveType moveType;
-            int actionHash;
+            int actionHash_1;
+            int actionHash_2;
 
             if (h == 0f && v == 0f) 
             {
@@ -143,12 +146,14 @@ namespace Game.GSystem
                 {
                     if (dirH < 0f)
                     {
-                        actionHash = idleLeftHash;
+                        actionHash_1 = animatorIdleLeftHash;
+                        actionHash_2 = velocityIdleHash;
                         moveType = MoveType.IdleLeft;
                     }
                     else
                     {
-                        actionHash = idleRightHash;
+                        actionHash_1 = animatorIdleRightHash;
+                        actionHash_2 = velocityIdleHash;
                         moveType = MoveType.IdleRight;
                     }
                 }
@@ -156,12 +161,14 @@ namespace Game.GSystem
                 {
                     if (dirV < 0f)
                     {
-                        actionHash = idleDownHash;
+                        actionHash_1 = animatorIdleDownHash;
+                        actionHash_2 = velocityIdleHash;
                         moveType = MoveType.IdleDown;
                     }
                     else
                     {
-                        actionHash = idleUpHash;
+                        actionHash_1 = animatorIdleUpHash;
+                        actionHash_2 = velocityIdleHash;
                         moveType = MoveType.IdleUp;
                     }
                 }
@@ -176,12 +183,14 @@ namespace Game.GSystem
                     {
                         if (IsRunning)
                         {
-                            actionHash = runRightHash;
+                            actionHash_1 = animatorRunRightHash;
+                            actionHash_2 = velocityRunRightHash;
                             moveType = MoveType.RunRight;
                         }
                         else
                         {
-                            actionHash = walkRightHash;
+                            actionHash_1 = animatorWalkRightHash;
+                            actionHash_2 = velocityWalkRightHash;
                             moveType = MoveType.WalkRight;
                         }
                     }
@@ -189,12 +198,14 @@ namespace Game.GSystem
                     {
                         if (IsRunning)
                         {
-                            actionHash = runLeftHash;
+                            actionHash_1 = animatorRunLeftHash;
+                            actionHash_2 = velocityRunLeftHash;
                             moveType = MoveType.RunLeft;
                         }
                         else
                         {
-                            actionHash = walkLeftHash;
+                            actionHash_1 = animatorWalkLeftHash;
+                            actionHash_2 = velocityWalkLeftHash;
                             moveType = MoveType.WalkLeft;
                         }
                     }
@@ -206,12 +217,14 @@ namespace Game.GSystem
                     {
                         if (IsRunning)
                         {
-                            actionHash = runUpHash;
+                            actionHash_1 = animatorRunUpHash;
+                            actionHash_2 = velocityRunUpHash;
                             moveType = MoveType.RunUp;
                         }
                         else
                         {
-                            actionHash = walkUpHash;
+                            actionHash_1 = animatorWalkUpHash;
+                            actionHash_2 = velocityWalkUpHash;
                             moveType = MoveType.WalkUp;
                         }
                     }
@@ -219,12 +232,14 @@ namespace Game.GSystem
                     {
                         if (IsRunning)
                         {
-                            actionHash = runDownHash;
+                            actionHash_1 = animatorRunDownHash;
+                            actionHash_2 = velocityRunDownHash;
                             moveType = MoveType.RunDown;
                         }
                         else
                         {
-                            actionHash = walkDownHash;
+                            actionHash_1 = animatorWalkDownHash;
+                            actionHash_2 = velocityWalkDownHash;
                             moveType = MoveType.WalkDown;
                         }
                     }
@@ -234,7 +249,8 @@ namespace Game.GSystem
                 IsMoving = true;
             }
             
-            actorComponent.PlayAction(actionHash);
+            actorComponent.PlayAction(actionHash_1);
+            actorComponent.PlayAction(actionHash_2);
             return moveType;
         }
 
@@ -363,22 +379,22 @@ namespace Game.GSystem
                 {
                     if (dirH < 0f)
                     {                        
-                        actionHash = idleLeftHash;
+                        actionHash = animatorIdleLeftHash;
                     }
                     else
                     {
-                        actionHash = idleRightHash;
+                        actionHash = animatorIdleRightHash;
                     }
                 }
                 else
                 {
                     if (dirV < 0f)
                     {
-                        actionHash = idleDownHash;
+                        actionHash = animatorIdleDownHash;
                     }
                     else
                     {
-                        actionHash = idleUpHash;
+                        actionHash = animatorIdleUpHash;
                     }
                 }
 
@@ -404,28 +420,28 @@ namespace Game.GSystem
             if (moveType == MoveType.WalkUp || moveType == MoveType.RunUp)
             {
                 //actionNameHash = IsRunning ? followRunUpHash : followWalkUpHash;
-                actionNameHash = IsRunning && moveType == MoveType.RunUp ? followRunUpHash : followWalkUpHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunUp ? animatorRunUpHash : animatorWalkUpHash;
                 dirH = 0;
                 dirV = 1;
             }
             else if (moveType == MoveType.WalkDown || moveType == MoveType.RunDown)
             {
                 //actionNameHash = IsRunning ? followRunDownHash : followWalkDownHash;
-                actionNameHash = IsRunning && moveType == MoveType.RunDown ? followRunDownHash : followWalkDownHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunDown ? animatorRunDownHash : animatorWalkDownHash;
                 dirH = 0;
                 dirV = -1;
             }
             else if (moveType == MoveType.WalkLeft || moveType == MoveType.RunLeft)
             {
                 //actionNameHash = IsRunning ? followRunLeftHash : followWalkLeftHash;
-                actionNameHash = IsRunning && moveType == MoveType.RunLeft ? followRunLeftHash : followWalkLeftHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunLeft ? animatorRunLeftHash : animatorWalkLeftHash;
                 dirH = -1;
                 dirV = 0;
             }
             else if (moveType == MoveType.WalkRight || moveType == MoveType.RunRight)
             {             
                 //actionNameHash = IsRunning ? followRunRightHash : followWalkRightHash;
-                actionNameHash = IsRunning && moveType == MoveType.RunRight ? followRunRightHash : followWalkRightHash;
+                actionNameHash = IsRunning && moveType == MoveType.RunRight ? animatorRunRightHash : animatorWalkRightHash;
                 dirH = 1;
                 dirV = 0;
             }

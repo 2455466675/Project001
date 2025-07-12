@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.GSystem 
 {
-    public class AppearMoveAction : ActionItem<AppearMoveActionCommand>
+    public class AppearMoveAction : ActionCommand<AppearMoveActionCommand>
     {
         public enum PosType 
         {
@@ -18,11 +18,11 @@ namespace Game.GSystem
         public float moveTime;
     }
 
-    public class AppearMoveActionCommand : ActionCommand<AppearMoveAction> 
+    public class AppearMoveActionCommand : ActionCommandExecutor<AppearMoveAction> 
     {
         protected override void OnExecute()
         {
-            AppearMoveAction item = Item;
+            AppearMoveAction item = Command;
             Actor actor = Player.Actor;
             //actor.transform.localPosition = item.startPos;
             //actor.transform.DOLocalMove(item.endPos, item.moveTime).SetEase(item.ease);

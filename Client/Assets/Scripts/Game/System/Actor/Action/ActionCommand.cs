@@ -1,10 +1,38 @@
+using Sirenix.OdinInspector;
+using UnityEngine;
+
 namespace Game.GSystem
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ActionCommand<T> : ActionCommandBase where T : ActionItemBase
+    public abstract class ActionCommand : MonoBehaviour
     {
-        protected T Item => GetActionItem<T>();
+        public int Priority => priority;
+        public float Timepoint => timepoint;
+        public float Duration => duration;
+
+        [PropertySpace(SpaceBefore = 10, SpaceAfter = 0)]
+        [SerializeField]
+        [Min(0)]
+        private int priority;
+        [SerializeField]
+        [Min(0f)]
+        private float timepoint;
+        [PropertySpace(SpaceBefore = 0, SpaceAfter = 20)]
+        [SerializeField]
+        private float duration;
+
+        public abstract ActionCommandExecutor CreateExecutor();
+    }
+
+    public class ActionCommand<T> : ActionCommand where T : ActionCommandExecutor, new()
+    {
+        public override ActionCommandExecutor CreateExecutor()
+        {
+            T cmd = new();
+            cmd.SetCommand(this);
+            return cmd;
+        }
     }
 }

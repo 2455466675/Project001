@@ -15,36 +15,36 @@ namespace Game.GSystem
     /// </summary>
     public class ActionPlayer
     {
-        private class Command : IComparable<Command>
+        private class Execution : IComparable<Execution>
         {
             public bool IsExecuted => isExecuted;
-            public int Priority => command.Priority;
-            public float Timepoint => command.Timepoint;
-            public float Duration => command.Duration;
+            public int Priority => executor.Priority;
+            public float Timepoint => executor.Timepoint;
+            public float Duration => executor.Duration;
             private bool isExecuted;
-            private readonly ActionCommandBase command;
+            private readonly ActionCommandExecutor executor;
 
-            public Command(ActionPlayer player, ActionCommandBase command) 
+            public Execution(ActionPlayer player, ActionCommandExecutor executor) 
             {
-                this.command = command;
-                this.command.SetPlayer(player);
+                this.executor = executor;
+                this.executor.Player = player;
                 isExecuted = false;
             }
 
             public void Execute() 
             {
                 isExecuted = true;
-                command?.Execute();
+                executor?.Execute();
             }
 
             public void Complete()
             {
-                command?.Complete();
+                executor?.Complete();
             }
 
-            public int CompareTo(Command other)
+            public int CompareTo(Execution other)
             {
-                return command.Priority.CompareTo(other.command.Priority);
+                return executor.Priority.CompareTo(other.executor.Priority);
             }
         }
 
@@ -78,19 +78,19 @@ namespace Game.GSystem
         private float timer;
 
         private ActionPlayerState state;
-        private readonly Command[] commands;
+        private readonly Execution[] executions;
 
-        public ActionPlayer(int actionNameHash, ActionCommandBase[] commands) 
+        public ActionPlayer(int actionNameHash, ActionCommandExecutor[] executors) 
         {
             ActionNameHash = actionNameHash;
             state = ActionPlayerState.Idle;
 
-            int length = commands != null ? commands.Length : 0;
+            int length = executors != null ? executors.Length : 0;
 
-            this.commands = new Command[length];
+            this.executions = new Execution[length];
             for (int i = 0; i < length; i++) 
             {
-                this.commands[i] = new Command(this, commands[i]);                
+                this.executions[i] = new Execution(this, executors[i]);                
             }
         }
 
@@ -128,10 +128,10 @@ namespace Game.GSystem
 
             state = ActionPlayerState.Completed;
 
-            for (int i = 0; i < commands.Length; i++)
+            for (int i = 0; i < executions.Length; i++)
             {
-                Command cmd = commands[i];
-                cmd.Complete();
+                Execution exe = executions[i];
+                exe.Complete();
             }
             
             completionSource?.TrySetResult();
@@ -145,38 +145,38 @@ namespace Game.GSystem
             timer = 0f;
 
             float duration = 0f;
-            for (int i = 0; i < commands.Length; i++)
+            for (int i = 0; i < executions.Length; i++)
             {
-                Command cmd = commands[i];
-                if (cmd.Timepoint < 0f)
+                Execution exe = executions[i];
+                if (exe.Timepoint < 0f)
                 {
                     continue;
                 }
 
-                if (cmd.Duration < 0f)
+                if (exe.Duration < 0f)
                 {
                     duration = -1f;
                     break;
                 }
 
-                float t = cmd.Timepoint + cmd.Duration;
+                float t = exe.Timepoint + exe.Duration;
                 duration = Math.Max(duration, t);
             }
             this.duration = duration;
 
-            Array.Sort(commands, (a, b) => b.CompareTo(a));
+            Array.Sort(executions, (a, b) => b.CompareTo(a));
         }
 
         private void Run() 
         {
-            for (int i = 0; i < commands.Length; i++)
+            for (int i = 0; i < executions.Length; i++)
             {
-                Command cmd = commands[i];
-                if (!cmd.IsExecuted && cmd.Timepoint <= timer)
+                Execution exe = executions[i];
+                if (!exe.IsExecuted && exe.Timepoint <= timer)
                 {
                     try
                     {
-                        cmd.Execute();
+                        exe.Execute();
                     }
                     catch (Exception e)
                     {

@@ -13,7 +13,7 @@ namespace Game.GSystem
         Play = 99,
     }
 
-    public class AnimatorAction : ActionItem<AnimatorActionCommand>
+    public class AnimatorCommand : ActionCommand<AnimatorCommandExecutor>
     {
         public string parameter;
         public AnimatorActionType animationType = AnimatorActionType.ParameterFloat;
@@ -39,7 +39,7 @@ namespace Game.GSystem
         }
     }
 
-    public class AnimatorActionCommand : ActionCommand<AnimatorAction>
+    public class AnimatorCommandExecutor : ActionCommandExecutor<AnimatorCommand>
     {
         private bool isLoop;
         private int lastState;
@@ -58,26 +58,26 @@ namespace Game.GSystem
                 return;
             }
 
-            int hash = Item.ParameterHash;
+            int hash = Command.ParameterHash;
 
-            AnimatorActionType at = Item.animationType;
+            AnimatorActionType at = Command.animationType;
             switch (at)
             {
                 case AnimatorActionType.ParameterFloat:
-                    animator.SetFloat(hash, Item.floatValue);
+                    animator.SetFloat(hash, Command.floatValue);
                     break;
                 case AnimatorActionType.ParameterInt:
-                    animator.SetInteger(hash, Item.intValue);
+                    animator.SetInteger(hash, Command.intValue);
                     break;
                 case AnimatorActionType.ParameterBool:
-                    animator.SetBool(hash, Item.boolValue);
+                    animator.SetBool(hash, Command.boolValue);
                     break;
                 case AnimatorActionType.ParameterTrigger:
                     animator.SetTrigger(hash);                    
                     break;
                 case AnimatorActionType.Play:
                     AnimatorStateInfo last = animator.GetCurrentAnimatorStateInfo(0);
-                    animator.Play(hash, Item.layer);
+                    animator.Play(hash, Command.layer);
                     AnimatorStateInfo curr = animator.GetCurrentAnimatorStateInfo(0);
                     if (curr.loop) 
                     {
@@ -109,7 +109,7 @@ namespace Game.GSystem
                 return;
             }
 
-            AnimatorActionType at = Item.animationType;
+            AnimatorActionType at = Command.animationType;
             if (at != AnimatorActionType.Play) 
             {
                 return;
@@ -120,7 +120,7 @@ namespace Game.GSystem
                 return;
             }
 
-            animator.Play(lastState, Item.layer);
+            animator.Play(lastState, Command.layer);
         }
     }
 }
