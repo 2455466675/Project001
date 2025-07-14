@@ -1,4 +1,3 @@
-
 using Cysharp.Threading.Tasks;
 
 namespace Game.GSystem
@@ -13,7 +12,7 @@ namespace Game.GSystem
     /// <summary>
     /// 
     /// </summary>
-    public class BattleUnit : UnitArchetype<BattleActorComponent, BattleNodeComponent, BattleTransformComponent>
+    public class BattleUnit : UnitArchetype<BattleActorComponent, BattleNodeComponent, BattleTransformComponent, BattleAttributeComponent>
     {
         public int BattleId { get; private set; }
 
@@ -23,6 +22,8 @@ namespace Game.GSystem
         {
             BattleId = battleId;
             State = BattleUnitState.Empty;
+            AddComponent<BattleHudComponent>();
+            AddComponent<BattleBehaviorComponent>();
         }
 
         public void Reset(int cfgId) 
@@ -33,15 +34,20 @@ namespace Game.GSystem
             }
             else
             {
-                GetComponent<BattleCampComponent>().Reset(cfgId);
                 State = BattleUnitState.Alive;
+                GetComponent<BattleCampComponent>().Reset(cfgId);
+                GetComponent<BattleAttributeComponent>().SetAttributeValue(AttributeDefine.HP_1, 100);
+                GetComponent<BattleAttributeComponent>().SetAttributeValue(AttributeDefine.HP_2, 80);
+                GetComponent<BattleAttributeComponent>().SetAttributeValue(AttributeDefine.SP_1, 100);
+                GetComponent<BattleAttributeComponent>().SetAttributeValue(AttributeDefine.SP_2, 0);
+                GetComponent<BattleAttributeComponent>().SetAttributeValue(AttributeDefine.SP_RATE, 1);
+                GetComponent<BattleAttributeComponent>().SetAttributeValue(AttributeDefine.ATK, 10);
             }
         }
 
         public void Clear() 
         {
             State = BattleUnitState.Empty;
-
             GetComponent<BattleNodeComponent>().Clear();
             GetComponent<BattleActorComponent>().Clear();
         }

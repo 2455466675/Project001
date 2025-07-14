@@ -155,6 +155,12 @@ namespace Game.GSystem
             }
 
             await UniTask.WhenAll(tasks);
+
+            foreach (var unit in units)
+            {
+                unit.GetComponent<BattleHudComponent>().LoadHud();          
+                unit.GetComponent<BattleBehaviorComponent>().StartUp();
+            }
         }
 
         private async UniTask PlayTransitionAnim() 

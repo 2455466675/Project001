@@ -10,6 +10,7 @@ namespace Game
     {
         [SerializeField]
         private Camera m_camera;
+        public Camera GameMainCamera => m_camera;
        
         private void LateUpdate()
         {
@@ -26,8 +27,7 @@ namespace Game
                     if (leader != null)
                     {
                         Vector3 pos = leader.GetComponent<ActorComponent>().GetPosition();
-                        Vector3 originPos = m_camera.transform.position;
-                        SetPosition(new Vector3(pos.x, originPos.y, pos.z - 7));
+                        SetPosition(new Vector3(pos.x, 2, pos.z - 7));
                     }
                 }                
             }

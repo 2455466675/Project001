@@ -104,7 +104,7 @@ namespace Game
             for (int num = parent.childCount - 1; num >= 0; num--)
             {
                 Transform child = parent.GetChild(num);
-                UnityEngine.Object.Destroy(child.gameObject);
+                Destroy(child.gameObject);
             }
         }
 
@@ -293,7 +293,7 @@ namespace Game
                 }
                 else
                 {
-                    UnityEngine.Object.Destroy(child.gameObject);
+                    Destroy(child.gameObject);
                 }
             }
         }
@@ -479,6 +479,15 @@ namespace Game
             {
                 item.gameObject.SetLayer(layer);
             }
+        }
+
+        public static void Destroy(GameObject go) 
+        {
+            if (go == null) 
+            {
+                return;
+            }
+            UnityEngine.Object.Destroy(go);
         }
     }
 }

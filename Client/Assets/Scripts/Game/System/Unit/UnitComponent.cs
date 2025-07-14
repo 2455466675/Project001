@@ -22,7 +22,6 @@ namespace Game.GSystem
             return unit.GetComponent<T>();
         }
 
-
         protected virtual void OnDestroyComponent() 
         {
         }

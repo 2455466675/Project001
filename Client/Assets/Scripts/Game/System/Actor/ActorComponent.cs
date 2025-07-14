@@ -11,6 +11,8 @@ namespace Game.GSystem
 
         public event Action<Actor> OnRefreshActorEvent;
 
+        public bool IsValid => actor != null;
+
         public void Init(int id) 
         {
             this.id = id;
@@ -103,6 +105,32 @@ namespace Game.GSystem
                 return;
             }
             actor.SwitchAnimatorController(controllerType);
+        }
+
+        public Transform GetHudNode() 
+        {
+            if (actor == null)
+            {
+                return null;
+            }
+            if (actor.hudNode == null) 
+            {
+                return actor.transform;
+            }
+            else
+            {
+                return actor.hudNode;
+            }
+        }
+
+        public Transform GetBone(string boneName)
+        {
+            if (actor == null)
+            {
+                return null;
+            }
+
+            return actor.GetBone(boneName);
         }
 
         public Vector3 GetPosition() 

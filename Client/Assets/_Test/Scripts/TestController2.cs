@@ -7,7 +7,7 @@ namespace Game.UI
     /// <summary>
     /// 
     /// </summary>
-    public class TestController2 : Controller
+    public class TestController2 : ViewController
     {
         protected override void Register()
         {

@@ -15,7 +15,7 @@ namespace Game.GSystem
         public Rigidbody Rigidbody => m_rigidbody;
         public BoxCollider boxCollider;
         public ActorBones bones;
-
+        public Transform hudNode;
         [SerializeField]
         private ActionDriver actionDriver;
 

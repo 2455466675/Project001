@@ -9,7 +9,7 @@ namespace Game.UI
     /// 
     /// </summary>
     [DisallowMultipleComponent]
-    public class Controller : MonoBehaviour, IViewContainer
+    public class ViewController : MonoBehaviour, IViewContainer
     {
         [SerializeField]
         private ViewEntity[] views;

@@ -37,6 +37,16 @@ namespace Game
             return Math.Abs(f);
         }
 
+        public static int Floor(float v) 
+        {
+            return UnityEngine.Mathf.FloorToInt(v);
+        }
+
+        public static int Ceil(float v) 
+        {
+            return UnityEngine.Mathf.CeilToInt(v);
+        }
+
         private static Random random = new Random();
         /// <summary>
         /// [min, max)

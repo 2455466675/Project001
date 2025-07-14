@@ -1,3 +1,4 @@
+using Game.GSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,9 @@ namespace Game.UI
 
             Game.Event.Register<OnBattleGridSelectChangedEventArgs>(OnBattleGridSelectChanged);
             Game.System.BattleSystem.SetProxy(this);
+
+            BattleUnitRootView view = GetView<BattleUnitRootView>();
+            view.SetCanvasCamera(Game.Root.MainCamera.GameMainCamera);
         }
 
         public override void Hide()
@@ -42,6 +46,9 @@ namespace Game.UI
             }
             groupView.gameObject.SetActive(false);
             Game.System.BattleSystem.SetProxy(null);
+
+            BattleUnitRootView view = GetView<BattleUnitRootView>();
+            view.SetCanvasCamera(null);
         }
 
         private void OnBattleGridSelectChanged(OnBattleGridSelectChangedEventArgs args) 

@@ -120,8 +120,8 @@ namespace Game.UI
         }
 
         public void OnDestroy() 
-        {
-            UnityEngine.Object.Destroy(groupView);
+        {         
+            GoHelper.Destroy(groupView.gameObject);
             groupView = null;
         }
     }

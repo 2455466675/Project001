@@ -13,7 +13,7 @@ namespace Game.UI.Input
             switch (inputType)
             {
                 case InputType.Cancel:
-                    Pop();
+                    //Pop();
                     break;
                 case InputType.Esc:
                     PopAll();

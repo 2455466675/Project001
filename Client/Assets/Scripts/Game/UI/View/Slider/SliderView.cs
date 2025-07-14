@@ -13,10 +13,21 @@ namespace Game.UI
 
         public void SetValue(float value) 
         {
-            if (slider != null) 
+            if (slider == null) 
             {
-                slider.value = value;                
+                return;
             }
+            slider.value = value;                
+        }
+
+        public void SetValue(int arg1, int arg2) 
+        {
+            if (slider == null)
+            {
+                return;
+            }
+            float value = Mathf.Clamp01(arg1 * 1f / arg2);
+            slider.value = value;
         }
 
         private void OnValidate()
