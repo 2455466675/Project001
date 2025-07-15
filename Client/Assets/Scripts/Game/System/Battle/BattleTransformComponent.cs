@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 namespace Game.GSystem 
 {
@@ -24,7 +25,9 @@ namespace Game.GSystem
         public void SetPosition(int x, int y) 
         {
             pX = x; 
-            pY = y;            
+            pY = y;           
+            var pos = BattleUtil.IndexToPosition(pX, pY);
+            GetComponent<ActorComponent>().SetLocalPosition(pos);
         }
 
         public void MoveByPath(List<Vector2Int> path)
@@ -32,7 +35,7 @@ namespace Game.GSystem
             MoveAsync(path).Forget();
         }
 
-        private async UniTask MoveAsync(List<Vector2Int> path) 
+        public async UniTask MoveAsync(List<Vector2Int> path) 
         {
             ActorComponent actor = GetComponent<ActorComponent>();
 

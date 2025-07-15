@@ -18,7 +18,11 @@ namespace Navigation
         private string param;
 
         public bool IsBinded => data is not null;
-        public int Index { get; private set; }
+
+        [HideInInspector]
+        [SerializeField]
+        private int index;
+        public int Index => index;
         public virtual bool IsValid => true;
 
         public event Action<NavigationItem> OnRefreshEvent;
@@ -96,7 +100,7 @@ namespace Navigation
 
         internal void SetIndex(int index)
         {
-            Index = index;
+            this.index = index;
         }
 
         internal void OnSelect()

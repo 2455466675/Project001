@@ -17,6 +17,11 @@ namespace Game.GSystem
             unit = null;
         }
 
+        public T GetParent<T>() where T : UnitBase 
+        {
+            return unit as T;
+        }
+
         public T GetComponent<T>() where T : UnitComponent
         {
             return unit.GetComponent<T>();

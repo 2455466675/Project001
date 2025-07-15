@@ -1,7 +1,4 @@
-using Game.Input;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.UI.Input
 {
@@ -18,7 +15,7 @@ namespace Game.UI.Input
                 new BattleInputModule()
             };
 
-            Push(modules.Find(m => m.ModuleType == ModuleType.Basal));
+            PushModule(ModuleType.Basal);
         }
 
         protected override void OnInputAction(ActionContext context)
@@ -41,18 +38,24 @@ namespace Game.UI.Input
 
         public void Navigate(NavigationListDefine list_ID, ModuleType moduleType, int[] navigateIndexs, object intent)
         {
+            InputModule module = PushModule(moduleType);
+            if (module == null) 
+            {
+                return;
+            }
+            module.Navigate(list_ID, navigateIndexs, intent);
+        }
+
+        public InputModule PushModule(ModuleType moduleType) 
+        {
             InputModule module;
 
             if (TryPeek(out InputCammand cammand))
             {
                 module = cammand as InputModule;
-                if (module != null)
-                {
-                    if (moduleType == ModuleType.Undefined || module.ModuleType == moduleType)
-                    {
-                        module.Navigate(list_ID, navigateIndexs, intent);
-                        return;
-                    }
+                if (module != null && (moduleType == ModuleType.Undefined || module.ModuleType == moduleType))
+                {                    
+                    return module;
                 }
             }
 
@@ -60,11 +63,11 @@ namespace Game.UI.Input
             if (module == null)
             {
                 MLog.Error($"InputModule is null : {moduleType}");
-                return;
+                return null;
             }
 
             Push(module);
-            module.Navigate(list_ID, navigateIndexs, intent);
+            return module;
         }
     }
 }

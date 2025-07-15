@@ -25,6 +25,7 @@ namespace Game.UI
 
         public override void Show()
         {
+            MLog.Log("Battle_Units_Group_Proxy Show");
             if (groupView == null)
             {
                 return;
@@ -36,6 +37,9 @@ namespace Game.UI
 
             BattleUnitRootView view = GetView<BattleUnitRootView>();
             view.SetCanvasCamera(Game.Root.MainCamera.GameMainCamera);
+
+            Game.Root.MainCamera.SetPosition(new Vector3(6, 6, 0));
+            Game.Root.MainCamera.SetRotation(Quaternion.AngleAxis(70f, Vector3.right));
         }
 
         public override void Hide()
@@ -57,9 +61,6 @@ namespace Game.UI
             Vector3 pos = item.transform.position;
             SelectArrowView view = GetView<SelectArrowView>();
             view.SetPosition(pos);
-
-            Game.Root.MainCamera.SetPosition(new Vector3(6, 6, 0));
-            Game.Root.MainCamera.SetRotation(Quaternion.AngleAxis(70f, Vector3.right));
         }
     }
 }

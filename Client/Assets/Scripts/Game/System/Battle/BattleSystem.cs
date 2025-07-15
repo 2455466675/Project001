@@ -16,6 +16,8 @@ namespace Game.GSystem
 
         private Battle_Units_Group_Proxy proxy;
 
+        private BattleTurnController turnController;
+
         public void Init() 
         {
             units = new List<BattleUnit>();
@@ -35,6 +37,8 @@ namespace Game.GSystem
                 unit.Init(i + 4);
                 units.Add(unit);
             }
+
+            turnController = new BattleTurnController(this);
         }
 
         public BattleUnit[] GetEnemies() 
@@ -52,6 +56,11 @@ namespace Game.GSystem
             return units.Find(u => u.BattleId == battleId);
         }
 
+        public void OnSubmitGrid(int x, int y) 
+        {
+            turnController.Submit(x, y);
+        }
+
         public void SetProxy(Battle_Units_Group_Proxy proxy) 
         {
             this.proxy = proxy;
@@ -64,6 +73,15 @@ namespace Game.GSystem
                 return default;
             }
             return proxy.GetView<T>();
+        }
+
+        public void FixedUpdate(float fdt) 
+        {
+            if (!IsBattle) 
+            {
+                return;
+            }
+            turnController.Tick();
         }
 
         public void EnterBattle() 
@@ -100,17 +118,15 @@ namespace Game.GSystem
 
             IsBattle = true;
 
-            Game.UI.Navigate(NavigationListDefine.Battle_Grid, ModuleType.Battle, new int[] {54});
-
-            var view = GetBattleSceneView<SceneGridView>();
-            var item = view.GetTileItem(10, 6);
-            var unit = GetBattleUnit(0);
-            unit.GetComponent<ActorComponent>().SwitchAnimatorController(AnimatorControllerType.Battle);
-            unit.GetComponent<ActorComponent>().SetRigidbodyEnable(false);
-            unit.GetComponent<ActorComponent>().SetLocalPosition(item.transform.localPosition);
-            unit.GetComponent<ActorComponent>().SetLocalRotation(70f);
-            unit.GetComponent<BattleTransformComponent>().SetPosition(10, 6);
-
+            for (int i = 0; i < 2; i++)
+            {
+                var unit = GetBattleUnit(i);
+                unit.GetComponent<ActorComponent>().SwitchAnimatorController(AnimatorControllerType.Battle);
+                unit.GetComponent<ActorComponent>().SetRigidbodyEnable(false);
+                unit.GetComponent<ActorComponent>().SetLocalRotation(70f);
+                unit.GetComponent<BattleTransformComponent>().SetPosition(10 + i, 6 + i);
+                unit.GetComponent<BattleAttributeComponent>().SetEffect(11101, i * 10000);
+            }
         }
 
         private async UniTask PreLoad() 
@@ -128,13 +144,15 @@ namespace Game.GSystem
 
             List<int> testHero = new List<int>()
             {
-                810001,// 810002, 810003, 810004
+                810001, 810002, //810003, 810004
             };
 
             for (int i = 0; i < testHero.Count; i++) 
             {
                 BattleUnit unit = units[i];
                 unit.Reset(testHero[i]);
+
+                turnController.AddUnit(unit.BattleId);
             }
 
             await UniTask.Yield();
@@ -159,7 +177,6 @@ namespace Game.GSystem
             foreach (var unit in units)
             {
                 unit.GetComponent<BattleHudComponent>().LoadHud();          
-                unit.GetComponent<BattleBehaviorComponent>().StartUp();
             }
         }
 
@@ -187,19 +204,6 @@ namespace Game.GSystem
 
             var e = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Loading_Group);
             e.Hide();
-        }
-
-        private async UniTask Appear() 
-        {
-            List<UniTask> tasks = new List<UniTask>();
-
-            foreach (var unit in units)
-            {
-                ActionHandle handle = unit.PlayAction(Common.StringToHash("Appear"));
-                tasks.Add(handle.Task);
-            }
-
-            await UniTask.WhenAll(tasks);
         }
     }
 }

@@ -45,6 +45,7 @@ namespace Game.GSystem
         public void FixedUpdate(float fdt) 
         {
             UnitManager.FixedUpdate(fdt);
+            BattleSystem.FixedUpdate(fdt);
         }
     }
 }

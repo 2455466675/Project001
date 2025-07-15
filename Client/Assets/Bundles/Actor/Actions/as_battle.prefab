@@ -57,10 +57,9 @@ GameObject:
   m_Component:
   - component: {fileID: 874034724649888031}
   - component: {fileID: 4028876289627795231}
-  - component: {fileID: 513132707007062608}
   - component: {fileID: 3069840819415135114}
   m_Layer: 0
-  m_Name: Appear
+  m_Name: Skill001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,29 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9339c86f06c8844db1dc38dc03da87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionName: Appear
-  items:
+  actionName: Skill001
+  commands:
   - {fileID: 3069840819415135114}
---- !u!114 &513132707007062608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4139167533820470066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fc1ba3deee423c40b0a887415a1f195, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  priority: 0
-  timepoint: 0.5
-  duration: 1.5
-  posType: 0
-  ease: 5
-  startPos: {x: 0, y: 0, z: 0}
-  endPos: {x: 0, y: 0, z: 0}
-  moveTime: 1
 --- !u!114 &3069840819415135114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,8 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 0
   timepoint: 0
-  duration: -1
-  parameter: attack_001
+  duration: 0.233
+  parameter: skill_001
   animationType: 99
   intValue: 0
   floatValue: 0

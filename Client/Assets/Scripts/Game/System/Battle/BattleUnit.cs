@@ -24,6 +24,7 @@ namespace Game.GSystem
             State = BattleUnitState.Empty;
             AddComponent<BattleHudComponent>();
             AddComponent<BattleBehaviorComponent>();
+            AddComponent<BattleAIComponent>();
         }
 
         public void Reset(int cfgId) 
