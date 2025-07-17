@@ -25,7 +25,6 @@ namespace Game.UI
 
         public override void Show()
         {
-            MLog.Log("Battle_Units_Group_Proxy Show");
             if (groupView == null)
             {
                 return;
@@ -61,6 +60,11 @@ namespace Game.UI
             Vector3 pos = item.transform.position;
             SelectArrowView view = GetView<SelectArrowView>();
             view.SetPosition(pos);
+        }
+
+        public override bool IsLocked()
+        {
+            return true;
         }
     }
 }

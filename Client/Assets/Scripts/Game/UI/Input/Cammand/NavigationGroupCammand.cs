@@ -47,5 +47,11 @@ namespace Game.UI
         {
             return Game.UI.GetNavigationGroupEntity(Define);
         }
+
+        protected override bool CheckIsLocked()
+        {
+            var entity = GetEntity();
+            return entity.IsLocked;
+        }
     }
 }

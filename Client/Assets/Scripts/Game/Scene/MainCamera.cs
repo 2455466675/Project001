@@ -28,6 +28,7 @@ namespace Game
                     {
                         Vector3 pos = leader.GetComponent<ActorComponent>().GetPosition();
                         SetPosition(new Vector3(pos.x, 2, pos.z - 7));
+                        SetRotation(Quaternion.AngleAxis(0, Vector3.right));
                     }
                 }                
             }

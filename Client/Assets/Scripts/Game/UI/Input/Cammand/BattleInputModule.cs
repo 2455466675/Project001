@@ -7,13 +7,18 @@ namespace Game.UI.Input
     {
         public override ModuleType ModuleType => ModuleType.Battle;
 
+        protected override bool CheckIsLocked()
+        {
+            return true;
+        }
+
         protected override void OnInputAction(ActionContext context)
         {
             InputType inputType = context.InputType;
             switch (inputType)
             {
                 case InputType.Cancel:
-                    //Pop();
+                    Pop();
                     break;
                 case InputType.Esc:
                     PopAll();

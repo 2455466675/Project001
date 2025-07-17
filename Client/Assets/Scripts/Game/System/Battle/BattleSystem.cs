@@ -109,15 +109,18 @@ namespace Game.GSystem
 
             Game.Scene.LoadBattleScene();
 
+            IsBattle = true;
+
+            var groupEntity = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Units_Group);
+            groupEntity.Show();
+
             await EndLoad();
 
             await StopTransitionAnim();
             //await Appear();
 
             MLog.Log("Enter end");
-
-            IsBattle = true;
-
+         
             for (int i = 0; i < 2; i++)
             {
                 var unit = GetBattleUnit(i);
@@ -160,10 +163,6 @@ namespace Game.GSystem
 
         private async UniTask EndLoad()
         {
-
-            var groupEntity = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Units_Group);
-            groupEntity.Show();
-
             List<UniTask> tasks = new List<UniTask>();
 
             foreach (var unit in units)

@@ -124,5 +124,10 @@ namespace Game.UI
             GoHelper.Destroy(groupView.gameObject);
             groupView = null;
         }
+
+        public virtual bool IsLocked()
+        {
+            return false;
+        }
     }
 }

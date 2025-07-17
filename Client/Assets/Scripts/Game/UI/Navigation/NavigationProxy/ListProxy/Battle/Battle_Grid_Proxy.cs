@@ -20,6 +20,24 @@ namespace Game.UI
             MLog.Log("Battle_Grid_Proxy OnDisable");
         }
 
+        public override bool InFocus(bool isRefocus, int[] indexs = null)
+        {
+            MLog.Log("Battle_Grid_Proxy InFocus");
+            return base.InFocus(isRefocus, indexs);
+        }
+
+        public override void OutFocus()
+        {
+            MLog.Log("Battle_Grid_Proxy OutFocus");
+            base.OutFocus();
+        }
+
+        public override void Exit()
+        {
+            MLog.Log("Battle_Grid_Proxy Exit");
+            base.Exit();
+        }
+      
         public override void OnBindData(GameNavigationItem item)
         {
 
@@ -30,9 +48,18 @@ namespace Game.UI
 
         }
 
+        public override void Move(float h, float v)
+        {
+            base.Move(h, v);
+        }
+
+        public override void Submit()
+        {
+            base.Submit();
+        }
+
         public override void OnSelect(GameNavigationItem item)
         {
-            MLog.Log("Battle_Grid_Proxy OnSelect");
             TileItem tileItem = item as TileItem;
             tileItem.Focus(true);
             Game.Event.Publish(new OnBattleGridSelectChangedEventArgs() { tileItem = tileItem });
@@ -48,6 +75,7 @@ namespace Game.UI
         {
             TileItem tileItem = item as TileItem;
             Game.Event.Publish(new OnBattleGridSubmitEventArgs() { tileItem = tileItem });
+            Game.UI.Back();
         }
     }
 }

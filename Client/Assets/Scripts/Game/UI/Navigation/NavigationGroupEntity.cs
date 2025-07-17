@@ -14,6 +14,8 @@ namespace Game.UI
         private NavigationGroupDefine define;
         private bool isLoaded;
 
+        public bool IsLocked => proxy != null && proxy.IsLocked();
+
         public void Init(NavigationGroupDefine define) 
         {            
             this.define = define;
