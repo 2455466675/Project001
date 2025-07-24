@@ -20,6 +20,8 @@ namespace Game.UI.Input
 
         private readonly Stack<InputCammand> subCammands;
 
+        protected bool IsPopAll { get; private set; }
+
         public InputCammand() 
         {
             subCammands = new Stack<InputCammand>();
@@ -28,9 +30,8 @@ namespace Game.UI.Input
         /// <summary>
         /// 弹出
         /// </summary>
-        /// <param name="isPopAll"></param>
-        /// <returns></returns>
-        public bool Pop(bool isPopAll = false) 
+        /// <returns>cammand is clean?</returns>
+        public bool Pop() 
         {
             if (subCammands.Count == 0) 
             {
@@ -39,13 +40,13 @@ namespace Game.UI.Input
 
             if (TryPeek(out InputCammand cammand)) 
             {
-                bool isOver = cammand.Pop(isPopAll); //总是在操作最上层的那一个命令
+                bool isOver = cammand.Pop(); //总是在操作最上层的那一个命令
                 if (!isOver) 
                 {
                     return false;
                 }
                 
-                cammand.OnPop(isPopAll);
+                cammand.OnPop();
                 subCammands.Pop();
 
                 if (subCammands.Count == 0) 
@@ -56,10 +57,10 @@ namespace Game.UI.Input
                 {
                     if (TryPeek(out cammand)) 
                     {
-                        bool success = cammand.Rise(isPopAll);  
+                        bool success = cammand.Rise();  
                         if (!success) 
                         {
-                            return Pop(isPopAll);   //如果下一个命令上升失败，将其也弹出
+                            return Pop();   //如果下一个命令上升失败，将其也弹出
                         }
                     }
                     return false;
@@ -76,6 +77,7 @@ namespace Game.UI.Input
         /// </summary>
         public void PopAll()
         {
+            IsPopAll = true;
             while (Count > 0)
             {
                 InputCammand top = Top();
@@ -88,8 +90,9 @@ namespace Game.UI.Input
                     break;
                 }
 
-                Pop(true);
+                Pop();
             }
+            IsPopAll = false;
         }
 
         /// <summary>
@@ -154,9 +157,9 @@ namespace Game.UI.Input
         /// 命令升到栈顶
         /// </summary>
         /// <returns>是否成功</returns>
-        private bool Rise(bool isPopAll = false) 
+        private bool Rise() 
         {
-            bool success = OnRise(isPopAll);
+            bool success = OnRise();
             if (!success)
             {
                 return false;
@@ -165,7 +168,7 @@ namespace Game.UI.Input
             {
                 if (TryPeek(out InputCammand cammand))
                 {
-                    return cammand.Rise(isPopAll);
+                    return cammand.Rise();
                 }
                 return true;
             }
@@ -186,7 +189,7 @@ namespace Game.UI.Input
         /// <summary>
         /// 当命令弹出时
         /// </summary>
-        protected virtual void OnPop(bool isPopAll = false) 
+        protected virtual void OnPop() 
         {
         }
         /// <summary>
@@ -200,7 +203,7 @@ namespace Game.UI.Input
         /// <summary>
         /// 当命令升到栈顶时
         /// </summary>
-        protected virtual bool OnRise(bool isPopAll = false) 
+        protected virtual bool OnRise() 
         {
             return true;
         }

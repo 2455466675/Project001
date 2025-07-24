@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using Game.UI.Input;
 using Game.UI;
 using System.Collections.Generic;
 
@@ -111,6 +110,8 @@ namespace Game.GSystem
 
             IsBattle = true;
 
+            Game.UI.PushModule(UI.Input.ModuleType.Battle);
+
             var groupEntity = Game.UI.GetNavigationGroupEntity(UI.NavigationGroupDefine.Battle_Units_Group);
             groupEntity.Show();
 
@@ -155,8 +156,10 @@ namespace Game.GSystem
                 BattleUnit unit = units[i];
                 unit.Reset(testHero[i]);
 
-                turnController.AddUnit(unit.BattleId);
+                turnController.AddUnit(unit);
             }
+
+            turnController.StartUp();
 
             await UniTask.Yield();
         }

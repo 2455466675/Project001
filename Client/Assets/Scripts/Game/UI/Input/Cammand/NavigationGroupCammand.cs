@@ -17,7 +17,7 @@ namespace Game.UI
             this.intent = intent;
         }
 
-        protected override void OnPop(bool isPopAll = false)
+        protected override void OnPop()
         {
             var entity = GetEntity();
             entity?.Hide();
@@ -30,7 +30,7 @@ namespace Game.UI
             return true;
         }
 
-        protected override bool OnRise(bool isPopAll = false)
+        protected override bool OnRise()
         {
             var entity = GetEntity();
             entity?.Refocus();

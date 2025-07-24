@@ -75,7 +75,12 @@ namespace Game.UI
         {
             TileItem tileItem = item as TileItem;
             Game.Event.Publish(new OnBattleGridSubmitEventArgs() { tileItem = tileItem });
-            Game.UI.Back();
+            //Game.UI.Back();
+        }
+
+        public override bool IsLocked()
+        {
+            return true;
         }
     }
 }

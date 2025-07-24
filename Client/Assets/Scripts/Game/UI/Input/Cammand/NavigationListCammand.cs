@@ -17,7 +17,7 @@ namespace Game.UI
             this.defaultIndexs = defaultIndexs;
         }
 
-        protected override void OnPop(bool isPopAll = false)
+        protected override void OnPop()
         {
             var entity = GetEntity();
             entity?.Exit();            
@@ -36,9 +36,9 @@ namespace Game.UI
             }          
         }
 
-        protected override bool OnRise(bool isPopAll = false)
+        protected override bool OnRise()
         {
-            if (isPopAll) //isPopAll不再聚焦，必定成功
+            if (IsPopAll) //isPopAll不再聚焦，必定成功
             {
                 return true;
             }

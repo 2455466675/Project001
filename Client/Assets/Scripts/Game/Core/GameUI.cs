@@ -27,6 +27,11 @@ namespace Game.UI
             inputController.Navigate(list_ID, moduleType, navigateIndexs, intent);
         }
 
+        public void PushModule(ModuleType moduleType) 
+        {
+            inputController.PushModule(moduleType);
+        }
+
         public void Back()
         {
             inputController.Back();

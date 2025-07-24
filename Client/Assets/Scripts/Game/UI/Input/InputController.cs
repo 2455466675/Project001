@@ -81,6 +81,11 @@ namespace Game.UI.Input
             moduleManager.Navigate(list_ID, moduleType, navigateIndexs, intent);            
         }
 
+        public void PushModule(ModuleType moduleType) 
+        {
+            moduleManager.PushModule(moduleType);
+        }
+
         public void Back() 
         {
             OnCancel();
