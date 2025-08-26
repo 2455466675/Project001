@@ -1,92 +1,71 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Navigation
+namespace Navigation 
 {
     public enum ListState
     {
-        Closed     = 0,
-        InFocused  = 1,
+        Closed = 0,
+        InFocused = 1,
         OutFocused = 2,
     }
 
     public enum ListType
     {
-        Vertical   = 0,
+        Vertical = 0,
         Horizontal = 1,
-        Grid       = 2,
+        Grid = 2,
     }
 
-    public struct ListChangedEventArgs
-    {
-        /// <summary>
-        /// 起始索引
-        /// </summary>
-        public int MinIndex { get; private set; }
-        /// <summary>
-        /// 结束索引
-        /// </summary>
-        public int MaxIndex { get; private set; }
-        /// <summary>
-        /// 起始索引与结束索引之间的元素
-        /// </summary>
-        
-        public int ItemCount { get; private set; }
 
-        public int TotalCount { get; private set; }
-
-        public NavigationItem[] Items { get; private set; }
-        public ListChangedEventArgs(int minIndex, int maxIndex, int itemCount, int totalCount, NavigationItem[] items)
-        {
-            MinIndex = minIndex;
-            MaxIndex = maxIndex;
-            ItemCount = itemCount;
-            TotalCount = totalCount;
-            Items = items;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class NavigationList : MonoBehaviour, INavigation
+    public abstract class NavigationList : MonoBehaviour
     {
         [SerializeField]
-        protected ListType listType;
+        protected ListType m_ListType;
+        protected ListState state;
+
         protected int minIndex;
         protected int maxIndex;
         protected int pointer;
         protected bool isInit;
-        protected ListState state;
 
         private NavigationItem[] current;
 
-        public event Action OnListInFocusEvent;
-        public event Action OnListOutFocusEvent;
-        public event Action OnListExitEvent;
-        public event Action OnListEmptyEvent;
-        public event Action<NavigationItem> OnSelectedEvent;
-        public event Action<NavigationItem> OnDeselectedEvent;
-        public event Action<NavigationItem> OnSubmitEvent;
-        public event Action<NavigationItem> OnClearItemEvent;
-        public event Action<float, float, NavigationItem> OnMoveEvent;
+        #region Event
+
+        public event Action OnListInFocus;
+        public event Action OnListOutFocus;
+        public event Action OnListExit;
+
+        public event Action<NavigationItem> OnSelectedItem;
+        public event Action<NavigationItem> OnDeselectedItem;
+        public event Action<NavigationItem> OnSubmitItem;    
+        public event Action<float, float, NavigationItem> OnMoveItem;
+
+        public event Action<NavigationItem> OnItemBindData;
+        public event Action<NavigationItem> OnItemUnbindData;
+
+        #endregion
+
+        #region
 
         [SerializeField]
         [Range(0.2f, 1f)]
         private float pressTime = 0.3f; //长按时间
         private float pressTimer;
-
         [SerializeField]
         [Range(0.1f, 1f)]
         private float intervalTime = 0.15f; //长按后每次更新间隔
         private float intervalTimer;
-
         private bool isPress;
         private bool CanMove => pressTimer <= 0f && intervalTimer <= 0f;
 
+
         private void FixedUpdate()
         {
-            if (!isPress) 
+            if (!isPress)
             {
                 return;
             }
@@ -99,26 +78,54 @@ namespace Navigation
             if (intervalTimer > 0f)
             {
                 intervalTimer -= Time.fixedDeltaTime;
-            }            
+            }
         }
 
-        public virtual void Init() 
+        #endregion
+
+        #region
+
+        public bool InFocus(bool isRefocus, int[] indexs = null) 
         {
+            if (indexs == null || indexs.Length == 0)
+            {
+                indexs = new int[] { 0 };
+            }
+            bool r = OnInFocus(isRefocus, indexs);
+            if (r)
+            {
+                OnListInFocus?.Invoke();
+            }
+            return r;
         }
 
-        public virtual void Clear() 
+        public void OutFocus() 
         {
+            state = ListState.OutFocused;
+            isPress = false;
+            OutFocusCurrent();
+            OnListOutFocus?.Invoke();
+        }
+
+        public void Exit() 
+        {
+            state = ListState.Closed;
+            DeselectCurrent();
+            current = null;
+            isPress = false;
+            OnExit();
+            OnListExit?.Invoke();
         }
 
         public void Move(float h, float v)
         {
-            if (h == 0f && v == 0f) 
+            if (h == 0f && v == 0f)
             {
-                isPress = false;          
+                isPress = false;
                 return;
             }
-            
-            if (!isPress) 
+
+            if (!isPress)
             {
                 MoveInner(h, v);
                 isPress = true;
@@ -133,7 +140,7 @@ namespace Navigation
                 }
                 MoveInner(h, v);
                 intervalTimer = intervalTime;
-            }            
+            }
         }
 
         public void Submit()
@@ -141,49 +148,24 @@ namespace Navigation
             SubmitCurrent();
         }
 
-        public bool InFocus(bool isRefocus, int[] indexs = null)
-        {
-            if (indexs == null || indexs.Length == 0) 
-            {
-                indexs = new int[] { 0 };
-            }
-            bool r = OnInFocus(isRefocus, indexs);
-            if (r) 
-            {
-                OnListInFocusEvent?.Invoke();
-            }
-            return r;
-        }
+        #endregion
 
-        public void OutFocus()
-        {
-            state = ListState.OutFocused;
-            isPress = false;
-            OutFocusCurrent();
-            OnListOutFocusEvent?.Invoke();
-        }
+        #region
 
-        public void Exit()
-        {
-            state = ListState.Closed;
-            DeselectCurrent();
-            current = null;
-            isPress = false;
-            OnExit();
-            OnListExitEvent?.Invoke();
-        }
+        public abstract void Init();
+        public abstract void UpdateDataCount(int count);      
 
-        protected virtual void OnMove(float h, float v) 
+        protected virtual void OnMove(float h, float v)
         {
         }
 
-        protected virtual bool OnInFocus(bool isRefocus, int[] indexs = null) 
+        protected virtual bool OnInFocus(bool isRefocus, int[] indexs = null)
         {
             return false;
         }
 
-        protected virtual void OnExit() 
-        {        
+        protected virtual void OnExit()
+        {
         }
 
         protected void SelectChanged(NavigationItem[] items)
@@ -192,82 +174,29 @@ namespace Navigation
             SelectCurrent(items);
         }
 
-        protected void ClearItem(NavigationItem item) 
+        protected void SetItemDataIndex(NavigationItem item, int index) 
         {
-            OnClearItemEvent?.Invoke(item);
-            item.UnbindData();
-        }
-
-        protected void ListEmpty() 
-        {
-            OnListEmptyEvent?.Invoke();
-        }
-
-        private void DeselectCurrent()
-        {
-            if (current != null)
+            if (index < 0)
             {
-                NavigationItem[] temp = new NavigationItem[current.Length];
-                Array.Copy(current, temp, current.Length);
-
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    NavigationItem item = temp[i];
-                    item.OnDeselect();
-                    OnDeselectedEvent?.Invoke(item);
-                }
+                UnbindData(item);
+            }
+            else
+            {
+                BindData(item, index);
             }
         }
 
-        private void SelectCurrent(NavigationItem[] items)
+        #endregion
+
+        #region
+
+        private void MoveInner(float h, float v)
         {
-            current = items;
-
-            if (current != null)
-            {
-                NavigationItem[] temp = new NavigationItem[current.Length];
-                Array.Copy(current, temp, current.Length);
-
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    NavigationItem item = temp[i];
-                    item.OnSelect();
-                    OnSelectedEvent?.Invoke(item);
-                }
-            }
+            MoveCurrent(h, v);
+            OnMove(h, v);
         }
 
-        private void OutFocusCurrent()
-        {
-            if (current != null)
-            {
-                NavigationItem[] temp = new NavigationItem[current.Length];
-                Array.Copy(current, temp, current.Length);
-
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    temp[i].OutFocus();
-                }
-            }
-        }
-
-        private void SubmitCurrent()
-        {
-            if (current != null)
-            {
-                NavigationItem[] temp = new NavigationItem[current.Length];
-                Array.Copy(current, temp, current.Length);
-
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    NavigationItem item = temp[i];
-                    item.OnSubmit();
-                    OnSubmitEvent?.Invoke(item);
-                }
-            }
-        }
-
-        private void MoveCurrent(float h, float v) 
+        private void MoveCurrent(float h, float v)
         {
             if (current != null)
             {
@@ -295,15 +224,97 @@ namespace Navigation
                         item.OnMoveDown();
                     }
 
-                    OnMoveEvent?.Invoke(h, v, item);
+                    OnMoveItem?.Invoke(h, v, item);
                 }
             }
         }
 
-        private void MoveInner(float h, float v)
+        private void SubmitCurrent()
         {
-            MoveCurrent(h, v);
-            OnMove(h, v);
+            if (current != null)
+            {
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    NavigationItem item = temp[i];
+                    item.OnSubmit();
+                    OnSubmitItem?.Invoke(item);
+                }
+            }
         }
+
+        private void SelectCurrent(NavigationItem[] items)
+        {
+            current = items;
+
+            if (current != null)
+            {
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    NavigationItem item = temp[i];
+                    item.OnSelect();
+                    OnSelectedItem?.Invoke(item);
+                }
+            }
+        }
+
+        private void DeselectCurrent()
+        {
+            if (current != null)
+            {
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    NavigationItem item = temp[i];
+                    item.OnDeselect();
+                    OnDeselectedItem?.Invoke(item);
+                }
+            }
+        }
+
+        private void OutFocusCurrent()
+        {
+            if (current != null)
+            {
+                NavigationItem[] temp = new NavigationItem[current.Length];
+                Array.Copy(current, temp, current.Length);
+
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    temp[i].OutFocus();
+                }
+            }
+        }
+
+        private void BindData(NavigationItem item, int index)
+        {
+            if (item.IndexOfData >= 0)
+            {
+                UnbindData(item);
+            }
+
+            item.SetDataIndex(index);
+            OnItemBindData?.Invoke(item);
+        }
+
+        private void UnbindData(NavigationItem item)
+        {
+            if (item.IndexOfData < 0)
+            {
+                return;
+            }
+
+            OnItemUnbindData?.Invoke(item);
+            item.SetDataIndex(-1);
+        }
+
+        #endregion
     }
 }

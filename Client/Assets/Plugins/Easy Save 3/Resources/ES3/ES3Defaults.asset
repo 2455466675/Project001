@@ -33,15 +33,19 @@ MonoBehaviour:
     - Assembly-CSharp-firstpass
     - UniTask.Linq
     - YooAsset
-    - Game
+    - Base
     - Eflatun.SceneReference
     - GameConfig
-    - Navigation
+    - UI
     - UniTask.DOTween
+    - Navigation2
     - Assembly-CSharp
-    - GameUnit
+    - Core
+    - Utility
+    - Gameplay
     - UniTask.Addressables
     - Sirenix.OdinInspector.CompatibilityLayer
+    - Feature
     - UniTask.TextMeshPro
     - Eflatun.SceneReference.Editor
     - PsdPlugin

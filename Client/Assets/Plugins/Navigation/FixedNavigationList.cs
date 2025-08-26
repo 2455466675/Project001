@@ -18,17 +18,15 @@ namespace Navigation
             LowerRight,
         }
 
-        [ShowIf("listType", ListType.Grid)]
+        [ShowIf("m_ListType", ListType.Grid)]
         public int rowCount;
-        [ShowIf("listType", ListType.Grid)]
+        [ShowIf("m_ListType", ListType.Grid)]
         public int columnCount;
-        [ShowIf("listType", ListType.Grid)]
+        [ShowIf("m_ListType", ListType.Grid)]
         public ChildAlignment childAlignment;
 
         [SerializeField]
         private List<NavigationItem> items;
-
-        public int Count => items != null ? items.Count : 0;
 
         [SerializeField]
         private bool isLoop;
@@ -38,21 +36,11 @@ namespace Navigation
         /// </summary>
         private int[] index;
         private bool IsMultiple => index != null && index.Length > 1;
-        private bool IsGrid => listType == ListType.Grid;
-
-        public NavigationItem GetItem(int index)
-        {
-            if (index < 0 || index >= items.Count)
-            {
-                return null;
-            }
-
-            return items[index];
-        }
+        private bool IsGrid => m_ListType == ListType.Grid;
 
         public override void Init()
         {
-            if (isInit) 
+            if (isInit)
             {
                 Debug.LogWarning("repeat init");
                 return;
@@ -71,22 +59,28 @@ namespace Navigation
             isInit = true;
         }
 
-        public override void Clear()
+        public override void UpdateDataCount(int count) 
         {
+            if (count <= 0) 
+            {
+                return;
+            }
+
             if (items == null || items.Count == 0) 
             {
                 return;
             }
 
-            for (int i = 0; i < items.Count; i++) 
-            { 
-                var item = items[i];
-                if (item != null) 
+            for (int i = 0; i < items.Count; i++)
+            {
+                NavigationItem item = items[i];
+                if (i < count) 
                 {
-                    if (item.IsBinded)
-                    {
-                        ClearItem(item);
-                    }
+                    SetItemDataIndex(item, i);
+                }
+                else
+                {
+                    SetItemDataIndex(item, -1);
                 }
             }
         }
@@ -127,28 +121,28 @@ namespace Navigation
             int index = -1;
             if (v > 0)
             {
-                if (IsGrid) 
+                if (IsGrid)
                 {
-                    if (isLoop) 
+                    if (isLoop)
                     {
                         bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
                         index = MovePointVertical(pointer, minus);
                     }
                     else
                     {
-                        if ((pointer + 1) % rowCount == 0) 
+                        if ((pointer + 1) % rowCount == 0)
                         {
                             return;
                         }
                         else
                         {
-                            index = MovePointVertical(pointer, false);                            
+                            index = MovePointVertical(pointer, false);
                         }
                     }
                 }
                 else
                 {
-                    index = MovePointVertical(pointer, true);                    
+                    index = MovePointVertical(pointer, true);
                 }
 
             }
@@ -156,10 +150,10 @@ namespace Navigation
             {
                 if (IsGrid)
                 {
-                    if (isLoop) 
+                    if (isLoop)
                     {
                         bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
-                        index = MovePointVertical(pointer, !minus);                    
+                        index = MovePointVertical(pointer, !minus);
                     }
                     else
                     {
@@ -175,7 +169,7 @@ namespace Navigation
                 }
                 else
                 {
-                    index = MovePointVertical(pointer, false);                    
+                    index = MovePointVertical(pointer, false);
                 }
             }
             else if (h < 0)
@@ -209,7 +203,7 @@ namespace Navigation
                 return;
             }
 
-            Select(new int[] {index});
+            Select(new int[] { index });
         }
 
         private bool Select(int[] indexs)
@@ -250,7 +244,7 @@ namespace Navigation
 
                 //将无效的元素剔除
                 argItems = argItems.Where(item => item.IsValid).ToArray();
-                index = argItems?.Select(item => item.Index).ToArray();
+                index = argItems?.Select(item => item.IndexOfList).ToArray();
 
                 isSuccess = argItems != null && argItems.Length > 0;
                 pointer = argItems != null ? items.IndexOf(argItems[0]) : 0;
@@ -397,14 +391,14 @@ namespace Navigation
             } while (true);
         }
 
-        [Button("Init")]
+        //[Button("Init")]
         private void InitGroup()
         {
             items = GetComponentsInChildren<NavigationItem>().ToList();
             items.RemoveAll(x => x == null);
             for (int i = 0; i < items.Count; i++)
             {
-                items[i].SetIndex(i);
+                items[i].SetListIndex(i);
             }
         }
     }

@@ -115,7 +115,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8179828721177960079}
-  - component: {fileID: 8047615897684151997}
   m_Layer: 0
   m_Name: actor_2004
   m_TagString: Untagged
@@ -140,24 +139,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8047615897684151997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1493306877634760687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1f30e5cb5ef37943a993b1e6b2dde4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 3188721988335370791}
-  animator: {fileID: 6144966887487820105}
-  m_rigidbody2D: {fileID: 0}
-  boxCollider2D: {fileID: 0}
-  bones: {fileID: 118622751275710635}
-  actionDriver: {fileID: 0}
 --- !u!1 &1579501260368144661
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +148,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7893402724308303655}
-  - component: {fileID: 118622751275710635}
   m_Layer: 0
   m_Name: bones
   m_TagString: Untagged
@@ -193,22 +173,6 @@ Transform:
   m_Father: {fileID: 8179828721177960079}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &118622751275710635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1579501260368144661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa121af02ff33274783988ea25259528, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bones:
-  - {fileID: 8702377447668989582}
-  - {fileID: 5513047833571736361}
-  - {fileID: 8933107704018621751}
 --- !u!1 &4843911336335773945
 GameObject:
   m_ObjectHideFlags: 0

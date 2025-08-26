@@ -42,10 +42,10 @@ namespace Navigation
         {
             if (list != null) 
             {
-                list.OnListChangedEvent += List_OnListChangedEvent;
-                list.OnListInFocusEvent += List_OnListInFocusEvent;
-                list.OnListOutFocusEvent += List_OnListOutFocusEvent;
-                list.OnListExitEvent += List_OnListExitEvent;
+                //list.OnListChangedEvent += List_OnListChangedEvent;
+                //list.OnListInFocusEvent += List_OnListInFocusEvent;
+                //list.OnListOutFocusEvent += List_OnListOutFocusEvent;
+                //list.OnListExitEvent += List_OnListExitEvent;
             }
 
             StartCoroutine(HideFade(0f, 0f));
@@ -93,38 +93,38 @@ namespace Navigation
             }
         }
 
-        private void List_OnListChangedEvent(ListChangedEventArgs obj)
-        {
-            if (!isInFocus) 
-            {
-                return;
-            }
+        //private void List_OnListChangedEvent(ListChangedEventArgs obj)
+        //{
+        //    if (!isInFocus) 
+        //    {
+        //        return;
+        //    }
 
-            int minIndex = obj.MinIndex;
-            int itemCount = obj.ItemCount;
-            int totalCount = obj.TotalCount;
+        //    int minIndex = obj.MinIndex;
+        //    int itemCount = obj.ItemCount;
+        //    int totalCount = obj.TotalCount;
 
-            if (totalCount <= 0 || totalCount <= itemCount)
-            {
-                Hide();
-                this.value = 0;
-                tickCounter = 0;
-                tickIntervaler = 0f;
-            }
-            else
-            {
-                float size = (1f * itemCount) / totalCount;
-                float value = (1f * minIndex) / (totalCount - itemCount);
-                if (this.value != value)
-                {
-                    this.size = size;
-                    this.value = value;
-                    tickCounter++;
-                    tickIntervaler = tickInterval;
-                    showDurationer = showDuration;
-                }
-            }
-        }
+        //    if (totalCount <= 0 || totalCount <= itemCount)
+        //    {
+        //        Hide();
+        //        this.value = 0;
+        //        tickCounter = 0;
+        //        tickIntervaler = 0f;
+        //    }
+        //    else
+        //    {
+        //        float size = (1f * itemCount) / totalCount;
+        //        float value = (1f * minIndex) / (totalCount - itemCount);
+        //        if (this.value != value)
+        //        {
+        //            this.size = size;
+        //            this.value = value;
+        //            tickCounter++;
+        //            tickIntervaler = tickInterval;
+        //            showDurationer = showDuration;
+        //        }
+        //    }
+        //}
 
         private void List_OnListOutFocusEvent()
         {

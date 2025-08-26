@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2429482123385954082}
-  - component: {fileID: 7065902620540750852}
   m_Layer: 0
   m_Name: as_battle
   m_TagString: Untagged
@@ -33,20 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7065902620540750852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3642039152239245888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3794a4cf60f5d3a459d4aacbc55381ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actions:
-  - {fileID: 4028876289627795231}
 --- !u!1 &4139167533820470066
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,8 +41,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 874034724649888031}
-  - component: {fileID: 4028876289627795231}
-  - component: {fileID: 3069840819415135114}
   m_Layer: 0
   m_Name: Skill001
   m_TagString: Untagged
@@ -80,39 +63,3 @@ Transform:
   m_Father: {fileID: 2429482123385954082}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4028876289627795231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4139167533820470066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9339c86f06c8844db1dc38dc03da87f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Skill001
-  commands:
-  - {fileID: 3069840819415135114}
---- !u!114 &3069840819415135114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4139167533820470066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ce304f203e84748b11c9980de77ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  priority: 0
-  timepoint: 0
-  duration: 0.233
-  parameter: skill_001
-  animationType: 99
-  intValue: 0
-  floatValue: 0
-  boolValue: 0
-  layer: 0

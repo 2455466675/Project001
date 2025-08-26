@@ -1,7 +1,8 @@
-using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace Navigation
 {
@@ -232,15 +233,15 @@ namespace Navigation
         #endregion
 
         [SerializeField]
-        [ShowIf("listType", ListType.Vertical)]
+        [ShowIf("m_ListType", ListType.Vertical)]
         private Vertical vertical;
 
         [SerializeField]
-        [ShowIf("listType", ListType.Horizontal)]
+        [ShowIf("m_ListType", ListType.Horizontal)]
         private Horizontal horizontal;
 
         [SerializeField]
-        [ShowIf("listType", ListType.Grid)]
+        [ShowIf("m_ListType", ListType.Grid)]
         private Grid grid;
 
         [SerializeField]
@@ -250,14 +251,14 @@ namespace Navigation
         [SerializeField]
         private RectTransform content;
 
-        private bool Isvertical => listType == ListType.Vertical;
-        private bool IsHorizontal => listType == ListType.Horizontal;
-        private bool IsGrid => listType == ListType.Grid;
+        private bool Isvertical => m_ListType == ListType.Vertical;
+        private bool IsHorizontal => m_ListType == ListType.Horizontal;
+        private bool IsGrid => m_ListType == ListType.Grid;
 
         /// <summary>
         /// 数据数量
         /// </summary>
-        private int totalCount;
+        private int dataCount;
         /// <summary>
         /// 子物体数量
         /// </summary>
@@ -282,52 +283,43 @@ namespace Navigation
                 return;
             }
 
-            if (viewport == null) 
+            if (viewport == null)
             {
                 Debug.LogError("viewport is null");
                 return;
             }
 
-            if (content == null) 
+            if (content == null)
             {
                 Debug.LogError("content is null");
                 return;
             }
 
             isInit = true;
-            totalCount = -1;
+            dataCount = -1;
             minIndex = -1;
             maxIndex = -1;
             pointer = -1;
             state = ListState.Closed;
 
-            if (Isvertical) 
+            if (Isvertical)
             {
                 CreateItemsByVertical();
             }
             if (IsHorizontal)
             {
                 CreateItemsByHorizontal();
-            }  
-            if (IsGrid) 
+            }
+            if (IsGrid)
             {
                 CreateItemsByGrid();
             }
         }
 
-        public override void Clear()
-        {
-            minIndex = -1;
-            maxIndex = -1;
-            pointer = 0;
-            totalCount = 0;
-            OnListChanged();
-        }
-
-        public void UpdateItemCount(int count)
+        public override void UpdateDataCount(int count)
         {
             if (!isInit)
-            {                
+            {
                 return;
             }
 
@@ -338,37 +330,36 @@ namespace Navigation
 
             if (count == 0)
             {
-                Clear();
-                if (state == ListState.InFocused) 
+                if (state == ListState.InFocused)
                 {
-                    ListEmpty();                
+                    //ListEmpty();
                 }
                 return;
             }
 
-            if (totalCount == count)
+            if (dataCount == count)
             {
                 OnListChanged();
                 return;
             }
 
-            totalCount = count;
+            dataCount = count;
 
             if (pointer == 0)
             {
                 minIndex = 0;
-                maxIndex = Mathf.Min(totalCount - 1, itemCount - 1);
+                maxIndex = Mathf.Min(dataCount - 1, itemCount - 1);
                 OnListChanged();
             }
             else
             {
                 int oldPointer = pointer;
-                if (IsGrid) 
+                if (IsGrid)
                 {
                     int oldMin = minIndex;
 
-                    maxIndex = Mathf.Min(totalCount - 1, Mathf.Max(maxIndex, itemCount - 1));
-                    if ((maxIndex + 1) % grid.columnCount == 0) 
+                    maxIndex = Mathf.Min(dataCount - 1, Mathf.Max(maxIndex, itemCount - 1));
+                    if ((maxIndex + 1) % grid.columnCount == 0)
                     {
                         minIndex = Mathf.Max(maxIndex - (grid.rowCount * grid.columnCount) + 1, 0);
                     }
@@ -389,7 +380,7 @@ namespace Navigation
                 {
                     int i = pointer - minIndex;
 
-                    maxIndex = Mathf.Min(totalCount - 1, Mathf.Max(maxIndex, itemCount - 1));
+                    maxIndex = Mathf.Min(dataCount - 1, Mathf.Max(maxIndex, itemCount - 1));
                     minIndex = Mathf.Max(maxIndex - (itemCount - 1), 0);
                     pointer = Mathf.Clamp(minIndex + i, minIndex, maxIndex);
 
@@ -398,13 +389,16 @@ namespace Navigation
                     {
                         OnSelectChanged();
                     }
-                }                
+                }
             }
         }
 
         protected override void OnExit()
         {
             pointer = -1;
+            minIndex = -1;
+            maxIndex = -1;
+            dataCount = 0;
         }
 
         protected override bool OnInFocus(bool isRefocus, int[] indexs)
@@ -424,37 +418,37 @@ namespace Navigation
 
         protected override void OnMove(float h, float v)
         {
-            if (!isInit) 
+            if (!isInit)
             {
                 return;
             }
 
             int index = -1;
-            if (Isvertical) 
+            if (Isvertical)
             {
-                index = vertical.MovePointer(h, v, pointer, totalCount - 1);
+                index = vertical.MovePointer(h, v, pointer, dataCount - 1);
             }
 
-            if (IsHorizontal) 
+            if (IsHorizontal)
             {
-                index = horizontal.MovePointer(h, v, pointer, totalCount - 1);
+                index = horizontal.MovePointer(h, v, pointer, dataCount - 1);
             }
 
-            if (IsGrid) 
+            if (IsGrid)
             {
-                index = grid.MovePointer(h, v, pointer, totalCount - 1);
+                index = grid.MovePointer(h, v, pointer, dataCount - 1);
             }
 
-            if (index < 0) 
+            if (index < 0)
             {
                 return;
             }
 
             bool success = Select(index);
-            if (success) 
+            if (success)
             {
                 OnSelectChanged();
-            }   
+            }
         }
 
         private bool Select(int index)
@@ -464,27 +458,27 @@ namespace Navigation
                 return false;
             }
 
-            if (index < 0 || index >= totalCount)
+            if (index < 0 || index >= dataCount)
             {
                 return false;
             }
 
             if (index >= minIndex && index <= maxIndex)
             {
-                pointer = index;                
+                pointer = index;
                 return true;
             }
 
             if (index < minIndex)
             {
-                if (IsGrid) 
+                if (IsGrid)
                 {
                     minIndex -= grid.columnCount;
-                    if((maxIndex + 1) % grid.columnCount == 0) 
+                    if ((maxIndex + 1) % grid.columnCount == 0)
                     {
                         maxIndex -= grid.columnCount;
                     }
-                    else 
+                    else
                     {
                         maxIndex -= (maxIndex + 1) % grid.columnCount;
                     }
@@ -496,7 +490,7 @@ namespace Navigation
                     maxIndex -= i;
                 }
 
-                pointer = index;        
+                pointer = index;
                 OnListChanged();
                 return true;
             }
@@ -507,7 +501,7 @@ namespace Navigation
                 {
                     minIndex += grid.columnCount;
                     maxIndex += grid.columnCount;
-                    maxIndex = Mathf.Min(totalCount - 1, maxIndex);
+                    maxIndex = Mathf.Min(dataCount - 1, maxIndex);
                 }
                 else
                 {
@@ -516,47 +510,50 @@ namespace Navigation
                     maxIndex += i;
                 }
 
-                pointer = index;                
+                pointer = index;
                 OnListChanged();
                 return true;
             }
-           
+
             return false;
         }
 
         private void OnListChanged()
         {
             int length = (maxIndex < 0 || minIndex < 0) ? 0 : maxIndex - minIndex + 1;
-            NavigationItem[] lts = new NavigationItem[length];
 
             foreach (var kv in items)
             {
                 int index = kv.Key;
                 NavigationItem item = kv.Value;
-                if (index < length) 
+                if (index < length)
                 {
                     item.SetActive(true);
-                    lts[index] = item;
+                    
+                    int dataIndex = index + minIndex;
+                    if (dataIndex > maxIndex || dataIndex < 0 || dataIndex > dataCount) 
+                    {
+                        continue;
+                    }
+                    
+                    SetItemDataIndex(item, dataIndex);
                 }
                 else
                 {
-                    if (item.IsBinded) 
-                    {
-                        ClearItem(item);
-                    }
+                    SetItemDataIndex(item, -1);
                     item.SetActive(false);
-                }                
-            }
-
-            OnListChangedEvent?.Invoke(new ListChangedEventArgs(minIndex, maxIndex, itemCount, totalCount, lts));            
+                }
+            }            
         }
 
         private void OnSelectChanged()
-        {                  
+        {
             NavigationItem[] selectedItems = new NavigationItem[] { items[pointer - minIndex] };
             SelectChanged(selectedItems);
         }
-   
+
+        #region
+
         private void CreateItemsByVertical()
         {
             item.SetActive(false);
@@ -588,10 +585,11 @@ namespace Navigation
                 NavigationItem lt = Instantiate<NavigationItem>(item, content);
 
                 float x = 0f + horizontalOffest;
-                float y = (h * i + verticalOffest + spacing * i) * (topToBottom ? -1f : 1f);                
+                float y = (h * i + verticalOffest + spacing * i) * (topToBottom ? -1f : 1f);
 
                 lt.transform.localPosition = new Vector2(x, y);
-                lt.SetIndex(i);
+                lt.SetListIndex(i);
+                lt.SetDataIndex(-1);
                 lt.SetActive(false);
                 items[i] = lt;
             }
@@ -631,7 +629,8 @@ namespace Navigation
                 float y = 0f + verticalOffest;
 
                 lt.transform.localPosition = new Vector2(x, y);
-                lt.SetIndex(i);
+                lt.SetListIndex(i);
+                lt.SetDataIndex(-1);
                 lt.SetActive(false);
                 items[i] = lt;
             }
@@ -649,17 +648,17 @@ namespace Navigation
             bool lowerRight = grid.alignment == Grid.Alignment.LowerRight;
 
             Vector2 pivot = new Vector2();
-            if (upperLeft) 
+            if (upperLeft)
             {
                 pivot.x = 0f;
                 pivot.y = 1f;
             }
-            if (upperRight) 
+            if (upperRight)
             {
                 pivot.x = 1f;
                 pivot.y = 1f;
             }
-            if (lowerLeft) 
+            if (lowerLeft)
             {
                 pivot.x = 0f;
                 pivot.y = 0f;
@@ -700,25 +699,26 @@ namespace Navigation
                     float x = w * j + horizontalOffest + xSpacing * j;
                     float y = h * i + verticalOffest + ySpacing * i;
 
-                    if (upperLeft) 
+                    if (upperLeft)
                     {
                         y *= -1f;
                     }
 
-                    if (upperRight) 
+                    if (upperRight)
                     {
                         x *= -1f;
                         y *= -1f;
                     }
 
-                    if (lowerRight) 
+                    if (lowerRight)
                     {
                         x *= -1f;
                     }
 
                     int index = cc * i + j;
                     lt.transform.localPosition = new Vector2(x, y);
-                    lt.SetIndex(index);
+                    lt.SetListIndex(index);
+                    lt.SetDataIndex(-1);
                     lt.SetActive(false);
                     items[index] = lt;
                 }
@@ -726,5 +726,7 @@ namespace Navigation
 
             itemCount = rc * cc;
         }
+
+        #endregion
     }
 }

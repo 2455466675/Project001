@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2350661334095558723}
-  - component: {fileID: 2350661334095558720}
   m_Layer: 0
   m_Name: BattleSelector
   m_TagString: Untagged
@@ -33,21 +32,6 @@ Transform:
   m_Father: {fileID: 4900466135154766657}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2350661334095558720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2350661334095558722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2187e58e6551fae4a9e33817f447d659, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  finger: {fileID: 3346917823849569158}
-  actorView: {fileID: 4900466135326869390}
-  offest: {x: -0.5, y: 0}
 --- !u!1 &3346917823849569158
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +43,6 @@ GameObject:
   - component: {fileID: 5633681687358923585}
   - component: {fileID: 2963797350097100688}
   - component: {fileID: 1583754222473677638}
-  - component: {fileID: 140957596995592440}
   m_Layer: 0
   m_Name: Finger
   m_TagString: Untagged
@@ -116,36 +99,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &140957596995592440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3346917823849569158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7f5277cfb30da149972ed2308870d72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 1050162004, guid: d4a1cec19a227d14b8f940eea4b135a9, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4900466135154766656
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +108,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4900466135154766657}
-  - component: {fileID: 4900466135154766662}
   m_Layer: 0
   m_Name: BattleUnit
   m_TagString: Untagged
@@ -180,24 +132,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4900466135154766662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4900466135154766656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9490bc5d2d928c64c804c359e51fe0e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  param: 
-  selector: {fileID: 2350661334095558720}
-  event: {fileID: 0}
-  views:
-  - key: ActorView
-    view: {fileID: 4900466135326869390}
 --- !u!1 &4900466135326869384
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +141,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4900466135326869385}
-  - component: {fileID: 4900466135326869390}
   m_Layer: 0
   m_Name: ActorView
   m_TagString: Untagged
@@ -230,15 +163,3 @@ Transform:
   m_Father: {fileID: 4900466135154766657}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4900466135326869390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4900466135326869384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95d2eb8c61dbb74cb1a01a0bf1269f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

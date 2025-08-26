@@ -146,7 +146,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6940473781498672934}
-  - component: {fileID: 1104254755421468072}
   m_Layer: 0
   m_Name: bones
   m_TagString: Untagged
@@ -172,22 +171,6 @@ Transform:
   m_Father: {fileID: 7041758613816586002}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1104254755421468072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2373165323785724165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa121af02ff33274783988ea25259528, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bones:
-  - {fileID: 712161944117227278}
-  - {fileID: 3697034527044086659}
-  - {fileID: 6045152138856081008}
 --- !u!1 &3011517892620379170
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +211,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7041758613816586002}
-  - component: {fileID: 4906058658493550527}
   m_Layer: 0
   m_Name: actor_2002
   m_TagString: Untagged
@@ -253,25 +235,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4906058658493550527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7800525811636564754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1f30e5cb5ef37943a993b1e6b2dde4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  spriteRenderer: {fileID: 5339550401177637544}
-  animator: {fileID: 7965858821288718081}
-  m_rigidbody2D: {fileID: 0}
-  boxCollider2D: {fileID: 0}
-  bones: {fileID: 1104254755421468072}
-  actionDriver: {fileID: 0}
 --- !u!1 &7861199876663614368
 GameObject:
   m_ObjectHideFlags: 0

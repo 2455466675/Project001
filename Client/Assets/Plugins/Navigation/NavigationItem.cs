@@ -3,193 +3,133 @@ using UnityEngine;
 
 namespace Navigation
 {
-    public interface IRefreshable 
+    public class NavigationItem : MonoBehaviour
     {
-        public void Refresh();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class NavigationItem : MonoBehaviour , IRefreshable
-    {
-        private INavigationItemData data;
-        [SerializeField]
-        private string param;
-
-        public bool IsBinded => data is not null;
-
         [HideInInspector]
         [SerializeField]
-        private int index;
-        public int Index => index;
-        public virtual bool IsValid => true;
+        private int m_IndexOfList;
+        public int IndexOfList => m_IndexOfList;
 
-        public event Action<NavigationItem> OnRefreshEvent;
+        private int m_IndexOfData;
+        public int IndexOfData => m_IndexOfData;
 
-        /// <summary>
-        /// Ñ¡ÔñÆ÷
-        /// </summary>
+        internal bool IsValid 
+        {
+            get 
+            {
+                if (DataValidChecker == null) 
+                {
+                    return true;
+                }
+                else
+                {
+                    return DataValidChecker.Invoke(IndexOfData);
+                }
+            }
+        }        
+        public event Func<int, bool> DataValidChecker;
+
         [SerializeField]
-        private NavigationItemSelector selector;
-        /// <summary>
-        /// ÊÂ¼þ
-        /// </summary>
+        private NavigationItemSelector m_Selector;
         [SerializeField]
-        private NavigationItemEvent @event;
+        private NavigationItemEvent m_Event;
 
-        public void BindData(INavigationItemData data) 
-        {            
-            this.data = data;
-            this.data.Bind(this);
-        }
-
-        public void UnbindData() 
-        {
-            this.data.Unbind(this);
-            this.data = null;
-            OnRefreshEvent = null;
-        }
-
-        public void Refresh() 
-        {
-            OnRefreshEvent?.Invoke(this);
-        }
-
-        public bool TryGetData<T>(out T result) where T : class
-        {
-            if (IsBinded && data is T r) 
-            {
-                result = r;
-                return true;
-            }
-            else
-            {
-                result = default;
-                return false;                
-            }
-        }
-
-        public string GetStringParam() 
-        {
-            return param;
-        }
-
-        public int GetIntParam() 
-        {
-            if (int.TryParse(param, out var val)) 
-            {
-                return val;
-            }
-            return 0;
-        }
-
-        public double GetDoubleParam() 
-        {
-            if (double.TryParse(param, out var val)) 
-            {
-                return val;
-            }
-            return 0d;
-        }
+        #region
 
         internal void SetActive(bool active)
         {
             gameObject.SetActive(active);
         }
 
-        internal void SetIndex(int index)
+        internal void SetListIndex(int index)
         {
-            this.index = index;
+            m_IndexOfList = index;
         }
+
+        internal void SetDataIndex(int index) 
+        {
+            m_IndexOfData = index;
+        }
+
+        #endregion
+
+        #region Event
 
         internal void OnSelect()
         {
-            if (selector != null)
+            if (m_Selector != null)
             {
-                selector.OnSelect();
+                m_Selector.OnSelect();
             }
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnSelect(this);
+                m_Event.OnSelect(this);
             }
         }
 
         internal void OnDeselect()
         {
-            if (selector != null)
+            if (m_Selector != null)
             {
-                selector.OnDeselect();
+                m_Selector.OnDeselect();
             }
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnDeselect(this);
+                m_Event.OnDeselect(this);
             }
         }
 
         internal void OutFocus()
         {
-            if (selector != null)
+            if (m_Selector != null)
             {
-                selector.OnOutFocus();
+                m_Selector.OnOutFocus();
             }
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnOutFocus(this);
+                m_Event.OnOutFocus(this);
             }
         }
 
         internal void OnSubmit()
         {
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnSubmit(this);
+                m_Event.OnSubmit(this);
             }
         }
 
-        internal void OnMoveUp() 
+        internal void OnMoveUp()
         {
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnMoveUp(this);
+                m_Event.OnMoveUp(this);
             }
         }
 
         internal void OnMoveDown()
         {
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnMoveDown(this);
+                m_Event.OnMoveDown(this);
             }
         }
 
         internal void OnMoveLeft()
         {
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnMoveLeft(this);
+                m_Event.OnMoveLeft(this);
             }
         }
 
         internal void OnMoveRight()
         {
-            if (@event != null)
+            if (m_Event != null)
             {
-                @event.OnMoveRight(this);
+                m_Event.OnMoveRight(this);
             }
         }
-
-        protected void InitItem() 
-        {
-            if (@event == null) 
-            {
-                @event = GetComponentInChildren<NavigationItemEvent>();
-            }
-
-            if (selector == null) 
-            {
-                selector = GetComponentInChildren<NavigationItemSelector>();
-            }
-        }
+        #endregion
     }
 }

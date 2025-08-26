@@ -15,60 +15,60 @@ namespace Navigation
         }
 
         [SerializeField]
-        private NavigationItemUnityEvent onSubmitEvent;
+        private NavigationItemUnityEvent m_OnSubmit;
         [SerializeField]
-        private NavigationItemUnityEvent onSelectEvent;
+        private NavigationItemUnityEvent m_OnSelect;
         [SerializeField]
-        private NavigationItemUnityEvent onDeselectEvent;
+        private NavigationItemUnityEvent m_OnDeselect;
         [SerializeField]
-        private NavigationItemUnityEvent onOutFocusEvent;
+        private NavigationItemUnityEvent m_OnOutFocus;
         [SerializeField]
-        private NavigationItemUnityEvent onMoveUpEvent;
+        private NavigationItemUnityEvent m_OnMoveUp;
         [SerializeField]
-        private NavigationItemUnityEvent onMoveDownEvent;
+        private NavigationItemUnityEvent m_OnMoveDown;
         [SerializeField]
-        private NavigationItemUnityEvent onMoveLeftEvent;
+        private NavigationItemUnityEvent m_OnMoveLeft;
         [SerializeField]
-        private NavigationItemUnityEvent onMoveRightEvent;
+        private NavigationItemUnityEvent m_OnMoveRight;
 
         public void OnSubmit(NavigationItem item)
         {
-            onSubmitEvent?.Invoke(item);
+            m_OnSubmit?.Invoke(item);
         }
 
         public void OnSelect(NavigationItem item)
         {
-            onSelectEvent?.Invoke(item);
+            m_OnSelect?.Invoke(item);
         }
 
         public void OnDeselect(NavigationItem item)
         {
-            onDeselectEvent?.Invoke(item);
+            m_OnDeselect?.Invoke(item);
         }
 
         public void OnOutFocus(NavigationItem item)
         {
-            onOutFocusEvent?.Invoke(item);
+            m_OnOutFocus?.Invoke(item);
         }
 
         public void OnMoveUp(NavigationItem item)
         {
-            onMoveUpEvent?.Invoke(item);
+            m_OnMoveUp?.Invoke(item);
         }
 
         public void OnMoveDown(NavigationItem item)
         {
-            onMoveDownEvent?.Invoke(item);
+            m_OnMoveDown?.Invoke(item);
         }
 
         public void OnMoveLeft(NavigationItem item)
         {
-            onMoveLeftEvent?.Invoke(item);
+            m_OnMoveLeft?.Invoke(item);
         }
 
         public void OnMoveRight(NavigationItem item)
         {
-            onMoveRightEvent?.Invoke(item);
+            m_OnMoveRight?.Invoke(item);
         }
     }
 }

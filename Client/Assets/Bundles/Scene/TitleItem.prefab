@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1301563455208620400}
-  - component: {fileID: 4889096833308328141}
   m_Layer: 0
   m_Name: TitleItem
   m_TagString: Untagged
@@ -37,27 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &4889096833308328141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1301563455208620401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8c47cc13f5fc5f4290b2eec0d4da19e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  param: 
-  selector: {fileID: 0}
-  event: {fileID: 0}
-  views: []
-  baseTile: {fileID: 1301563455764702636}
-  redTile: {fileID: 1301563456465467852}
-  yellowTile: {fileID: 1301563456202660829}
-  blueTile: {fileID: 1301563457098786578}
-  borderTile: {fileID: 1079244400007740412}
 --- !u!1 &1301563455764702626
 GameObject:
   m_ObjectHideFlags: 0

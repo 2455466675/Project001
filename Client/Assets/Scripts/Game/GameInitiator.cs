@@ -1,25 +1,24 @@
 using UnityEngine;
+using GameFramework;
+using GameFramework.Core;
+using GameFramework.Featrue;
+using GameFramework.Gameplay;
+using GameFramework.UI;
 
-namespace Game
+public class GameInitiator : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class GameInitiator : MonoBehaviour
-    {        
-        public GameInitConfig config;
+    private void Awake()
+    {
+        Core.Init();
+        Feature.Init();
+        Gameplay.Init();
+        UI.Init();
+    }
 
-        private void Awake()
-        {
-            Application.targetFrameRate = 30;
-        }
+    private async void Start()
+    {
+        await GameFramework.Game.InitModules();
 
-        private async void Start()
-        {
-            Game.Root = FindFirstObjectByType<GameRoot>();
-            await Game.Init(config);
-
-            Game.Event.Publish(new GameStartEventArgs());
-        }
+        GameFramework.Game.GetModule<EventManager>().Publish(new UIEventTestArg() { id = 19 });
     }
 }

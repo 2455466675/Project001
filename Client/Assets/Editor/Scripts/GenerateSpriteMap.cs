@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
-using Game.Resource;
+using GameFramework;
 
 public class GenerateSpriteMap
 {
