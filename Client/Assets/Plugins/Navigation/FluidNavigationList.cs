@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -264,10 +263,6 @@ namespace Navigation
         /// </summary>
         private int itemCount;
         private Dictionary<int, NavigationItem> items;
-        /// <summary>
-        /// 当列表发生变化时
-        /// </summary>
-        public event Action<ListChangedEventArgs> OnListChangedEvent;
 
         public override void Init()
         {

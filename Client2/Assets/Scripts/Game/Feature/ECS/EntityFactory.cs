@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace GameFramework.Featrue 
 {
-    public class EntityManager : IGameModule
+    public class EntityFactory : IGameModule
     {
         private int m_UidGenerator;
         private Dictionary<int, Entity> m_Entites;

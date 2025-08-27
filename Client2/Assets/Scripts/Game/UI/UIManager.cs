@@ -25,7 +25,7 @@ namespace GameFramework.UI
 
         public void ShowPanel(PanelDefine id, object content = null)
         {
-            Entity entity = Game.GetModule<EntityManager>().CreateEntity();
+            Entity entity = Game.GetModule<EntityFactory>().CreateEntity();
             PanelComponent pc = entity.AddComponent<PanelComponent>();
             pc.SetId(id);
             pc.Show(GetPanelController(id), content);
