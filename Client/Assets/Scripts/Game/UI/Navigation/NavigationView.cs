@@ -61,6 +61,15 @@ namespace GameFramework.UI
             m_List.OnItemUnbindData -= List_OnItemUnbindData;
         }
 
+        public void UpdateDataCount(int count) 
+        {
+            if(m_List == null) 
+            {
+                return;
+            }
+            m_List.UpdateDataCount(count);
+        }
+
         #region
 
         private void List_OnItemUnbindData(NavigationItem arg)

@@ -17,8 +17,8 @@ public class GameInitiator : MonoBehaviour
 
     private async void Start()
     {
-        await GameFramework.Game.InitModules();
+        await Game.InitModules();
 
-        GameFramework.Game.GetModule<EventManager>().Publish(new UIEventTestArg() { id = 19 });
+        Game.GetModule<EventManager>().Publish(new UIEventTestArg() { id = 19 });
     }
 }

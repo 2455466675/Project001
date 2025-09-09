@@ -16,8 +16,12 @@ namespace GameFramework.UI
         private Dictionary<NavigationDefine, NavigationController> m_NavigationControllers;
         private Dictionary<NavigationDefine, PanelDefine> m_NavigationMap;
 
+        private Dictionary<PanelDefine, Entity> m_Panels;
+
+
         public async UniTask Init()
         {
+            m_Panels = new Dictionary<PanelDefine, Entity>();
             InitControllers();
 
             await UniTask.Yield();
@@ -25,10 +29,23 @@ namespace GameFramework.UI
 
         public void ShowPanel(PanelDefine id, object content = null)
         {
-            Entity entity = Game.GetModule<EntityManager>().CreateEntity();
-            PanelComponent pc = entity.AddComponent<PanelComponent>();
-            pc.SetId(id);
-            pc.Show(GetPanelController(id), content);
+            Entity entity;
+            PanelComponent pc;
+            if (m_Panels.ContainsKey(id) ) 
+            {
+                entity = m_Panels[id];
+                pc = entity.AddComponent<PanelComponent>();
+                pc.Show(content);
+            }
+            else
+            {
+                entity = Game.GetModule<EntityManager>().CreateEntity();
+                pc = entity.AddComponent<PanelComponent>();
+                pc.SetId(id);
+                pc.Load(GetPanelController(id));
+                pc.Show(content);
+                m_Panels.Add(id, entity);
+            }
         }
 
         public void Navigate(NavigationDefine id)
@@ -43,6 +60,11 @@ namespace GameFramework.UI
         private PanelController GetPanelController(PanelDefine id)
         {
             return m_PanelControllers[id];
+        }
+
+        private NavigationController GetNavigationController(NavigationDefine id)
+        {
+            return m_NavigationControllers[id];
         }
 
         private void InitControllers() 
@@ -75,13 +97,17 @@ namespace GameFramework.UI
                     UIPanelControllerAttribute attribute = type.GetCustomAttribute(typeof(UIPanelControllerAttribute), false) as UIPanelControllerAttribute;
                     PanelController controller = Activator.CreateInstance(type) as PanelController;
 
-                    m_PanelControllers.Add(attribute.Id, controller);
-
-                    for (int j = 0; j < attribute.Children.Length; j++)
+                    int childCount = attribute.Children.Length;
+                    NavigationController[] controllers = new NavigationController[childCount];
+                    for (int j = 0; j < childCount; j++)
                     {
                         NavigationDefine navigationDefine = attribute.Children[j];
                         m_NavigationMap[navigationDefine] = attribute.Id;
+                        controllers[j] = GetNavigationController(navigationDefine);
                     }
+                    controller.SetNavigationControllers(controllers);
+
+                    m_PanelControllers.Add(attribute.Id, controller);
                 }
             }
         }

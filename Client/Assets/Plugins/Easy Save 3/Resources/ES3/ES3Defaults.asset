@@ -38,7 +38,7 @@ MonoBehaviour:
     - GameConfig
     - UI
     - UniTask.DOTween
-    - Navigation2
+    - Navigation
     - Assembly-CSharp
     - Core
     - Utility
@@ -47,6 +47,7 @@ MonoBehaviour:
     - Sirenix.OdinInspector.CompatibilityLayer
     - Feature
     - UniTask.TextMeshPro
+    - LITJson
     - Eflatun.SceneReference.Editor
     - PsdPlugin
     - YooAsset.Editor

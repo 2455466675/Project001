@@ -9,6 +9,11 @@ namespace GameFramework.Core
         public bool BoolValue { get; set; }
         public float X { get; set; }
         public float Y { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}, x:{2}, y:{3}", Input.ToString(), BoolValue, X, Y);
+        }
     }
 
     /// <summary>

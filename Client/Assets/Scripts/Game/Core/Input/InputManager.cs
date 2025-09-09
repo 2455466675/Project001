@@ -14,7 +14,7 @@ namespace GameFramework.Core
         public async UniTask Init()
         {
             m_GameInput = new GameInput();
-
+            m_GameInput.Enable();
             InitWrappers();
 
             await UniTask.Yield();
@@ -63,7 +63,8 @@ namespace GameFramework.Core
         }
 
         private void OnInputHandler(InputContext context)
-        { 
+        {
+            MDebug.Log("OnInputHandler", context);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-namespace Game
+namespace GameFramework
 {
     [Serializable]
     public class MyTest
