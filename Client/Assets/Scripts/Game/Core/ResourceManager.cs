@@ -93,15 +93,13 @@ namespace GameFramework.Core
         public GameObject LoadAndInstantiate(string path, Transform parent)
         {
             GameObject obj = LoadAsset<GameObject>(path);
-            //return GoHelper.Instantiate(obj, parent);
-            return null;
+            return GoHelper.Instantiate(obj, parent);
         }
 
         public async UniTask<GameObject> LoadAndInstantiateAsync(string path, Transform parent)
         {
             GameObject obj = await LoadAssetAsync<GameObject>(path);
-            //return GoHelper.Instantiate(obj, parent);
-            return null;
+            return GoHelper.Instantiate(obj, parent);
         }
 
         public Sprite GetSprite(string spriteName)

@@ -20,7 +20,7 @@ namespace GameFramework
         [SerializeField]
         private MainCamera mainCamera;
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);

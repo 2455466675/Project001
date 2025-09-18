@@ -1,38 +1,38 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace GameFramework.UI
 {
     public abstract class PanelController
     {
         private UIPanel m_Panel;
-
-        private NavigationController[] m_SubControllers;
-
         private object m_Content;
 
-        public void SetNavigationControllers(NavigationController[] controllers) 
-        {
-            m_SubControllers = controllers;
-        }
+        public bool IsLocked => CheckIsLocked();
 
         public void Show(UIPanel panel, object content)
         {
             m_Panel = panel;
             m_Content = content;
 
-            SubShow();
+            m_Panel.Show();
             OnShow();
         }
 
         public void Hide()
         {
-            SubHide();
             OnHide();
+            m_Panel.Hide();
 
             m_Panel = null;
             m_Content = null;
+        }
+
+        public void Refocus() 
+        {
+            OnRefocus();
+        }
+
+        public void OutFocus()
+        {
+            OnOutFocus();
         }
 
         protected T GetWidget<T>() where T : UIWidget
@@ -40,12 +40,9 @@ namespace GameFramework.UI
             return m_Panel.GetWidget<T>();
         }
 
-        protected virtual void OnShow() { }
-        protected virtual void OnHide() { }
-
         protected T GetContent<T>() where T : class
         {
-            if (m_Content == null) 
+            if (m_Content == null)
             {
                 return default;
             }
@@ -55,29 +52,17 @@ namespace GameFramework.UI
             }
         }
 
-        private void SubShow() 
-        {
-            var navigationViews = m_Panel.GetNavigationViews();
-            if (navigationViews == null || navigationViews.Length != m_SubControllers.Length)
-            {
-                return;
-            }
+        #region
 
-            for (int i = 0; i < m_SubControllers.Length; i++)
-            {
-                NavigationController controller = m_SubControllers[i];
-                NavigationView view = navigationViews[i];
-                controller.Show(view);
-            }
+        protected virtual void OnShow() { }
+        protected virtual void OnHide() { }
+        protected virtual void OnRefocus() { }
+        protected virtual void OnOutFocus() { }
+        protected virtual bool CheckIsLocked()
+        {
+            return false;
         }
 
-        private void SubHide() 
-        {
-            for (int i = 0; i < m_SubControllers.Length; i++)
-            {
-                NavigationController controller = m_SubControllers[i];
-                controller.Hide();
-            }
-        }
+        #endregion
     }
 }

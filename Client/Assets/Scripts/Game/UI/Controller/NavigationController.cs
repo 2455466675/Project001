@@ -41,6 +41,8 @@ namespace GameFramework.UI
         private List<DataModel> m_Datas;
         private Dictionary<int, DataBinder> m_Binders = new Dictionary<int, DataBinder>();
 
+        public bool IsLocked => CheckIsLocked();
+
         protected void SetData(List<DataModel> datas)
         {
             if (m_View == null)
@@ -87,7 +89,7 @@ namespace GameFramework.UI
             m_View.Submit();
         }
 
-        public bool InFocus(bool isRefocus, int[] indexs = null)
+        public bool InFocus(bool isRefocus, int[] indexs)
         {
             if (m_View == null)
             {
@@ -199,6 +201,11 @@ namespace GameFramework.UI
         protected virtual void MoveDownItemView(NavigationItemView itemView, DataModel dataModel) { }
         protected virtual void MoveLeftItemView(NavigationItemView itemView, DataModel dataModel) { }
         protected virtual void MoveRightItemView(NavigationItemView itemView, DataModel dataModel) { }
+
+        protected virtual bool CheckIsLocked() 
+        {
+            return false;
+        }
 
         #endregion
 

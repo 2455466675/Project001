@@ -14,14 +14,16 @@ namespace GameFramework.UI
 
         private Dictionary<PanelDefine, PanelController> m_PanelControllers;
         private Dictionary<NavigationDefine, NavigationController> m_NavigationControllers;
+        private Dictionary<PanelDefine, NavigationDefine[]> m_PanelMap;
         private Dictionary<NavigationDefine, PanelDefine> m_NavigationMap;
 
         private Dictionary<PanelDefine, Entity> m_Panels;
-
+        private Dictionary<NavigationDefine, Entity> m_Navigations;
 
         public async UniTask Init()
         {
             m_Panels = new Dictionary<PanelDefine, Entity>();
+            m_Navigations = new Dictionary<NavigationDefine, Entity>();
             InitControllers();
 
             await UniTask.Yield();
@@ -30,21 +32,44 @@ namespace GameFramework.UI
         public void ShowPanel(PanelDefine id, object content = null)
         {
             Entity entity;
-            PanelComponent pc;
             if (m_Panels.ContainsKey(id) ) 
             {
                 entity = m_Panels[id];
-                pc = entity.AddComponent<PanelComponent>();
-                pc.Show(content);
             }
             else
             {
-                entity = Game.GetModule<EntityManager>().CreateEntity();
-                pc = entity.AddComponent<PanelComponent>();
-                pc.SetId(id);
-                pc.Load(GetPanelController(id));
-                pc.Show(content);
-                m_Panels.Add(id, entity);
+                entity = InitPanel(id);
+            }
+            entity.GetComponent<PanelComponent>().Show(content);
+
+            var children = m_PanelMap[id];
+            if (children != null) 
+            {
+                for (int i = 0; i < children.Length; i++)
+                {
+                    var child = GetListEntity(children[i]);
+                    child?.GetComponent<NavigationListComponent>().Show();
+                }
+            }           
+        }
+
+        public void HidePanel(PanelDefine id)
+        {
+            if (!m_Panels.ContainsKey(id))
+            {
+                return;
+            }
+            Entity entity = m_Panels[id];
+            entity.GetComponent<PanelComponent>().Hide();
+
+            var children = m_PanelMap[id];
+            if (children != null)
+            {
+                for (int i = 0; i < children.Length; i++)
+                {
+                    var child = GetListEntity(children[i]);
+                    child?.GetComponent<NavigationListComponent>().Hide();
+                }
             }
         }
 
@@ -57,14 +82,38 @@ namespace GameFramework.UI
             PanelDefine panel = m_NavigationMap[id];
         }
 
-        private PanelController GetPanelController(PanelDefine id)
+        public Entity GetPanelEntity(PanelDefine id)
         {
-            return m_PanelControllers[id];
+            return m_Panels[id];
         }
 
-        private NavigationController GetNavigationController(NavigationDefine id)
+        public Entity GetListEntity(NavigationDefine id)
         {
-            return m_NavigationControllers[id];
+            return m_Navigations[id];
+        }
+
+        public PanelController GetPanelController(PanelDefine id)
+        {
+            if (m_PanelControllers.ContainsKey(id)) 
+            {
+                return m_PanelControllers[id];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public NavigationController GetNavigationController(NavigationDefine id)
+        {
+            if (m_NavigationControllers.ContainsKey(id))
+            {
+                return m_NavigationControllers[id];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private void InitControllers() 
@@ -72,6 +121,7 @@ namespace GameFramework.UI
             m_PanelControllers = new Dictionary<PanelDefine, PanelController>();
             m_NavigationControllers = new Dictionary<NavigationDefine, NavigationController>();
             m_NavigationMap = new Dictionary<NavigationDefine, PanelDefine>();
+            m_PanelMap = new Dictionary<PanelDefine, NavigationDefine[]>();
 
             AssemblyManager assemblyManager = Game.GetModule<AssemblyManager>();
 
@@ -98,18 +148,44 @@ namespace GameFramework.UI
                     PanelController controller = Activator.CreateInstance(type) as PanelController;
 
                     int childCount = attribute.Children.Length;
-                    NavigationController[] controllers = new NavigationController[childCount];
+                    NavigationDefine[] children = new NavigationDefine[childCount];
                     for (int j = 0; j < childCount; j++)
                     {
                         NavigationDefine navigationDefine = attribute.Children[j];
                         m_NavigationMap[navigationDefine] = attribute.Id;
-                        controllers[j] = GetNavigationController(navigationDefine);
+                        children[j] = navigationDefine;
                     }
-                    controller.SetNavigationControllers(controllers);
 
+                    m_PanelMap.Add(attribute.Id, children);
                     m_PanelControllers.Add(attribute.Id, controller);
                 }
             }
+        }
+
+        private Entity InitPanel(PanelDefine id)
+        {
+            var panelEntity = Game.GetModule<EntityManager>().CreateEntity();
+            var pc = panelEntity.AddComponent<PanelComponent>();
+
+            var panelControll = GetPanelController(id);
+            pc.Init(id, panelControll);
+
+            var views = pc.GetNavigationViews();
+            var children = m_PanelMap[id];
+            var length1 = children != null ? children.Length : 0;
+            var length2 = views != null ? views.Length : 0;
+            int length3 = Utility.Math.Min(length1, length2);
+            for (int i = 0; i < length3; i++)
+            {
+                var listEntity = Game.GetModule<EntityManager>().CreateEntity();
+                var nlc = listEntity.AddComponent<NavigationListComponent>();
+                var navigationController = GetNavigationController(children[i]);
+                nlc.Init(views[i], navigationController);
+                m_Navigations.Add(children[i], listEntity);
+            }
+
+            m_Panels.Add(id, panelEntity);
+            return panelEntity;
         }
     }
 }

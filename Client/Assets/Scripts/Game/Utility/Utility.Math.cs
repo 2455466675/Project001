@@ -10,6 +10,11 @@ namespace GameFramework
             {
                 return Mathf.Max(v1, v2);
             }
+
+            public static int Min(int v1, int v2)
+            {
+                return Mathf.Min(v1, v2);
+            }
         }
     }
 }

@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 5033770037687045509}
   - component: {fileID: 5508568936135379157}
   m_Layer: 5
-  m_Name: TestGroup1
+  m_Name: TestPanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
