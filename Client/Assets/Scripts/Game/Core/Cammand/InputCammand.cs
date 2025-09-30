@@ -1,6 +1,6 @@
 namespace GameFramework.Core 
 {
-    public abstract class InputCammand : GameCammand
+    public abstract class InputCammand : GameCammand, IInputable
     {
         /// <summary>
         /// ÊäÈë²Ù×÷

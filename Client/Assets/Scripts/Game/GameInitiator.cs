@@ -19,8 +19,7 @@ public class GameInitiator : MonoBehaviour
     {
         await Game.InitModules();
 
-        Game.GetModule<EventManager>().Publish(new UIEventTestArg() { id = 19 });
-
-        Game.GetModule<UIManager>().ShowPanel(PanelDefine.TestPanel2);
+        Game.GetModule<InputController>().Switch(InputModuleType.Character);
+        Game.GetModule<UIManager>().Navigate(NavigationDefine.TestList1);
     }
 }

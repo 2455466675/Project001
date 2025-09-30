@@ -1,9 +1,19 @@
-using Cysharp.Threading.Tasks;
 using System;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace GameFramework.Core 
 {
+    public interface IInputable
+    {
+        void InputAction(InputContext context);
+    }
+
+    public struct InputEventArgs : IGameEventArgs 
+    {
+        public InputContext context;
+    }
+
     public class InputManager : IGameModule
     {
         public GameModulePriority Priority => GameModulePriority.InputManager;
@@ -18,6 +28,16 @@ namespace GameFramework.Core
             InitWrappers();
 
             await UniTask.Yield();
+        }
+
+        public void Enable() 
+        {
+            m_GameInput?.Enable();
+        }
+
+        public void Disable() 
+        {
+            m_GameInput?.Disable();
         }
 
         private void InitWrappers() 
@@ -65,6 +85,7 @@ namespace GameFramework.Core
         private void OnInputHandler(InputContext context)
         {
             MDebug.Log("OnInputHandler", context);
+            Game.GetModule<EventManager>().Publish(new InputEventArgs() { context = context });
         }
     }
 }

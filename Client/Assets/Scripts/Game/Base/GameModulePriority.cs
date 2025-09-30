@@ -9,6 +9,7 @@ namespace GameFramework
         InputManager = -70,
 
         EntityManager = -10,
+        InputController = 90,
 
         UIManager = 100,
     }

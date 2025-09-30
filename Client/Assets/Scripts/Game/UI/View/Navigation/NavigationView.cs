@@ -37,7 +37,7 @@ namespace GameFramework.UI
             {
                 return;
             }
-
+            m_List.Init();
             m_List.OnSelectedItem += List_OnSelectedItem;
             m_List.OnDeselectedItem += List_OnDeselectedItem;
             m_List.OnSubmitItem += List_OnSubmitItem;
@@ -118,11 +118,11 @@ namespace GameFramework.UI
                 }
                 if (v > 0)
                 {
-                    OnMoveDownItem?.Invoke(itemView, index);
+                    OnMoveUpItem?.Invoke(itemView, index);
                 }
                 if (v < 0)
                 {
-                    OnMoveUpItem?.Invoke(itemView, index);
+                    OnMoveDownItem?.Invoke(itemView, index);
                 }
             }
         }

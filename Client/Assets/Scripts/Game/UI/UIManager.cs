@@ -73,13 +73,43 @@ namespace GameFramework.UI
             }
         }
 
-        public void Navigate(NavigationDefine id)
+        private Entity InitPanel(PanelDefine id)
+        {
+            var panelEntity = Game.GetModule<EntityManager>().CreateEntity();
+            var pc = panelEntity.AddComponent<PanelComponent>();
+
+            var panelControll = GetPanelController(id);
+            pc.Init(id, panelControll);
+
+            var views = pc.GetNavigationViews();
+            var children = m_PanelMap[id];
+            var length1 = children != null ? children.Length : 0;
+            var length2 = views != null ? views.Length : 0;
+            int length3 = Utility.Math.Min(length1, length2);
+            for (int i = 0; i < length3; i++)
+            {
+                var listEntity = Game.GetModule<EntityManager>().CreateEntity();
+                var nlc = listEntity.AddComponent<NavigationListComponent>();
+                var navigationController = GetNavigationController(children[i]);
+                nlc.Init(views[i], navigationController);
+                m_Navigations.Add(children[i], listEntity);
+            }
+
+            m_Panels.Add(id, panelEntity);
+            return panelEntity;
+        }
+
+        public void Navigate(NavigationDefine id, int[] defaultIndexs = null)
         {
             if (!m_NavigationMap.ContainsKey(id)) 
             {
                 return;
             }
+
+            defaultIndexs ??= new int[] {0};
+
             PanelDefine panel = m_NavigationMap[id];
+            Game.GetModule<InputController>().Navigate(id, panel, defaultIndexs);
         }
 
         public Entity GetPanelEntity(PanelDefine id)
@@ -162,30 +192,5 @@ namespace GameFramework.UI
             }
         }
 
-        private Entity InitPanel(PanelDefine id)
-        {
-            var panelEntity = Game.GetModule<EntityManager>().CreateEntity();
-            var pc = panelEntity.AddComponent<PanelComponent>();
-
-            var panelControll = GetPanelController(id);
-            pc.Init(id, panelControll);
-
-            var views = pc.GetNavigationViews();
-            var children = m_PanelMap[id];
-            var length1 = children != null ? children.Length : 0;
-            var length2 = views != null ? views.Length : 0;
-            int length3 = Utility.Math.Min(length1, length2);
-            for (int i = 0; i < length3; i++)
-            {
-                var listEntity = Game.GetModule<EntityManager>().CreateEntity();
-                var nlc = listEntity.AddComponent<NavigationListComponent>();
-                var navigationController = GetNavigationController(children[i]);
-                nlc.Init(views[i], navigationController);
-                m_Navigations.Add(children[i], listEntity);
-            }
-
-            m_Panels.Add(id, panelEntity);
-            return panelEntity;
-        }
     }
 }

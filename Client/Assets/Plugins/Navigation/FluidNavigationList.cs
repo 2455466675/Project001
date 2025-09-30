@@ -315,6 +315,7 @@ namespace Navigation
         {
             if (!isInit)
             {
+                Debug.LogError("do not init");
                 return;
             }
 

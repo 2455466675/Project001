@@ -66,25 +66,25 @@ namespace GameFramework.Core
         /// <summary>
         /// 清空，直到遇到一个静态命令
         /// </summary>
-        //public void PopAll()
-        //{
-        //    IsPopAll = true;
-        //    while (Count > 0)
-        //    {
-        //        GameCammand top = Top();
-        //        if (top == null)
-        //        {
-        //            break;
-        //        }
-        //        if (top.IsLocked)
-        //        {
-        //            break;
-        //        }
+        public void PopAll()
+        {
+            IsPopAll = true;
+            while (Count > 0)
+            {
+                GameCammand top = Top();
+                if (top == null)
+                {
+                    break;
+                }
+                if (top.IsLocked)
+                {
+                    break;
+                }
 
-        //        Pop();
-        //    }
-        //    IsPopAll = false;
-        //}
+                Pop();
+            }
+            IsPopAll = false;
+        }
 
         /// <summary>
         /// 压入一个子命令
@@ -138,6 +138,12 @@ namespace GameFramework.Core
 
         public bool TryPeek<T>(out T cammand) where T : GameCammand
         {
+            if (Count == 0) 
+            {
+                cammand = default;
+                return false;
+            }
+
             if (subCammands.TryPeek(out GameCammand gc))
             {
                 if (gc is T tc) 
@@ -146,6 +152,7 @@ namespace GameFramework.Core
                     return true;
                 }
             }
+
             cammand = default;
             return false;
         }
