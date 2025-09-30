@@ -1,7 +1,5 @@
-using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace GameFramework.UI 
@@ -58,13 +56,7 @@ namespace GameFramework.UI
 
 #if UNITY_EDITOR
 
-        [Button("Init")]
-        private void InitEditor() 
-        {
-            Init();
-        }
-
-        public void Init() 
+        protected virtual void InitEditor() 
         {
             void Fun(Transform tf, List<UIWidget> widgets)
             {
@@ -81,7 +73,7 @@ namespace GameFramework.UI
                     var container = child.GetComponent<UIWidgetContainer>();
                     if (container != null)
                     {
-                        container.Init();
+                        container.InitEditor();
                         continue;
                     }
                     else

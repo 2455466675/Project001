@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,11 +17,8 @@ namespace Navigation
             LowerRight,
         }
 
-        [ShowIf("m_ListType", ListType.Grid)]
         public int rowCount;
-        [ShowIf("m_ListType", ListType.Grid)]
         public int columnCount;
-        [ShowIf("m_ListType", ListType.Grid)]
         public ChildAlignment childAlignment;
 
         [SerializeField]

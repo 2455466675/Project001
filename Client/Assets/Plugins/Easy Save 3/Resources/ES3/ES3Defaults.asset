@@ -29,32 +29,30 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - UniTask
     - Assembly-CSharp-firstpass
-    - UniTask.Linq
-    - LITJson
-    - YooAsset
-    - Base
-    - Eflatun.SceneReference
-    - GameConfig
-    - UI
-    - UniTask.DOTween
-    - Navigation
-    - Assembly-CSharp
-    - Core
-    - Utility
-    - Gameplay
-    - UniTask.Addressables
-    - Sirenix.OdinInspector.CompatibilityLayer
-    - Feature
-    - UniTask.TextMeshPro
     - Eflatun.SceneReference.Editor
-    - PsdPlugin
-    - YooAsset.Editor
+    - UI
+    - YooAsset
     - PPv2URPConverters
-    - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - UniTask
+    - YooAsset.Editor
+    - Assembly-CSharp
+    - UniTask.Linq
+    - Eflatun.SceneReference
+    - PsdPlugin
+    - Base
+    - Core
+    - LITJson
+    - GameConfig
+    - Navigation
+    - UniTask.TextMeshPro
+    - Gameplay
+    - Utility
     - UniTask.Editor
-    - Sirenix.OdinInspector.Modules.UnityMathematics
+    - Feature
+    - ScriptablePacker
+    - UniTask.Addressables
+    - UniTask.DOTween
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

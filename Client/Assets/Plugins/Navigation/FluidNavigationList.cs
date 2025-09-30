@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 namespace Navigation
 {
@@ -232,15 +231,15 @@ namespace Navigation
         #endregion
 
         [SerializeField]
-        [ShowIf("m_ListType", ListType.Vertical)]
+        [ShowIfEnum("m_ListType", ListType.Vertical)]
         private Vertical vertical;
 
         [SerializeField]
-        [ShowIf("m_ListType", ListType.Horizontal)]
+        [ShowIfEnum("m_ListType", ListType.Horizontal)]
         private Horizontal horizontal;
 
         [SerializeField]
-        [ShowIf("m_ListType", ListType.Grid)]
+        [ShowIfEnum("m_ListType", ListType.Grid)]
         private Grid grid;
 
         [SerializeField]
