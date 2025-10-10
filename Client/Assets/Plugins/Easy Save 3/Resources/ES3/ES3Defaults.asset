@@ -47,6 +47,7 @@ MonoBehaviour:
     - GameConfig
     - Navigation
     - UniTask.TextMeshPro
+    - HotUpdate_Base
     - HotUpdate_Utility
     - HotUpdate_Gameplay
     - HybridCLR.Runtime

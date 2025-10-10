@@ -1,13 +1,10 @@
 {
-    "name": "HotUpdate_Feature",
+    "name": "HotUpdate_Base",
     "rootNamespace": "",
     "references": [
-        "GUID:c2cc29d72abadaa4591c289684d93261",
-        "GUID:851bd627eb312944bbee98f651e3e491",
+        "GUID:13ba8ce62aa80c74598530029cb2d649",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:b1b8bc4790a37c94a9c40c39eceba6be",
-        "GUID:ca24a47bd52ce7c499f10e7e812d9f25",
-        "GUID:4f19279a65948394da73294b2fdd18f1"
+        "GUID:e34a5702dd353724aa315fb8011f08c3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -3,6 +3,11 @@
   <assembly fullname="Eflatun.SceneReference">
     <type fullname="Eflatun.SceneReference.SceneReference" preserve="all" />
   </assembly>
+  <assembly fullname="HybridCLR.Runtime">
+    <type fullname="HybridCLR.HomologousImageMode" preserve="all" />
+    <type fullname="HybridCLR.LoadImageErrorCode" preserve="all" />
+    <type fullname="HybridCLR.RuntimeApi" preserve="all" />
+  </assembly>
   <assembly fullname="Navigation">
     <type fullname="Navigation.NavigationItem" preserve="all" />
     <type fullname="Navigation.NavigationItemSelector" preserve="all" />
@@ -56,6 +61,7 @@
     <type fullname="UnityEngine.ScriptableObject" preserve="all" />
     <type fullname="UnityEngine.SerializeField" preserve="all" />
     <type fullname="UnityEngine.Sprite" preserve="all" />
+    <type fullname="UnityEngine.TextAsset" preserve="all" />
     <type fullname="UnityEngine.Time" preserve="all" />
     <type fullname="UnityEngine.Transform" preserve="all" />
     <type fullname="UnityEngine.U2D.SpriteAtlas" preserve="all" />

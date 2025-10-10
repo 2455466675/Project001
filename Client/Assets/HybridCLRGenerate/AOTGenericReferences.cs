@@ -410,5 +410,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// YooAsset.AllAssetsHandle YooAsset.ResourcePackage.LoadAllAssetsSync<object>(string)
 		// YooAsset.AssetHandle YooAsset.ResourcePackage.LoadAssetAsync<object>(string,uint)
 		// YooAsset.AssetHandle YooAsset.ResourcePackage.LoadAssetSync<object>(string)
+		// YooAsset.AssetHandle YooAsset.YooAssets.LoadAssetSync<object>(string)
 	}
 }

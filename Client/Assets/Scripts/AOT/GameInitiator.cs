@@ -25,12 +25,11 @@ public class GameInitiator : MonoBehaviour
 
         await assetInitiator;
 
-
         Assembly assembly;
 #if UNITY_EDITOR
-        assembly = AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate_Core");
+        assembly = AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate_Base");
 #else
-        var handle = YooAssets.LoadAssetAsync("Assets/Bundles/Dlls/HotUpdate_Core.dll");
+        var handle = YooAssets.LoadAssetAsync("Assets/Bundles/Dlls/HotUpdate_Base.dll");
         await handle;
 
         TextAsset textAsset = handle.GetAssetObject<TextAsset>();

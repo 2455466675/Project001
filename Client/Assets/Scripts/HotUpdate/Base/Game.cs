@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using HybridCLR;
 using YooAsset;
+using System.Reflection;
 
 namespace GameFramework
 {
@@ -23,6 +24,8 @@ namespace GameFramework
         {
             MDebug.Log("Game Start!");
             LoadMetadataForAOTAssembly();
+
+            LoadHotUpdateAssemblies().Forget();
         }
 
         public static void AddModule<T>() where T : class, IGameModule, new()
@@ -66,25 +69,25 @@ namespace GameFramework
             }
         }
 
-        public static void LoadMetadataForAOTAssembly()
+        private static void LoadMetadataForAOTAssembly()
         {
 #if !UNITY_EDITOR
 
             List<string> aotDllList = new List<string>
             {
-                "mscorlib.dll",
-                "System.dll",
-                "System.Core.dll",
-                "UniTask.dll",
-                "Unity.InputSystem.dll",
-                "UnityEngine.CoreModule.dll",
-                "YooAsset.dll",
+                "mscorlib",
+                "System",
+                "System.Core",
+                "UniTask",
+                "Unity.InputSystem",
+                "UnityEngine.CoreModule",
+                "YooAsset",
             };
 
             HomologousImageMode mode = HomologousImageMode.SuperSet;
             foreach (var aotDllName in aotDllList)
             {
-                string path = string.Format("Assets/Bundles/Dlls/{0}", aotDllName);
+                string path = string.Format("Assets/Bundles/Dlls/{0}.dll", aotDllName);
                 byte[] dllBytes = YooAssets.LoadAssetSync<TextAsset>(path).GetAssetObject<TextAsset>().bytes;
                 LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
                 Debug.Log($"LoadMetadataForAOTAssembly:{aotDllName}. ret:{err}");
@@ -92,5 +95,41 @@ namespace GameFramework
 #endif
         }
 
+        private static async UniTask LoadHotUpdateAssemblies()
+        {
+            List<string> hotUpdateDllList = new List<string>
+            {
+                "GameConfig",
+                "HotUpdate_Utility",
+                "HotUpdate_Core",
+                "HotUpdate_Feature",
+                "HotUpdate_Gameplay",
+                "HotUpdate_UI",
+            };
+
+            List<Assembly> assemblies = new List<Assembly>();
+
+#if UNITY_EDITOR
+            foreach (var name in hotUpdateDllList)
+            {
+                Assembly assembly = Assembly.Load(name);
+                assemblies.Add(assembly);
+                Debug.Log("Load Assembly : " + assembly.GetName().Name);
+            }
+            await UniTask.Yield();
+#else
+            foreach (var name in hotUpdateDllList)
+            {
+                string path = string.Format("Assets/Bundles/Dlls/{0}.dll", name);
+                var handle = YooAssets.LoadAssetAsync(path);
+                await handle;
+
+                TextAsset textAsset = handle.GetAssetObject<TextAsset>();
+                Assembly assembly = Assembly.Load(textAsset.bytes);
+                assemblies.Add(assembly);
+                Debug.Log("Load Assembly : " + assembly.GetName().Name);
+            }
+#endif
+        }
     }
 }
