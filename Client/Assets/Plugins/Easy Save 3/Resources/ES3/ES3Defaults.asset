@@ -31,9 +31,9 @@ MonoBehaviour:
     assemblyNames:
     - HybridCLR.Editor
     - Assembly-CSharp-firstpass
+    - YooAsset
     - Eflatun.SceneReference.Editor
     - HotUpdate_Feature
-    - YooAsset
     - PPv2URPConverters
     - UniTask
     - YooAsset.Editor
@@ -50,11 +50,11 @@ MonoBehaviour:
     - HotUpdate_Utility
     - HotUpdate_Gameplay
     - HybridCLR.Runtime
-    - UI
     - UniTask.Editor
     - ScriptablePacker
     - UniTask.Addressables
     - UniTask.DOTween
+    - UI
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

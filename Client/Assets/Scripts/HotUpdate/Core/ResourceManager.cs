@@ -26,19 +26,19 @@ namespace GameFramework.Core
 
             RuntimePlatform platform = Application.platform;
 
-            if (platform == RuntimePlatform.WindowsEditor)
-            {
-                EditorSimulateModeParameters parameters = new EditorSimulateModeParameters();
-                var smfp = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, packageName);
-                parameters.SimulateManifestFilePath = smfp;
+            //if (platform == RuntimePlatform.WindowsEditor)
+            //{
+            //    EditorSimulateModeParameters parameters = new EditorSimulateModeParameters();
+            //    var smfp = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, packageName);
+            //    parameters.SimulateManifestFilePath = smfp;
 
-                await m_Package.InitializeAsync(parameters);
-            }
-            else if (platform == RuntimePlatform.WindowsPlayer)
-            {
-                OfflinePlayModeParameters parameters = new OfflinePlayModeParameters();
-                await m_Package.InitializeAsync(parameters);
-            }
+            //    await m_Package.InitializeAsync(parameters);
+            //}
+            //else if (platform == RuntimePlatform.WindowsPlayer)
+            //{
+            //    OfflinePlayModeParameters parameters = new OfflinePlayModeParameters();
+            //    await m_Package.InitializeAsync(parameters);
+            //}
 
             //spriteManager = new SpriteManager(initCfg.SpriteMap);
         }

@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
+using HybridCLR;
+using YooAsset;
 
 namespace GameFramework
 {
@@ -14,6 +17,12 @@ namespace GameFramework
         {
             m_GameModules = new Dictionary<Type, IGameModule>();
             m_UpdateableModules = new List<IUpdate>();
+        }
+
+        public static void Start()
+        {
+            MDebug.Log("Game Start!");
+            LoadMetadataForAOTAssembly();
         }
 
         public static void AddModule<T>() where T : class, IGameModule, new()
@@ -56,5 +65,32 @@ namespace GameFramework
                 await module.Init();
             }
         }
+
+        public static void LoadMetadataForAOTAssembly()
+        {
+#if !UNITY_EDITOR
+
+            List<string> aotDllList = new List<string>
+            {
+                "mscorlib.dll",
+                "System.dll",
+                "System.Core.dll",
+                "UniTask.dll",
+                "Unity.InputSystem.dll",
+                "UnityEngine.CoreModule.dll",
+                "YooAsset.dll",
+            };
+
+            HomologousImageMode mode = HomologousImageMode.SuperSet;
+            foreach (var aotDllName in aotDllList)
+            {
+                string path = string.Format("Assets/Bundles/Dlls/{0}", aotDllName);
+                byte[] dllBytes = YooAssets.LoadAssetSync<TextAsset>(path).GetAssetObject<TextAsset>().bytes;
+                LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
+                Debug.Log($"LoadMetadataForAOTAssembly:{aotDllName}. ret:{err}");
+            }
+#endif
+        }
+
     }
 }

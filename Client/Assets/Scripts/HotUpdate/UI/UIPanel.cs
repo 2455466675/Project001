@@ -35,6 +35,7 @@ namespace GameFramework.UI
 
 #if UNITY_EDITOR
 
+        [Button("Init")]
         protected override void InitEditor()
         {
             base.InitEditor();

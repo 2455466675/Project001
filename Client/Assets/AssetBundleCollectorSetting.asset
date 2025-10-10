@@ -19,10 +19,11 @@ MonoBehaviour:
   - PackageName: DefaultPackage
     PackageDesc: 
     EnableAddressable: 1
+    SupportExtensionless: 1
     LocationToLower: 0
     IncludeAssetGUID: 0
-    IgnoreDefaultType: 1
     AutoCollectShaders: 1
+    IgnoreRuleName: NormalIgnoreRule
     Groups:
     - GroupName: Game
       GroupDesc: 
@@ -67,5 +68,18 @@ MonoBehaviour:
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: Dll
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Bundles/Dlls
+        CollectorGUID: 502cf39459521eb4ebc298566fb5b82d
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 

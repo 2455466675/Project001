@@ -22,12 +22,20 @@ MonoBehaviour:
   - {fileID: 5897886265953266890, guid: 4b4641bc0abcacc48b72316b1f2e54a7, type: 3}
   - {fileID: 5897886265953266890, guid: c4ebf4e4eba8d9f43a3dd72a0ad50708, type: 3}
   - {fileID: 5897886265953266890, guid: 851bd627eb312944bbee98f651e3e491, type: 3}
+  - {fileID: 5897886265953266890, guid: b1b8bc4790a37c94a9c40c39eceba6be, type: 3}
   hotUpdateAssemblies: []
   preserveHotUpdateAssemblies: []
   hotUpdateDllCompileOutputRootDir: HybridCLRData/HotUpdateDlls
   externalHotUpdateAssembliyDirs: []
   strippedAOTDllOutputRootDir: HybridCLRData/AssembliesPostIl2CppStrip
-  patchAOTAssemblies: []
+  patchAOTAssemblies:
+  - System.Core
+  - System
+  - mscorlib
+  - UniTask
+  - Unity.InputSystem
+  - UnityEngine.CoreModule
+  - YooAsset
   outputLinkFile: HybridCLRGenerate/link.xml
   outputAOTGenericReferenceFile: HybridCLRGenerate/AOTGenericReferences.cs
   maxGenericReferenceIteration: 10

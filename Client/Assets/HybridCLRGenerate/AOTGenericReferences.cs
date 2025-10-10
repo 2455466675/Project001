@@ -6,7 +6,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	public static readonly IReadOnlyList<string> PatchedAOTAssemblyList = new List<string>
 	{
 		"System.Core.dll",
-		"UI.dll",
 		"UniTask.dll",
 		"Unity.InputSystem.dll",
 		"UnityEngine.CoreModule.dll",
@@ -23,11 +22,10 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.ConfigManager.<Init>d__5>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.EventManager.<Init>d__4>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.InputManager.<Init>d__4>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.ResourceManager.<Init>d__3>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.ResourceManager.<LoadAndInstantiateAsync>d__9,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.ResourceManager.<LoadAssetAsync>d__6<object>,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Featrue.EntityManager.<Init>d__4>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Game.<InitModules>d__5>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Game.<InitModules>d__6>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.SceneEntity.<LoadSceneAsync>d__16>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.UI.InputController.<Init>d__4>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.UI.UIManager.<Init>d__8>
@@ -35,11 +33,10 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.ConfigManager.<Init>d__5>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.EventManager.<Init>d__4>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.InputManager.<Init>d__4>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.ResourceManager.<Init>d__3>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.ResourceManager.<LoadAndInstantiateAsync>d__9,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.ResourceManager.<LoadAssetAsync>d__6<object>,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Featrue.EntityManager.<Init>d__4>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Game.<InitModules>d__5>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Game.<InitModules>d__6>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.SceneEntity.<LoadSceneAsync>d__16>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.UI.InputController.<Init>d__4>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.UI.UIManager.<Init>d__8>
@@ -102,6 +99,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Action<GameFramework.Core.InputContext>
 	// System.Action<GameFramework.Core.InputEventArgs>
 	// System.Action<UnityEngine.InputSystem.InputAction.CallbackContext>
+	// System.Action<float,float,object>
 	// System.Action<float>
 	// System.Action<object,int>
 	// System.Action<object,object>
@@ -205,11 +203,16 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Func<object,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>
 	// System.Func<object,System.ValueTuple<byte,System.ValueTuple<byte,object>>>
 	// System.Func<object,System.ValueTuple<byte,object>>
+	// System.Func<object,byte>
 	// System.Func<object,object,object>
 	// System.Func<object,object>
 	// System.Func<object>
 	// System.Linq.Buffer<object>
 	// System.Linq.Enumerable.<CastIterator>d__99<object>
+	// System.Linq.Enumerable.Iterator<object>
+	// System.Linq.Enumerable.WhereArrayIterator<object>
+	// System.Linq.Enumerable.WhereEnumerableIterator<object>
+	// System.Linq.Enumerable.WhereListIterator<object>
 	// System.Predicate<object>
 	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>>>
 	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>>
@@ -355,8 +358,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 
 	public void RefMethods()
 	{
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Core.ResourceManager.<Init>d__3>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Core.ResourceManager.<Init>d__3&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Game.<InitModules>d__5>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Game.<InitModules>d__5&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Game.<InitModules>d__6>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Game.<InitModules>d__6&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.YieldAwaitable.Awaiter,GameFramework.Core.AssemblyManager.<Init>d__5>(Cysharp.Threading.Tasks.YieldAwaitable.Awaiter&,GameFramework.Core.AssemblyManager.<Init>d__5&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.YieldAwaitable.Awaiter,GameFramework.Core.ConfigManager.<Init>d__5>(Cysharp.Threading.Tasks.YieldAwaitable.Awaiter&,GameFramework.Core.ConfigManager.<Init>d__5&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.YieldAwaitable.Awaiter,GameFramework.Core.EventManager.<Init>d__4>(Cysharp.Threading.Tasks.YieldAwaitable.Awaiter&,GameFramework.Core.EventManager.<Init>d__4&)
@@ -373,19 +375,19 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Core.InputManager.<Init>d__4>(GameFramework.Core.InputManager.<Init>d__4&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Core.ResourceManager.<Init>d__3>(GameFramework.Core.ResourceManager.<Init>d__3&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Featrue.EntityManager.<Init>d__4>(GameFramework.Featrue.EntityManager.<Init>d__4&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Game.<InitModules>d__5>(GameFramework.Game.<InitModules>d__5&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Game.<InitModules>d__6>(GameFramework.Game.<InitModules>d__6&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.SceneEntity.<LoadSceneAsync>d__16>(GameFramework.SceneEntity.<LoadSceneAsync>d__16&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.UI.InputController.<Init>d__4>(GameFramework.UI.InputController.<Init>d__4&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.UI.UIManager.<Init>d__8>(GameFramework.UI.UIManager.<Init>d__8&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<GameFramework.Core.ResourceManager.<LoadAndInstantiateAsync>d__9>(GameFramework.Core.ResourceManager.<LoadAndInstantiateAsync>d__9&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<GameFramework.Core.ResourceManager.<LoadAssetAsync>d__6<object>>(GameFramework.Core.ResourceManager.<LoadAssetAsync>d__6<object>&)
-		// Cysharp.Threading.Tasks.UniTask.Awaiter Cysharp.Threading.Tasks.EnumeratorAsyncExtensions.GetAwaiter<object>(object)
-		// object GameFramework.UI.UIWidgetContainer.GetWidget<object>()
 		// object System.Activator.CreateInstance<object>()
 		// System.Collections.Generic.IEnumerable<object> System.Linq.Enumerable.Cast<object>(System.Collections.IEnumerable)
 		// System.Collections.Generic.IEnumerable<object> System.Linq.Enumerable.CastIterator<object>(System.Collections.IEnumerable)
+		// object System.Linq.Enumerable.FirstOrDefault<object>(System.Collections.Generic.IEnumerable<object>)
 		// object[] System.Linq.Enumerable.ToArray<object>(System.Collections.Generic.IEnumerable<object>)
 		// System.Collections.Generic.List<object> System.Linq.Enumerable.ToList<object>(System.Collections.Generic.IEnumerable<object>)
+		// System.Collections.Generic.IEnumerable<object> System.Linq.Enumerable.Where<object>(System.Collections.Generic.IEnumerable<object>,System.Func<object,bool>)
 		// object& System.Runtime.CompilerServices.Unsafe.As<object,object>(object&)
 		// System.Void* System.Runtime.CompilerServices.Unsafe.AsPointer<object>(object&)
 		// System.Void* Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AddressOf<UnityEngine.Vector2>(UnityEngine.Vector2&)
@@ -393,11 +395,13 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object UnityEngine.Component.GetComponent<object>()
 		// object UnityEngine.Component.GetComponentInParent<object>(bool)
 		// object[] UnityEngine.Component.GetComponentsInChildren<object>(bool)
+		// bool UnityEngine.Component.TryGetComponent<object>(object&)
 		// object UnityEngine.GameObject.AddComponent<object>()
 		// object UnityEngine.GameObject.GetComponent<object>()
 		// object UnityEngine.GameObject.GetComponentInParent<object>()
 		// object UnityEngine.GameObject.GetComponentInParent<object>(bool)
 		// object[] UnityEngine.GameObject.GetComponentsInChildren<object>(bool)
+		// bool UnityEngine.GameObject.TryGetComponent<object>(object&)
 		// UnityEngine.Vector2 UnityEngine.InputSystem.InputAction.ReadValue<UnityEngine.Vector2>()
 		// UnityEngine.Vector2 UnityEngine.InputSystem.InputActionState.ApplyProcessors<UnityEngine.Vector2>(int,UnityEngine.Vector2,UnityEngine.InputSystem.InputControl<UnityEngine.Vector2>)
 		// UnityEngine.Vector2 UnityEngine.InputSystem.InputActionState.ReadValue<UnityEngine.Vector2>(int,int,bool)
