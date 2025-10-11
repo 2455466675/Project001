@@ -7,9 +7,7 @@ namespace GameFramework.Featrue
     {
         public static void Init()
         {
-            Game.AddModule<EntityManager>();
 
-            AssemblyManager.AddAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

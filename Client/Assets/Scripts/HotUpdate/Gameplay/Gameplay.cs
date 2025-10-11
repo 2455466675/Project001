@@ -7,7 +7,7 @@ namespace GameFramework.Gameplay
     {
         public static void Init()
         {
-            AssemblyManager.AddAssembly(Assembly.GetExecutingAssembly());
+
         }
     }
 }

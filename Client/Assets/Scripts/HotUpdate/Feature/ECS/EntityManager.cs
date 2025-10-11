@@ -1,21 +1,17 @@
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 
 namespace GameFramework.Featrue 
 {
-    public class EntityManager : IGameModule
+    [GameModule(GameModulePriority.EntityManager)]
+    public class EntityManager : ISyncInit
     {
         private int m_UidGenerator;
         private Dictionary<int, Entity> m_Entites;
 
-        public GameModulePriority Priority => GameModulePriority.EntityManager;
-
-        public async UniTask Init()
+        public void Init()
         {
             m_UidGenerator = 10000;
             m_Entites = new Dictionary<int, Entity>();
-
-            await UniTask.Yield();
         }
 
         public Entity CreateEntity() 

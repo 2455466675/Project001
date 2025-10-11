@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace GameFramework.Core 
 {
-    public class ConfigManager : IGameModule
+    [GameModule(GameModulePriority.ConfigManager)]
+    public class ConfigManager : IAsyncInit
     {
         public class TextItem 
         {
@@ -22,15 +23,12 @@ namespace GameFramework.Core
         }
 
         private GameCfgData m_Data;
-
         private Dictionary<int, TextItem> m_TextItems;
-
-        public GameModulePriority Priority => GameModulePriority.ConfigManager;
 
         public async UniTask Init() 
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, "cfg.bytes");
-            using (FileStream stream = new FileStream(filePath, FileMode.Open))
+            TextAsset textAsset = await Game.GetModule<AssetsManager>().LoadAssetAsync<TextAsset>("Assets/Bundles/Config/cfg");
+            using (MemoryStream stream = new MemoryStream(textAsset.bytes))
             {
                 using (BinaryReader br = new BinaryReader(stream))
                 {
@@ -40,8 +38,6 @@ namespace GameFramework.Core
             }
 
             m_TextItems = new Dictionary<int, TextItem>();
-
-            await UniTask.Yield();
         }
 
         /// <summary>

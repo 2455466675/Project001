@@ -9,48 +9,76 @@ using System.Reflection;
 
 namespace GameFramework
 {
+    public struct GameStartUpEventArgs : IGameEventArgs
+    {
+
+    }
+
     public static class Game
     {
-        private static Dictionary<Type, IGameModule> m_GameModules;
+        private class GameModule 
+        {
+            public Type type;
+            public int priority;
+            public IGameModule obj;
+        }
+
+        private static bool isStarted;
+        private static Dictionary<Type, GameModule> m_GameModules;
         private static List<IUpdate> m_UpdateableModules;
+
+        private static List<Assembly> m_Assemblies;
+        private static Dictionary<Type, List<Type>> m_AttributeTypes;
+
+        public static EventManager Event { get; private set; }
 
         static Game()
         {
-            m_GameModules = new Dictionary<Type, IGameModule>();
+            m_GameModules = new Dictionary<Type, GameModule>();
             m_UpdateableModules = new List<IUpdate>();
+            m_Assemblies = new List<Assembly>();
+            m_AttributeTypes = new Dictionary<Type, List<Type>>();
+            Event = new EventManager();
         }
 
-        public static void Start()
+        public static async void Start()
         {
             MDebug.Log("Game Start!");
-            LoadMetadataForAOTAssembly();
+            isStarted = false;
 
-            LoadHotUpdateAssemblies().Forget();
+            await LoadMetadataForAOTAssembly();
+            await LoadHotUpdateAssemblies();
+
+            InitGameAttributeTypes();
+
+            await InitGameModules();
+            await LoadGameRoot();
+
+            Event.Init();
+            Event.Publish(new GameStartUpEventArgs());
+
+            isStarted = true;
         }
 
-        public static void AddModule<T>() where T : class, IGameModule, new()
+        public static void Update() 
         {
-            Type type = typeof(T);
-            if (m_GameModules.ContainsKey(type))
+            if (!isStarted) 
             {
                 return;
             }
 
-            T module = new();
-            m_GameModules.Add(type, module);
-
-            if (module is IUpdate u)
+            for (int i = 0; i < m_UpdateableModules.Count; i++)
             {
-                m_UpdateableModules.Add(u);
+                m_UpdateableModules[i].Update();
             }
         }
 
         public static T GetModule<T>() where T : class, IGameModule
         {
             Type type = typeof(T);
-            if (m_GameModules.TryGetValue(type, out IGameModule module))
+            if (m_GameModules.TryGetValue(type, out GameModule module))
             {
-                return module as T;
+                return module.obj as T;
             }
             else
             {
@@ -58,18 +86,20 @@ namespace GameFramework
             }
         }
 
-        public static async UniTask InitModules()
+        public static Type[] GetTypes<T>() where T : GameAttribute
         {
-            List<IGameModule> modules = m_GameModules.Values.ToList();
-            modules.Sort((a, b) => a.Priority.CompareTo(b.Priority));
-
-            foreach (var module in modules)
+            Type type = typeof(T);
+            if (m_AttributeTypes.ContainsKey(type))
             {
-                await module.Init();
+                return m_AttributeTypes[type].ToArray();
+            }
+            else
+            {
+                return new Type[0];
             }
         }
 
-        private static void LoadMetadataForAOTAssembly()
+        private static async UniTask LoadMetadataForAOTAssembly()
         {
 #if !UNITY_EDITOR
 
@@ -88,10 +118,17 @@ namespace GameFramework
             foreach (var aotDllName in aotDllList)
             {
                 string path = string.Format("Assets/Bundles/Dlls/{0}.dll", aotDllName);
-                byte[] dllBytes = YooAssets.LoadAssetSync<TextAsset>(path).GetAssetObject<TextAsset>().bytes;
+                var handle = YooAssets.LoadAssetAsync<TextAsset>(path);
+                await handle;
+
+                byte[] dllBytes = handle.GetAssetObject<TextAsset>().bytes;
                 LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
+
                 Debug.Log($"LoadMetadataForAOTAssembly:{aotDllName}. ret:{err}");
             }
+
+#else
+            await UniTask.Yield();
 #endif
         }
 
@@ -130,6 +167,92 @@ namespace GameFramework
                 Debug.Log("Load Assembly : " + assembly.GetName().Name);
             }
 #endif
+            m_Assemblies = assemblies;
+        }
+
+        private static void InitGameAttributeTypes() 
+        {
+            m_AttributeTypes.Clear();
+
+            foreach (var assembly in m_Assemblies)
+            {
+                Type[] types = assembly.GetTypes();
+                foreach (Type type in types)
+                {
+                    var attributes = type.GetCustomAttributes(typeof(GameAttribute), false);
+                    foreach (var attribute in attributes)
+                    {
+                        Type attributeType = attribute.GetType();
+                        if (!m_AttributeTypes.TryGetValue(attributeType, out List<Type> list))
+                        {
+                            list = new List<Type>();
+                            m_AttributeTypes.Add(attributeType, list);
+                        }
+
+                        list.Add(type);
+                    }
+                }
+            }
+        }
+
+        private static async UniTask InitGameModules()
+        {
+            m_GameModules.Clear();
+            m_UpdateableModules.Clear();
+
+            List<GameModule> modules = new List<GameModule>();
+
+            Type[] types = GetTypes<GameModuleAttribute>();
+            foreach (Type type in types)
+            {
+                if (m_GameModules.ContainsKey(type))
+                {
+                    continue;
+                }
+
+                var attribute = type.GetCustomAttribute(typeof(GameModuleAttribute), false) as GameModuleAttribute;
+                var obj = Activator.CreateInstance(type);
+
+                GameModule module = new GameModule
+                {
+                    type = type,
+                    obj = obj as IGameModule,
+                    priority = (int)attribute.Priority
+                };
+
+                modules.Add(module);
+                m_GameModules.Add(type, module);
+            }
+
+            modules.Sort((a, b) => a.priority - b.priority);
+
+            foreach (var module in modules)
+            {
+                IGameModule obj = module.obj;
+                if (obj is ISyncInit s)
+                {
+                    s.Init();
+                }
+
+                if (obj is IAsyncInit a)
+                {
+                    await a.Init();
+                }
+
+                if (obj is IUpdate u)
+                {
+                    m_UpdateableModules.Add(u);
+                }
+
+                Debug.Log("GameModule Init : " + module.type.Name);
+            }
+        }
+
+        private static async UniTask LoadGameRoot() 
+        {
+            var handle = YooAssets.LoadAssetAsync<GameObject>("Assets/Bundles/Common/GameRoot");
+            await handle;
+            await handle.InstantiateAsync();
         }
     }
 }

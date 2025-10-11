@@ -102,22 +102,19 @@ namespace GameFramework.UI
         }
     }
 
-    public class InputController : IGameModule
+    [GameModule(GameModulePriority.InputController)]
+    public class InputController : ISyncInit
     {
-        public GameModulePriority Priority => GameModulePriority.InputController;
-
         private List<InputModule> inputModules;
         private InputModule current;
 
-        public async UniTask Init()
+        public void Init()
         {
             inputModules = new List<InputModule>
             {
                 new CharacterInputModule(),
                 new BattleInputModule()
             };
-
-            await UniTask.Yield();
         }
 
         public void Switch(InputModuleType moduleType) 

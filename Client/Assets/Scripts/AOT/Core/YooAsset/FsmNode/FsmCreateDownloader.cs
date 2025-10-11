@@ -42,11 +42,7 @@ namespace GameFramework.Core
             }
             else
             {
-                // 发现新更新文件后，挂起流程系统
-                // 注意：开发者需要在下载前检测磁盘空间不足
-                int totalDownloadCount = downloader.TotalDownloadCount;
-                long totalDownloadBytes = downloader.TotalDownloadBytes;
-                //PatchEventDefine.FoundUpdateFiles.SendEventMessage(totalDownloadCount, totalDownloadBytes);
+                m_Machine.ChangeState<FsmDownloadPackageFiles>();
             }
         }
     }

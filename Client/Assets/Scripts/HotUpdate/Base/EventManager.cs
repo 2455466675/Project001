@@ -1,35 +1,32 @@
 using System;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 
-namespace GameFramework.Core 
+namespace GameFramework 
 {
     public class GameEventAttribute : GameAttribute 
     {   
     }
 
-    public abstract class GameEventBase<T> : IGameEvent where T : struct, IGameEventArgs
+    public abstract class GameEventHandlerBase<T> : IGameEvent where T : struct, IGameEventArgs
     {
         public Type Type => typeof(T);
 
         public abstract void Invoke(T arg);
     }
 
-    public class EventManager : IGameModule
+    public class EventManager
     {
-        public GameModulePriority Priority => GameModulePriority.EventManager;
-
         private Dictionary<Type, List<IGameEvent>> m_Events;
         private Dictionary<Type, List<object>> m_Actions;
 
-        public async UniTask Init()
+        internal EventManager() { }
+
+        public void Init()
         {
             m_Events = new Dictionary<Type, List<IGameEvent>>();
             m_Actions = new Dictionary<Type, List<object>>();
 
-            AssemblyManager assemblyManager = Game.GetModule<AssemblyManager>();
-
-            Type[] types = assemblyManager.GetTypes<GameEventAttribute>();
+            Type[] types = Game.GetTypes<GameEventAttribute>();
             foreach (Type type in types)
             {
                 object o = Activator.CreateInstance(type);
@@ -43,8 +40,6 @@ namespace GameFramework.Core
                     m_Events[t].Add(e);
                 }
             }
-
-            await UniTask.Yield();
         }
 
         public void Register<T>(Action<T> action) where T : IGameEventArgs
@@ -75,7 +70,7 @@ namespace GameFramework.Core
                 List<IGameEvent> events = m_Events[t];
                 foreach (var e in events)
                 {
-                    if (e is GameEventBase<T> ge)
+                    if (e is GameEventHandlerBase<T> ge)
                     {
                         ge.Invoke(args);
                     }

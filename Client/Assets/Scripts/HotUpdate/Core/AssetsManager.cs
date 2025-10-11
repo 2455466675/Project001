@@ -5,41 +5,13 @@ using Cysharp.Threading.Tasks;
 
 namespace GameFramework.Core 
 {
-    public class ResourceManager : IGameModule
+    [GameModule(GameModulePriority.AssetsManager)]
+    public class AssetsManager : ISyncInit
     {
-        private ResourcePackage m_Package;
-
-        public GameModulePriority Priority => GameModulePriority.ResourceManager;
-
         //private SpriteManager spriteManager;
 
-        public async UniTask Init()
+        public void Init()
         {
-            string packageName = "DefaultPackage";
-
-            YooAssets.Initialize();
-
-            m_Package = YooAssets.TryGetPackage(packageName);
-            m_Package ??= YooAssets.CreatePackage(packageName);
-
-            YooAssets.SetDefaultPackage(m_Package);
-
-            RuntimePlatform platform = Application.platform;
-
-            //if (platform == RuntimePlatform.WindowsEditor)
-            //{
-            //    EditorSimulateModeParameters parameters = new EditorSimulateModeParameters();
-            //    var smfp = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, packageName);
-            //    parameters.SimulateManifestFilePath = smfp;
-
-            //    await m_Package.InitializeAsync(parameters);
-            //}
-            //else if (platform == RuntimePlatform.WindowsPlayer)
-            //{
-            //    OfflinePlayModeParameters parameters = new OfflinePlayModeParameters();
-            //    await m_Package.InitializeAsync(parameters);
-            //}
-
             //spriteManager = new SpriteManager(initCfg.SpriteMap);
         }
 
@@ -49,7 +21,7 @@ namespace GameFramework.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
         /// <returns></returns>
-        public T LoadFormRes<T>(string path) where T : UnityEngine.Object
+        public T LoadFormResources<T>(string path) where T : UnityEngine.Object
         {
             return Resources.Load<T>(path);
         }
@@ -62,7 +34,7 @@ namespace GameFramework.Core
         /// <returns></returns>
         public T LoadAsset<T>(string path) where T : UnityEngine.Object
         {
-            return m_Package.LoadAssetSync<T>(path).AssetObject as T;
+            return YooAssets.LoadAssetSync<T>(path).AssetObject as T;
         }
 
         /// <summary>
@@ -73,14 +45,14 @@ namespace GameFramework.Core
         /// <returns></returns>
         public async UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object
         {
-            AssetHandle handle = m_Package.LoadAssetAsync<T>(path);
+            AssetHandle handle = YooAssets.LoadAssetAsync<T>(path);
             await handle.Task;
             return handle.GetAssetObject<T>();
         }
 
         public T[] LoadAllAssets<T>(string path) where T : UnityEngine.Object
         {
-            AllAssetsHandle handle = m_Package.LoadAllAssetsSync<T>(path);
+            AllAssetsHandle handle = YooAssets.LoadAllAssetsSync<T>(path);
             return handle.AllAssetObjects.Cast<T>().ToArray();
         }
 

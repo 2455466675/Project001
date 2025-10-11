@@ -1,17 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using GameFramework.Featrue;
 using GameFramework.Core;
 using System.Reflection;
+using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace GameFramework.UI 
 {
-    public class UIManager : IGameModule
+    [GameModule(GameModulePriority.UIManager)]
+    public class UIManager : ISyncInit
     {
-        public GameModulePriority Priority => GameModulePriority.UIManager;
-
         private Dictionary<PanelDefine, PanelController> m_PanelControllers;
         private Dictionary<NavigationDefine, NavigationController> m_NavigationControllers;
         private Dictionary<PanelDefine, NavigationDefine[]> m_PanelMap;
@@ -20,13 +19,11 @@ namespace GameFramework.UI
         private Dictionary<PanelDefine, Entity> m_Panels;
         private Dictionary<NavigationDefine, Entity> m_Navigations;
 
-        public async UniTask Init()
+        public void Init()
         {
             m_Panels = new Dictionary<PanelDefine, Entity>();
             m_Navigations = new Dictionary<NavigationDefine, Entity>();
             InitControllers();
-
-            await UniTask.Yield();
         }
 
         public void ShowPanel(PanelDefine id, object content = null)
@@ -153,9 +150,7 @@ namespace GameFramework.UI
             m_NavigationMap = new Dictionary<NavigationDefine, PanelDefine>();
             m_PanelMap = new Dictionary<PanelDefine, NavigationDefine[]>();
 
-            AssemblyManager assemblyManager = Game.GetModule<AssemblyManager>();
-
-            Type[] types1 = assemblyManager.GetTypes<NavigationControllerAttribute>();
+            Type[] types1 = Game.GetTypes<NavigationControllerAttribute>();
             for (int i = 0; i < types1.Length; i++)
             {
                 Type type = types1[i];
@@ -168,7 +163,7 @@ namespace GameFramework.UI
                 }
             }
 
-            Type[] types2 = assemblyManager.GetTypes<UIPanelControllerAttribute>();
+            Type[] types2 = Game.GetTypes<UIPanelControllerAttribute>();
             for (int i = 0; i < types2.Length; i++)
             {
                 Type type = types2[i];

@@ -4,8 +4,15 @@ namespace GameFramework
 {
     public interface IGameModule
     {
-        GameModulePriority Priority { get; }
+    }
 
+    public interface ISyncInit : IGameModule
+    {
+        void Init();
+    }
+
+    public interface IAsyncInit : IGameModule
+    {
         UniTask Init();
     }
 

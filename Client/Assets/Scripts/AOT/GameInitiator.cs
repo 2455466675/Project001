@@ -21,7 +21,15 @@ public class GameInitiator : MonoBehaviour
 
     private async void Start()
     {
-        AssetInitiator assetInitiator = new AssetInitiator(new YooAssetInitiator(packageName, playMode));
+        EPlayMode ePlayMode = playMode;
+#if UNITY_EDITOR
+        //if (ePlayMode == EPlayMode.HostPlayMode) 
+        //{
+        //    ePlayMode = EPlayMode.EditorSimulateMode;        
+        //}
+#endif
+
+        AssetInitiator assetInitiator = new AssetInitiator(new YooAssetInitiator(packageName, ePlayMode));
 
         await assetInitiator;
 

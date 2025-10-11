@@ -17,13 +17,13 @@ namespace GameFramework.UI
 
         public void Init(PanelDefine id, PanelController controller) 
         {
-            var cfg = Game.GetModule<ConfigManager>().Find<PanelCfg>((int)id);
-            var parent = GameRoot.Instance.UIRoot.GetGroupContainer(cfg.GroupType);
-            var go = Game.GetModule<ResourceManager>().LoadAndInstantiate(cfg.Path, parent);
-            var panel = go.GetComponent<UIPanel>();
+            //var cfg = Game.GetModule<ConfigManager>().Find<PanelCfg>((int)id);
+            //var parent = GameRoot.Instance.UIRoot.GetGroupContainer(cfg.GroupType);
+            //var go = Game.GetModule<ResourceManager>().LoadAndInstantiate(cfg.Path, parent);
+            //var panel = go.GetComponent<UIPanel>();
 
-            m_UIPanel = panel;
-            m_Controller = controller;
+            //m_UIPanel = panel;
+            //m_Controller = controller;
         }
 
         public NavigationView[] GetNavigationViews()

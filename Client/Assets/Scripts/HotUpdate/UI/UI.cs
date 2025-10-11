@@ -8,10 +8,7 @@ namespace GameFramework.UI
     {
         public static void Init()
         {
-            Game.AddModule<InputController>();
-            Game.AddModule<UIManager>();
 
-            AssemblyManager.AddAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

@@ -1,7 +1,7 @@
 {
     "excelPath":"./Excel/",
     "csFileOutputPaht":"../Client/Assets/Scripts/Config/Model",
-    "cfgFileOutputPaht":"../Client/Assets/StreamingAssets",
+    "cfgFileOutputPaht":"../Client/Assets/Bundles/Config",
     "language":"language/",
     "cfgList":
     [ 
