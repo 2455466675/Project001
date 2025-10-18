@@ -55,9 +55,9 @@ namespace GameFramework
             await LoadGameRoot();
 
             Event.Init();
-            Event.Publish(new GameStartUpEventArgs());
-
             isStarted = true;
+
+            Event.Publish(new GameStartUpEventArgs());
         }
 
         public static void Update() 

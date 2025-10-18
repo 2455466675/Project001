@@ -5,7 +5,7 @@ namespace GameFramework
         AssetsManager = -100,
         ConfigManager = -95,
 
-        EventManager = -80,
+        SceneManager = -80,
         InputManager = -70,
 
         EntityManager = -10,

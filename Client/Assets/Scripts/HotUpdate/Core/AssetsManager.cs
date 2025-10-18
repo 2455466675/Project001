@@ -2,6 +2,7 @@ using System.Linq;
 using YooAsset;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 namespace GameFramework.Core 
 {
@@ -46,7 +47,7 @@ namespace GameFramework.Core
         public async UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object
         {
             AssetHandle handle = YooAssets.LoadAssetAsync<T>(path);
-            await handle.Task;
+            await handle;
             return handle.GetAssetObject<T>();
         }
 
@@ -54,6 +55,18 @@ namespace GameFramework.Core
         {
             AllAssetsHandle handle = YooAssets.LoadAllAssetsSync<T>(path);
             return handle.AllAssetObjects.Cast<T>().ToArray();
+        }
+
+        public Scene LoadScene(string path, LoadSceneMode mode) 
+        {
+            var handle = YooAssets.LoadSceneSync(path, mode);
+            return handle.SceneObject;
+        }
+
+        public SceneHandle LoadScentAsync(string path, LoadSceneMode mode) 
+        {
+            var handle = YooAssets.LoadSceneAsync(path, mode);
+            return handle;
         }
 
         /// <summary>

@@ -1,4 +1,3 @@
-using Eflatun.SceneReference;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,30 +7,29 @@ using UnityEngine.SceneManagement;
 namespace GameFramework
 {
     [Serializable]
-    public class SceneData 
+    public class SceneConfig 
     {
         [SerializeField]
         private int id;
         [SerializeField]
         private LoadSceneMode loadSceneMode;
         [SerializeField]
-        private SceneReference reference;
+        private string path;
+        [SerializeField]
+        private string desc;
 
         public int Id => id;
         public LoadSceneMode LoadSceneMode => loadSceneMode;
-        public int BuildIndex => reference.BuildIndex;
-        public string Name => reference.Name;
-        public string Path => reference.Path;
-        public Scene LoadedScene => reference.LoadedScene;
+        public string Path => path;
     }
 
     [CreateAssetMenu(menuName = "MyMenu/Create SceneMap")]
     public class SceneMap : ScriptableObject
     {
         [SerializeField]
-        private List<SceneData> data;
+        private List<SceneConfig> data;
 
-        public SceneData GetSceneData(int id) 
+        internal SceneConfig GetSceneConfig(int id) 
         {
             if (data == null || data.Count == 0) 
             {
@@ -39,6 +37,15 @@ namespace GameFramework
             }
 
             return data.Find(s => s.Id == id);
+        }
+
+        internal List<SceneConfig> GetSceneConfigList()
+        {
+            if (data == null)
+            {
+                return new List<SceneConfig>();
+            }
+            return data;
         }
     }
 }

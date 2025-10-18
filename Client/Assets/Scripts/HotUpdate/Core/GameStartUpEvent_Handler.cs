@@ -8,6 +8,13 @@ namespace GameFramework.Core
         public override void Invoke(GameStartUpEventArgs arg)
         {
             MDebug.Log("”Œœ∑∆Ù∂Ø!");
+
+            /*
+             * Login
+             * Playing
+             * 
+             */
+            Game.GetModule<SceneManager>().LoadScene(1001);
         }
     }
 }
