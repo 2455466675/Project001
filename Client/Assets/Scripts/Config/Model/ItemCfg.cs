@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public partial class ItemCfg : ICfg
+	public sealed class ItemCfg : ICfg
 	{
 		public int Id {get; private set;} 
 		public int Name {get; private set;} 
@@ -39,7 +39,7 @@ namespace Config
 
 
 	[Serializable]
-	public partial class ItemCfgContainer : CfgContainerBase<ItemCfg>
+	internal class ItemCfgContainer : CfgContainerBase<ItemCfg>
 	{
 		public override void Deserialize(BinaryReader reader)
 		{

@@ -26,19 +26,22 @@ namespace GameFramework
         private static bool isStarted;
         private static Dictionary<Type, GameModule> m_GameModules;
         private static List<IUpdate> m_UpdateableModules;
+        private static List<IFixedUpdate> m_FixedUpdateableModules;
 
         private static List<Assembly> m_Assemblies;
         private static Dictionary<Type, List<Type>> m_AttributeTypes;
 
-        public static EventManager Event { get; private set; }
-
+        public static IGameEvent Event { get; private set; }
+        public static IGameplay Gameplay { get; private set; }
         static Game()
         {
             m_GameModules = new Dictionary<Type, GameModule>();
             m_UpdateableModules = new List<IUpdate>();
+            m_FixedUpdateableModules = new List<IFixedUpdate>();
             m_Assemblies = new List<Assembly>();
             m_AttributeTypes = new Dictionary<Type, List<Type>>();
-            Event = new EventManager();
+            Event = new GameEvent();
+            Gameplay = new Gameplay();
         }
 
         public static async void Start()
@@ -55,6 +58,7 @@ namespace GameFramework
             await LoadGameRoot();
 
             Event.Init();
+            Gameplay.Init();
             isStarted = true;
 
             Event.Publish(new GameStartUpEventArgs());
@@ -70,6 +74,19 @@ namespace GameFramework
             for (int i = 0; i < m_UpdateableModules.Count; i++)
             {
                 m_UpdateableModules[i].Update();
+            }
+        }
+
+        public static void FixedUpdate()
+        {
+            if (!isStarted)
+            {
+                return;
+            }
+
+            for (int i = 0; i < m_FixedUpdateableModules.Count; i++)
+            {
+                m_FixedUpdateableModules[i].FixedUpdate();
             }
         }
 
@@ -199,6 +216,7 @@ namespace GameFramework
         {
             m_GameModules.Clear();
             m_UpdateableModules.Clear();
+            m_FixedUpdateableModules.Clear();
 
             List<GameModule> modules = new List<GameModule>();
 
@@ -229,12 +247,12 @@ namespace GameFramework
             foreach (var module in modules)
             {
                 IGameModule obj = module.obj;
-                if (obj is ISyncInit s)
+                if (obj is IGameModule_SyncInit s)
                 {
                     s.Init();
                 }
 
-                if (obj is IAsyncInit a)
+                if (obj is IGameModule_AsyncInit a)
                 {
                     await a.Init();
                 }
@@ -242,6 +260,11 @@ namespace GameFramework
                 if (obj is IUpdate u)
                 {
                     m_UpdateableModules.Add(u);
+                }
+
+                if (obj is IFixedUpdate fu)
+                {
+                    m_FixedUpdateableModules.Add(fu);
                 }
 
                 Debug.Log("GameModule Init : " + module.type.Name);

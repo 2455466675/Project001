@@ -61,6 +61,8 @@ namespace GameFramework.UI
             Fun(transform, views);
 
             navigation = views.ToArray();
+
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
 #endif

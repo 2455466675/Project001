@@ -6,12 +6,12 @@ namespace GameFramework
     {
     }
 
-    public interface ISyncInit : IGameModule
+    public interface IGameModule_SyncInit : IGameModule
     {
         void Init();
     }
 
-    public interface IAsyncInit : IGameModule
+    public interface IGameModule_AsyncInit : IGameModule
     {
         UniTask Init();
     }
@@ -19,5 +19,10 @@ namespace GameFramework
     public interface IUpdate
     {
         void Update();
+    }
+
+    public interface IFixedUpdate
+    {
+        void FixedUpdate();
     }
 }

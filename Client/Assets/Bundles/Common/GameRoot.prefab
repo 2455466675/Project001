@@ -608,7 +608,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 2269336493127326102}
   m_Canvas: {fileID: 1055370259940104832}
-  m_Groups: []
+  m_Groups:
+  - type: 1
+    transform: {fileID: 5642407745728952144}
+  - type: 2
+    transform: {fileID: 3517151803351261968}
+  - type: 3
+    transform: {fileID: 8569307952608205056}
+  - type: 4
+    transform: {fileID: 8838366017133511964}
 --- !u!1 &8586805540698830188
 GameObject:
   m_ObjectHideFlags: 0

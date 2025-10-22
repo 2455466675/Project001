@@ -45,12 +45,6 @@ namespace GameFramework.UI
         }
     }
 
-    public enum InputModuleType 
-    {
-        Character = 1,
-        Battle = 2,
-    }
-
     public abstract class InputModule : IInputable
     {
         private readonly NavigateCammand navigateCammand;
@@ -103,7 +97,7 @@ namespace GameFramework.UI
     }
 
     [GameModule(GameModulePriority.InputController)]
-    public class InputController : ISyncInit
+    public class InputController : IGameModule_SyncInit
     {
         private List<InputModule> inputModules;
         private InputModule current;

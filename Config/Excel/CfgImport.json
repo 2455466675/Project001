@@ -54,6 +54,11 @@
             "excel":"battle/battle_role_action.xlsx",
             "type":"BattleRoleActionCfg",
             "sheet":1
+        },
+		{
+            "excel":"login.xlsx",
+            "type":"LoginCfg",
+            "sheet":1
         }
     ]
 }

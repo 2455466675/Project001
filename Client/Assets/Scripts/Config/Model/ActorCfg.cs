@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public partial class ActorCfg : ICfg
+	public sealed class ActorCfg : ICfg
 	{
 		public int Id {get; private set;} 
 		public string PrefabPath {get; private set;} 
@@ -27,7 +27,7 @@ namespace Config
 
 
 	[Serializable]
-	public partial class ActorCfgContainer : CfgContainerBase<ActorCfg>
+	internal class ActorCfgContainer : CfgContainerBase<ActorCfg>
 	{
 		public override void Deserialize(BinaryReader reader)
 		{

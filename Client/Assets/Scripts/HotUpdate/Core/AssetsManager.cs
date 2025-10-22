@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 namespace GameFramework.Core 
 {
     [GameModule(GameModulePriority.AssetsManager)]
-    public class AssetsManager : ISyncInit
+    public class AssetsManager : IGameModule_SyncInit
     {
         //private SpriteManager spriteManager;
 
@@ -35,7 +35,10 @@ namespace GameFramework.Core
         /// <returns></returns>
         public T LoadAsset<T>(string path) where T : UnityEngine.Object
         {
-            return YooAssets.LoadAssetSync<T>(path).AssetObject as T;
+            var handle = YooAssets.LoadAssetSync<T>(path);
+            T result = handle.GetAssetObject<T>();
+            handle.Release();
+            return result;
         }
 
         /// <summary>
@@ -46,21 +49,25 @@ namespace GameFramework.Core
         /// <returns></returns>
         public async UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object
         {
-            AssetHandle handle = YooAssets.LoadAssetAsync<T>(path);
+            var handle = YooAssets.LoadAssetAsync<T>(path);
             await handle;
-            return handle.GetAssetObject<T>();
+            T result = handle.GetAssetObject<T>();
+            handle.Release();
+            return result;
         }
 
         public T[] LoadAllAssets<T>(string path) where T : UnityEngine.Object
         {
-            AllAssetsHandle handle = YooAssets.LoadAllAssetsSync<T>(path);
-            return handle.AllAssetObjects.Cast<T>().ToArray();
+            var handle = YooAssets.LoadAllAssetsSync<T>(path);
+            T[] result = handle.AllAssetObjects.Cast<T>().ToArray();
+            handle.Release();
+            return result;
         }
 
-        public Scene LoadScene(string path, LoadSceneMode mode) 
+        public SceneHandle LoadScene(string path, LoadSceneMode mode) 
         {
             var handle = YooAssets.LoadSceneSync(path, mode);
-            return handle.SceneObject;
+            return handle;
         }
 
         public SceneHandle LoadScentAsync(string path, LoadSceneMode mode) 

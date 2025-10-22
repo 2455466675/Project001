@@ -8,7 +8,7 @@ using UnityEngine;
 namespace GameFramework.Core 
 {
     [GameModule(GameModulePriority.ConfigManager)]
-    public class ConfigManager : IAsyncInit
+    public class ConfigManager : IGameModule_AsyncInit
     {
         public class TextItem 
         {

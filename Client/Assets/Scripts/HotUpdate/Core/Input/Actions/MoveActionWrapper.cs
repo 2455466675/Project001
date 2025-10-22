@@ -10,7 +10,7 @@ namespace GameFramework.Core
     {
         private bool isPress;
 
-        public override void Tick(float fdt)
+        public override void Tick()
         {
             if (!isPress) 
             {

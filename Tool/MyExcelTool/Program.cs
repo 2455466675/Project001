@@ -119,6 +119,11 @@ namespace ExecelTool
             for (int i = 0; i < paths.Length; i++)
             {
                 //FileInfo fileInfo = new FileInfo(Path.GetFullPath(paths[i]));
+                var name = Path.GetFileName(paths[i]);
+                if (name.StartsWith('~')) 
+                {
+                    continue;
+                }
 
                 using (FileStream stream = new FileStream(Path.GetFullPath(paths[i]), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
@@ -310,7 +315,7 @@ namespace ExecelTool
             sb.Append("{\n");
 
             sb.Append("\t[Serializable]\n");
-            sb.Append($"\tpublic partial class {excelName} : ICfg\n");
+            sb.Append($"\tpublic sealed class {excelName} : ICfg\n");
             sb.Append("\t{\n");
 
             foreach (var item in head)
@@ -349,7 +354,7 @@ namespace ExecelTool
             sb.Append("\n\n");
 
             sb.Append("\t[Serializable]\n");
-            sb.Append($"\tpublic partial class {excelName}Container : CfgContainerBase<{excelName}>\n");  //配置对应的容器类
+            sb.Append($"\tinternal class {excelName}Container : CfgContainerBase<{excelName}>\n");  //配置对应的容器类
             sb.Append("\t{\n");
 
             sb.Append("\t\tpublic override void Deserialize(BinaryReader reader)\n");

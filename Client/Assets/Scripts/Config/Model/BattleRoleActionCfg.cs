@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public partial class BattleRoleActionCfg : ICfg
+	public sealed class BattleRoleActionCfg : ICfg
 	{
 		public int Id {get; private set;} 
 		public string Name {get; private set;} 
@@ -27,7 +27,7 @@ namespace Config
 
 
 	[Serializable]
-	public partial class BattleRoleActionCfgContainer : CfgContainerBase<BattleRoleActionCfg>
+	internal class BattleRoleActionCfgContainer : CfgContainerBase<BattleRoleActionCfg>
 	{
 		public override void Deserialize(BinaryReader reader)
 		{

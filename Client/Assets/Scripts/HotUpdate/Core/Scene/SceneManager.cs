@@ -1,13 +1,15 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace GameFramework.Core 
 {
     [GameModule(GameModulePriority.SceneManager)]
-    public class SceneManager : IAsyncInit
+    public class SceneManager : IGameModule_AsyncInit
     {
         private Dictionary<int, SceneEntity> m_Entities;
+
+        private SceneEntity m_MainScene;
+        private SceneEntity m_BattleScene;
 
         public async UniTask Init()
         {
@@ -24,6 +26,9 @@ namespace GameFramework.Core
         }
 
         /*
+         * 
+         * Init => Login <=> Play
+         *              
          * LoadView
          * 
          * None
@@ -33,12 +38,28 @@ namespace GameFramework.Core
          * 
         */
 
-        public void LoadScene(int id) 
+        public async UniTask LoadScene(int id) 
         {
-            if (m_Entities.TryGetValue(id, out var entity))
-            {
-                entity.Load();
+            if (m_MainScene != null && m_MainScene.SceneId == id) 
+            {                
+                return;
             }
+
+            if (!m_Entities.ContainsKey(id)) 
+            {
+                return;
+            }
+
+            SceneEntity entity = m_Entities[id];
+            await entity.LoadAsync();
+
+            if (m_MainScene != null) 
+            {
+                await m_MainScene.UnloadAsync();            
+            }
+
+            m_MainScene = entity;
+            m_MainScene.ActivateScene();
         }
     }
 }

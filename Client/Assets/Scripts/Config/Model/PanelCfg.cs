@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public partial class PanelCfg : ICfg
+	public sealed class PanelCfg : ICfg
 	{
 		public int Id {get; private set;} 
 		public string Path {get; private set;} 
@@ -30,7 +30,7 @@ namespace Config
 
 
 	[Serializable]
-	public partial class PanelCfgContainer : CfgContainerBase<PanelCfg>
+	internal class PanelCfgContainer : CfgContainerBase<PanelCfg>
 	{
 		public override void Deserialize(BinaryReader reader)
 		{

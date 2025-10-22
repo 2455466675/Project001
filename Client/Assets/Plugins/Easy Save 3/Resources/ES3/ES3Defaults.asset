@@ -30,25 +30,26 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - HybridCLR.Editor
-    - Assembly-CSharp-firstpass
+    - ES3
     - YooAsset
     - Eflatun.SceneReference.Editor
-    - HotUpdate_Feature
     - PPv2URPConverters
     - UniTask
+    - HotUpdate_Core
     - YooAsset.Editor
     - Assembly-CSharp
     - HotUpdate_UI
     - UniTask.Linq
     - Eflatun.SceneReference
     - PsdPlugin
-    - HotUpdate_Core
     - LITJson
     - GameConfig
     - Navigation
     - UniTask.TextMeshPro
     - HotUpdate_Base
+    - Assembly-CSharp-firstpass
     - HotUpdate_Utility
+    - HotUpdate_Feature
     - HotUpdate_Gameplay
     - HybridCLR.Runtime
     - UniTask.Editor

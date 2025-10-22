@@ -9,7 +9,7 @@ using Cysharp.Threading.Tasks;
 namespace GameFramework.UI 
 {
     [GameModule(GameModulePriority.UIManager)]
-    public class UIManager : ISyncInit
+    public class UIManager : IGameModule_SyncInit
     {
         private Dictionary<PanelDefine, PanelController> m_PanelControllers;
         private Dictionary<NavigationDefine, NavigationController> m_NavigationControllers;
@@ -98,8 +98,10 @@ namespace GameFramework.UI
 
         public void Navigate(NavigationDefine id, int[] defaultIndexs = null)
         {
+            MDebug.Log("Navigate");
             if (!m_NavigationMap.ContainsKey(id)) 
             {
+                MDebug.Log("Navigate 2");
                 return;
             }
 

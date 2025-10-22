@@ -1,10 +1,9 @@
 using Cysharp.Threading.Tasks;
-using GameFramework.Core;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using YooAsset;
 
-namespace GameFramework
+namespace GameFramework.Core
 {
     /// <summary>
     /// 
@@ -15,24 +14,24 @@ namespace GameFramework
         {
             None = 0,
             Loading,
-            Active,
-            Deactive,
+            Visible,
+            Unvisible,
         }
 
         public int SceneId => cfg.Id;
-        public bool IsLoaded => scene.isLoaded;
-        public bool IsValid => scene.IsValid();
+        public bool IsLoaded => handle != null && handle.SceneObject.isLoaded;
+        public bool IsValid => handle != null && handle.SceneObject.IsValid();
 
         private readonly SceneConfig cfg;
+        private SceneHandle handle;
         private State state;
-        private Scene scene;
 
         internal SceneEntity(SceneConfig cfg)
         {
             this.cfg = cfg;
         }
 
-        internal void SetActive(bool active)
+        internal void SetVisible(bool visible)
         {
             if (!IsLoaded)
             {
@@ -47,12 +46,21 @@ namespace GameFramework
             {
                 return;
             }
-            GameObject[] objects = scene.GetRootGameObjects();
+            GameObject[] objects = handle.SceneObject.GetRootGameObjects();
             foreach (GameObject obj in objects)
             {
-                obj.SetActive(active);
+                obj.SetActive(visible);
             }
-            state = active ? State.Active : State.Deactive;
+            state = visible ? State.Visible : State.Unvisible;
+        }
+
+        internal void ActivateScene() 
+        {
+            if (handle == null) 
+            {
+                return;
+            }
+            handle.ActivateScene();
         }
 
         internal void Load() 
@@ -66,8 +74,9 @@ namespace GameFramework
                 return;
             }
             state = State.Loading;
-            scene = Game.GetModule<AssetsManager>().LoadScene(cfg.Path, cfg.LoadSceneMode);
-            state = State.Active;
+            var handle = Game.GetModule<AssetsManager>().LoadScene(cfg.Path, cfg.LoadSceneMode);
+            this.handle = handle;
+            state = State.Visible;
         }
 
         internal async UniTask LoadAsync()
@@ -86,17 +95,18 @@ namespace GameFramework
             {
                 await UniTask.Yield();
             }
-            scene = handle.SceneObject;
-            state = State.Active;
+            this.handle = handle;
+            state = State.Visible;
         }
 
         internal async UniTask UnloadAsync() 
         {
-            if (!IsLoaded) 
+            if (handle == null) 
             {
                 return;
             }
-            await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(scene);
+            await handle.UnloadAsync();
+            handle = null;
         }
     }
 }

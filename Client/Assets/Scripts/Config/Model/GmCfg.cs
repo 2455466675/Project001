@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public partial class GmCfg : ICfg
+	public sealed class GmCfg : ICfg
 	{
 		public int Id {get; private set;} 
 		public int Class {get; private set;} 
@@ -36,7 +36,7 @@ namespace Config
 
 
 	[Serializable]
-	public partial class GmCfgContainer : CfgContainerBase<GmCfg>
+	internal class GmCfgContainer : CfgContainerBase<GmCfg>
 	{
 		public override void Deserialize(BinaryReader reader)
 		{

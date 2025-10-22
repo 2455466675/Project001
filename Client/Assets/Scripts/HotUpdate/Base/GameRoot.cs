@@ -41,6 +41,7 @@ namespace GameFramework
 
         private void FixedUpdate()
         {
+            Game.FixedUpdate();
         }
 
         private T GetNodeInner<T>() where T : GameNode

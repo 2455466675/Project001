@@ -48,6 +48,9 @@ namespace Config
 			var _BattleRoleActionCfgContainer = new BattleRoleActionCfgContainer();
 			_BattleRoleActionCfgContainer.Deserialize(reader);
 			CfgDatas.Add(typeof(BattleRoleActionCfg), _BattleRoleActionCfgContainer);
+			var _LoginCfgContainer = new LoginCfgContainer();
+			_LoginCfgContainer.Deserialize(reader);
+			CfgDatas.Add(typeof(LoginCfg), _LoginCfgContainer);
 		}
 		public void Serialize(BinaryWriter writer)
 		{

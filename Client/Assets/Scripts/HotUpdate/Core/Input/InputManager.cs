@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameFramework.Core 
 {
@@ -13,7 +14,7 @@ namespace GameFramework.Core
     }
 
     [GameModule(GameModulePriority.InputManager)]
-    public class InputManager : ISyncInit
+    public class InputManager : IGameModule_SyncInit, IFixedUpdate
     {
         public GameModulePriority Priority => GameModulePriority.InputManager;
 
@@ -25,6 +26,14 @@ namespace GameFramework.Core
             m_GameInput = new GameInput();
             m_GameInput.Enable();
             InitWrappers();
+        }
+
+        public void FixedUpdate()
+        {
+            foreach (var item in m_Wrappers)
+            {
+                item.Tick();
+            }
         }
 
         public void Enable() 

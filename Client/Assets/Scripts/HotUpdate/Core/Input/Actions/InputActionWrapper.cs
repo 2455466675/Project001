@@ -37,7 +37,7 @@ namespace GameFramework.Core
         /// FixedUpdate
         /// </summary>
         /// <param name="fdt"></param>
-        public virtual void Tick(float fdt) 
+        public virtual void Tick() 
         {
         }
 

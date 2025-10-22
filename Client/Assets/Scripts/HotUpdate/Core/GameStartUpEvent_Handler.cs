@@ -1,4 +1,4 @@
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace GameFramework.Core 
 {
@@ -14,7 +14,8 @@ namespace GameFramework.Core
              * Playing
              * 
              */
-            Game.GetModule<SceneManager>().LoadScene(1001);
+
+            Game.GetModule<StateManager>().Start();
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-public class SnowflakeGenerator
+public static class SnowflakeGenerator
 {
     private const int WorkerIdBits = 5;
     private const int DatacenterIdBits = 5;
@@ -17,16 +17,18 @@ public class SnowflakeGenerator
 
     private static readonly DateTime Epoch = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-    private readonly object _lock = new object();
+    private static readonly object _lock = new object();
 
-    private readonly long _workerId;
-    private readonly long _datacenterId;
+    private static readonly long _workerId;
+    private static readonly long _datacenterId;
 
-    private long _lastTimestamp = -1L;
-    private long _sequence = 0L;
+    private static long _lastTimestamp = -1L;
+    private static long _sequence = 0L;
 
-    public SnowflakeGenerator(long datacenterId, long workerId)
+    static SnowflakeGenerator()
     {
+        long datacenterId = 5;
+        long workerId = 1;
         if (datacenterId > MaxDatacenterId || datacenterId < 0)
             throw new ArgumentException($"Datacenter ID must be between 0 and {MaxDatacenterId}");
 
@@ -37,7 +39,7 @@ public class SnowflakeGenerator
         _workerId = workerId;
     }
 
-    public long NextId()
+    public static long NextId()
     {
         lock (_lock)
         {
@@ -68,7 +70,7 @@ public class SnowflakeGenerator
         }
     }
 
-    private long WaitNextMillis(long currentTimestamp)
+    private static long WaitNextMillis(long currentTimestamp)
     {
         long timestamp = GetCurrentTimestamp();
         while (timestamp <= currentTimestamp)
