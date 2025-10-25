@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameFramework.Featrue;
 
 namespace GameFramework.UI
 {
@@ -38,12 +37,12 @@ namespace GameFramework.UI
         }
 
         private NavigationView m_View;
-        private List<DataModel> m_Datas;
+        private IReadOnlyList<DataModel> m_Datas;
         private Dictionary<int, DataBinder> m_Binders = new Dictionary<int, DataBinder>();
 
         public bool IsLocked => CheckIsLocked();
 
-        protected void SetData(List<DataModel> datas)
+        protected void SetData(IReadOnlyList<DataModel> datas)
         {
             if (m_View == null)
             {
@@ -186,6 +185,13 @@ namespace GameFramework.UI
             DataModel dataModel = m_Datas[dataIndex];
             MoveRightItemView(itemView, dataModel);
         }
+
+        private bool CheckValid(int dataIndex) 
+        {
+            DataModel dataModel = m_Datas[dataIndex];
+            return CheckItemIsValid(dataModel);
+        }
+
         #endregion
 
         #region
@@ -201,6 +207,11 @@ namespace GameFramework.UI
         protected virtual void MoveDownItemView(NavigationItemView itemView, DataModel dataModel) { }
         protected virtual void MoveLeftItemView(NavigationItemView itemView, DataModel dataModel) { }
         protected virtual void MoveRightItemView(NavigationItemView itemView, DataModel dataModel) { }
+
+        protected virtual bool CheckItemIsValid(DataModel dataModel) 
+        {
+            return true;
+        }
 
         protected virtual bool CheckIsLocked() 
         {
@@ -225,6 +236,7 @@ namespace GameFramework.UI
             m_View.OnMoveRigthItem += OnMoveRight;
             m_View.OnItemBindData += OnBindData;
             m_View.OnItemUnbindData += OnUnbindData;
+            m_View.OnCheckItemValid += CheckValid;
         }
 
         private void Unregister()
@@ -243,6 +255,7 @@ namespace GameFramework.UI
             m_View.OnMoveRigthItem -= OnMoveRight;
             m_View.OnItemBindData -= OnBindData;
             m_View.OnItemUnbindData -= OnUnbindData;
+            m_View.OnCheckItemValid -= CheckValid;
         }
 
         private void ClearBinders() 

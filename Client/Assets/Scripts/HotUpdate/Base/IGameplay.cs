@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
+
 namespace GameFramework 
 {
     public interface IGameplay
     {
-        void Init();
+        UniTask Init();
         void Exit();
         void SaveGame(ISaveWriter writer);
         void LoadGame(ISaveReader reader);

@@ -8,7 +8,7 @@ using Cysharp.Threading.Tasks;
 
 namespace GameFramework.UI 
 {
-    [GameModule(GameModulePriority.UIManager)]
+    [GameModule]
     public class UIManager : IGameModule_SyncInit
     {
         private Dictionary<PanelDefine, PanelController> m_PanelControllers;
@@ -96,7 +96,7 @@ namespace GameFramework.UI
             return panelEntity;
         }
 
-        public void Navigate(NavigationDefine id, int[] defaultIndexs = null)
+        public void EnterNavigate(NavigationDefine id, int[] defaultIndexs = null)
         {
             MDebug.Log("Navigate");
             if (!m_NavigationMap.ContainsKey(id)) 
@@ -108,7 +108,12 @@ namespace GameFramework.UI
             defaultIndexs ??= new int[] {0};
 
             PanelDefine panel = m_NavigationMap[id];
-            Game.GetModule<InputController>().Navigate(id, panel, defaultIndexs);
+            Game.GetModule<InputController>().EnterNavigate(id, panel, defaultIndexs);
+        }
+
+        public void ExitNavigate() 
+        {
+            Game.GetModule<InputController>().ExitNavigate();
         }
 
         public Entity GetPanelEntity(PanelDefine id)

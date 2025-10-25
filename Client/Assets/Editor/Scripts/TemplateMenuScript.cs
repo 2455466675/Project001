@@ -35,6 +35,13 @@ public class TemplateMenuScript
         Instantiate(path);
     }
 
+    [MenuItem("GameObject/MyUI/Image/ImageView")]
+    public static void CreateImageView()
+    {
+        string path = "Assets/Editor/UITemplate/ImageView.prefab";
+        Instantiate(path);
+    }
+
     [MenuItem("GameObject/MyUI/Text/StaticTextView")]
     public static void CreateStaticTextView()
     {

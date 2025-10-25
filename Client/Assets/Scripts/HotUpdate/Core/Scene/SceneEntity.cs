@@ -89,12 +89,12 @@ namespace GameFramework.Core
             {
                 return;
             }
+
             state = State.Loading;
+
             var handle = Game.GetModule<AssetsManager>().LoadScentAsync(cfg.Path, cfg.LoadSceneMode);
-            while (!handle.IsDone)
-            {
-                await UniTask.Yield();
-            }
+            await handle;
+
             this.handle = handle;
             state = State.Visible;
         }
@@ -105,7 +105,10 @@ namespace GameFramework.Core
             {
                 return;
             }
-            await handle.UnloadAsync();
+            if (handle.IsValid) 
+            {
+                await handle.UnloadAsync();            
+            }
             handle = null;
         }
     }

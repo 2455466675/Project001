@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace GameFramework 
 {
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class GameEventAttribute : GameAttribute 
     {   
     }

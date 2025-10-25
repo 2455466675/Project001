@@ -10,7 +10,7 @@ namespace GameFramework.Gameplay
         public int count;
     }
 
-    [Gameplay(-100)]
+    [Gameplay]
     public class InventorySystem : IGameplaySystem
     {
         public int id;
@@ -18,12 +18,12 @@ namespace GameFramework.Gameplay
 
         public void OnInit()
         {
-            inventory = new Dictionary<string, DataModel>();            
+        
         }
 
         public void OnExit()
         {
-
+            inventory.Clear();
         }
 
         public void Test() 

@@ -35,7 +35,7 @@ namespace GameFramework.UI
 
         protected override void SubmitItemView(NavigationItemView itemView, DataModel dataModel)
         {
-            Game.GetModule<UIManager>().Navigate(NavigationDefine.TestList2);
+            Game.GetModule<UIManager>().EnterNavigate(NavigationDefine.TestList2);
         }
 
         protected override bool CheckIsLocked()

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace GameFramework.Core 
 {
-    [GameModule(GameModulePriority.AssetsManager)]
+    [GameModule]
     public class AssetsManager : IGameModule_SyncInit
     {
         //private SpriteManager spriteManager;
@@ -92,6 +92,12 @@ namespace GameFramework.Core
         {
             GameObject obj = await LoadAssetAsync<GameObject>(path);
             return GoHelper.Instantiate(obj, parent);
+        }
+
+        public async UniTask UnloadUnusedAssetsAsync() 
+        {
+            var package = YooAssets.GetPackage("DefaultPackage");
+            await package.UnloadUnusedAssetsAsync();
         }
 
         public Sprite GetSprite(string spriteName)

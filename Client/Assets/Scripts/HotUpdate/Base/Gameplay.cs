@@ -1,16 +1,16 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace GameFramework 
 {
+    /// <summary>
+    /// 游戏玩法特性类
+    /// 通过Tools/MyTools/Game Priority Editor来编辑优先级
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class GameplayAttribute : GameAttribute
     {
-        public int Piority { get; private set; }
-        public GameplayAttribute(int priority = 0) 
-        { 
-            this.Piority = priority;
-        }
     }
 
     internal class Gameplay : IGameplay
@@ -26,8 +26,21 @@ namespace GameFramework
    
         internal Gameplay() { }
 
-        public void Init()
+        public async UniTask Init()
         {
+            List<ClassPriorityData> items = await Game.GetGamePriorityDatas("GameModuleAttribute");
+            int GetPriority(string fullName)
+            {
+                foreach (var data in items)
+                {
+                    if (data.type == fullName)
+                    {
+                        return data.priority;
+                    }
+                }
+                return 0;
+            }
+
             Type[] types = Game.GetTypes<GameplayAttribute>();
             m_Systems = new Dictionary<Type, IGameplaySystem>(types.Length);
             m_Sorts = new List<GameplaySystemSort>(types.Length);
@@ -38,12 +51,7 @@ namespace GameFramework
                 if (o is IGameplaySystem s)
                 {
                     m_Systems[type] = s;
-
-                    var attribute = type.GetCustomAttribute(typeof(GameplayAttribute), false) as GameplayAttribute;
-                    var sort = new GameplaySystemSort();
-                    sort.priority = attribute.Piority;
-                    sort.system = s;
-                    m_Sorts.Add(sort);
+                    m_Sorts.Add(new GameplaySystemSort(){ priority = GetPriority(type.FullName), system = s });
                 }
             }
 

@@ -46,7 +46,7 @@ namespace Navigation
 
         public event Action<NavigationItem> OnItemBindData;
         public event Action<NavigationItem> OnItemUnbindData;
-
+        public event Func<int, bool> OnCheckItemValid;
         #endregion
 
         #region
@@ -301,6 +301,7 @@ namespace Navigation
             }
 
             item.SetDataIndex(index);
+            item.DataValidChecker += CheckValid;
             OnItemBindData?.Invoke(item);
         }
 
@@ -312,7 +313,17 @@ namespace Navigation
             }
 
             OnItemUnbindData?.Invoke(item);
+            item.DataValidChecker -= CheckValid;
             item.SetDataIndex(-1);
+        }
+
+        private bool CheckValid(int index) 
+        {
+            if (OnCheckItemValid == null) 
+            {
+                return true;
+            }
+            return OnCheckItemValid.Invoke(index);
         }
 
         #endregion

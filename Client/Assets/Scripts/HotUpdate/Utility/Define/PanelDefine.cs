@@ -6,5 +6,6 @@ namespace GameFramework
         TestPanel2 = 2,
 
         LoginPanel = 1001,
+        LoadingPanel = 1002,
     }
 }

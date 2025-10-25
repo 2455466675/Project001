@@ -8,9 +8,18 @@ namespace GameFramework.Core
          * LoadView
          * */
 
-    [GameModule(GameModulePriority.StateManager)]
-    public class StateManager : IGameModule_SyncInit, IUpdate
+    [GameModule]
+    public class StateManager : IGameModule_SyncInit, IUpdate, IBlackboard
     {
+        public const string PhaseKey = "GamePhase";
+
+        public enum GamePhase
+        {
+            Init = 1,
+            Login = 2,
+            Play = 3,
+        }
+
         private StateMachine machine;
 
         public void Init()
@@ -29,6 +38,36 @@ namespace GameFramework.Core
         public void Update()
         {
             machine.Tick();
+        }
+
+        public bool GetBlackboardBoolValue(string key)
+        {
+            return machine.GetBlackboardBoolValue(key);
+        }
+
+        public int GetBlackboardIntValue(string key)
+        {
+            return machine.GetBlackboardIntValue(key);
+        }
+
+        public string GetBlackboardStringValue(string key)
+        {
+            return machine.GetBlackboardStringValue(key);
+        }
+
+        public void SetBlackboardValue(string key, int value)
+        {
+            machine.SetBlackboardValue(key, value);
+        }
+
+        public void SetBlackboardValue(string key, bool value)
+        {
+            machine.SetBlackboardValue(key, value);
+        }
+
+        public void SetBlackboardValue(string key, string value)
+        {
+            machine.SetBlackboardValue(key, value);
         }
     }
 }

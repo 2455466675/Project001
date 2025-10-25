@@ -2,6 +2,7 @@ using System;
 
 namespace GameFramework.UI 
 {
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class UIPanelControllerAttribute : GameAttribute
     {       
         public PanelDefine Id { get; private set; }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace GameFramework.Core 
 {
@@ -13,11 +12,9 @@ namespace GameFramework.Core
         public InputContext context;
     }
 
-    [GameModule(GameModulePriority.InputManager)]
+    [GameModule]
     public class InputManager : IGameModule_SyncInit, IFixedUpdate
     {
-        public GameModulePriority Priority => GameModulePriority.InputManager;
-
         private GameInput m_GameInput;
         private InputActionWrapper[] m_Wrappers;
 

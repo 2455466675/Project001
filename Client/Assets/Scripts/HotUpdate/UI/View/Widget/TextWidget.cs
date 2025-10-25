@@ -15,7 +15,6 @@ namespace GameFramework.UI
                 return;
             }
             this.m_Text.text = text;
-            this.m_Text.color = Utility.Color.DefaultColor;
         }
 
         public void SetText(int textId) 

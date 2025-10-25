@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   packageName: DefaultPackage
-  playMode: 0
+  playMode: 2
 --- !u!114 &404166800
 MonoBehaviour:
   m_ObjectHideFlags: 0

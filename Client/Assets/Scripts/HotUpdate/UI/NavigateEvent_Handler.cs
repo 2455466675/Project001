@@ -5,7 +5,7 @@ namespace GameFramework.UI
     {
         public override void Invoke(NavigateEventArgs arg)
         {
-            Game.GetModule<UIManager>().Navigate(arg.navigationDefine);
+            Game.GetModule<UIManager>().EnterNavigate(arg.navigationDefine);
         }
     }
 }

@@ -33,12 +33,12 @@ MonoBehaviour:
     - ES3
     - YooAsset
     - Eflatun.SceneReference.Editor
+    - HotUpdate_UI
     - PPv2URPConverters
     - UniTask
     - HotUpdate_Core
     - YooAsset.Editor
     - Assembly-CSharp
-    - HotUpdate_UI
     - UniTask.Linq
     - Eflatun.SceneReference
     - PsdPlugin
@@ -48,6 +48,7 @@ MonoBehaviour:
     - UniTask.TextMeshPro
     - HotUpdate_Base
     - Assembly-CSharp-firstpass
+    - Base
     - HotUpdate_Utility
     - HotUpdate_Feature
     - HotUpdate_Gameplay

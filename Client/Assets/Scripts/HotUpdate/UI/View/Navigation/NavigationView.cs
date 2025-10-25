@@ -20,6 +20,7 @@ namespace GameFramework.UI
         public event Action<NavigationItemView, int> OnMoveDownItem;
         public event Action<NavigationItemView, int> OnMoveLeftItem;
         public event Action<NavigationItemView, int> OnMoveRigthItem;
+        public event Func<int, bool> OnCheckItemValid;
 
         private void Awake()
         {
@@ -44,6 +45,7 @@ namespace GameFramework.UI
             m_List.OnMoveItem += List_OnMoveItem;
             m_List.OnItemBindData += List_OnItemBindData;
             m_List.OnItemUnbindData += List_OnItemUnbindData;
+            m_List.OnCheckItemValid += List_CheckItemValid;
         }
 
         private void UnRegister()
@@ -59,6 +61,7 @@ namespace GameFramework.UI
             m_List.OnMoveItem -= List_OnMoveItem;
             m_List.OnItemBindData -= List_OnItemBindData;
             m_List.OnItemUnbindData -= List_OnItemUnbindData;
+            m_List.OnCheckItemValid -= List_CheckItemValid;
         }
 
         public void UpdateDataCount(int count) 
@@ -164,6 +167,15 @@ namespace GameFramework.UI
             {
                 OnSelectItem?.Invoke(itemView, arg.IndexOfData);
             }
+        }
+
+        private bool List_CheckItemValid(int index) 
+        {
+            if (OnCheckItemValid == null) 
+            {
+                return true;
+            }
+            return OnCheckItemValid.Invoke(index);
         }
 
         #endregion

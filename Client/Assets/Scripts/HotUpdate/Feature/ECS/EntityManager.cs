@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace GameFramework.Featrue 
 {
-    [GameModule(GameModulePriority.EntityManager)]
+    [GameModule]
     public class EntityManager : IGameModule_SyncInit
     {
         private int m_UidGenerator;

@@ -10,6 +10,12 @@ namespace GameFramework.UI
 
         protected override void OnDestroy()
         {
+            if (m_UIPanel == null) 
+            {
+                return;
+            }
+
+            m_UIPanel.transform.SetParent(null);
             GoHelper.Destroy(m_UIPanel.gameObject);
             m_UIPanel = null;
             m_Controller = null;

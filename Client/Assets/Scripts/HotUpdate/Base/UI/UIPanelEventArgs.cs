@@ -1,7 +1,8 @@
 namespace GameFramework 
 {
-    public struct ShowPanelEventArgs : IGameEventArgs
+    public struct UIPanelEventArgs : IGameEventArgs
     {
+        public bool isShow;
         public PanelDefine panelDefine;
     }
 }

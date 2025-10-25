@@ -30,7 +30,31 @@ namespace GameFramework.UI
         [SerializeField]
         private Canvas m_Canvas;
         [SerializeField]
+        private CanvasGroup m_Mask;
+
+        [SerializeField]
         private List<Group> m_Groups;
+
+        private void Awake()
+        {
+            ShowMask();
+        }
+
+        public void ShowMask() 
+        {
+            if (m_Mask != null) 
+            {
+                m_Mask.alpha = 1f;
+            }
+        }
+
+        public void HideMask() 
+        {
+            if (m_Mask != null)
+            {
+                m_Mask.alpha = 0f;
+            }
+        }
 
         public Transform GetGroup(GroupType type) 
         {

@@ -6,6 +6,7 @@ using UnityEngine;
 using HybridCLR;
 using YooAsset;
 using System.Reflection;
+using LITJson;
 
 namespace GameFramework
 {
@@ -58,7 +59,7 @@ namespace GameFramework
             await LoadGameRoot();
 
             Event.Init();
-            Gameplay.Init();
+            await Gameplay.Init();
             isStarted = true;
 
             Event.Publish(new GameStartUpEventArgs());
@@ -113,6 +114,29 @@ namespace GameFramework
             else
             {
                 return new Type[0];
+            }
+        }
+
+        /// <summary>
+        /// 获取游戏模块的优先级
+        /// </summary>
+        /// <param name="name">特性名</param>
+        /// <returns></returns>
+        internal static async UniTask<List<ClassPriorityData>> GetGamePriorityDatas(string name)
+        {
+            var path = string.Format("Assets/Bundles/Common/{0}.json", name);
+            var handle = YooAssets.LoadAssetAsync<TextAsset>(path);
+            await handle;
+            if (handle.AssetObject == null)
+            {
+                return new List<ClassPriorityData>();
+            }
+            else
+            {
+                var json = handle.GetAssetObject<TextAsset>().text;
+                ClassPriorityListWrapper wrapper = JsonMapper.ToObject<ClassPriorityListWrapper>(json);
+                List<ClassPriorityData> items = wrapper != null && wrapper.items != null ? wrapper.items : new List<ClassPriorityData>();
+                return items;
             }
         }
 
@@ -218,6 +242,19 @@ namespace GameFramework
             m_UpdateableModules.Clear();
             m_FixedUpdateableModules.Clear();
 
+            List<ClassPriorityData> items = await GetGamePriorityDatas("GameModuleAttribute");
+            int GetPriority(string fullName)
+            {
+                foreach (var data in items)
+                {
+                    if (data.type == fullName)
+                    {
+                        return data.priority;
+                    }
+                }
+                return 0;
+            }
+
             List<GameModule> modules = new List<GameModule>();
 
             Type[] types = GetTypes<GameModuleAttribute>();
@@ -228,14 +265,13 @@ namespace GameFramework
                     continue;
                 }
 
-                var attribute = type.GetCustomAttribute(typeof(GameModuleAttribute), false) as GameModuleAttribute;
                 var obj = Activator.CreateInstance(type);
 
                 GameModule module = new GameModule
                 {
                     type = type,
                     obj = obj as IGameModule,
-                    priority = (int)attribute.Priority
+                    priority = GetPriority(type.FullName),
                 };
 
                 modules.Add(module);

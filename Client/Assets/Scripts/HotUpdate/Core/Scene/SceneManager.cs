@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameFramework.Core 
 {
-    [GameModule(GameModulePriority.SceneManager)]
+    [GameModule]
     public class SceneManager : IGameModule_AsyncInit
     {
         private Dictionary<int, SceneEntity> m_Entities;
@@ -60,6 +60,8 @@ namespace GameFramework.Core
 
             m_MainScene = entity;
             m_MainScene.ActivateScene();
+
+            await Game.GetModule<AssetsManager>().UnloadUnusedAssetsAsync();
         }
     }
 }

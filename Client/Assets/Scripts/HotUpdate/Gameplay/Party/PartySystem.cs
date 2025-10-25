@@ -1,7 +1,7 @@
 
 namespace GameFramework.Gameplay
 {
-    [Gameplay(-50)]
+    [Gameplay]
     public class PartySystem : IGameplaySystem
     {
         public void OnInit()
