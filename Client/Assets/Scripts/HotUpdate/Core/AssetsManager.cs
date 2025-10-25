@@ -94,6 +94,9 @@ namespace GameFramework.Core
             return GoHelper.Instantiate(obj, parent);
         }
 
+        /*
+         * 会把字体资源也卸载了。。。。
+         */
         public async UniTask UnloadUnusedAssetsAsync() 
         {
             var package = YooAssets.GetPackage("DefaultPackage");

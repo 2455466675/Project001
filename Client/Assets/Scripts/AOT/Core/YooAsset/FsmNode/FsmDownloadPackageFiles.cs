@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System.IO;
 using UnityEngine;
 using YooAsset;
 
@@ -40,13 +39,13 @@ namespace GameFramework.Core
 #if UNITY_EDITOR
 
 #elif UNITY_STANDALONE_WIN
-            DriveInfo drive = new DriveInfo(Path.GetPathRoot(Application.persistentDataPath));
-            if ((totalDownloadBytes + 100 * MB) > drive.AvailableFreeSpace)
-            {
-                Debug.Log($"Ê£Óà´æ´¢¿Õ¼ä²»×ã");
-                m_Machine.ChangeState<FsmFinish>();
-                return;
-            }
+            //DriveInfo drive = new DriveInfo(Path.GetPathRoot(Application.persistentDataPath));
+            //if ((totalDownloadBytes + 100 * MB) > drive.AvailableFreeSpace)
+            //{
+            //    Debug.Log($"Ê£Óà´æ´¢¿Õ¼ä²»×ã");
+            //    m_Machine.ChangeState<FsmFinish>();
+            //    return;
+            //}
 #endif
 
             downloader.DownloadErrorCallback = DownloadError;

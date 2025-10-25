@@ -61,7 +61,7 @@ namespace GameFramework.Core
             m_MainScene = entity;
             m_MainScene.ActivateScene();
 
-            await Game.GetModule<AssetsManager>().UnloadUnusedAssetsAsync();
+            //await Game.GetModule<AssetsManager>().UnloadUnusedAssetsAsync();
         }
     }
 }
