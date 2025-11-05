@@ -36,7 +36,7 @@ namespace GameFramework.UI
             TextWidget text = itemView.GetWidget<TextWidget>();
             if (text != null) 
             {              
-                text.SetText(dataModel.GetIntValue("name"));
+                text.SetTextById(dataModel.GetStringValue("name"));
             }
 
             ImageWidget image = itemView.GetWidget<ImageWidget>();

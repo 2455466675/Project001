@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public partial class GameCfgData : IBinarySerialize
+	public class GameCfgData : IBinarySerialize
 	{
 		public Dictionary<Type, ICfgContainer> CfgDatas {get; private set;}
 		public void Deserialize(BinaryReader reader)

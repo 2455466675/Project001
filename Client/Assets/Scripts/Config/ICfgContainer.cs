@@ -11,53 +11,82 @@ namespace Config
 
     }
 
-    public abstract class CfgContainerBase<T> : ICfgContainer where T : class, ICfg
+    public abstract class CfgContainerBase<T> : ICfgContainer where T : class, IConfig
     {
-        public Dictionary<int, T> CfgMap { get; protected set; }
+        public Dictionary<int, T> IntCfgMap { get; protected set; }
+
+        public Dictionary<string, T> StrCfgMap { get; protected set; }
 
         public abstract void Deserialize(BinaryReader reader);
 
         public abstract void Serialize(BinaryWriter writer);
 
-        public virtual T Find(int id)
+        public T Find(int id)
         {
-            if (CfgMap == null)
+            if (IntCfgMap == null)
+            {
+                return default;
+            }
+            if (!IntCfgMap.ContainsKey(id))
+            {
+                return default;
+            }
+            return IntCfgMap[id];
+        }
+
+        public T Find(string id)
+        {
+            if (StrCfgMap == null)
             {
                 return null;
             }
-            if (!CfgMap.ContainsKey(id))
-            {                
-                return null;
-            }
-            return CfgMap[id];
-        }
-
-        public virtual T Find(Func<T, bool> func)
-        {
-            if (CfgMap == null)
+            if (!StrCfgMap.ContainsKey(id))
             {
                 return null;
             }
-            
-            return CfgMap.Values.Where(func).FirstOrDefault();
+            return StrCfgMap[id];
         }
 
-        public virtual T[] FindAll()
+        public T Find(Func<T, bool> func)
         {
-            if (CfgMap == null)
+            Type type = typeof(T);
+            if (typeof(IConfig_IntKey).IsAssignableFrom(type) && IntCfgMap != null)
             {
-                return new T[0];
+                return IntCfgMap.Values.Where(func).FirstOrDefault();
             }
-            return CfgMap.Values.ToArray();
+            if (typeof(IConfig_StringKey).IsAssignableFrom(type) && StrCfgMap != null)
+            {
+                return StrCfgMap.Values.Where(func).FirstOrDefault();
+            }
+            return default;
         }
 
-        public virtual T[] FindAll(Func<T, bool> func)
+        public T[] FindAll()
         {
-            if (CfgMap == null)
+            Type type = typeof(T);
+            if (typeof(IConfig_IntKey).IsAssignableFrom(type) && IntCfgMap != null)
             {
-                return new T[0];
+                return IntCfgMap.Values.ToArray();
             }
-            return CfgMap.Values.Where(func).ToArray();
+            if (typeof(IConfig_StringKey).IsAssignableFrom(type) && StrCfgMap != null)
+            {
+                return StrCfgMap.Values.ToArray();
+            }
+            return new T[0];
+        }
+
+        public T[] FindAll(Func<T, bool> func)
+        {
+            Type type = typeof(T);
+            if (typeof(IConfig_IntKey).IsAssignableFrom(type) && IntCfgMap != null)
+            {
+                return IntCfgMap.Values.Where(func).ToArray();
+            }
+            if (typeof(IConfig_StringKey).IsAssignableFrom(type) && StrCfgMap != null)
+            {
+                return StrCfgMap.Values.Where(func).ToArray();
+            }
+            return new T[0];
         }
     }
 }

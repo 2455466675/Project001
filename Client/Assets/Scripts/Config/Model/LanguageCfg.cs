@@ -9,14 +9,14 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public sealed class LanguageCfg : ICfg
+	public sealed class LanguageCfg : IConfig_StringKey
 	{
-		public int Id {get; private set;} 
+		public string Id {get; private set;} 
 		public string Text {get; private set;} 
 		public int Color {get; private set;} 
 		public void Deserialize(BinaryReader reader)
 		{
-			Id = reader.ReadInt32();
+			Id = reader.ReadString();
 			Text = reader.ReadString();
 			Color = reader.ReadInt32();
 		}
@@ -35,18 +35,18 @@ namespace Config
 		public override void Deserialize(BinaryReader reader)
 		{
 			int count = reader.ReadInt32();
-			CfgMap = new Dictionary<int, LanguageCfg>(count);
+			StrCfgMap = new Dictionary<string, LanguageCfg>(count);
 			for (int i = 0; i < count; i++)
 			{
 				var item = new LanguageCfg();
 				item.Deserialize(reader);
-				CfgMap.Add(item.Id, item);
+				StrCfgMap.Add(item.Id, item);
 			}
 		}
 		public override void Serialize(BinaryWriter writer)
 		{
-			writer.Write(CfgMap.Count);
-			foreach (var item in CfgMap.Values)
+			writer.Write(StrCfgMap.Count);
+			foreach (var item in StrCfgMap.Values)
 			{
 				item.Serialize(writer);
 			}

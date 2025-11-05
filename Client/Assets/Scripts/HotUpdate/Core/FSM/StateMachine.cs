@@ -6,9 +6,11 @@ namespace GameFramework.Core
     public interface IBlackboard 
     {
         void SetBlackboardValue(string key, int value);
+        void SetBlackboardValue(string key, float value);
         void SetBlackboardValue(string key, bool value);
         void SetBlackboardValue(string key, string value);
         int GetBlackboardIntValue(string key);
+        float GetBlackboardFloatValue(string key);
         bool GetBlackboardBoolValue(string key);
         string GetBlackboardStringValue(string key);
     }
@@ -64,8 +66,10 @@ namespace GameFramework.Core
 
         public void Tick()
         {
-            OnTick();
-            CheckTrigger();
+            if (!CheckTrigger())
+            {
+                OnTick();
+            }
         }
 
         public void AddTrigger(IStateTrigger trigger)
@@ -106,6 +110,11 @@ namespace GameFramework.Core
             machine.SetBlackboardValue(key, value);
         }
 
+        public void SetBlackboardValue(string key, float value)
+        {
+            machine.SetBlackboardValue(key, value);
+        }
+
         public int GetBlackboardIntValue(string key)
         {
             return machine.GetBlackboardIntValue(key);
@@ -120,9 +129,15 @@ namespace GameFramework.Core
         {
             return machine.GetBlackboardStringValue(key);
         }
+
+        public float GetBlackboardFloatValue(string key)
+        {
+            return machine.GetBlackboardFloatValue(key);
+        }
+
         #endregion
 
-        private void CheckTrigger() 
+        private bool CheckTrigger() 
         {
             for (int i = 0; i < triggers.Count; i++)
             {
@@ -131,9 +146,11 @@ namespace GameFramework.Core
                 if (result)
                 {
                     machine.Switch(trigger.Type);
-                    return;
+                    return true;
                 }
             }
+
+            return false;
         }
     }
 
@@ -190,11 +207,6 @@ namespace GameFramework.Core
         public void Switch(Type type) 
         {
             string key = type.FullName;
-            if (!states.ContainsKey(key)) 
-            {
-                return;
-            }
-
             IStateItem state = GetState(key);
             if (state == null) 
             {
@@ -222,6 +234,11 @@ namespace GameFramework.Core
             blackboard.SetValue(key, value);
         }
 
+        public void SetBlackboardValue(string key, float value)
+        {
+            blackboard.SetValue(key, value);
+        }
+
         public int GetBlackboardIntValue(string key) 
         {
             return blackboard.GetIntValue(key);
@@ -236,6 +253,12 @@ namespace GameFramework.Core
         {
             return blackboard.GetStringValue(key);
         }
+
+        public float GetBlackboardFloatValue(string key)
+        {
+            return blackboard.GetFloatValue(key);
+        }
+
         #endregion
 
         private IStateItem GetState(string key) 

@@ -23,7 +23,7 @@ namespace GameFramework.Core
         }
 
         private GameCfgData m_Data;
-        private Dictionary<int, TextItem> m_TextItems;
+        private Dictionary<string, TextItem> m_TextItems;
 
         public async UniTask Init() 
         {
@@ -37,7 +37,7 @@ namespace GameFramework.Core
                 }
             }
 
-            m_TextItems = new Dictionary<int, TextItem>();
+            m_TextItems = new Dictionary<string, TextItem>();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace GameFramework.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T Find<T>(int id) where T : class, ICfg
+        public T Find<T>(int id) where T : class, IConfig
         {
             Type t = typeof(T);
             if (!m_Data.CfgDatas.ContainsKey(t))
@@ -56,14 +56,23 @@ namespace GameFramework.Core
             var container = m_Data.CfgDatas[t] as CfgContainerBase<T>;
             return container.Find(id);
         }
-
+        public T Find<T>(string id) where T : class, IConfig
+        {
+            Type t = typeof(T);
+            if (!m_Data.CfgDatas.ContainsKey(t))
+            {
+                return null;
+            }
+            var container = m_Data.CfgDatas[t] as CfgContainerBase<T>;
+            return container.Find(id);
+        }
         /// <summary>
         /// ≤È’“≈‰÷√
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public T Find<T>(Func<T, bool> func) where T : class, ICfg
+        public T Find<T>(Func<T, bool> func) where T : class, IConfig
         {
             Type t = typeof(T);
             if (!m_Data.CfgDatas.ContainsKey(t))
@@ -79,7 +88,7 @@ namespace GameFramework.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T[] FindAll<T>() where T : class, ICfg
+        public T[] FindAll<T>() where T : class, IConfig
         {
             Type t = typeof(T);
             if (!m_Data.CfgDatas.ContainsKey(t))
@@ -97,7 +106,7 @@ namespace GameFramework.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public T[] FindAll<T>(Func<T, bool> func) where T : class, ICfg
+        public T[] FindAll<T>(Func<T, bool> func) where T : class, IConfig
         {
             Type t = typeof(T);
             if (!m_Data.CfgDatas.ContainsKey(t))
@@ -114,7 +123,7 @@ namespace GameFramework.Core
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public string GetTextById(int id)
+        public string GetTextById(string id)
         {
             var item = GetTextItem(id);
             if (item == null) 
@@ -127,13 +136,13 @@ namespace GameFramework.Core
             }
         }
 
-        public TextItem GetTextItem(int id) 
+        public TextItem GetTextItem(string id) 
         {
             if (m_TextItems.TryGetValue(id, out var item))
             {
                 return item;
             }
-            else 
+            else
             {
                 var cfg = Find<LanguageCfg>(id);
                 if (cfg == null)

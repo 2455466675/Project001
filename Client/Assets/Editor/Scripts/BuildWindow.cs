@@ -181,21 +181,23 @@ public class BuildWindow : EditorWindow
 
         GUI.enabled = !isBuilding;
 
-        if (GUILayout.Button("1. 编译C#热更DLL", GUILayout.Height(35)))
+        if (GUILayout.Button("编译C#热更DLL", GUILayout.Height(35)))
         {
             RequestBuild(BuildType.BuildHotUpdateDLL);
         }
+        EditorGUILayout.HelpBox($"调用HyBridCLR接口,将可热更的C#代码编译为DLL,生成的DLL会拷贝到{hybridCLROutputPath}下", MessageType.Info);
 
         GUILayout.Space(5);
 
-        if (GUILayout.Button("2. 构建AssetsBundle资源包", GUILayout.Height(35)))
+        if (GUILayout.Button("构建AssetsBundle资源包", GUILayout.Height(35)))
         {
             RequestBuild(BuildType.BuildAssetsBundle);
         }
+        EditorGUILayout.HelpBox($"调用YooAsset接口,将收集器中收集的资源打包", MessageType.Info);
 
         GUILayout.Space(5);
 
-        if (GUILayout.Button("3. 构建整包", GUILayout.Height(35)))
+        if (GUILayout.Button("构建整包", GUILayout.Height(35)))
         {
             packageOutputPath = EditorUtility.SaveFolderPanel("构建整包", "Output", string.Empty);
             if (!string.IsNullOrEmpty(packageOutputPath))
@@ -203,24 +205,35 @@ public class BuildWindow : EditorWindow
                 RequestBuild(BuildType.BuildPlayerPackage);                
             }
         }
+        EditorGUILayout.HelpBox($"构建整包时请确保AssetBundle已复制到StreamingAssets目录下", MessageType.Info);
 
         GUILayout.Space(5);
 
-        if (GUILayout.Button("4. 构建热更补丁", GUILayout.Height(35)))
-        {
-            RequestBuild(BuildType.BuildHotAssets);
-        }
-
-        GUILayout.Space(10);
-
         GUI.backgroundColor = Color.green;
-        if (GUILayout.Button("一键打包（全流程）", GUILayout.Height(50)))
+
+        if (GUILayout.Button("一键打包（编译C#热更DLL、构建AssetsBundle资源包、构建整包）", GUILayout.Height(50)))
         {
+            if (copyOption != EBuildinFileCopyOption.ClearAndCopyAll || copyOption != EBuildinFileCopyOption.OnlyCopyAll)
+            {
+                EditorUtility.DisplayDialog("提示", "请将‘复制到StreamingAssets’设置为ClearAndCopyAll或OnlyCopyAll", "确定");
+                return;
+            }
+
             packageOutputPath = EditorUtility.SaveFolderPanel("构建整包", "Output", string.Empty);
             if (!string.IsNullOrEmpty(packageOutputPath))
             {
                 RequestBuild(BuildType.BuildAll);
-            }                
+            }
+        }
+        GUI.backgroundColor = Color.white;
+
+        GUILayout.Space(10);
+
+        GUI.backgroundColor = Color.blue;
+
+        if (GUILayout.Button("构建热更补丁（编译C#热更DLL、构建AssetsBundle资源包）", GUILayout.Height(35)))
+        {
+            RequestBuild(BuildType.BuildHotAssets);
         }
         GUI.backgroundColor = Color.white;
 

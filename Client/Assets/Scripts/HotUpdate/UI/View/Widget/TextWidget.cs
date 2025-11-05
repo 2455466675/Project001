@@ -17,7 +17,7 @@ namespace GameFramework.UI
             this.m_Text.text = text;
         }
 
-        public void SetText(int textId) 
+        public void SetTextById(string textId) 
         {
             var textItem = Game.GetModule<ConfigManager>().GetTextItem(textId);
             if (textItem == null) 

@@ -118,9 +118,23 @@ namespace GameFramework.UI
 
         #region
 
+        private bool CheckDataValid(int dataIndex)
+        {
+            bool result = m_Datas != null && dataIndex >= 0 && dataIndex < m_Datas.Count;
+            if (!result)
+            {
+                MDebug.Error("数据无效 : ", dataIndex);
+            }
+            return result;
+        }
+
         private void OnBindData(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnBindData", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             DataBinder binder = new DataBinder();
             binder.Bind(itemView, dataModel, RefreshItemView);
@@ -129,7 +143,6 @@ namespace GameFramework.UI
 
         private void OnUnbindData(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnUnbindData", dataIndex);
             if (m_Binders.TryGetValue(dataIndex, out DataBinder binder)) 
             {
                 binder.Unbind();
@@ -139,55 +152,87 @@ namespace GameFramework.UI
 
         private void OnSelect(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnSelect", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             SelectItemView(itemView, dataModel);
         }
 
         private void OnDeselect(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnDeselect", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             DeselectItemView(itemView, dataModel);
         }
 
         private void OnSubmit(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnSubmit", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             SubmitItemView(itemView, dataModel);
         }
 
         private void OnMoveUp(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnMoveUp", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             MoveUpItemView(itemView, dataModel);
         }
 
         private void OnMoveDown(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnMoveDown", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             MoveDownItemView(itemView, dataModel);
         }
 
         private void OnMoveLeft(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnMoveLeft", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             MoveLeftItemView(itemView, dataModel);
         }
 
         private void OnMoveRight(NavigationItemView itemView, int dataIndex)
         {
-            MDebug.Log("OnMoveRight", dataIndex);
+            if (!CheckDataValid(dataIndex))
+            {
+                return;
+            }
+
             DataModel dataModel = m_Datas[dataIndex];
             MoveRightItemView(itemView, dataModel);
         }
 
         private bool CheckValid(int dataIndex) 
         {
+            if (!CheckDataValid(dataIndex))
+            {
+                return false;
+            }
             DataModel dataModel = m_Datas[dataIndex];
             return CheckItemIsValid(dataModel);
         }

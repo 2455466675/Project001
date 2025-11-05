@@ -13,6 +13,7 @@ namespace GameFramework
         {
             Undefined,
             Integer,
+            Float,
             Boolean,
             String,
         }
@@ -24,6 +25,8 @@ namespace GameFramework
             private ValueType m_ValueType;
             [SerializeField]
             private int m_IntValue;
+            [SerializeField]
+            private float m_FloatValue;
             [SerializeField]
             private bool m_BoolValue;
             [SerializeField]
@@ -51,6 +54,37 @@ namespace GameFramework
                     return 0;
                 }
                 set 
+                {
+                    SetValue(value);
+                }
+            }
+
+            public float FloatValue
+            {
+                get
+                {
+                    if (m_ValueType == ValueType.Integer)
+                    {
+                        return m_IntValue;
+                    }
+                    if (m_ValueType == ValueType.Float)
+                    {
+                        return m_FloatValue;
+                    }
+                    if (m_ValueType == ValueType.Boolean)
+                    {
+                        return 0f;
+                    }
+                    if (m_ValueType == ValueType.String)
+                    {
+                        if (float.TryParse(m_StringValue, out float v))
+                        {
+                            return v;
+                        }
+                    }
+                    return 0f;
+                }
+                set
                 {
                     SetValue(value);
                 }
@@ -117,6 +151,10 @@ namespace GameFramework
                 {
                     return m_IntValue.ToString();
                 }
+                if (m_ValueType == ValueType.Float)
+                {
+                    return m_FloatValue.ToString();
+                }
                 if (m_ValueType == ValueType.Boolean)
                 {
                     return m_BoolValue.ToString();
@@ -128,6 +166,7 @@ namespace GameFramework
             {
                 m_ValueType = ValueType.Undefined;
                 m_IntValue = 0;
+                m_FloatValue = 0f;
                 m_BoolValue = false;
                 m_StringValue = string.Empty;
             }
@@ -153,7 +192,28 @@ namespace GameFramework
                 }
                 return isChanged;
             }
-
+            public bool SetValue(float value)
+            {
+                bool isChanged = false;
+                if (m_ValueType != ValueType.Float)
+                {
+                    m_ValueType = ValueType.Float;
+                    m_FloatValue = value;
+                    m_IntValue = 0;
+                    m_BoolValue = false;
+                    m_StringValue = string.Empty;
+                    isChanged = true;
+                }
+                else
+                {
+                    if (m_FloatValue != value)
+                    {
+                        m_FloatValue = value;
+                        isChanged = true;
+                    }
+                }
+                return isChanged;
+            }
             public bool SetValue(bool value)
             {
                 bool isChanged = false;
@@ -161,6 +221,7 @@ namespace GameFramework
                 {
                     m_ValueType = ValueType.Boolean;
                     m_IntValue = 0;
+                    m_FloatValue = 0f;
                     m_BoolValue = value;
                     m_StringValue = string.Empty;
                     isChanged = true;
@@ -183,6 +244,7 @@ namespace GameFramework
                 {
                     m_ValueType = ValueType.String;
                     m_IntValue = 0;
+                    m_FloatValue = 0f;
                     m_BoolValue = false;
                     m_StringValue = value;
                     isChanged = true;
@@ -217,7 +279,14 @@ namespace GameFramework
                 OnValueChanged?.Invoke(key);            
             }
         }
-
+        public void SetValue(string key, float value)
+        {
+            DataModelValue modelValue = GetValue(key);
+            if (modelValue.SetValue(value))
+            {
+                OnValueChanged?.Invoke(key);
+            }
+        }
         public void SetValue(string key, bool value)
         {
             DataModelValue modelValue = GetValue(key);
@@ -241,7 +310,11 @@ namespace GameFramework
             DataModelValue modelValue = GetValue(key);
             return modelValue.IntValue;
         }
-
+        public float GetFloatValue(string key)
+        {
+            DataModelValue modelValue = GetValue(key);
+            return modelValue.FloatValue;
+        }
         public bool GetBoolValue(string key)
         {
             DataModelValue modelValue = GetValue(key);

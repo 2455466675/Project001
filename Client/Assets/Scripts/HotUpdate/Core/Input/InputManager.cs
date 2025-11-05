@@ -87,7 +87,7 @@ namespace GameFramework.Core
 
         private void OnInputHandler(InputContext context)
         {
-            MDebug.Log("OnInputHandler", context);
+            //MDebug.Log("OnInputHandler", context);
             Game.Event.Publish(new InputEventArgs() { context = context });
         }
     }

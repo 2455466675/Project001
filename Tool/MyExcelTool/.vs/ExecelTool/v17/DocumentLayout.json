@@ -15,12 +15,12 @@
       "RelativeMoniker": "D:0:0:{1401E7C8-610F-40C3-A471-A20DA6F521F8}|ExcelTool.csproj|solutionrelative:cfgmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1401E7C8-610F-40C3-A471-A20DA6F521F8}|ExcelTool.csproj|e:\\unityprojects\\project001\\tool\\myexceltool\\output\\itemcfg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1401E7C8-610F-40C3-A471-A20DA6F521F8}|ExcelTool.csproj|solutionrelative:output\\itemcfg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1401E7C8-610F-40C3-A471-A20DA6F521F8}|ExcelTool.csproj|e:\\unityprojects\\project001\\tool\\myexceltool\\cfgitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1401E7C8-610F-40C3-A471-A20DA6F521F8}|ExcelTool.csproj|solutionrelative:cfgitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1401E7C8-610F-40C3-A471-A20DA6F521F8}|ExcelTool.csproj|e:\\unityprojects\\project001\\tool\\myexceltool\\output\\itemcfg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1401E7C8-610F-40C3-A471-A20DA6F521F8}|ExcelTool.csproj|solutionrelative:output\\itemcfg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "E:\\UnityProjects\\Project001\\Tool\\MyExcelTool\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAADABAAAAAAAAAAAYwEkBAAAoAAAA",
+              "ViewState": "AQIAAJkBAAAAAAAAAAAUwKoBAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T11:49:24.851Z",
               "EditorCaption": ""
@@ -61,13 +61,14 @@
               "RelativeDocumentMoniker": "Output\\GameCfgData.cs",
               "ToolTip": "E:\\UnityProjects\\Project001\\Tool\\MyExcelTool\\Output\\GameCfgData.cs",
               "RelativeToolTip": "Output\\GameCfgData.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAAAAIAAAAOAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAIAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T12:44:40.511Z"
+              "WhenOpened": "2024-10-22T12:44:40.511Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ItemCfg.cs",
               "DocumentMoniker": "E:\\UnityProjects\\Project001\\Tool\\MyExcelTool\\Output\\ItemCfg.cs",
               "RelativeDocumentMoniker": "Output\\ItemCfg.cs",
@@ -79,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "CfgItem.cs",
               "DocumentMoniker": "E:\\UnityProjects\\Project001\\Tool\\MyExcelTool\\CfgItem.cs",
               "RelativeDocumentMoniker": "CfgItem.cs",
@@ -87,7 +88,8 @@
               "RelativeToolTip": "CfgItem.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T07:35:14.695Z"
+              "WhenOpened": "2024-07-06T07:35:14.695Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -99,7 +101,8 @@
               "RelativeToolTip": "CfgModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAuwA0AAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T07:34:19.477Z"
+              "WhenOpened": "2024-07-06T07:34:19.477Z",
+              "EditorCaption": ""
             }
           ]
         }

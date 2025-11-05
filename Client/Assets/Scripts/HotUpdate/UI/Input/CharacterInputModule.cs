@@ -1,4 +1,6 @@
 using GameFramework.Core;
+using GameFramework.Featrue;
+using GameFramework.Gameplay;
 
 namespace GameFramework.UI
 {
@@ -8,7 +10,14 @@ namespace GameFramework.UI
 
         protected override void OnInputAction(InputContext context)
         {
+            Entity leader = Game.Gameplay.GetSystem<PartySystem>().GetLeader();
+            if (leader == null)
+            {
+                return;
+            }
 
+            var mc = leader.GetComponent<MotorComponent>();
+            mc.OnInputAction(context);
         }
     }
 }

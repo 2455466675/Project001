@@ -55,6 +55,11 @@ namespace GameFramework.Core
             return machine.GetBlackboardStringValue(key);
         }
 
+        public float GetBlackboardFloatValue(string key)
+        {
+            return machine.GetBlackboardFloatValue(key);
+        }
+
         public void SetBlackboardValue(string key, int value)
         {
             machine.SetBlackboardValue(key, value);
@@ -66,6 +71,11 @@ namespace GameFramework.Core
         }
 
         public void SetBlackboardValue(string key, string value)
+        {
+            machine.SetBlackboardValue(key, value);
+        }
+
+        public void SetBlackboardValue(string key, float value)
         {
             machine.SetBlackboardValue(key, value);
         }

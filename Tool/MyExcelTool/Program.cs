@@ -315,7 +315,11 @@ namespace ExecelTool
             sb.Append("{\n");
 
             sb.Append("\t[Serializable]\n");
-            sb.Append($"\tpublic sealed class {excelName} : ICfg\n");
+
+            bool isIntKey = head[0].Item2 == "int";
+            string interfaceName = isIntKey ? "IConfig_IntKey" : "IConfig_StringKey";
+
+            sb.Append($"\tpublic sealed class {excelName} : {interfaceName}\n");
             sb.Append("\t{\n");
 
             foreach (var item in head)
@@ -360,14 +364,17 @@ namespace ExecelTool
             sb.Append("\t\tpublic override void Deserialize(BinaryReader reader)\n");
             sb.Append("\t\t{\n");
 
+            string key = isIntKey ? "int" : "string";
+            string cfgMap = isIntKey ? "IntCfgMap" : "StrCfgMap";
+
             sb.Append($"\t\t\tint count = reader.ReadInt32();\n");
-            sb.Append($"\t\t\tCfgMap = new Dictionary<int, {excelName}>(count);\n");
+            sb.Append($"\t\t\t{cfgMap} = new Dictionary<{key}, {excelName}>(count);\n");
             sb.Append($"\t\t\tfor (int i = 0; i < count; i++)\n");
             sb.Append("\t\t\t{\n");
 
             sb.Append($"\t\t\t\tvar item = new {excelName}();\n");
             sb.Append($"\t\t\t\titem.Deserialize(reader);\n");
-            sb.Append($"\t\t\t\tCfgMap.Add(item.Id, item);\n");
+            sb.Append($"\t\t\t\t{cfgMap}.Add(item.Id, item);\n");
 
             sb.Append("\t\t\t}\n");
             sb.Append("\t\t}\n");
@@ -375,8 +382,8 @@ namespace ExecelTool
             sb.Append("\t\tpublic override void Serialize(BinaryWriter writer)\n");
             sb.Append("\t\t{\n");
 
-            sb.Append($"\t\t\twriter.Write(CfgMap.Count);\n");
-            sb.Append($"\t\t\tforeach (var item in CfgMap.Values)\n");
+            sb.Append($"\t\t\twriter.Write({cfgMap}.Count);\n");
+            sb.Append($"\t\t\tforeach (var item in {cfgMap}.Values)\n");
             sb.Append("\t\t\t{\n");
 
             sb.Append($"\t\t\t\titem.Serialize(writer);\n");
@@ -416,7 +423,7 @@ namespace ExecelTool
             sb.Append("{\n");
 
             sb.Append("\t[Serializable]\n");
-            sb.Append($"\tpublic partial class {name} : IBinarySerialize\n");
+            sb.Append($"\tpublic class {name} : IBinarySerialize\n");
             sb.Append("\t{\n");
 
             sb.Append("\t\tpublic Dictionary<Type, ICfgContainer> CfgDatas {get; private set;}\n");

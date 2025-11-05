@@ -15,6 +15,26 @@ namespace GameFramework
             {
                 return Mathf.Min(v1, v2);
             }
+
+            public static int Floor(float v)
+            {
+                return Mathf.FloorToInt(v);
+            }
+
+            public static int Ceil(float v)
+            {
+                return Mathf.CeilToInt(v);
+            }
+
+            public static float Abs(float v)
+            {
+                return Mathf.Abs(v);
+            }
+
+            public static int Abs(int v)
+            {
+                return Mathf.Abs(v);
+            }
         }
     }
 }

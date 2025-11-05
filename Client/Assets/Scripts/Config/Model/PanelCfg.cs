@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public sealed class PanelCfg : ICfg
+	public sealed class PanelCfg : IConfig_IntKey
 	{
 		public int Id {get; private set;} 
 		public string Path {get; private set;} 
@@ -35,18 +35,18 @@ namespace Config
 		public override void Deserialize(BinaryReader reader)
 		{
 			int count = reader.ReadInt32();
-			CfgMap = new Dictionary<int, PanelCfg>(count);
+			IntCfgMap = new Dictionary<int, PanelCfg>(count);
 			for (int i = 0; i < count; i++)
 			{
 				var item = new PanelCfg();
 				item.Deserialize(reader);
-				CfgMap.Add(item.Id, item);
+				IntCfgMap.Add(item.Id, item);
 			}
 		}
 		public override void Serialize(BinaryWriter writer)
 		{
-			writer.Write(CfgMap.Count);
-			foreach (var item in CfgMap.Values)
+			writer.Write(IntCfgMap.Count);
+			foreach (var item in IntCfgMap.Values)
 			{
 				item.Serialize(writer);
 			}

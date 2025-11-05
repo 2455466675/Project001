@@ -1,9 +1,9 @@
 namespace GameFramework.Featrue 
 {
-    public class Component
+    public abstract class Component
     {
         private Entity m_Entity;
-
+      
         internal void Init(Entity entity)
         {
             m_Entity = entity;
@@ -18,7 +18,14 @@ namespace GameFramework.Featrue
 
         public T GetComponent<T>() where T : Component
         {
-            return m_Entity.GetComponent<T>();
+            if (m_Entity == null)
+            {
+                return default;
+            }
+            else
+            {
+                return m_Entity.GetComponent<T>();                
+            }
         }
 
         protected virtual void OnInit() 

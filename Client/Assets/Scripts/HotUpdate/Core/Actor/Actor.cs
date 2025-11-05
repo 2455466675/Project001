@@ -1,0 +1,129 @@
+using UnityEngine;
+
+namespace GameFramework.Core
+{
+    public class Actor : MonoBehaviour
+    {
+        public int Id { get; set; }
+        public Animator Animator => m_Animator;
+
+        [SerializeField]
+        private Rigidbody m_Rigidbody;
+        [SerializeField]
+        private Collider m_Collider;
+        [SerializeField]
+        private Animator m_Animator;
+        [SerializeField]
+        private Transform[] m_Bones;
+
+        public Vector3 Velocity
+        {
+            get
+            {
+                if (m_Rigidbody == null)
+                {
+                    return Vector3.zero;
+                }
+                else
+                {
+                    return m_Rigidbody.linearVelocity;
+                }
+            }
+            set
+            {
+                if (m_Rigidbody == null)
+                {
+                    return;
+                }
+                else
+                {
+                    m_Rigidbody.linearVelocity = value;
+                }
+            }
+        }
+
+        public Vector3 Position
+        {
+            get
+            {
+                if (m_Rigidbody == null)
+                {
+                    return transform.position;
+                }
+                else
+                {
+                    return m_Rigidbody.position;
+                }
+            }
+            set
+            {
+                if (m_Rigidbody == null)
+                {
+                    transform.position = value;
+                }
+                else
+                {
+                    m_Rigidbody.position = value;
+                }
+            }
+        }
+
+        public Vector3 LocalPosition
+        {
+            get
+            {
+                return transform.localPosition;
+            }
+            set
+            {
+                transform.localPosition = value;
+            }
+        }
+
+        public void MovePosition(Vector3 pos)
+        {
+            if (m_Rigidbody == null)
+            {
+                return;
+            }
+            else
+            {
+                m_Rigidbody.MovePosition(pos);                
+            }
+        }
+
+        public Transform GetBone(string name) 
+        {
+            if (m_Bones == null || m_Bones.Length == 0)
+            {
+                return null;
+            }
+
+            foreach (var item in m_Bones)
+            {
+                if (item.gameObject.name == name) 
+                {
+                    return item;
+                }
+            }
+
+            return m_Bones[0];
+        }
+
+#if UNITY_EDITOR
+
+        private void OnValidate()
+        {
+            if (m_Animator == null)
+            {
+                m_Animator = GetComponentInChildren<Animator>();
+            }
+            if (m_Rigidbody == null)
+            {
+                m_Rigidbody = GetComponentInChildren<Rigidbody>();
+            }
+        }
+#endif
+
+    }
+}

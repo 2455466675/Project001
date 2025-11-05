@@ -9,15 +9,15 @@ using System.Collections.Generic;
 namespace Config
 {
 	[Serializable]
-	public sealed class LoginCfg : ICfg
+	public sealed class LoginCfg : IConfig_IntKey
 	{
 		public int Id {get; private set;} 
-		public int Name {get; private set;} 
+		public string Name {get; private set;} 
 		public int Sort {get; private set;} 
 		public void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
-			Name = reader.ReadInt32();
+			Name = reader.ReadString();
 			Sort = reader.ReadInt32();
 		}
 		public void Serialize(BinaryWriter writer)
@@ -35,18 +35,18 @@ namespace Config
 		public override void Deserialize(BinaryReader reader)
 		{
 			int count = reader.ReadInt32();
-			CfgMap = new Dictionary<int, LoginCfg>(count);
+			IntCfgMap = new Dictionary<int, LoginCfg>(count);
 			for (int i = 0; i < count; i++)
 			{
 				var item = new LoginCfg();
 				item.Deserialize(reader);
-				CfgMap.Add(item.Id, item);
+				IntCfgMap.Add(item.Id, item);
 			}
 		}
 		public override void Serialize(BinaryWriter writer)
 		{
-			writer.Write(CfgMap.Count);
-			foreach (var item in CfgMap.Values)
+			writer.Write(IntCfgMap.Count);
+			foreach (var item in IntCfgMap.Values)
 			{
 				item.Serialize(writer);
 			}

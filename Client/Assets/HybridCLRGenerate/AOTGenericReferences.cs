@@ -20,6 +20,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// }} 
 
 	// {{ AOT generic types
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.ActorManager.<LoadActorAsync>d__3,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.AssetsManager.<LoadAndInstantiateAsync>d__8,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.AssetsManager.<LoadAssetAsync>d__3<object>,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Core.AssetsManager.<UnloadUnusedAssetsAsync>d__9>
@@ -34,7 +35,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Game.<LoadGameRoot>d__26>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Game.<LoadHotUpdateAssemblies>d__23>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Game.<LoadMetadataForAOTAssembly>d__22>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.GameEvent.<PublishAsync>d__7<object>>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<GameFramework.Gameplay.<Init>d__4>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.ActorManager.<LoadActorAsync>d__3,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.AssetsManager.<LoadAndInstantiateAsync>d__8,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.AssetsManager.<LoadAssetAsync>d__3<object>,object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Core.AssetsManager.<UnloadUnusedAssetsAsync>d__9>
@@ -49,6 +52,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Game.<LoadGameRoot>d__26>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Game.<LoadHotUpdateAssemblies>d__23>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Game.<LoadMetadataForAOTAssembly>d__22>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.GameEvent.<PublishAsync>d__7<object>>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<GameFramework.Gameplay.<Init>d__4>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoid.<>c<GameFramework.Core.GameLoginState.<LoadLogin>d__4>
@@ -111,6 +115,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Cysharp.Threading.Tasks.UniTaskCompletionSourceCore<Cysharp.Threading.Tasks.AsyncUnit>
 	// Cysharp.Threading.Tasks.UniTaskCompletionSourceCore<object>
 	// System.Action<GameFramework.Core.InputContext>
+	// System.Action<GameFramework.Gameplay.MoveTrace>
 	// System.Action<GameFramework.LoadingProgressEventArgs>
 	// System.Action<UnityEngine.InputSystem.InputAction.CallbackContext>
 	// System.Action<float,float,object>
@@ -118,8 +123,10 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Action<object,int>
 	// System.Action<object,object>
 	// System.Action<object>
+	// System.Collections.Generic.ArraySortHelper<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.ArraySortHelper<int>
 	// System.Collections.Generic.ArraySortHelper<object>
+	// System.Collections.Generic.Comparer<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.Comparer<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>>>
 	// System.Collections.Generic.Comparer<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>>
 	// System.Collections.Generic.Comparer<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>
@@ -179,6 +186,10 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.EqualityComparer<byte>
 	// System.Collections.Generic.EqualityComparer<int>
 	// System.Collections.Generic.EqualityComparer<object>
+	// System.Collections.Generic.HashSet.Enumerator<object>
+	// System.Collections.Generic.HashSet<object>
+	// System.Collections.Generic.HashSetEqualityComparer<object>
+	// System.Collections.Generic.ICollection<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<int,int>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<object,ES3Internal.ES3Data>>
@@ -187,10 +198,12 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.ICollection<int>
 	// System.Collections.Generic.ICollection<object>
+	// System.Collections.Generic.IComparer<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.IComparer<int>
 	// System.Collections.Generic.IComparer<object>
 	// System.Collections.Generic.IDictionary<object,LITJson.ArrayMetadata>
 	// System.Collections.Generic.IDictionary<object,LITJson.PropertyMetadata>
+	// System.Collections.Generic.IEnumerable<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<int,int>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<object,ES3Internal.ES3Data>>
@@ -199,6 +212,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.IEnumerable<int>
 	// System.Collections.Generic.IEnumerable<object>
+	// System.Collections.Generic.IEnumerator<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<int,int>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<object,ES3Internal.ES3Data>>
@@ -209,6 +223,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerator<object>
 	// System.Collections.Generic.IEqualityComparer<int>
 	// System.Collections.Generic.IEqualityComparer<object>
+	// System.Collections.Generic.IList<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.IList<int>
 	// System.Collections.Generic.IList<object>
 	// System.Collections.Generic.IReadOnlyCollection<object>
@@ -219,10 +234,13 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.KeyValuePair<object,byte>
 	// System.Collections.Generic.KeyValuePair<object,int>
 	// System.Collections.Generic.KeyValuePair<object,object>
+	// System.Collections.Generic.List.Enumerator<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.List.Enumerator<int>
 	// System.Collections.Generic.List.Enumerator<object>
+	// System.Collections.Generic.List<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.List<int>
 	// System.Collections.Generic.List<object>
+	// System.Collections.Generic.ObjectComparer<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.Generic.ObjectComparer<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>>
 	// System.Collections.Generic.ObjectComparer<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>
 	// System.Collections.Generic.ObjectComparer<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>
@@ -244,10 +262,14 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ObjectEqualityComparer<byte>
 	// System.Collections.Generic.ObjectEqualityComparer<int>
 	// System.Collections.Generic.ObjectEqualityComparer<object>
+	// System.Collections.Generic.Queue.Enumerator<object>
+	// System.Collections.Generic.Queue<object>
 	// System.Collections.Generic.Stack.Enumerator<object>
 	// System.Collections.Generic.Stack<object>
+	// System.Collections.ObjectModel.ReadOnlyCollection<GameFramework.Gameplay.MoveTrace>
 	// System.Collections.ObjectModel.ReadOnlyCollection<int>
 	// System.Collections.ObjectModel.ReadOnlyCollection<object>
+	// System.Comparison<GameFramework.Gameplay.MoveTrace>
 	// System.Comparison<int>
 	// System.Comparison<object>
 	// System.Func<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>>
@@ -276,6 +298,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Linq.Enumerable.WhereArrayIterator<object>
 	// System.Linq.Enumerable.WhereEnumerableIterator<object>
 	// System.Linq.Enumerable.WhereListIterator<object>
+	// System.Predicate<GameFramework.Gameplay.MoveTrace>
 	// System.Predicate<int>
 	// System.Predicate<object>
 	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,System.ValueTuple<byte,object>>>>>>>>>
@@ -430,6 +453,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Game.<LoadGameRoot>d__26>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Game.<LoadGameRoot>d__26&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Game.<LoadHotUpdateAssemblies>d__23>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Game.<LoadHotUpdateAssemblies>d__23&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Game.<LoadMetadataForAOTAssembly>d__22>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Game.<LoadMetadataForAOTAssembly>d__22&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.GameEvent.<PublishAsync>d__7<object>>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.GameEvent.<PublishAsync>d__7<object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,GameFramework.Core.ConfigManager.<Init>d__3>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,GameFramework.Core.ConfigManager.<Init>d__3&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,GameFramework.Core.SceneManager.<Init>d__3>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,GameFramework.Core.SceneManager.<Init>d__3&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,GameFramework.Game.<InitGameModules>d__25>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,GameFramework.Game.<InitGameModules>d__25&)
@@ -437,6 +461,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.YieldAwaitable.Awaiter,GameFramework.Core.GamePlayState.<SetProgress>d__5>(Cysharp.Threading.Tasks.YieldAwaitable.Awaiter&,GameFramework.Core.GamePlayState.<SetProgress>d__5&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Core.AssetsManager.<LoadAssetAsync>d__3<object>>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Core.AssetsManager.<LoadAssetAsync>d__3<object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Game.<GetGamePriorityDatas>d__21>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Game.<GetGamePriorityDatas>d__21&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,GameFramework.Core.ActorManager.<LoadActorAsync>d__3>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,GameFramework.Core.ActorManager.<LoadActorAsync>d__3&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,GameFramework.Core.AssetsManager.<LoadAndInstantiateAsync>d__8>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,GameFramework.Core.AssetsManager.<LoadAndInstantiateAsync>d__8&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Core.AssetsManager.<UnloadUnusedAssetsAsync>d__9>(GameFramework.Core.AssetsManager.<UnloadUnusedAssetsAsync>d__9&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Core.ConfigManager.<Init>d__3>(GameFramework.Core.ConfigManager.<Init>d__3&)
@@ -449,7 +474,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Game.<LoadGameRoot>d__26>(GameFramework.Game.<LoadGameRoot>d__26&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Game.<LoadHotUpdateAssemblies>d__23>(GameFramework.Game.<LoadHotUpdateAssemblies>d__23&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Game.<LoadMetadataForAOTAssembly>d__22>(GameFramework.Game.<LoadMetadataForAOTAssembly>d__22&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.GameEvent.<PublishAsync>d__7<object>>(GameFramework.GameEvent.<PublishAsync>d__7<object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<GameFramework.Gameplay.<Init>d__4>(GameFramework.Gameplay.<Init>d__4&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<GameFramework.Core.ActorManager.<LoadActorAsync>d__3>(GameFramework.Core.ActorManager.<LoadActorAsync>d__3&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<GameFramework.Core.AssetsManager.<LoadAndInstantiateAsync>d__8>(GameFramework.Core.AssetsManager.<LoadAndInstantiateAsync>d__8&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<GameFramework.Core.AssetsManager.<LoadAssetAsync>d__3<object>>(GameFramework.Core.AssetsManager.<LoadAssetAsync>d__3<object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<GameFramework.Game.<GetGamePriorityDatas>d__21>(GameFramework.Game.<GetGamePriorityDatas>d__21&)
@@ -480,7 +507,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object[] System.Linq.Enumerable.ToArray<object>(System.Collections.Generic.IEnumerable<object>)
 		// System.Collections.Generic.IEnumerable<object> System.Linq.Enumerable.Where<object>(System.Collections.Generic.IEnumerable<object>,System.Func<object,bool>)
 		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,GameFramework.Game.<Start>d__16>(Cysharp.Threading.Tasks.UniTask.Awaiter&,GameFramework.Game.<Start>d__16&)
+		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,GameFramework.Gameplay.ActorComponent.<RefreshActorAsync>d__18>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,GameFramework.Gameplay.ActorComponent.<RefreshActorAsync>d__18&)
 		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Start<GameFramework.Game.<Start>d__16>(GameFramework.Game.<Start>d__16&)
+		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Start<GameFramework.Gameplay.ActorComponent.<RefreshActorAsync>d__18>(GameFramework.Gameplay.ActorComponent.<RefreshActorAsync>d__18&)
 		// object& System.Runtime.CompilerServices.Unsafe.As<object,object>(object&)
 		// System.Void* System.Runtime.CompilerServices.Unsafe.AsPointer<object>(object&)
 		// System.Void* Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AddressOf<UnityEngine.Vector2>(UnityEngine.Vector2&)
