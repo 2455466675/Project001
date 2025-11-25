@@ -9,7 +9,7 @@ namespace Navigation
     /// </summary>
     public class FixedNavigationList : NavigationList
     {
-        public enum ChildAlignment
+        private enum GridAlignment
         {
             UpperLeft,
             UpperRight,
@@ -17,15 +17,41 @@ namespace Navigation
             LowerRight,
         }
 
-        public int rowCount;
-        public int columnCount;
-        public ChildAlignment childAlignment;
+        private enum VerticalAlignment
+        {
+            TopToBottom,
+            BottomToTop,
+        }
+
+        private enum HorizontalAlignment
+        {
+            LeftToRight,
+            RightToLeft,
+        }
 
         [SerializeField]
-        private List<NavigationItem> items;
+        [ShowIfEnum("m_ListType", ListType.Grid)]
+        private int rowCount;
+        [SerializeField]
+        [ShowIfEnum("m_ListType", ListType.Grid)]
+        private int columnCount;
+        [SerializeField]
+        [ShowIfEnum("m_ListType", ListType.Grid)]
+        private GridAlignment gridAlignment;
+
+        [SerializeField]
+        [ShowIfEnum("m_ListType", ListType.Vertical)]
+        private VerticalAlignment verticalAlignment;
+
+        [SerializeField]
+        [ShowIfEnum("m_ListType", ListType.Horizontal)]
+        private HorizontalAlignment horizontalAlignment;
 
         [SerializeField]
         private bool isLoop;
+
+        [SerializeField]
+        private List<NavigationItem> items;
 
         /// <summary>
         /// 当前选择的索引
@@ -33,6 +59,8 @@ namespace Navigation
         private int[] index;
         private bool IsMultiple => index != null && index.Length > 1;
         private bool IsGrid => m_ListType == ListType.Grid;
+        private bool IsVertical => m_ListType == ListType.Vertical;
+        private bool IsHorizontal => m_ListType == ListType.Horizontal;
 
         public override void Init()
         {
@@ -81,6 +109,18 @@ namespace Navigation
             }
         }
 
+        public override NavigationItem GetNavigationItem(int index)
+        {
+            if (index >= 0 &&  index < items.Count)
+            {
+                return items[index];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         protected override void OnExit()
         {
             base.OnExit();
@@ -105,6 +145,7 @@ namespace Navigation
         {
             if (!isInit)
             {
+                Debug.LogError("not init");
                 return;
             }
 
@@ -119,74 +160,59 @@ namespace Navigation
             {
                 if (IsGrid)
                 {
-                    if (isLoop)
-                    {
-                        bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
-                        index = MovePointVertical(pointer, minus);
-                    }
-                    else
-                    {
-                        if ((pointer + 1) % rowCount == 0)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            index = MovePointVertical(pointer, false);
-                        }
-                    }
-                }
-                else
-                {
-                    index = MovePointVertical(pointer, true);
+                    bool minus = gridAlignment == GridAlignment.UpperLeft || gridAlignment == GridAlignment.UpperRight;
+                    index = MovePointVertical(pointer, minus, columnCount);
                 }
 
+                if (IsVertical)
+                {
+                    bool minus = verticalAlignment == VerticalAlignment.TopToBottom;
+                    index = MovePointVertical(pointer, minus, 1);
+                }               
             }
             else if (v < 0)
             {
                 if (IsGrid)
                 {
-                    if (isLoop)
-                    {
-                        bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.UpperRight;
-                        index = MovePointVertical(pointer, !minus);
-                    }
-                    else
-                    {
-                        if (pointer % rowCount == 0)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            index = MovePointVertical(pointer, true);
-                        }
-                    }
+                    bool minus = gridAlignment == GridAlignment.LowerLeft || gridAlignment == GridAlignment.LowerRight;
+                    index = MovePointVertical(pointer, minus, columnCount);
                 }
-                else
+
+                if (IsVertical)
                 {
-                    index = MovePointVertical(pointer, false);
+                    bool minus = verticalAlignment == VerticalAlignment.BottomToTop;
+                    index = MovePointVertical(pointer, minus, 1);
                 }
             }
             else if (h < 0)
             {
-                if (!IsGrid)
+                if (IsGrid)
                 {
-                    return;
+                    bool minus = gridAlignment == GridAlignment.UpperLeft || gridAlignment == GridAlignment.LowerLeft;
+                    index = MovePointHorizontal(pointer, minus, 1);
+                }
+                
+                if (IsHorizontal)
+                {
+                    bool minus = horizontalAlignment == HorizontalAlignment.LeftToRight;
+                    index = MovePointHorizontal(pointer, minus, 1);
                 }
 
-                bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.LowerLeft;
-                index = MovePointHorizontal(pointer, minus);
             }
             else if (h > 0)
             {
-                if (!IsGrid)
+                if (IsGrid)
                 {
-                    return;
+                    bool minus = gridAlignment == GridAlignment.UpperRight || gridAlignment == GridAlignment.LowerRight;
+                    index = MovePointHorizontal(pointer, minus, 1);
                 }
 
-                bool minus = childAlignment == ChildAlignment.UpperLeft || childAlignment == ChildAlignment.LowerLeft;
-                index = MovePointHorizontal(pointer, !minus);
+                if (IsHorizontal)
+                {
+                    bool minus = horizontalAlignment == HorizontalAlignment.RightToLeft;
+                    index = MovePointHorizontal(pointer, minus, 1);
+                }
+
             }
 
             if (index < minIndex || index > maxIndex)
@@ -206,6 +232,7 @@ namespace Navigation
         {
             if (!isInit)
             {
+                Debug.LogError("not init");
                 return false;
             }
             if (items == null || items.Count <= 0)
@@ -260,25 +287,48 @@ namespace Navigation
         /// <param name="beginIndex">起始索引</param>
         /// <param name="minus">从起始索引开始减去</param>
         /// <returns></returns>
-        private int MovePointVertical(int beginIndex, bool minus)
+        private int MovePointVertical(int beginIndex, bool minus, int c)
         {
             int index;
             do
             {
                 if (minus)
                 {
-                    index = beginIndex - 1;
-                    if (index < minIndex && isLoop)
+                    index = beginIndex - c;
+
+                    if (IsVertical)
                     {
-                        index = maxIndex;
+                        if (index < minIndex && isLoop)
+                        {
+                            index = maxIndex;
+                        }
+                    }
+
+                    if (IsGrid)
+                    {
+                        if (index < minIndex && isLoop)
+                        {
+                            index = beginIndex + (rowCount - 1) * c;
+                        }
                     }
                 }
                 else
                 {
-                    index = beginIndex + 1;
-                    if (index > maxIndex && isLoop)
+                    index = beginIndex + c;
+                    if (IsVertical)
                     {
-                        index = minIndex;
+                        if (index > maxIndex && isLoop)
+                        {
+                            index = minIndex;
+                        }
+                    }
+
+                    if (IsGrid)
+                    {
+                        if (index > maxIndex && isLoop)
+                        {
+                            index = beginIndex - (rowCount - 1) * c;
+                        }
                     }
                 }
 
@@ -310,24 +360,47 @@ namespace Navigation
         /// <param name="beginIndex">起始索引</param>
         /// <param name="minus">从起始索引开始减去</param>
         /// <returns></returns>
-        private int MovePointHorizontal(int beginIndex, bool minus)
+        private int MovePointHorizontal(int beginIndex, bool minus, int c)
         {
             int index;
 
             if (minus)
             {
-                index = beginIndex - rowCount;
-                if (index < minIndex && isLoop)
+                index = beginIndex - c;
+
+                if (IsHorizontal)
                 {
-                    index = maxIndex + index + 1;
+                    if (index < minIndex && isLoop)
+                    {
+                        index = maxIndex;
+                    }
+                }
+
+                if (IsGrid)
+                {
+                    if ((index + c) % columnCount == 0 && isLoop)
+                    {
+                        index = beginIndex + (columnCount - 1) * c;
+                    }
                 }
             }
             else
             {
-                index = beginIndex + rowCount;
-                if (index > maxIndex && isLoop)
+                index = beginIndex + c;
+                if (IsVertical)
                 {
-                    index = minIndex + index - maxIndex - 1;
+                    if (index > maxIndex && isLoop)
+                    {
+                        index = minIndex;
+                    }
+                }
+
+                if (IsGrid)
+                {
+                    if (index % columnCount == 0 && isLoop)
+                    {
+                        index = beginIndex - (columnCount - 1) * c;
+                    }
                 }
             }
 
@@ -387,7 +460,9 @@ namespace Navigation
             } while (true);
         }
 
-        //[Button("Init")]
+#if UNITY_EDITOR
+
+        [ContextMenu("Init")]
         private void InitGroup()
         {
             items = GetComponentsInChildren<NavigationItem>().ToList();
@@ -397,5 +472,6 @@ namespace Navigation
                 items[i].SetListIndex(i);
             }
         }
+#endif
     }
 }

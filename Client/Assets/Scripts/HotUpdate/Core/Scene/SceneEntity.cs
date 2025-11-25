@@ -35,18 +35,22 @@ namespace GameFramework.Core
         {
             if (!IsLoaded)
             {
+                MDebug.Log("!IsLoaded", SceneId);
                 return;
             }
             if (!IsValid) 
             {
+                MDebug.Log("!IsValid", SceneId);
                 return;
             }
            
             if (state == State.None || state == State.Loading)
             {
+                MDebug.Log("state == State.None || state == State.Loading", SceneId);
                 return;
             }
             GameObject[] objects = handle.SceneObject.GetRootGameObjects();
+            MDebug.Log("objects", SceneId, objects.Length);
             foreach (GameObject obj in objects)
             {
                 obj.SetActive(visible);

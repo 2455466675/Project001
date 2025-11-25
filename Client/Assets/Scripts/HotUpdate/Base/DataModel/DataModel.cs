@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GameFramework 
 {
     [Serializable]
-    public sealed class DataModel : IDataModel
+    public sealed class DataModel : IDataModel, IReadOnlyDataModel
     {
         private enum ValueType 
         {
@@ -359,6 +359,56 @@ namespace GameFramework
             sb.Append("}");
 
             return sb.ToString();
+        }
+    }
+
+    public class DataModelWrapper : IDataModel, IReadOnlyDataModel
+    {
+        private readonly DataModel m_Data = new DataModel();
+
+        public DataModel GetDataModel()
+        {
+            return m_Data;
+        }
+
+        public bool GetBoolValue(string key)
+        {
+            return m_Data.GetBoolValue(key);
+        }
+
+        public float GetFloatValue(string key)
+        {
+            return m_Data.GetFloatValue(key);
+        }
+
+        public int GetIntValue(string key)
+        {
+            return m_Data.GetIntValue(key);
+        }
+
+        public string GetStringValue(string key)
+        {
+            return m_Data.GetStringValue(key);
+        }
+
+        public void SetValue(string key, int value)
+        {
+            m_Data.SetValue(key, value);
+        }
+
+        public void SetValue(string key, float value)
+        {
+            m_Data.SetValue(key, value);
+        }
+
+        public void SetValue(string key, bool value)
+        {
+            m_Data.SetValue(key, value);
+        }
+
+        public void SetValue(string key, string value)
+        {
+            m_Data.SetValue(key, value);
         }
     }
 }

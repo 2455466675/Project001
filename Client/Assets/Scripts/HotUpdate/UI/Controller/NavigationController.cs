@@ -6,14 +6,14 @@ namespace GameFramework.UI
 {
     public abstract class NavigationController
     {
-        private class DataBinder 
+        private class DataBinder
         {
             private NavigationItemView m_ItemView;
             private DataModel m_DataModel;
             private Action<NavigationItemView, DataModel> m_Action;
 
-            public void Bind(NavigationItemView view, DataModel dataModel, Action<NavigationItemView, DataModel> action) 
-            {             
+            public void Bind(NavigationItemView view, DataModel dataModel, Action<NavigationItemView, DataModel> action)
+            {
                 m_ItemView = view;
                 m_DataModel = dataModel;
                 m_Action = action;
@@ -22,7 +22,7 @@ namespace GameFramework.UI
                 DataModel_OnValueChanged(string.Empty);
             }
 
-            public void Unbind() 
+            public void Unbind()
             {
                 m_DataModel.OnValueChanged -= DataModel_OnValueChanged;
                 m_ItemView = null;
@@ -60,7 +60,7 @@ namespace GameFramework.UI
             OnShow();
         }
 
-        public void Hide() 
+        public void Hide()
         {
             OnHide();
             Unregister();
@@ -137,15 +137,17 @@ namespace GameFramework.UI
 
             DataModel dataModel = m_Datas[dataIndex];
             DataBinder binder = new DataBinder();
+            BindItemView(itemView, dataModel);
             binder.Bind(itemView, dataModel, RefreshItemView);
             m_Binders[dataIndex] = binder;
         }
 
         private void OnUnbindData(NavigationItemView itemView, int dataIndex)
         {
-            if (m_Binders.TryGetValue(dataIndex, out DataBinder binder)) 
+            if (m_Binders.TryGetValue(dataIndex, out DataBinder binder))
             {
                 binder.Unbind();
+                UnbindItemView(itemView, m_Datas[dataIndex]);
                 m_Binders.Remove(dataIndex);
             }
         }
@@ -227,7 +229,7 @@ namespace GameFramework.UI
             MoveRightItemView(itemView, dataModel);
         }
 
-        private bool CheckValid(int dataIndex) 
+        private bool CheckValid(int dataIndex)
         {
             if (!CheckDataValid(dataIndex))
             {
@@ -244,7 +246,9 @@ namespace GameFramework.UI
         protected virtual void OnShow() { }
         protected virtual void OnHide() { }
 
-        protected virtual void RefreshItemView(NavigationItemView itemView, DataModel dataModel) { }
+        protected virtual void BindItemView(NavigationItemView itemView, DataModel dataModel) { }
+        protected virtual void UnbindItemView(NavigationItemView itemView, DataModel dataModel) { }
+        protected virtual void RefreshItemView(NavigationItemView itemView, IReadOnlyDataModel dataModel) { }
         protected virtual void SelectItemView(NavigationItemView itemView, DataModel dataModel) { }
         protected virtual void DeselectItemView(NavigationItemView itemView, DataModel dataModel) { }
         protected virtual void SubmitItemView(NavigationItemView itemView, DataModel dataModel) { }

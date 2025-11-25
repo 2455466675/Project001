@@ -11,7 +11,7 @@ namespace GameFramework.Gameplay
     }
 
     [Gameplay]
-    public class InventorySystem : IGameplaySystem
+    public class InventorySystem : IGameplaySystem, IGameSerializeable
     {
         public int id;
         private Dictionary<string, DataModel> inventory;

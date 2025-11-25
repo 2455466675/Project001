@@ -28,17 +28,20 @@ namespace GameFramework
         private static Dictionary<Type, GameModule> m_GameModules;
         private static List<IUpdate> m_UpdateableModules;
         private static List<IFixedUpdate> m_FixedUpdateableModules;
+        private static List<ILateUpdate> m_LateUpdateableModules;
 
         private static List<Assembly> m_Assemblies;
         private static Dictionary<Type, List<Type>> m_AttributeTypes;
 
         public static IGameEvent Event { get; private set; }
-        public static IGameplay Gameplay { get; private set; }
+        private static IGameplay Gameplay { get; }
+
         static Game()
         {
             m_GameModules = new Dictionary<Type, GameModule>();
             m_UpdateableModules = new List<IUpdate>();
             m_FixedUpdateableModules = new List<IFixedUpdate>();
+            m_LateUpdateableModules = new List<ILateUpdate>();
             m_Assemblies = new List<Assembly>();
             m_AttributeTypes = new Dictionary<Type, List<Type>>();
             Event = new GameEvent();
@@ -71,7 +74,6 @@ namespace GameFramework
             {
                 return;
             }
-
             for (int i = 0; i < m_UpdateableModules.Count; i++)
             {
                 m_UpdateableModules[i].Update();
@@ -84,10 +86,21 @@ namespace GameFramework
             {
                 return;
             }
-
             for (int i = 0; i < m_FixedUpdateableModules.Count; i++)
             {
                 m_FixedUpdateableModules[i].FixedUpdate();
+            }
+        }
+
+        public static void LateUpdate()
+        {
+            if (!isStarted)
+            {
+                return;
+            }
+            for (int i = 0; i < m_LateUpdateableModules.Count; i++)
+            {
+                m_LateUpdateableModules[i].LateUpdate();
             }
         }
 
@@ -116,6 +129,30 @@ namespace GameFramework
                 return new Type[0];
             }
         }
+
+        #region Gameplay
+
+        public static T GetSystem<T>() where T : class, IGameplaySystem
+        {
+            return Gameplay.GetSystem<T>();
+        }
+
+        public static void Exit() 
+        {
+            Gameplay.Exit();
+        }
+        
+        public static void SaveGame(ISaveWriter writer)
+        {
+            Gameplay.SaveGame(writer);
+        }
+
+        public static void LoadGame(ISaveReader reader)
+        {
+            Gameplay.LoadGame(reader);
+        }
+
+        #endregion
 
         /// <summary>
         /// 获取游戏模块的优先级
@@ -241,6 +278,7 @@ namespace GameFramework
             m_GameModules.Clear();
             m_UpdateableModules.Clear();
             m_FixedUpdateableModules.Clear();
+            m_LateUpdateableModules.Clear();
 
             List<ClassPriorityData> items = await GetGamePriorityDatas("GameModuleAttribute");
             int GetPriority(string fullName)
@@ -301,6 +339,11 @@ namespace GameFramework
                 if (obj is IFixedUpdate fu)
                 {
                     m_FixedUpdateableModules.Add(fu);
+                }
+
+                if (obj is ILateUpdate lu)
+                {
+                    m_LateUpdateableModules.Add(lu);
                 }
 
                 Debug.Log("GameModule Init : " + module.type.Name);

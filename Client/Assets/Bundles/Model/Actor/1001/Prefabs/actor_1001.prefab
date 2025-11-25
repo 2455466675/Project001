@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 2904013216568834798}
   - component: {fileID: 2367476302467340057}
   - component: {fileID: 1707397919405123022}
+  - component: {fileID: 63296644428958771}
   m_Layer: 7
   m_Name: sp
   m_TagString: Untagged
@@ -372,3 +373,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &63296644428958771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081316072473413829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b3386ea8a4c634486319e00fe5909e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Default: normal
+  controllers:
+  - name: normal
+    controller: {fileID: 9100000, guid: 83f13846a0e15d342a57a9d0b643f79e, type: 2}
+  - name: battle
+    controller: {fileID: 9100000, guid: 30a170d4eb830fe45885a07657624e4c, type: 2}

@@ -4,7 +4,7 @@ namespace GameFramework.UI
 {
     public abstract class InputModule : IInputable
     {
-        private readonly NavigateCammand navigateCammand;
+        protected readonly NavigateCammand navigateCammand;
 
         public abstract InputModuleType ModuleType { get; }
 
@@ -23,18 +23,11 @@ namespace GameFramework.UI
             navigateCammand.PopAll();
         }
 
-        public void InputAction(InputContext context)
+        public void PushCammand(GameCammand cammand)
         {
-            if (navigateCammand.Count > 0)
-            {
-                navigateCammand.InputAction(context);
-            }
-            else
-            {
-                OnInputAction(context);
-            }
+            navigateCammand.Push(cammand);
         }
 
-        protected abstract void OnInputAction(InputContext context);
+        public abstract void InputAction(InputContext context);
     }
 }

@@ -21,9 +21,16 @@ namespace GameFramework
             public IGameplaySystem system;
         }
 
+        private class GameplaySerializeableSort
+        {
+            public int priority;
+            public IGameSerializeable serializeable;
+        }
+
         private Dictionary<Type, IGameplaySystem> m_Systems;
-        private List<GameplaySystemSort> m_Sorts;
-   
+        private List<GameplaySystemSort> m_SystemSort;
+        private List<GameplaySerializeableSort> m_SerializeableSort;
+
         internal Gameplay() { }
 
         public async UniTask Init()
@@ -43,52 +50,54 @@ namespace GameFramework
 
             Type[] types = Game.GetTypes<GameplayAttribute>();
             m_Systems = new Dictionary<Type, IGameplaySystem>(types.Length);
-            m_Sorts = new List<GameplaySystemSort>(types.Length);
+            m_SystemSort = new List<GameplaySystemSort>();
+            m_SerializeableSort = new List<GameplaySerializeableSort>();
 
             foreach (Type type in types)
             {
+                int priority = GetPriority(type.FullName);
                 object o = Activator.CreateInstance(type);
-                if (o is IGameplaySystem s)
+                if (o is IGameplaySystem sys)
                 {
-                    m_Systems[type] = s;
-                    m_Sorts.Add(new GameplaySystemSort(){ priority = GetPriority(type.FullName), system = s });
+                    m_Systems[type] = sys;
+                    m_SystemSort.Add(new GameplaySystemSort(){ priority = priority, system = sys });
+                }
+                if (o is IGameSerializeable serializeable)
+                {
+                    m_SerializeableSort.Add(new GameplaySerializeableSort(){ priority = priority, serializeable = serializeable });
                 }
             }
 
-            m_Sorts.Sort((a, b) => a.priority - b.priority);
-            foreach (var item in m_Sorts)
-            {
-                item.system.OnInit();
-            }
+            m_SystemSort.Sort((a, b) => a.priority - b.priority);
+            m_SerializeableSort.Sort((a, b) => a.priority - b.priority);
+
+            InitSystem();
         }
 
         public void Exit()
         {
-            foreach (var item in m_Sorts)
-            {
-                item.system.OnExit();
-            }
+            ExitSystem();
         }
 
         public void SaveGame(ISaveWriter writer) 
         {
-            for (int i = 0; i < m_Sorts.Count; i++)
+            for (int i = 0; i < m_SerializeableSort.Count; i++)
             {
-                var item = m_Sorts[i];
-                var sys = item.system;
-                writer.Next(sys.GetType().Name);
-                sys.OnSaveGame(writer);
+                var item = m_SerializeableSort[i];
+                var serializeable = item.serializeable;
+                writer.Next(serializeable.GetType().Name);
+                serializeable.OnSaveGame(writer);
             }
         }
 
         public void LoadGame(ISaveReader reader) 
         {
-            for (int i = 0; i < m_Sorts.Count; i++)
+            for (int i = 0; i < m_SerializeableSort.Count; i++)
             {
-                var item = m_Sorts[i];
-                var sys = item.system;
-                reader.Next(sys.GetType().Name);
-                sys.OnLoadGame(reader);
+                var item = m_SerializeableSort[i];
+                var serializeable = item.serializeable;
+                reader.Next(serializeable.GetType().Name);
+                serializeable.OnLoadGame(reader);
             }
         }
 
@@ -101,6 +110,22 @@ namespace GameFramework
             }
 
             return default;
+        }
+
+        private void InitSystem()
+        {
+            foreach (var item in m_SystemSort)
+            {
+                item.system.OnInit();
+            }
+        }
+
+        private void ExitSystem()
+        {
+            foreach (var item in m_SystemSort)
+            {
+                item.system.OnExit();
+            }
         }
     }
 }

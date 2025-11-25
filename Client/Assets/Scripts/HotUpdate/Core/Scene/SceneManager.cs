@@ -63,6 +63,52 @@ namespace GameFramework.Core
 
             //await Game.GetModule<AssetsManager>().UnloadUnusedAssetsAsync();
         }
+
+        public async UniTask LoadBattleScene()
+        {
+            if (m_BattleScene != null && m_BattleScene.IsValid)
+            {
+                return;
+            }
+
+            SceneEntity entity = m_Entities[3001];
+            await entity.LoadAsync();
+
+            entity.SetVisible(false);
+            m_BattleScene = entity;
+        }
+
+        public void EnterBattleScene()
+        {
+            if (m_BattleScene == null || !m_BattleScene.IsValid)
+            {
+                return;
+            }
+
+            if (m_MainScene == null || !m_MainScene.IsValid)
+            {
+                return;
+            }
+
+            m_BattleScene.SetVisible(true);
+            m_MainScene.SetVisible(false);
+        }
+
+        public void ExitBattleScene()
+        {
+            if (m_BattleScene == null || !m_BattleScene.IsValid)
+            {
+                return;
+            }
+
+            if (m_MainScene == null || !m_MainScene.IsValid)
+            {
+                return;
+            }
+
+            m_BattleScene.SetVisible(false);
+            m_MainScene.SetVisible(true);
+        }
     }
 }
 

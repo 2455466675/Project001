@@ -10,13 +10,8 @@ namespace GameFramework.UI
         {
             if (arg.context.Input == InputDefine.M_Keyboard) 
             {
-                Game.Gameplay.GetSystem<InventorySystem>().Test();
+                Game.GetSystem<InventorySystem>().Test();
                 Game.GetModule<SaveManager>().Save(1);
-            }
-
-            if (arg.context.Input == InputDefine.Cancel)
-            {              
-                Game.GetModule<SaveManager>().Load(1);
             }
 
             Game.GetModule<InputController>().InputAction(arg.context);

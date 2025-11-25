@@ -38,5 +38,10 @@ namespace GameFramework.UI
         {
             current?.ExitNavigate();
         }
+
+        public void PushCammand(GameCammand cammand)
+        {
+            current?.PushCammand(cammand);
+        }
     }
 }

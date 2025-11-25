@@ -388,6 +388,18 @@ namespace Navigation
             }
         }
 
+        public override NavigationItem GetNavigationItem(int index)
+        {
+            foreach (var item in items.Values)
+            {
+                if (item.IndexOfData == index)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
         protected override void OnExit()
         {
             pointer = -1;
@@ -415,6 +427,7 @@ namespace Navigation
         {
             if (!isInit)
             {
+                Debug.LogError("not init");
                 return;
             }
 
@@ -450,6 +463,7 @@ namespace Navigation
         {
             if (!isInit)
             {
+                Debug.LogError("not init");
                 return false;
             }
 

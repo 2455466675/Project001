@@ -8,6 +8,7 @@ namespace GameFramework.Core
         Esc        = 3,
         LeftShift  = 4,
         Move       = 5,
-        M_Keyboard = 6,
+        Move2      = 6,  
+        M_Keyboard = 7,
     }
 }

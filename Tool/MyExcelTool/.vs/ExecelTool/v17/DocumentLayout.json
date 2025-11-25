@@ -46,9 +46,9 @@
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\UnityProjects\\Project001\\Tool\\MyExcelTool\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "E:\\UnityProjects\\Project001\\Tool\\MyExcelTool\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAJkBAAAAAAAAAAAUwKoBAAAfAAAA",
+              "ToolTip": "E:\\UnityProjects\\Project001\\Tool\\MyExcelTool\\Program.cs*",
+              "RelativeToolTip": "Program.cs*",
+              "ViewState": "AQIAAK0AAAAAAAAAAAAwwI0BAABJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T11:49:24.851Z",
               "EditorCaption": ""
@@ -63,8 +63,7 @@
               "RelativeToolTip": "Output\\GameCfgData.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAAAAIAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T12:44:40.511Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-22T12:44:40.511Z"
             },
             {
               "$type": "Document",
@@ -88,8 +87,7 @@
               "RelativeToolTip": "CfgItem.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T07:35:14.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T07:35:14.695Z"
             },
             {
               "$type": "Document",
@@ -101,8 +99,7 @@
               "RelativeToolTip": "CfgModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAuwA0AAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T07:34:19.477Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-06T07:34:19.477Z"
             }
           ]
         }

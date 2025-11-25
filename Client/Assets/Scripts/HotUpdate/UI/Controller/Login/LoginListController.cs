@@ -29,7 +29,7 @@ namespace GameFramework.UI
             SetData(list);
         }
 
-        protected override void RefreshItemView(NavigationItemView itemView, DataModel dataModel)
+        protected override void RefreshItemView(NavigationItemView itemView, IReadOnlyDataModel dataModel)
         {
             int id = dataModel.GetIntValue("id");
 

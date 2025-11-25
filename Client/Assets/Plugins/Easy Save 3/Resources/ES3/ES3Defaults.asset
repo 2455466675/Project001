@@ -42,9 +42,11 @@ MonoBehaviour:
     - UniTask.Linq
     - Eflatun.SceneReference
     - PsdPlugin
+    - Core
     - LITJson
     - GameConfig
     - Navigation
+    - Utility
     - UniTask.TextMeshPro
     - Assembly-CSharp-firstpass
     - HotUpdate_Gameplay
@@ -57,7 +59,6 @@ MonoBehaviour:
     - ScriptablePacker
     - UniTask.Addressables
     - UniTask.DOTween
-    - UI
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace GameFramework.Gameplay
 {
     [Gameplay]
-    public class PartySystem : IGameplaySystem
+    public class PartySystem : IGameplaySystem, IGameSerializeable
     {
         private Entity character;
 
@@ -43,6 +43,8 @@ namespace GameFramework.Gameplay
             ac.RefreshActor();
             ac.Position = new UnityEngine.Vector3(0, 0, 0);
 
+            Game.GetModule<CameraManager>().SetTarget(ac.Transform);
+
             var mc = character.GetComponent<MotorComponent>();
             mc.SetFollowTarget(null);
             mc.StartUp();
@@ -57,7 +59,7 @@ namespace GameFramework.Gameplay
                 ac2.Position = new UnityEngine.Vector3(0, 0, 0);
 
                 var mc2 = entity.GetComponent<MotorComponent>();
-                mc2.SetFollowTarget(characters[i-1].GetComponent<MotorComponent>());
+                mc2.SetFollowTarget(characters[i - 1].GetComponent<MotorComponent>());
                 mc2.StartUp();
             }
         }

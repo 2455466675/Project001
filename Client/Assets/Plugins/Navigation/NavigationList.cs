@@ -153,7 +153,10 @@ namespace Navigation
         #region
 
         public abstract void Init();
-        public abstract void UpdateDataCount(int count);      
+        public abstract void UpdateDataCount(int count);
+
+        public abstract NavigationItem GetNavigationItem(int index);
+
 
         protected virtual void OnMove(float h, float v)
         {

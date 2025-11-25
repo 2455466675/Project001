@@ -7,10 +7,10 @@ namespace Navigation
     {
         [HideInInspector]
         [SerializeField]
-        private int m_IndexOfList;
+        private int m_IndexOfList = -1;
         public int IndexOfList => m_IndexOfList;
 
-        private int m_IndexOfData;
+        private int m_IndexOfData = -1;
         public int IndexOfData => m_IndexOfData;
 
         internal bool IsValid 

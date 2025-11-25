@@ -7,5 +7,6 @@ namespace GameFramework
 
         LoginPanel = 1001,
         LoadingPanel = 1002,
+        BattleLoadingPanel = 1007,
     }
 }

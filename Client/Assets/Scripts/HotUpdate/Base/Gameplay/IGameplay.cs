@@ -15,6 +15,12 @@ namespace GameFramework
     {
         void OnInit();
         void OnExit();
+        //void OnSaveGame(ISaveWriter writer);
+        //void OnLoadGame(ISaveReader reader);
+    }
+
+    public interface IGameSerializeable
+    {
         void OnSaveGame(ISaveWriter writer);
         void OnLoadGame(ISaveReader reader);
     }

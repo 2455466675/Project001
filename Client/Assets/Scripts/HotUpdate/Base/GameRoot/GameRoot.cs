@@ -44,6 +44,11 @@ namespace GameFramework
             Game.FixedUpdate();
         }
 
+        private void LateUpdate()
+        {
+            Game.LateUpdate();
+        }
+
         private T GetNodeInner<T>() where T : GameNode
         {
             if (nodes == null || nodes.Count == 0) 

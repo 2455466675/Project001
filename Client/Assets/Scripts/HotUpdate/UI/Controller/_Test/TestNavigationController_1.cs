@@ -23,7 +23,7 @@ namespace GameFramework.UI
             SetData(datas);
         }
 
-        protected override void RefreshItemView(NavigationItemView itemView, DataModel dataModel)
+        protected override void RefreshItemView(NavigationItemView itemView, IReadOnlyDataModel dataModel)
         {
             TextWidget textWidget = itemView.GetWidget<TextWidget>();
             if (textWidget != null) 
@@ -62,7 +62,7 @@ namespace GameFramework.UI
             SetData(datas);
         }
 
-        protected override void RefreshItemView(NavigationItemView itemView, DataModel dataModel)
+        protected override void RefreshItemView(NavigationItemView itemView, IReadOnlyDataModel dataModel)
         {
             TextWidget textWidget = itemView.GetWidget<TextWidget>();
             if (textWidget != null)

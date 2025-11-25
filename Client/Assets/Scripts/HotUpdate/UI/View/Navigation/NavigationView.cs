@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Navigation;
-using System;
 
 namespace GameFramework.UI 
 {
@@ -226,6 +224,33 @@ namespace GameFramework.UI
             }
         }
 
+        public NavigationItemView GetNavigationItemView(int index)
+        {
+            if (m_List == null)
+            {
+                return null;
+            }
+
+            NavigationItem item = m_List.GetNavigationItem(index);
+            if (item == null)
+            {
+                return null;
+            }
+
+            return item.GetComponent<NavigationItemView>();
+        }
+
         #endregion
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (m_List == null)
+            {
+                m_List = GetComponent<NavigationList>();
+            }
+        }
+#endif
+
     }
 }

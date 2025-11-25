@@ -28,7 +28,7 @@ namespace GameFramework.Core
             string key = GetKey(index);
 
             SaveWriter writer = new SaveWriter();
-            Game.Gameplay.SaveGame(writer);
+            Game.SaveGame(writer);
             SaveData data = writer.GetData();
 
             ES3.Save(key, data, FilePath);
@@ -61,7 +61,7 @@ namespace GameFramework.Core
             SaveReader reader = new SaveReader();
             reader.SetData(data);
 
-            Game.Gameplay.LoadGame(reader);
+            Game.LoadGame(reader);
 
             MDebug.Log("Load!");
         }

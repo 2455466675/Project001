@@ -6,35 +6,37 @@ namespace GameFramework.Gameplay
 {
     public class CharacterAnimState : StateItemBase
     {
-        protected MotorComponent MotorComponent { get; private set; }
+        protected ActorComponent Actor { get; private set; }
 
-        public CharacterAnimState(MotorComponent component)
+        public CharacterAnimState(Featrue.Component component)
         {
-            MotorComponent = component;
+            Actor = component.GetComponent<ActorComponent>();
         }
+    }
+    public class Idle2WalkTirgger : StateTriggerBase<WalkState>
+    {
+        public override bool Check(IBlackboard blackboard)
+        {
+            float x = blackboard.GetBlackboardFloatValue("DirX");
+            float y = blackboard.GetBlackboardFloatValue("DirY");
+            return x != 0 || y != 0;
+        }
+    }
 
-        protected ActorComponent Actor => MotorComponent?.Actor;
+    public class Idle2RunTirgger : StateTriggerBase<RunState>
+    {
+        public override bool Check(IBlackboard blackboard)
+        {
+            float x = blackboard.GetBlackboardFloatValue("DirX");
+            float y = blackboard.GetBlackboardFloatValue("DirY");
+            return x != 0 || y != 0;
+        }
     }
 
     public class IdleState : CharacterAnimState
     {
-        public IdleState(MotorComponent component) : base(component)
+        public IdleState(Featrue.Component component) : base(component)
         {
-        }
-
-        private class Idle2WalkTirgger : StateTriggerBase<WalkState>
-        {
-            public override bool Check(IBlackboard blackboard)
-            {
-                float x = blackboard.GetBlackboardFloatValue("DirX");
-                float y = blackboard.GetBlackboardFloatValue("DirY");
-                return x != 0 || y != 0;
-            }
-        }
-
-        protected override void OnInit()
-        {
-            AddTrigger(new Idle2WalkTirgger());
         }
 
         protected override void OnEnter()
@@ -46,37 +48,31 @@ namespace GameFramework.Gameplay
         }
     }
 
+    public class Walk2IdleTirgger : StateTriggerBase<IdleState>
+    {
+        public override bool Check(IBlackboard blackboard)
+        {
+            float x = blackboard.GetBlackboardFloatValue("DirX");
+            float y = blackboard.GetBlackboardFloatValue("DirY");
+            return x == 0f && y == 0f;
+        }
+    }
+
+    public class Walk2RunTirgger : StateTriggerBase<RunState>
+    {
+        public override bool Check(IBlackboard blackboard)
+        {
+            float x = blackboard.GetBlackboardFloatValue("DirX");
+            float y = blackboard.GetBlackboardFloatValue("DirY");
+            bool leftShift = blackboard.GetBlackboardBoolValue("LeftShift");
+            return (x != 0f || y != 0f) && leftShift;
+        }
+    }
+
     public class WalkState : CharacterAnimState
     {
-        public WalkState(MotorComponent component) : base(component)
+        public WalkState(Featrue.Component component) : base(component)
         {
-        }
-
-        private class Walk2IdleTirgger : StateTriggerBase<IdleState>
-        {
-            public override bool Check(IBlackboard blackboard)
-            {
-                float x = blackboard.GetBlackboardFloatValue("DirX");
-                float y = blackboard.GetBlackboardFloatValue("DirY");
-                return x == 0f && y == 0f;           
-            }
-        }
-
-        private class Walk2RunTirgger : StateTriggerBase<RunState>
-        {
-            public override bool Check(IBlackboard blackboard)
-            {
-                float x = blackboard.GetBlackboardFloatValue("DirX");
-                float y = blackboard.GetBlackboardFloatValue("DirY");
-                bool leftShift = blackboard.GetBlackboardBoolValue("LeftShift");
-                return (x != 0f || y != 0f) && leftShift;
-            }
-        }
-
-        protected override void OnInit()
-        {
-            AddTrigger(new Walk2IdleTirgger());
-            AddTrigger(new Walk2RunTirgger());
         }
 
         protected override void OnEnter()
@@ -101,26 +97,31 @@ namespace GameFramework.Gameplay
         }
     }
 
+    public class Run2WalkTirgger : StateTriggerBase<WalkState>
+    {
+        public override bool Check(IBlackboard blackboard)
+        {
+            float x = blackboard.GetBlackboardFloatValue("DirX");
+            float y = blackboard.GetBlackboardFloatValue("DirY");
+            bool leftShift = blackboard.GetBlackboardBoolValue("LeftShift");
+            return (x == 0f && y == 0f) || !leftShift;
+        }
+    }
+
+    public class Run2IdleTirgger : StateTriggerBase<IdleState>
+    {
+        public override bool Check(IBlackboard blackboard)
+        {
+            float x = blackboard.GetBlackboardFloatValue("DirX");
+            float y = blackboard.GetBlackboardFloatValue("DirY");
+            return x == 0f && y == 0f;
+        }
+    }
+
     public class RunState : CharacterAnimState
     {
-        public RunState(MotorComponent component) : base(component)
+        public RunState(Featrue.Component component) : base(component)
         {
-        }
-
-        private class Run2WalkTirgger : StateTriggerBase<WalkState>
-        {
-            public override bool Check(IBlackboard blackboard)
-            {
-                float x = blackboard.GetBlackboardFloatValue("DirX");
-                float y = blackboard.GetBlackboardFloatValue("DirY");
-                bool leftShift = blackboard.GetBlackboardBoolValue("LeftShift");
-                return (x == 0f && y == 0f) || !leftShift;
-            }
-        }
-
-        protected override void OnInit()
-        {
-            AddTrigger(new Run2WalkTirgger());
         }
 
         protected override void OnEnter()
@@ -190,9 +191,19 @@ namespace GameFramework.Gameplay
         protected override void OnInit()
         {
             m_Machine = new StateMachine();
-            m_Machine.AddState(new IdleState(this));
-            m_Machine.AddState(new WalkState(this));
-            m_Machine.AddState(new RunState(this));
+
+            IdleState idleState = new IdleState(this);
+            idleState.AddTrigger(new Idle2WalkTirgger());
+            m_Machine.AddState(idleState);
+
+            WalkState walkState = new WalkState(this);
+            walkState.AddTrigger(new Walk2IdleTirgger());
+            walkState.AddTrigger(new Walk2RunTirgger());
+            m_Machine.AddState(walkState);
+
+            RunState runState = new RunState(this);
+            runState.AddTrigger(new Run2WalkTirgger());
+            m_Machine.AddState(runState);
 
             m_Traces = new List<MoveTrace>();
             m_Step = new StepRecord();
@@ -221,6 +232,7 @@ namespace GameFramework.Gameplay
 
         public void StartUp()
         {
+            Actor.SetAnimatorController(ActorAnimator.Normal);
             m_Machine.Run<IdleState>();
             isStartUp = true;
         }
@@ -403,7 +415,8 @@ namespace GameFramework.Gameplay
                 float dirX = trace.dirX;
                 float dirY = trace.dirY;                
                 var ac = Actor;
-                ac.MovePosition(new Vector3(trace.x, trace.y, trace.z));
+                var target = new Vector3(trace.x, trace.y, trace.z);
+                ac.MovePosition(target);
                 SetXY(dirX, dirY);
                 SetLeftShift(m_Target.m_Step.LeftShift);
 

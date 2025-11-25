@@ -5,9 +5,10 @@ namespace GameFramework.Gameplay
 {
     public class ActorComponent : Featrue.Component
     {
+        private Actor m_Actor;
         public int ActorId { get; set; }
         public ActorType ActorType { get; set; }
-        private Actor m_Actor;
+        public Transform Transform => m_Actor != null ? m_Actor.transform : null;
 
         public Vector3 Velocity
         {
@@ -70,6 +71,15 @@ namespace GameFramework.Gameplay
             m_Actor.MovePosition(pos);
         }
 
+        public void SetKinematic(bool isKinematic)
+        {
+            if (m_Actor == null)
+            {
+                return;
+            }
+            m_Actor.SetKinematic(isKinematic);
+        }
+
         public void RefreshActor()
         {
             ActorManager manager = Game.GetModule<ActorManager>();
@@ -116,40 +126,49 @@ namespace GameFramework.Gameplay
 
         #region Animator
 
-        public void SetBool(string key, bool value)
+        public void SetAnimatorController(string name)
         {
             if (m_Actor == null || m_Actor.Animator == null)
             {
                 return;
             }
-            m_Actor.Animator.SetBool(key, value);
+            m_Actor.Animator.SetAnimatorController(name);
         }
 
-        public void SetFloat(string key, float value)
+        public void SetBool(string name, bool value)
         {
             if (m_Actor == null || m_Actor.Animator == null)
             {
                 return;
             }
-            m_Actor.Animator.SetFloat(key, value);
+            m_Actor.Animator.SetBool(name, value);
         }
 
-        public void SetInteger(string key, int value)
+        public void SetFloat(string name, float value)
         {
             if (m_Actor == null || m_Actor.Animator == null)
             {
                 return;
             }
-            m_Actor.Animator.SetInteger(key, value);
+            m_Actor.Animator.SetFloat(name, value);
         }
 
-        public void SetTrigger(string key)
+        public void SetInteger(string name, int value)
         {
             if (m_Actor == null || m_Actor.Animator == null)
             {
                 return;
             }
-            m_Actor.Animator.SetTrigger(key);
+            m_Actor.Animator.SetInteger(name, value);
+        }
+
+        public void SetTrigger(string name)
+        {
+            if (m_Actor == null || m_Actor.Animator == null)
+            {
+                return;
+            }
+            m_Actor.Animator.SetTrigger(name);
         }
 
         #endregion     
@@ -158,6 +177,16 @@ namespace GameFramework.Gameplay
         {
             Transform parent = GameRoot.GetNode<ActorNode>().GetActorNode(ActorType);
             return parent;
+        }
+
+        protected override void OnDestroy()
+        {
+            if (m_Actor == null)
+            {
+                return;
+            }
+            Game.GetModule<ActorManager>().RecycleActor(m_Actor);
+            m_Actor = null;
         }
     }
 }

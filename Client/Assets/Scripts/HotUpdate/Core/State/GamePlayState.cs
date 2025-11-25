@@ -23,7 +23,7 @@ namespace GameFramework.Core
 
         protected override void OnExit()
         {
-            Game.Gameplay.Exit();
+            Game.Exit();
         }
 
         private async UniTaskVoid LoadGame()
@@ -38,16 +38,17 @@ namespace GameFramework.Core
 
             int saveIndex = GetBlackboardIntValue("SaveIndex");
 
-
             int sceneId = saveManager.GetSaveSceneId(saveIndex);
             await sceneManager.LoadScene(sceneId);
+
+            await sceneManager.LoadBattleScene();
 
             await SetProgress(0.5f);
 
             saveManager.Load(saveIndex);
 
             await SetProgress(1f);
-
+            Game.GetModule<CameraManager>().SetState(CameraState.Follow);
             Game.Event.Publish(new UIPanelEventArgs() { panelDefine = PanelDefine.LoadingPanel, isShow = false });
         }
 

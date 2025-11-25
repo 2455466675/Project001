@@ -69,6 +69,7 @@ namespace GameFramework.UI
             switch (inputType)
             {
                 case InputDefine.Move:
+                case InputDefine.Move2:
                     float x = context.X;
                     float y = context.Y;
                     list?.Move(x, y);

@@ -5,14 +5,14 @@ namespace GameFramework.Core
     public class Actor : MonoBehaviour
     {
         public int Id { get; set; }
-        public Animator Animator => m_Animator;
+        public ActorAnimator Animator => m_Animator;
 
         [SerializeField]
         private Rigidbody m_Rigidbody;
         [SerializeField]
         private Collider m_Collider;
         [SerializeField]
-        private Animator m_Animator;
+        private ActorAnimator m_Animator;
         [SerializeField]
         private Transform[] m_Bones;
 
@@ -110,13 +110,26 @@ namespace GameFramework.Core
             return m_Bones[0];
         }
 
+        public void SetKinematic(bool isKinematic)
+        {
+            if (m_Rigidbody != null)
+            {
+                m_Rigidbody.isKinematic = isKinematic;
+            }
+
+            if (m_Collider != null)
+            {
+                m_Collider.isTrigger = isKinematic;
+            }
+        }
+
 #if UNITY_EDITOR
 
         private void OnValidate()
         {
             if (m_Animator == null)
             {
-                m_Animator = GetComponentInChildren<Animator>();
+                m_Animator = GetComponentInChildren<ActorAnimator>();
             }
             if (m_Rigidbody == null)
             {

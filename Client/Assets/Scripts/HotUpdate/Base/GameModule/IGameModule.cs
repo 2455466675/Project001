@@ -25,4 +25,9 @@ namespace GameFramework
     {
         void FixedUpdate();
     }
+
+    public interface ILateUpdate
+    {
+        void LateUpdate();
+    }
 }
