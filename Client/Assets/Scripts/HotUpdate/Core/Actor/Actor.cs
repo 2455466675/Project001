@@ -46,25 +46,11 @@ namespace GameFramework.Core
         {
             get
             {
-                if (m_Rigidbody == null)
-                {
-                    return transform.position;
-                }
-                else
-                {
-                    return m_Rigidbody.position;
-                }
+                return transform.position;
             }
             set
             {
-                if (m_Rigidbody == null)
-                {
-                    transform.position = value;
-                }
-                else
-                {
-                    m_Rigidbody.position = value;
-                }
+                transform.position = value;
             }
         }
 

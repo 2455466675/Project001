@@ -143,7 +143,7 @@ namespace GameFramework.Gameplay
         }
     }
 
-    public class MotorComponent : Featrue.Component, IFixedUpdate
+    public class MotorComponent : Featrue.Component, IFixedUpdate, ILateUpdate
     {
         private const int Gap = 200;
         private const float StepDistance = 0.002f;
@@ -226,6 +226,18 @@ namespace GameFramework.Gameplay
             }
             else
             {
+                //Follow();
+            }
+        }
+
+        public void LateUpdate()
+        {
+            if (m_Target == null)
+            {
+
+            }
+            else
+            {
                 Follow();
             }
         }
@@ -284,10 +296,9 @@ namespace GameFramework.Gameplay
                 var rx = m_Step.X;
                 var ry = m_Step.Y;
                 var last = m_Step.LastPos;
-
                 var dx = Utility.Math.Abs(pos.x - last.x);
                 var dz = Utility.Math.Abs(pos.z - last.z);
-                if (!(dx < 0.01f && dz < 0.01f))
+                if (!(dx < StepDistance && dz < StepDistance))
                 {          
                     if (rx != 0f && ry == 0f)
                     {
@@ -298,18 +309,17 @@ namespace GameFramework.Gameplay
                             float nz = last.z;
                             if (rx > 0f)
                             {
-                                nx = last.x + StepDistance;
+                                nx = last.x + StepDistance * i;
                             }
                             else
                             {
-                                nx = last.x - StepDistance;
+                                nx = last.x - StepDistance * i;
                             }
-
                             PushTrace(new MoveTrace() { dirX = rx, dirY = ry, x = nx, y = pos.y, z = nz });
                         }
 
                         PushTrace(new MoveTrace() { dirX = rx, dirY = ry, x = pos.x, y = pos.y, z = pos.z });
-                        m_Step.StepCount = r + 1;
+                        m_Step.StepCount = r;
                     }
 
                     if (ry != 0f && rx == 0f)
@@ -321,17 +331,17 @@ namespace GameFramework.Gameplay
                             float nz;
                             if (ry > 0f)
                             {
-                                nz = last.z + StepDistance;
+                                nz = last.z + StepDistance * i;
                             }
                             else
                             {
-                                nz = last.z - StepDistance;
+                                nz = last.z - StepDistance * i;
                             }
 
                             PushTrace(new MoveTrace() { dirX = rx, dirY = ry, x = nx, y = pos.y, z = nz });
                         }
                         PushTrace(new MoveTrace() { dirX = rx, dirY = ry, x = pos.x, y = pos.y, z = pos.z });
-                        m_Step.StepCount = r + 1;
+                        m_Step.StepCount = r;
                     }
 
                     if (rx != 0f && ry != 0f)
@@ -344,26 +354,26 @@ namespace GameFramework.Gameplay
                             float nz;
                             if (rx > 0f)
                             {
-                                nx = last.x + v;
+                                nx = last.x + v * i;
                             }
                             else
                             {
-                                nx = last.x - v;
+                                nx = last.x - v * i;
                             }
 
                             if (ry > 0f)
                             {
-                                nz = last.z + v;
+                                nz = last.z + v * i;
                             }
                             else
                             {
-                                nz = last.z - v;
+                                nz = last.z - v * i;
                             }
 
                             PushTrace(new MoveTrace() { dirX = rx, dirY = ry, x = nx, y = pos.y, z = nz });
                         }
                         PushTrace(new MoveTrace() { dirX = rx, dirY = ry, x = pos.x, y = pos.y, z = pos.z });
-                        m_Step.StepCount = r + 1;
+                        m_Step.StepCount = r;
                     }
                 }
                 else
@@ -407,14 +417,14 @@ namespace GameFramework.Gameplay
             int tracesCount = m_Target.m_Traces.Count;
             if (stepCount > 0 && tracesCount > Gap)
             {           
-                int i = Utility.Math.Min(tracesCount - Gap, stepCount);
+                var ac = Actor;
 
+                int i = Utility.Math.Min(tracesCount - Gap, stepCount);
                 var traces = m_Target.PopTraces(i);
                 var trace = traces[^1];
 
                 float dirX = trace.dirX;
                 float dirY = trace.dirY;                
-                var ac = Actor;
                 var target = new Vector3(trace.x, trace.y, trace.z);
                 ac.MovePosition(target);
                 SetXY(dirX, dirY);

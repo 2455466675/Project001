@@ -35,6 +35,22 @@ namespace GameFramework
             {
                 return Mathf.Abs(v);
             }
+
+            /// <summary>
+            /// [min, max)
+            /// </summary>
+            /// <param name="min"></param>
+            /// <param name="max"></param>
+            /// <returns></returns>
+            public static int Random(int min, int max)
+            {
+                return UnityEngine.Random.Range(min, max);
+            }
+
+            public static float Random(float min, float max)
+            {
+                return UnityEngine.Random.Range(min, max);
+            }
         }
     }
 }

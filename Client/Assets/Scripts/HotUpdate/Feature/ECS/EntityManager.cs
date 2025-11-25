@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace GameFramework.Featrue 
 {
     [GameModule]
-    public class EntityManager : IGameModule_SyncInit, IUpdate, IFixedUpdate
+    public class EntityManager : IGameModule_SyncInit, IUpdate, IFixedUpdate, ILateUpdate
     {
         private int m_UidGenerator;
         private Dictionary<int, Entity> m_Entites;
@@ -14,6 +14,9 @@ namespace GameFramework.Featrue
         private HashSet<IFixedUpdate> m_FixedUpdates;
         private HashSet<IFixedUpdate> m_AddFixedUpdates;
         private HashSet<IFixedUpdate> m_DelFixedUpdates;
+        private HashSet<ILateUpdate> m_LateUpdates;
+        private HashSet<ILateUpdate> m_AddLateUpdates;
+        private HashSet<ILateUpdate> m_DelLateUpdates;
 
         public void Init()
         {
@@ -25,6 +28,9 @@ namespace GameFramework.Featrue
             m_FixedUpdates = new HashSet<IFixedUpdate>();
             m_AddFixedUpdates = new HashSet<IFixedUpdate>();
             m_DelFixedUpdates = new HashSet<IFixedUpdate>();
+            m_LateUpdates = new HashSet<ILateUpdate>();
+            m_AddLateUpdates = new HashSet<ILateUpdate>();
+            m_DelLateUpdates = new HashSet<ILateUpdate>();
         }
 
         public void Update()
@@ -76,6 +82,32 @@ namespace GameFramework.Featrue
                     m_FixedUpdates.Remove(item);
                 }
                 m_DelFixedUpdates.Clear();
+            }
+        }
+
+        public void LateUpdate()
+        {
+            if (m_AddLateUpdates.Count > 0)
+            {
+                foreach (var item in m_AddLateUpdates)
+                {
+                    m_LateUpdates.Add(item);
+                }
+                m_AddLateUpdates.Clear();
+            }
+
+            foreach (var item in m_LateUpdates)
+            {
+                item.LateUpdate();
+            }
+
+            if (m_DelLateUpdates.Count > 0)
+            {
+                foreach (var item in m_DelLateUpdates)
+                {
+                    m_LateUpdates.Remove(item);
+                }
+                m_DelLateUpdates.Clear();
             }
         }
 
@@ -217,6 +249,11 @@ namespace GameFramework.Featrue
             {
                 m_AddFixedUpdates.Add(fixedUpdate);
             }
+
+            if (component is ILateUpdate lateUpdate)
+            {
+                m_AddLateUpdates.Add(lateUpdate);
+            }
         }
 
         private void UnregisterComponent(Component component)
@@ -229,6 +266,11 @@ namespace GameFramework.Featrue
             if (component is IFixedUpdate fixedUpdate)
             {
                 m_DelFixedUpdates.Add(fixedUpdate);
+            }
+
+            if (component is ILateUpdate lateUpdate)
+            {
+                m_DelLateUpdates.Add(lateUpdate);
             }
         }
     }
