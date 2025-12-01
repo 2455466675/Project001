@@ -26,8 +26,8 @@ namespace Navigation
                     return DataValidChecker.Invoke(IndexOfData);
                 }
             }
-        }        
-        public event Func<int, bool> DataValidChecker;
+        }
+        internal event Func<int, bool> DataValidChecker;
 
         [SerializeField]
         private NavigationItemSelector m_Selector;

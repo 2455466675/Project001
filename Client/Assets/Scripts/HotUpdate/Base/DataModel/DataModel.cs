@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GameFramework 
 {
     [Serializable]
-    public sealed class DataModel : IDataModel, IReadOnlyDataModel
+    public sealed class DataModel : IDataModel
     {
         private enum ValueType 
         {
@@ -362,7 +362,7 @@ namespace GameFramework
         }
     }
 
-    public class DataModelWrapper : IDataModel, IReadOnlyDataModel
+    public class DataModelWrapper : IDataModel
     {
         private readonly DataModel m_Data = new DataModel();
 

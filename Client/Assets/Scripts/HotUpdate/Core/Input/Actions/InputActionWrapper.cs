@@ -69,7 +69,7 @@ namespace GameFramework.Core
         {
         }
 
-        protected void Trigger(InputContext context) 
+        protected void Notify(InputContext context) 
         {
             OnInput?.Invoke(context);
         }

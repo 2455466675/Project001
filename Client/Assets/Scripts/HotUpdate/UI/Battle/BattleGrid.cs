@@ -12,73 +12,11 @@ namespace GameFramework.UI
             bool isEnter = arg.isEnter;
             if (isEnter)
             {
-                GameRoot.GetNode<ActorNode>().ChangeBattleModel(true);
-
-                var battleNode = GameRoot.GetNode<BattleNode>();
-                battleNode.LoadGrid(0, 0);
-
-                BattleGridController controller = new BattleGridController();
-                controller.Show(BattleGrid.Instance.NavigationView);
-
-                BattleGridCammand cammand = new BattleGridCammand(controller, new int[] { 0 });
-                Game.GetModule<InputController>().PushCammand(cammand);
+                Game.GetSystem<BattleViewSystem>().OnEnterBattle();
             }
             else
-            {
-                var battleNode = GameRoot.GetNode<BattleNode>();
-                battleNode.DestroyGrid();
-
-                GameRoot.GetNode<ActorNode>().ChangeBattleModel(false);
-            }
-        }
-    }
-
-    public class BattleGridCammand : InputCammand
-    {
-        private NavigationController controller;
-        private int[] defaultIndexs;
-
-        public BattleGridCammand(NavigationController controller, int[] defaultIndexs)
-        {
-            this.controller = controller;
-            this.defaultIndexs = defaultIndexs;
-        }
-
-        protected override void OnPop()
-        {
-            controller?.Exit();
-        }
-
-        protected override bool OnPush()
-        {
-            if (controller == null)
-            {
-                return false;
-            }
-            else
-            {
-                return controller.InFocus(false, defaultIndexs);
-            }
-        }
-
-        protected override bool CheckLocked()
-        {
-            return controller != null && controller.IsLocked;
-        }
-
-        protected override void OnInputAction(InputContext context)
-        {
-            InputDefine inputType = context.Input;
-            switch (inputType)
-            {
-                case InputDefine.Move:
-                    float x = context.X;
-                    float y = context.Y;
-                    controller?.Move(x, y);
-                    break;
-                case InputDefine.Submit:
-                    controller?.Submit();
-                    break;
+            {             
+                Game.GetSystem<BattleViewSystem>().OnEixtBattle();
             }
         }
     }
@@ -87,21 +25,12 @@ namespace GameFramework.UI
     {
         [SerializeField]
         private NavigationView m_NavigationView;
-
         [SerializeField]
         private BattleTileLayout m_TileLayout;
 
+        public NavigationView NavigationView => m_NavigationView;
         public int RowCount => m_TileLayout != null ? m_TileLayout.RowCount : 0;
         public int ColCount => m_TileLayout != null ? m_TileLayout.ColCount : 0;
-
-        public static BattleGrid Instance { get; private set; }
-
-        public NavigationView NavigationView => m_NavigationView;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
 
         public NavigationItemView GetTileItem(int index)
         {

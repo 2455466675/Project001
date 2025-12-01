@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// ×Ö·û´®ÏÂÀ­²Ëµ¥
+/// </summary>
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
 public class StringDropdownAttribute : PropertyAttribute
 {

@@ -1,5 +1,3 @@
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -38,13 +36,14 @@ namespace GameFramework.Gameplay
         {
             if (states.TryPeek(out int state))
             {
-                SetValue("state", state);
+                SetValue(DataKey.State, state);
             }
         }
 
         public bool Passable()
         {
-            return true;
+            int battleId = GetIntValue(DataKey.BattleId);
+            return battleId > 0;
         }
     }
 
@@ -158,29 +157,29 @@ namespace GameFramework.Gameplay
             }
         }
 
-        public static List<(int, int)> GetCirclePoints(int a, int b, int n)
+        public static List<(int, int)> GetCirclePoints(int x, int y, int r)
         {
             var points = new HashSet<(int, int)>();
 
-            if (n == 0)
+            if (r == 0)
             {
-                points.Add((a, b));
+                points.Add((x, y));
                 return points.ToList();
             }
 
-            for (int i = 1; i <= n; i++)
+            for (int i = 1; i <= r; i++)
             {
                 for (int dx = -i; dx <= i; dx++)
                 {
                     int rd = i - Utility.Math.Abs(dx);
                     if (rd == 0)
                     {
-                        points.Add((a + dx, b));
+                        points.Add((x + dx, y));
                     }
                     else
                     {
-                        points.Add((a + dx, b + rd));
-                        points.Add((a + dx, b - rd));
+                        points.Add((x + dx, y + rd));
+                        points.Add((x + dx, y - rd));
                     }
                 }
             }

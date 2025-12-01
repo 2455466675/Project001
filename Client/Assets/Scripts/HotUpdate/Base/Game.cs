@@ -39,9 +39,11 @@ namespace GameFramework
         static Game()
         {
             m_GameModules = new Dictionary<Type, GameModule>();
+
             m_UpdateableModules = new List<IUpdate>();
             m_FixedUpdateableModules = new List<IFixedUpdate>();
             m_LateUpdateableModules = new List<ILateUpdate>();
+
             m_Assemblies = new List<Assembly>();
             m_AttributeTypes = new Dictionary<Type, List<Type>>();
             Event = new GameEvent();
@@ -333,17 +335,17 @@ namespace GameFramework
 
                 if (obj is IUpdate u)
                 {
-                    m_UpdateableModules.Add(u);
+                    AddIUpdate(u);
                 }
 
                 if (obj is IFixedUpdate fu)
                 {
-                    m_FixedUpdateableModules.Add(fu);
+                    AddIFixedUpdate(fu);
                 }
 
                 if (obj is ILateUpdate lu)
                 {
-                    m_LateUpdateableModules.Add(lu);
+                    AddILateUpdate(lu);
                 }
 
                 Debug.Log("GameModule Init : " + module.type.Name);
@@ -355,6 +357,21 @@ namespace GameFramework
             var handle = YooAssets.LoadAssetAsync<GameObject>("Assets/Bundles/Common/GameRoot");
             await handle;
             await handle.InstantiateAsync();
+        }
+
+        internal static void AddIUpdate(IUpdate u)
+        {
+            m_UpdateableModules.Add(u);
+        }
+
+        internal static void AddIFixedUpdate(IFixedUpdate fu)
+        {
+            m_FixedUpdateableModules.Add(fu);
+        }
+
+        internal static void AddILateUpdate(ILateUpdate lu)
+        {
+            m_LateUpdateableModules.Add(lu);
         }
     }
 }

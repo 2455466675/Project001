@@ -48,8 +48,8 @@ MonoBehaviour:
     - Navigation
     - Utility
     - UniTask.TextMeshPro
-    - Assembly-CSharp-firstpass
     - HotUpdate_Gameplay
+    - Assembly-CSharp-firstpass
     - Base
     - HotUpdate_Utility
     - HotUpdate_Feature

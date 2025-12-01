@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameFramework.Featrue 
 {
-    public sealed class Entity
+    public sealed class Entity : IAddComponent, IGetComponent
     {
         public int Eid { get; private set; }
         private List<Component> m_Components;

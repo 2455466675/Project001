@@ -100,6 +100,15 @@ namespace GameFramework.Core
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Page"",
+                    ""type"": ""Value"",
+                    ""id"": ""434c37fd-959c-4e13-b3a4-02fa0cd5a714"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -311,6 +320,39 @@ namespace GameFramework.Core
                     ""action"": ""Move2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""51229c67-0700-4b53-9926-2ab4085588ff"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Page"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0c5c57d7-142c-406b-819e-895157ac7a50"",
+                    ""path"": ""<Keyboard>/pageDown"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""92f90b5d-9e50-42be-8f1d-2a3a89a684a7"",
+                    ""path"": ""<Keyboard>/pageUp"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -327,6 +369,7 @@ namespace GameFramework.Core
             m_Player_LeftShift = m_Player.FindAction("LeftShift", throwIfNotFound: true);
             m_Player_M_Keyboard = m_Player.FindAction("M_Keyboard", throwIfNotFound: true);
             m_Player_GM = m_Player.FindAction("GM", throwIfNotFound: true);
+            m_Player_Page = m_Player.FindAction("Page", throwIfNotFound: true);
         }
 
         ~@GameInput()
@@ -401,6 +444,7 @@ namespace GameFramework.Core
         private readonly InputAction m_Player_LeftShift;
         private readonly InputAction m_Player_M_Keyboard;
         private readonly InputAction m_Player_GM;
+        private readonly InputAction m_Player_Page;
         public struct PlayerActions
         {
             private @GameInput m_Wrapper;
@@ -413,6 +457,7 @@ namespace GameFramework.Core
             public InputAction @LeftShift => m_Wrapper.m_Player_LeftShift;
             public InputAction @M_Keyboard => m_Wrapper.m_Player_M_Keyboard;
             public InputAction @GM => m_Wrapper.m_Player_GM;
+            public InputAction @Page => m_Wrapper.m_Player_Page;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -446,6 +491,9 @@ namespace GameFramework.Core
                 @GM.started += instance.OnGM;
                 @GM.performed += instance.OnGM;
                 @GM.canceled += instance.OnGM;
+                @Page.started += instance.OnPage;
+                @Page.performed += instance.OnPage;
+                @Page.canceled += instance.OnPage;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -474,6 +522,9 @@ namespace GameFramework.Core
                 @GM.started -= instance.OnGM;
                 @GM.performed -= instance.OnGM;
                 @GM.canceled -= instance.OnGM;
+                @Page.started -= instance.OnPage;
+                @Page.performed -= instance.OnPage;
+                @Page.canceled -= instance.OnPage;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -501,6 +552,7 @@ namespace GameFramework.Core
             void OnLeftShift(InputAction.CallbackContext context);
             void OnM_Keyboard(InputAction.CallbackContext context);
             void OnGM(InputAction.CallbackContext context);
+            void OnPage(InputAction.CallbackContext context);
         }
     }
 }

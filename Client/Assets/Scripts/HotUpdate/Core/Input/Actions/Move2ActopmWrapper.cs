@@ -31,7 +31,7 @@ namespace GameFramework.Core
         private void Execute()
         {
             Vector2 v = inputAction.ReadValue<Vector2>();
-            Trigger(new InputContext() { Input = InputDefine.Move2, X = v.x, Y = v.y });
+            Notify(new InputContext() { Input = InputDefine.Move2, X = v.x, Y = v.y });
         }
     }
 }

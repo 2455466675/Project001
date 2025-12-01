@@ -161,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Rigidbody: {fileID: 8895283908519216394}
   m_Collider: {fileID: 533924207220920257}
-  m_Animator: {fileID: 1707397919405123022}
+  m_Animator: {fileID: 63296644428958771}
   m_Bones:
   - {fileID: 806451046735046763}
   - {fileID: 4901063645280012976}
@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b3386ea8a4c634486319e00fe5909e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 1707397919405123022}
   m_Default: normal
   controllers:
   - name: normal

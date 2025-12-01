@@ -179,7 +179,7 @@ namespace GameFramework.Gameplay
         public ActorComponent Actor { get; private set; }
 
         private bool isStartUp;
-        private StateMachine m_Machine;
+        private GameStateMachine m_Machine;
         private MotorComponent m_Target;
         private List<MoveTrace> m_Traces;
 
@@ -190,7 +190,7 @@ namespace GameFramework.Gameplay
 
         protected override void OnInit()
         {
-            m_Machine = new StateMachine();
+            m_Machine = new GameStateMachine();
 
             IdleState idleState = new IdleState(this);
             idleState.AddTrigger(new Idle2WalkTirgger());

@@ -20,11 +20,11 @@ namespace GameFramework.Core
             Play = 3,
         }
 
-        private StateMachine machine;
+        private GameStateMachine machine;
 
         public void Init()
         {
-            machine = new StateMachine();
+            machine = new GameStateMachine();
             machine.AddState(new GameInitState());
             machine.AddState(new GameLoginState());
             machine.AddState(new GamePlayState());

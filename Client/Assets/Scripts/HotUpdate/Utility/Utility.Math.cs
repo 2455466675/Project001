@@ -36,6 +36,11 @@ namespace GameFramework
                 return Mathf.Abs(v);
             }
 
+            public static float Clamp(float v, float min, float max)
+            {
+                return Mathf.Clamp(v, min, max);
+            }
+
             /// <summary>
             /// [min, max)
             /// </summary>

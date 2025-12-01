@@ -62,6 +62,32 @@ namespace GameFramework.Gameplay
             }
         }
 
+        public Quaternion Rotation
+        {
+            get
+            {
+                if (m_Actor == null)
+                {
+                    return Quaternion.identity;
+                }
+                else
+                {
+                    return m_Actor.Rotation;
+                }
+            }
+            set
+            {
+                if (m_Actor == null)
+                {
+                    return;
+                }
+                else
+                {
+                    m_Actor.Rotation = value;
+                }
+            }
+        }
+
         public void MovePosition(Vector3 pos)
         {
             if (m_Actor == null)
@@ -122,6 +148,12 @@ namespace GameFramework.Gameplay
 
             Transform parent = GetParent();
             m_Actor.transform.SetParent(parent, false);
+        }
+
+        public void SyncRotation()
+        {
+            var rotation = GameRoot.GetNode<CameraNode>().GetRotation();
+            this.Rotation = rotation;
         }
 
         #region Animator

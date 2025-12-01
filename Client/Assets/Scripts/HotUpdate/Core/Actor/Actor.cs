@@ -66,6 +66,18 @@ namespace GameFramework.Core
             }
         }
 
+        public Quaternion Rotation
+        {
+            get
+            {
+                return transform.rotation;
+            }
+            set
+            {
+                transform.rotation = value;
+            }
+        }
+
         public void MovePosition(Vector3 pos)
         {
             if (m_Rigidbody == null)

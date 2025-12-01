@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace GameFramework.Core
 {
+    public struct CameraRotateArgs : IGameEventArgs
+    {
+        public Quaternion rotation;
+    }
+
     public enum CameraState
     {
         Follow,
@@ -30,7 +35,7 @@ namespace GameFramework.Core
                 if (m_Target != null)
                 {
                     CameraNode node = GameRoot.GetNode<CameraNode>();
-                    node.transform.position = new Vector3(m_Target.position.x, m_Target.position.y + 2, m_Target.position.z - 6);
+                    node.SetPosition(m_Target.position);
                 }
             }
 
@@ -46,13 +51,15 @@ namespace GameFramework.Core
             if (m_State == CameraState.Battle)
             {
                 CameraNode node = GameRoot.GetNode<CameraNode>();
-                node.transform.rotation = Quaternion.Euler(45f, 0f, 0f);
+                Quaternion target = Quaternion.Euler(45f, 0f, 0f);
+                node.SetRotation(target);
             }
 
             if (m_State == CameraState.Follow)
             {
                 CameraNode node = GameRoot.GetNode<CameraNode>();
-                node.transform.rotation = Quaternion.Euler(15f, 0f, 0f);
+                Quaternion target = Quaternion.Euler(20f, 0f, 0f);
+                node.SetRotation(target);
             }
         }
 
@@ -64,12 +71,33 @@ namespace GameFramework.Core
         public void Move(Vector3 dir)
         {
             CameraNode node = GameRoot.GetNode<CameraNode>();
-            node.transform.position += 2.5f * Time.fixedDeltaTime * dir;
+
+            Vector3 position = node.GetPositon();
+            Vector3 target = position + 2f * Time.fixedDeltaTime * dir;
+
+            node.SetPosition(target);
+        }
+
+        public void Rotate(Vector2 dir)
+        {
+            CameraNode node = GameRoot.GetNode<CameraNode>();
+
+            Quaternion rotation = node.GetRotation();
+            float x = rotation.eulerAngles.x + 10f * Time.fixedDeltaTime * dir.y;
+            float v = Utility.Math.Clamp(x, 20f, 60f);
+            Quaternion target = Quaternion.Euler(v, 0f, 0f);
+
+            node.SetRotation(target);
+
+            Game.Event.Publish(new CameraRotateArgs() { rotation = target });
         }
 
         public void LookAt(Vector3 target) 
         {
-            Test(target).Forget();
+            CameraNode node = GameRoot.GetNode<CameraNode>();
+            node.SetPosition(target);
+
+            //Test(target).Forget();
         }
         
         private async UniTaskVoid Test(Vector3 target)

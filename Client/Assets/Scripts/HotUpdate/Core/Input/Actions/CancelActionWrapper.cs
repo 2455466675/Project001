@@ -9,7 +9,7 @@ namespace GameFramework.Core
     {
         protected override void OnStarted(InputAction.CallbackContext obj)
         {            
-            Trigger(new InputContext() { Input = InputDefine.Cancel });
+            Notify(new InputContext() { Input = InputDefine.Cancel });
         }
     }
 }

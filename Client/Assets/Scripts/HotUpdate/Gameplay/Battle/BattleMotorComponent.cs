@@ -7,13 +7,13 @@ namespace GameFramework.Gameplay
 {
     public class BattleMotorComponent : Featrue.Component, IFixedUpdate
     {
-        private StateMachine m_Machine;
+        private GameStateMachine m_Machine;
 
         private bool isStartUp;
 
         protected override void OnInit()
         {
-            m_Machine = new StateMachine();
+            m_Machine = new GameStateMachine();
 
             IdleState idleState = new IdleState(this);
             idleState.AddTrigger(new Idle2RunTirgger());
@@ -53,6 +53,11 @@ namespace GameFramework.Gameplay
 
         public async UniTask MoveAsync(List<Vector2Int> path)
         {
+            if (path == null || path.Count <= 1)
+            {
+                return;
+            }
+
             ActorComponent actor = GetComponent<ActorComponent>();
 
             float dirX = m_Machine.GetBlackboardFloatValue("LastDirX");

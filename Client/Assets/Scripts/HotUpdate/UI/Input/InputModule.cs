@@ -4,13 +4,17 @@ namespace GameFramework.UI
 {
     public abstract class InputModule : IInputable
     {
+        public abstract InputModuleType ModuleType { get; }
+
+
         protected readonly NavigateCammand navigateCammand;
 
-        public abstract InputModuleType ModuleType { get; }
+        private readonly GameCammand cammands;
 
         public InputModule()
         {
             navigateCammand = new NavigateCammand();
+
         }
 
         public void EnterNavigate(NavigationDefine navigationDefine, PanelDefine panelDefine, int[] defaultIndexs)

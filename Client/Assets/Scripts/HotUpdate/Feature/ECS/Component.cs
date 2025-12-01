@@ -1,9 +1,10 @@
 namespace GameFramework.Featrue 
 {
-    public abstract class Component
+    public abstract class Component : IGetComponent
     {
+        public int Eid => m_Entity != null ? m_Entity.Eid : -1;
         private Entity m_Entity;
-      
+
         internal void Init(Entity entity)
         {
             m_Entity = entity;

@@ -7,13 +7,19 @@ namespace GameFramework.Gameplay
     {
         private GameObject m_GridObj;
 
-        public void LoadGrid(int r, int c)
+        public T LoadGrid<T>(int r, int c) where T : Component
         {
             if (m_GridObj != null)
             {
-                return;
+                return default;
             }
             m_GridObj = Game.GetModule<AssetsManager>().LoadAndInstantiate("Assets/Bundles/Battle/BattleGrid", transform);
+            if (m_GridObj == null)
+            {
+                return default;
+            }
+
+            return m_GridObj.GetComponent<T>();
         }
 
         public void DestroyGrid()

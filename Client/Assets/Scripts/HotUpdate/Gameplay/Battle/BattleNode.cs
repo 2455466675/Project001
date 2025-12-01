@@ -8,11 +8,15 @@ namespace GameFramework.Gameplay
         [SerializeField]
         private BattleGridNode m_GridNode;
 
-        public void LoadGrid(int r, int c)
+        public T LoadGrid<T>(int r, int c) where T : Component
         {
             if (m_GridNode != null)
             {
-                m_GridNode.LoadGrid(r, c);
+                return m_GridNode.LoadGrid<T>(r, c);
+            }
+            else
+            {
+                return default;
             }
         }
 

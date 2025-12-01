@@ -23,22 +23,22 @@ namespace GameFramework.Core
 
     public interface IStateItem 
     {
-        void Init(StateMachine machine);
+        void Init(GameStateMachine machine);
         void Enter();
         void Exit();
         void Tick();
     }
 
-    public abstract class StateTriggerBase<T> : IStateTrigger where T : IStateItem
+    public abstract class StateTriggerBase<TriggerState> : IStateTrigger where TriggerState : IStateItem
     {
-        public Type Type => typeof(T);
+        public Type Type => typeof(TriggerState);
 
         public abstract bool Check(IBlackboard blackboard);
     }
 
     public abstract class StateItemBase : IStateItem , IBlackboard
     {
-        private StateMachine machine;
+        private GameStateMachine machine;
         private List<IStateTrigger> triggers;
 
         public StateItemBase() 
@@ -46,21 +46,18 @@ namespace GameFramework.Core
             triggers = new List<IStateTrigger>();
         }
 
-        public void Init(StateMachine machine) 
+        public void Init(GameStateMachine machine) 
         {
-            MDebug.Log("Init", GetType().Name);
             this.machine = machine;
             OnInit();
         }
         public void Enter()
         {
-            MDebug.Log("Enter", GetType().Name);
             OnEnter();
         }
 
         public void Exit()
         {
-            MDebug.Log("Exit", GetType().Name);
             OnExit();
         }
 
@@ -154,13 +151,13 @@ namespace GameFramework.Core
         }
     }
 
-    public class StateMachine : IBlackboard
+    public class GameStateMachine : IBlackboard
     {
         private Dictionary<string, IStateItem> states;
         private IStateItem current;
         private DataModel blackboard;
 
-        public StateMachine() 
+        public GameStateMachine() 
         {
             states = new Dictionary<string, IStateItem>();
             blackboard = new DataModel();

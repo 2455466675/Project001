@@ -31,6 +31,9 @@ namespace GameFramework.UI
                     break;
                 case InputDefine.M_Keyboard:
                     break;
+                case InputDefine.Page:
+                    Game.GetModule<CameraManager>().Rotate(new UnityEngine.Vector2(context.X, context.Y));
+                    break;
             }
         }
 

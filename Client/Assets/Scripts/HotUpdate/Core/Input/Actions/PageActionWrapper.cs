@@ -1,18 +1,14 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace GameFramework.Core
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class MoveActionWrapper : InputActionWrapper
+    public class PageActionWrapper : InputActionWrapper
     {
         private bool isPress;
 
         public override void Tick()
         {
-            if (!isPress) 
+            if (!isPress)
             {
                 return;
             }
@@ -33,8 +29,8 @@ namespace GameFramework.Core
 
         private void Execute()
         {
-            Vector2 v = inputAction.ReadValue<Vector2>();
-            Notify(new InputContext() { Input = InputDefine.Move, X = v.x, Y = v.y });
+            float v = inputAction.ReadValue<float>();
+            Notify(new InputContext() { Input = InputDefine.Page, Y = v });
         }
     }
 }

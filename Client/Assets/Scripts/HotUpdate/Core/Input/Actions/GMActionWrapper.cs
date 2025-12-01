@@ -6,7 +6,7 @@ namespace GameFramework.Core
     {
         protected override void OnStarted(InputAction.CallbackContext obj)
         {           
-            Trigger(new InputContext() { Input = InputDefine.GM });
+            Notify(new InputContext() { Input = InputDefine.GM });
         }
     }
 }

@@ -87,6 +87,11 @@ namespace GameFramework.Core
             wrapper7.OnInput += OnInputHandler;
             wrappers.Add(wrapper7);
 
+            InputActionWrapper wrapper8 = new PageActionWrapper();
+            wrapper8.Initialize(m_GameInput.Player.Page);
+            wrapper8.OnInput += OnInputHandler;
+            wrappers.Add(wrapper8);
+
             m_Wrappers = wrappers.ToArray();
         }
 

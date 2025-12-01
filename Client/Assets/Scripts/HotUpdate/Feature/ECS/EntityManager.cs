@@ -2,6 +2,16 @@ using System.Collections.Generic;
 
 namespace GameFramework.Featrue 
 {
+    public interface IAddComponent
+    {
+        public T AddComponent<T>() where T : Component, new();
+    }
+
+    public interface IGetComponent
+    {
+        public T GetComponent<T>() where T : Component;
+    }
+
     [GameModule]
     public class EntityManager : IGameModule_SyncInit, IUpdate, IFixedUpdate, ILateUpdate
     {
@@ -111,6 +121,8 @@ namespace GameFramework.Featrue
             }
         }
 
+        #region
+
         public Entity CreateEntity() 
         {
             int eid = m_UidGenerator++;
@@ -119,7 +131,8 @@ namespace GameFramework.Featrue
             return entity;
         }
 
-        public Entity CreateEntity<T>() where T : Component, new()
+        public Entity CreateEntity<T>() 
+            where T : Component, new()
         {
             int eid = m_UidGenerator++;
             Entity entity = new Entity(eid, RegisterComponent, UnregisterComponent);
@@ -132,7 +145,9 @@ namespace GameFramework.Featrue
             return entity;
         }
 
-        public Entity CreateEntity<T0, T1>() where T0 : Component, new() where T1 : Component, new()
+        public Entity CreateEntity<T0, T1>() 
+            where T0 : Component, new() 
+            where T1 : Component, new()
         {
             int eid = m_UidGenerator++;
             Entity entity = new Entity(eid, RegisterComponent, UnregisterComponent);
@@ -148,7 +163,10 @@ namespace GameFramework.Featrue
             return entity;
         }
 
-        public Entity CreateEntity<T0, T1, T2>() where T0 : Component, new() where T1 : Component, new() where T2 : Component, new()
+        public Entity CreateEntity<T0, T1, T2>() 
+            where T0 : Component, new() 
+            where T1 : Component, new() 
+            where T2 : Component, new()
         {
             int eid = m_UidGenerator++;
             Entity entity = new Entity(eid, RegisterComponent, UnregisterComponent);
@@ -167,7 +185,11 @@ namespace GameFramework.Featrue
             return entity;
         }
 
-        public Entity CreateEntity<T0, T1, T2, T3>() where T0 : Component, new() where T1 : Component, new() where T2 : Component, new() where T3 : Component, new()
+        public Entity CreateEntity<T0, T1, T2, T3>() 
+            where T0 : Component, new() 
+            where T1 : Component, new() 
+            where T2 : Component, new() 
+            where T3 : Component, new()
         {
             int eid = m_UidGenerator++;
             Entity entity = new Entity(eid, RegisterComponent, UnregisterComponent);
@@ -189,7 +211,12 @@ namespace GameFramework.Featrue
             return entity;
         }
 
-        public Entity CreateEntity<T0, T1, T2, T3, T4>() where T0 : Component, new() where T1 : Component, new() where T2 : Component, new() where T3 : Component, new() where T4 : Component, new()
+        public Entity CreateEntity<T0, T1, T2, T3, T4>() 
+            where T0 : Component, new() 
+            where T1 : Component, new() 
+            where T2 : Component, new() 
+            where T3 : Component, new() 
+            where T4 : Component, new()
         {
             int eid = m_UidGenerator++;
             Entity entity = new Entity(eid, RegisterComponent, UnregisterComponent);
@@ -213,6 +240,80 @@ namespace GameFramework.Featrue
             m_Entites.Add(eid, entity);
             return entity;
         }
+
+        public Entity CreateEntity<T0, T1, T2, T3, T4, T5>()
+            where T0 : Component, new()
+            where T1 : Component, new()
+            where T2 : Component, new()
+            where T3 : Component, new()
+            where T4 : Component, new()
+            where T5 : Component, new()
+        {
+            int eid = m_UidGenerator++;
+            Entity entity = new Entity(eid, RegisterComponent, UnregisterComponent);
+
+            Component c0 = entity.Internal_AddComponent<T0>();
+            Component c1 = entity.Internal_AddComponent<T1>();
+            Component c2 = entity.Internal_AddComponent<T2>();
+            Component c3 = entity.Internal_AddComponent<T3>();
+            Component c4 = entity.Internal_AddComponent<T4>();
+            Component c5 = entity.Internal_AddComponent<T5>();
+            c0.Init(entity);
+            c1.Init(entity);
+            c2.Init(entity);
+            c3.Init(entity);
+            c4.Init(entity);
+            c5.Init(entity);
+            RegisterComponent(c0);
+            RegisterComponent(c1);
+            RegisterComponent(c2);
+            RegisterComponent(c3);
+            RegisterComponent(c4);
+            RegisterComponent(c5);
+
+            m_Entites.Add(eid, entity);
+            return entity;
+        }
+
+        public Entity CreateEntity<T0, T1, T2, T3, T4, T5, T6>()
+            where T0 : Component, new()
+            where T1 : Component, new()
+            where T2 : Component, new()
+            where T3 : Component, new()
+            where T4 : Component, new()
+            where T5 : Component, new()
+            where T6 : Component, new()
+        {
+            int eid = m_UidGenerator++;
+            Entity entity = new Entity(eid, RegisterComponent, UnregisterComponent);
+
+            Component c0 = entity.Internal_AddComponent<T0>();
+            Component c1 = entity.Internal_AddComponent<T1>();
+            Component c2 = entity.Internal_AddComponent<T2>();
+            Component c3 = entity.Internal_AddComponent<T3>();
+            Component c4 = entity.Internal_AddComponent<T4>();
+            Component c5 = entity.Internal_AddComponent<T5>();
+            Component c6 = entity.Internal_AddComponent<T6>();
+            c0.Init(entity);
+            c1.Init(entity);
+            c2.Init(entity);
+            c3.Init(entity);
+            c4.Init(entity);
+            c5.Init(entity);
+            c6.Init(entity);
+            RegisterComponent(c0);
+            RegisterComponent(c1);
+            RegisterComponent(c2);
+            RegisterComponent(c3);
+            RegisterComponent(c4);
+            RegisterComponent(c5);
+            RegisterComponent(c6);
+
+            m_Entites.Add(eid, entity);
+            return entity;
+        }
+
+        #endregion
 
         public Entity GetEntity(int eid)
         {

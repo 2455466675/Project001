@@ -10,12 +10,12 @@ namespace GameFramework.Core
     {
         protected override void OnStarted(InputAction.CallbackContext obj)
         {
-            Trigger(new InputContext() { Input = InputDefine.LeftShift, BoolValue = true });
+            Notify(new InputContext() { Input = InputDefine.LeftShift, BoolValue = true });
         }
 
         protected override void OnCanceled(InputAction.CallbackContext obj)
         {
-            Trigger(new InputContext() { Input = InputDefine.LeftShift, BoolValue = false });
+            Notify(new InputContext() { Input = InputDefine.LeftShift, BoolValue = false });
         }
     }
 }

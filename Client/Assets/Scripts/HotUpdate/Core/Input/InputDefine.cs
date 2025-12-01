@@ -10,5 +10,6 @@ namespace GameFramework.Core
         Move       = 5,
         Move2      = 6,  
         M_Keyboard = 7,
+        Page       = 8,
     }
 }

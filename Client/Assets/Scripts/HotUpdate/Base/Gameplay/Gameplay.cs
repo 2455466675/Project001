@@ -72,6 +72,7 @@ namespace GameFramework
             m_SerializeableSort.Sort((a, b) => a.priority - b.priority);
 
             InitSystem();
+            RegisterUpdate();
         }
 
         public void Exit()
@@ -110,6 +111,26 @@ namespace GameFramework
             }
 
             return default;
+        }
+
+        private void RegisterUpdate()
+        {
+            foreach (var item in m_SystemSort)
+            {
+                IGameplaySystem sys = item.system;
+                if (sys is IUpdate u)
+                {
+                    Game.AddIUpdate(u);
+                }
+                if (sys is IFixedUpdate fu)
+                {
+                    Game.AddIFixedUpdate(fu);
+                }
+                if (sys is ILateUpdate lu)
+                {
+                    Game.AddILateUpdate(lu);
+                }
+            }
         }
 
         private void InitSystem()

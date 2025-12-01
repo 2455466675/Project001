@@ -6,13 +6,14 @@ using GameFramework.Featrue;
 
 namespace GameFramework.Gameplay 
 {
+
     public struct EnterBattleEventArgs : IGameEventArgs
     {
         public bool isEnter;
     }
 
     [Gameplay]
-    public class BattleSystem : IGameplaySystem
+    public class BattleSystem : IGameplaySystem, IFixedUpdate
     {
         public BattleFlowManager FlowManager { get; private set; }
         public BattleGridManager GridManager { get; private set; }
@@ -20,6 +21,8 @@ namespace GameFramework.Gameplay
         private List<Entity> entities;
 
         public Entity Entity => entities[0];
+
+        private bool isBattling;
 
         public void OnInit()
         {
@@ -44,31 +47,17 @@ namespace GameFramework.Gameplay
             Game.Event.Publish(new SwitchInputModuleEventArgs() { moduleType = InputModuleType.Battle });
             Game.Event.Publish(new EnterBattleEventArgs() { isEnter = true });
 
-            Entity entity = Game.GetModule<EntityManager>().CreateEntity<ActorComponent, BattleTransformComponent, BattleMotorComponent, AttributeComponent>();
-            ActorComponent ac = entity.GetComponent<ActorComponent>();
-            ac.ActorType = ActorType.Battle;
-            ac.ActorId = 1001;
-            ac.RefreshActor();
-            ac.SetKinematic(true);
+            CreateBattleUnit();
 
-            var btf = entity.GetComponent<BattleTransformComponent>();
-            btf.SetCoordPosition(4, 5);
+            FlowManager.StartUp();
 
-            GridManager.DrawTiles(4, 5, 3, TileState.Blue);
-
-            var bmc = entity.GetComponent<BattleMotorComponent>();
-            bmc.StartUp();
-
-            var attrComponet = entity.GetComponent<AttributeComponent>();
-            attrComponet.SetAttributeValue(AttributeDefine.HP_1, 100);
-            attrComponet.SetAttributeValue(AttributeDefine.SP_1, 100);
-            attrComponet.SetAttributeValue(AttributeDefine.SP_RATE, 5000);
-
-            entities.Add(entity);
+            isBattling = true;
         }
 
         public void ExitBattle()
         {
+            isBattling = false;
+
             Game.GetModule<SceneManager>().ExitBattleScene();
             Game.Event.Publish(new EnterBattleEventArgs() { isEnter = false });
             Game.Event.Publish(new SwitchInputModuleEventArgs() { moduleType = InputModuleType.Character });
@@ -79,6 +68,47 @@ namespace GameFramework.Gameplay
                 Game.GetModule<EntityManager>().DestroyEntity(item.Eid);
             }
             entities.Clear();
+        }
+
+        public void FixedUpdate()
+        {
+            if (isBattling)
+            {
+                FlowManager.Tick();
+            }
+        }
+
+        private void CreateBattleUnit()
+        {
+            int count = 2;
+            for (int i = 0; i < count; i++)
+            {
+                Entity entity = Game.GetModule<EntityManager>().CreateEntity<BattleUnitComponent, ActorComponent, BattleTransformComponent, BattleMotorComponent, AttributeComponent, BattleStateComponent>();
+                var buc = entity.GetComponent<BattleUnitComponent>();
+                buc.BattleId = i + 1;
+
+                var ac = entity.GetComponent<ActorComponent>();
+                ac.ActorType = ActorType.Battle;
+                ac.ActorId = Utility.Math.Random(1001, 1003);
+                ac.RefreshActor();
+                ac.SetKinematic(true);
+                ac.SyncRotation();
+
+                var btf = entity.GetComponent<BattleTransformComponent>();
+                btf.SetCoordPosition(4 + i, 5 + i);
+
+                //GridManager.DrawTiles(4, 5, 3, TileState.Blue);
+
+                var attrComponet = entity.GetComponent<AttributeComponent>();
+                attrComponet.SetAttributeValue(AttributeDefine.HP_1, 100);
+                attrComponet.SetAttributeValue(AttributeDefine.SP_1, 100);
+                attrComponet.SetAttributeValue(AttributeDefine.SP_RATE, 10);
+                attrComponet.AddAttributeEffect((int)AttributeDefine.SP_RATE + 10000, 5000);
+
+                entities.Add(entity);
+
+                FlowManager.AddUnit(entity);
+            }
         }
     }
 }
