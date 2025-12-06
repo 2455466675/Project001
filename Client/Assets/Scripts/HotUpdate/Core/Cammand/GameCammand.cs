@@ -112,7 +112,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// 最上面的一个命令
+        /// 命令树最上面的一个命令
         /// </summary>
         /// <returns></returns>
         public GameCammand Top()
@@ -155,6 +155,19 @@ namespace GameFramework.Core
 
             cammand = default;
             return false;
+        }
+
+        public void Clear()
+        {
+            if (Count > 0)
+            {
+                foreach (var sub in subCammands)
+                {
+                    sub.Clear();
+                }
+            }
+
+            subCammands.Clear();
         }
 
         #endregion
@@ -233,5 +246,10 @@ namespace GameFramework.Core
             return false;
         }
         #endregion
+    }
+
+    public class CammandStack : GameCammand
+    {
+
     }
 }

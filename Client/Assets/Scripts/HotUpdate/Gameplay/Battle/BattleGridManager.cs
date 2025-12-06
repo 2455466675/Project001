@@ -42,8 +42,9 @@ namespace GameFramework.Gameplay
 
         public bool Passable()
         {
-            int battleId = GetIntValue(DataKey.BattleId);
-            return battleId > 0;
+            //int battleId = GetIntValue(DataKey.BattleId);
+            //return battleId <= 0;
+            return true;
         }
     }
 
@@ -96,9 +97,9 @@ namespace GameFramework.Gameplay
             for (int i = 0; i < count; i++)
             {
                 TileItem tile = new TileItem();
-                tile.SetValue("index", i);
-                tile.SetValue("posX", 0f);
-                tile.SetValue("posZ", 0f);
+                tile.SetValue(DataKey.Index, i);
+                tile.SetValue(DataKey.PosX, 0f);
+                tile.SetValue(DataKey.PosZ, 0f);
                 tile.PushState(TileState.Green);
                 tiles.Add(tile);
             }
@@ -193,12 +194,13 @@ namespace GameFramework.Gameplay
             TileItem tile = GetTile(index);
             if (tile == null)
             {
+                MDebug.Error("tile is null : ", coordX, coordY, index);
                 return Vector3.zero;
             }
             else
             {
-                float x = tile.GetFloatValue("posX");
-                float z = tile.GetFloatValue("posZ");
+                float x = tile.GetFloatValue(DataKey.PosX);
+                float z = tile.GetFloatValue(DataKey.PosZ);
                 return new Vector3(x, 0.05f, z);
             }
         }

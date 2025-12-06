@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GameFramework 
 {
     [Serializable]
-    public sealed class DataModel : IDataModel
+    public sealed class DataModel : IDataModel, IEnumerable<string>
     {
         private enum ValueType 
         {
@@ -258,7 +258,34 @@ namespace GameFramework
                     }
                 }
                 return isChanged;
-            }                         
+            } 
+            
+            public bool CopyTo(DataModelValue target)
+            {
+                if (target == null)
+                {
+                    return false;
+                }
+
+                if (m_ValueType == ValueType.String)
+                {
+                    return target.SetValue(m_StringValue);
+                }
+                if (m_ValueType == ValueType.Integer)
+                {
+                    return target.SetValue(m_IntValue);
+                }
+                if (m_ValueType == ValueType.Float)
+                {
+                    return target.SetValue(m_FloatValue);
+                }
+                if (m_ValueType == ValueType.Boolean)
+                {
+                    return target.SetValue(m_BoolValue);
+                }
+
+                return false;
+            }
         }
 
         [SerializeField]
@@ -269,6 +296,34 @@ namespace GameFramework
         public DataModel() 
         {
             m_Values = new Dictionary<string, DataModelValue>();
+        }
+
+        public void AddRange(DataModel source)
+        {
+            if (source == null)
+            {
+                return;
+            }
+
+            bool isChanged = false;
+            foreach (var item in source.m_Values)
+            {
+                string key = item.Key;
+                DataModelValue v = item.Value;
+
+                bool r = SetValue(key, v);
+                isChanged = isChanged || r;
+            }
+
+            if (isChanged)
+            {
+                OnValueChanged?.Invoke(string.Empty);
+            }
+        }
+
+        public void Clear()
+        {
+            m_Values.Clear();
         }
 
         public void SetValue(string key, int value) 
@@ -303,6 +358,12 @@ namespace GameFramework
             {
                 OnValueChanged?.Invoke(key);
             }
+        }
+
+        private bool SetValue(string key, DataModelValue value)
+        {
+            DataModelValue modelValue = GetValue(key);
+            return value.CopyTo(modelValue);
         }
 
         public int GetIntValue(string key) 
@@ -360,6 +421,16 @@ namespace GameFramework
 
             return sb.ToString();
         }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            return m_Values.Keys.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
     public class DataModelWrapper : IDataModel
@@ -410,5 +481,6 @@ namespace GameFramework
         {
             m_Data.SetValue(key, value);
         }
+
     }
 }

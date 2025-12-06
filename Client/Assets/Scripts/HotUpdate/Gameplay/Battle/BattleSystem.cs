@@ -18,9 +18,7 @@ namespace GameFramework.Gameplay
         public BattleFlowManager FlowManager { get; private set; }
         public BattleGridManager GridManager { get; private set; }
 
-        private List<Entity> entities;
-
-        public Entity Entity => entities[0];
+        private Dictionary<int, Entity> entities;
 
         private bool isBattling;
 
@@ -28,7 +26,7 @@ namespace GameFramework.Gameplay
         {
             FlowManager = new BattleFlowManager();
             GridManager = new BattleGridManager();
-            entities = new List<Entity>();
+            entities = new Dictionary<int, Entity>();
         }
 
         public void OnExit()
@@ -65,9 +63,28 @@ namespace GameFramework.Gameplay
 
             foreach (var item in entities)
             {
-                Game.GetModule<EntityManager>().DestroyEntity(item.Eid);
+                Game.GetModule<EntityManager>().DestroyEntity(item.Value.Eid);
             }
             entities.Clear();
+        }
+
+        public Entity GetBattleUnit(int battleId)
+        {
+            if (entities.ContainsKey(battleId))
+            {
+                return entities[battleId];
+            }
+            return null;
+        }
+
+        public void SyncBattleUnitRotation()
+        {
+            foreach (var item in entities)
+            {
+                Entity entity = item.Value;
+                var ac = entity.GetComponent<ActorComponent>();
+                ac.SyncRotation();
+            }
         }
 
         public void FixedUpdate()
@@ -83,9 +100,10 @@ namespace GameFramework.Gameplay
             int count = 2;
             for (int i = 0; i < count; i++)
             {
+                int battleId = i + 1;
                 Entity entity = Game.GetModule<EntityManager>().CreateEntity<BattleUnitComponent, ActorComponent, BattleTransformComponent, BattleMotorComponent, AttributeComponent, BattleStateComponent>();
                 var buc = entity.GetComponent<BattleUnitComponent>();
-                buc.BattleId = i + 1;
+                buc.BattleId = battleId;
 
                 var ac = entity.GetComponent<ActorComponent>();
                 ac.ActorType = ActorType.Battle;
@@ -105,7 +123,7 @@ namespace GameFramework.Gameplay
                 attrComponet.SetAttributeValue(AttributeDefine.SP_RATE, 10);
                 attrComponet.AddAttributeEffect((int)AttributeDefine.SP_RATE + 10000, 5000);
 
-                entities.Add(entity);
+                entities.Add(battleId, entity);
 
                 FlowManager.AddUnit(entity);
             }

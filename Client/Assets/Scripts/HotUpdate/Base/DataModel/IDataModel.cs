@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace GameFramework 
 {
     public interface IWriteOnlyDataModel

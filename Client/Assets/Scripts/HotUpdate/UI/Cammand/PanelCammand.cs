@@ -42,6 +42,12 @@ namespace GameFramework.UI
             var panel = GetPanel();
             return panel.CheckLocked();
         }
+
+        protected override void OnInputAction(InputContext context)
+        {
+            //TODO 界面输入事件
+        }
+
         private PanelComponent GetPanel()
         {
             var entity = Game.GetModule<UIManager>().GetPanelEntity(Define);

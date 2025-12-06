@@ -16,14 +16,17 @@ namespace Navigation
         private FluidNavigationList list;
 
         [SerializeField]
+        [HelpBox("连续几次触发才显示滑动条")]
         private int tickCount;  //连续几次触发才显示滑动条
         private int tickCounter;
 
         [SerializeField]
+        [HelpBox("连续检测时间")]
         private float tickInterval; //连续检测时间
         private float tickIntervaler;
 
         [SerializeField]
+        [HelpBox("滑动条显示持续时间")]
         private float showDuration; //滑动条显示持续时间
         private float showDurationer;
 
@@ -42,10 +45,10 @@ namespace Navigation
         {
             if (list != null) 
             {
-                //list.OnListChangedEvent += List_OnListChangedEvent;
-                //list.OnListInFocusEvent += List_OnListInFocusEvent;
-                //list.OnListOutFocusEvent += List_OnListOutFocusEvent;
-                //list.OnListExitEvent += List_OnListExitEvent;
+                list.OnMoveItem += List_OnListChangedEvent;
+                list.OnListInFocus += List_OnListInFocusEvent;
+                list.OnListOutFocus+= List_OnListOutFocusEvent;
+                list.OnListExit += List_OnListExitEvent;
             }
 
             StartCoroutine(HideFade(0f, 0f));
@@ -93,38 +96,38 @@ namespace Navigation
             }
         }
 
-        //private void List_OnListChangedEvent(ListChangedEventArgs obj)
-        //{
-        //    if (!isInFocus) 
-        //    {
-        //        return;
-        //    }
+        private void List_OnListChangedEvent(float h, float v, NavigationItem item)
+        {
+            if (!isInFocus)
+            {
+                return;
+            }
 
-        //    int minIndex = obj.MinIndex;
-        //    int itemCount = obj.ItemCount;
-        //    int totalCount = obj.TotalCount;
+            int minIndex = list.MinIndex;
+            int itemCount = list.ItemCount;
+            int totalCount = list.TotalCount;
 
-        //    if (totalCount <= 0 || totalCount <= itemCount)
-        //    {
-        //        Hide();
-        //        this.value = 0;
-        //        tickCounter = 0;
-        //        tickIntervaler = 0f;
-        //    }
-        //    else
-        //    {
-        //        float size = (1f * itemCount) / totalCount;
-        //        float value = (1f * minIndex) / (totalCount - itemCount);
-        //        if (this.value != value)
-        //        {
-        //            this.size = size;
-        //            this.value = value;
-        //            tickCounter++;
-        //            tickIntervaler = tickInterval;
-        //            showDurationer = showDuration;
-        //        }
-        //    }
-        //}
+            if (totalCount <= 0 || totalCount <= itemCount)
+            {
+                Hide();
+                this.value = 0;
+                tickCounter = 0;
+                tickIntervaler = 0f;
+            }
+            else
+            {
+                float size = (1f * itemCount) / totalCount;
+                float value = (1f * minIndex) / (totalCount - itemCount);
+                if (this.value != value)
+                {
+                    this.size = size;
+                    this.value = value;
+                    tickCounter++;
+                    tickIntervaler = tickInterval;
+                    showDurationer = showDuration;
+                }
+            }
+        }
 
         private void List_OnListOutFocusEvent()
         {

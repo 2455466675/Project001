@@ -6,5 +6,8 @@ namespace GameFramework
         TestList2,
 
         LoginList,
+
+        BattleActionList,
+        BattleActionList2,
     }
 }

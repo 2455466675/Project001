@@ -212,6 +212,8 @@ namespace GameFramework.Gameplay
         {
             MDebug.Log("ActionState OnEnter");
 
+            int battleId = GetBlackboardIntValue(DataKey.BattleId);
+            Game.GetSystem<BattleSystem>().FlowManager.DoAction(battleId);
         }
     }
 

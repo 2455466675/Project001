@@ -7,6 +7,13 @@ using UnityEditor;
 public class TemplateMenuScript
 {
 
+    [MenuItem("GameObject/MyUI/Panel")]
+    public static void CreatePanel()
+    {
+        string path = "Assets/Editor/UITemplate/Panel.prefab";
+        Instantiate(path);
+    }
+
     [MenuItem("GameObject/MyUI/List/FluidNavigationList")]
     public static void CreateLoopNavigationList()
     {

@@ -8,5 +8,8 @@ namespace GameFramework
         LoginPanel = 1001,
         LoadingPanel = 1002,
         BattleLoadingPanel = 1007,
+
+        BattleActionPanel = 1008,
+        BattleActionPanel2 = 1009,
     }
 }

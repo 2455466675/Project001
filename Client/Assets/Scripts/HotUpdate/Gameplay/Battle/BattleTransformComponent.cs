@@ -2,12 +2,13 @@ using UnityEngine;
 
 namespace GameFramework.Gameplay
 {
-    public class BattleTransformComponent : Featrue.Component
+    public class BattleTransformComponent : TransformComponent
     {
         private int coordX;
         private int coordY;
+
         public int CoordX => coordX;
-        public int CoordY => coordY;
+        public int CoordY => coordY;     
 
         protected override void OnInit()
         {

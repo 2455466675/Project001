@@ -8,4 +8,13 @@ namespace GameFramework.UI
             Game.GetModule<UIManager>().EnterNavigate(arg.navigationDefine);
         }
     }
+
+    [GameEvent]
+    public class NavigateBackEvent_Handler : GameEventHandlerBase<NavigateBackEventArgs>
+    {
+        public override void Invoke(NavigateBackEventArgs arg)
+        {
+            Game.GetModule<InputController>().PopCammand();
+        }
+    }
 }

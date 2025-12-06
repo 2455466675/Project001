@@ -4,4 +4,9 @@ namespace GameFramework
     {
         public NavigationDefine navigationDefine;
     }
+
+    public struct NavigateBackEventArgs : IGameEventArgs
+    {
+
+    }
 }

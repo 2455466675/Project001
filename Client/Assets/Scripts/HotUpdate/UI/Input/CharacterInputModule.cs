@@ -4,23 +4,14 @@ using GameFramework.Gameplay;
 
 namespace GameFramework.UI
 {
-    public class CharacterInputModule : InputModule
+    public class CharacterCammand : InputCammand 
     {
-        public override InputModuleType ModuleType => InputModuleType.Character;
-
-        public override void InputAction(InputContext context)
+        protected override bool CheckLocked()
         {
-            if (navigateCammand.Count > 0)
-            {
-                navigateCammand.InputAction(context);
-            }
-            else
-            {
-                OnInputAction(context);
-            }
+            return true;
         }
 
-        private void OnInputAction(InputContext context)
+        protected override void OnInputAction(InputContext context)
         {
             Entity leader = Game.GetSystem<PartySystem>().GetLeader();
             if (leader == null)
@@ -43,8 +34,33 @@ namespace GameFramework.UI
                 case InputDefine.Esc:
                     break;
             }
+        }
+    }
 
+    public class CharacterInputModule : InputModule
+    {
+        public override InputModuleType ModuleType => InputModuleType.Character;
 
+        public CharacterInputModule()
+        {
+            Push(new CharacterCammand());
+        }
+
+        protected override void OnInputAction(InputContext context)
+        {
+            switch (context.Input)
+            {
+                case InputDefine.Move:
+                case InputDefine.Move2:
+                case InputDefine.LeftShift:
+                    break;
+                case InputDefine.Cancel:
+                    Pop();
+                    break;
+                case InputDefine.Esc:
+                    PopAll();
+                    break;
+            }
         }
     }
 }

@@ -8,9 +8,7 @@ namespace GameFramework.Gameplay
     {
         public override void Invoke(CameraRotateArgs arg)
         {
-            Entity entity = Game.GetSystem<BattleSystem>().Entity;
-            var ac = entity.GetComponent<ActorComponent>();
-            ac.SyncRotation();
+            Game.GetSystem<BattleSystem>().SyncBattleUnitRotation();
         }
     }
 }

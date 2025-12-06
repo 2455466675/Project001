@@ -263,6 +263,11 @@ namespace Navigation
         private int itemCount;
         private Dictionary<int, NavigationItem> items;
 
+        internal int ItemCount => itemCount;
+        internal int TotalCount => dataCount;
+        internal int MinIndex => minIndex;
+        internal int MaxIndex => maxIndex;
+
         public override void Init()
         {
             if (isInit)

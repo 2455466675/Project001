@@ -21,6 +21,7 @@ namespace GameFramework.UI
 
         public void Switch(InputModuleType moduleType) 
         {
+            PopAllCammand();
             current = inputModules.Find(a => a.ModuleType == moduleType);
         }
 
@@ -29,19 +30,37 @@ namespace GameFramework.UI
             current?.InputAction(context);
         }
 
-        public void EnterNavigate(NavigationDefine navigationDefine, PanelDefine panelDefine, int[] defaultIndexs) 
+        public void PopAllCammand() 
         {
-            current?.EnterNavigate(navigationDefine, panelDefine, defaultIndexs);
+            current?.PopAll();
         }
 
-        public void ExitNavigate() 
+        public void PushCammand(InputCammand cammand)
         {
-            current?.ExitNavigate();
+            current?.Push(cammand);
         }
 
-        public void PushCammand(GameCammand cammand)
+        public void PopCammand()
         {
-            current?.PushCammand(cammand);
+            current?.Pop();
+        }
+
+        public bool TryPeek<T>(out T cmd) where T : InputCammand
+        {
+            if (current == null)
+            {
+                cmd = default;
+                return false;
+            }
+
+            if (current.TryPeek(out cmd))
+            {
+                return true;
+            }
+            else
+            {
+                return false;                
+            }
         }
     }
 }

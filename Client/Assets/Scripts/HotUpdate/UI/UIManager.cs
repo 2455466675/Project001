@@ -98,22 +98,40 @@ namespace GameFramework.UI
 
         public void EnterNavigate(NavigationDefine id, int[] defaultIndexs = null)
         {
-            MDebug.Log("Navigate");
             if (!m_NavigationMap.ContainsKey(id)) 
             {
-                MDebug.Log("Navigate 2");
+                MDebug.Error("未定义的导航列表 : ", id);
+                return;
+            }
+
+            PanelDefine panel = m_NavigationMap[id];
+
+            InputController inputController = Game.GetModule<InputController>();
+
+            PanelCammand panelCammand;
+            if(inputController.TryPeek(out PanelCammand cammand) && cammand.Define == panel)
+            {
+                panelCammand = cammand;
+            }
+            else
+            {
+                panelCammand = new PanelCammand(panel);
+                inputController.PushCammand(panelCammand);
+            }
+
+            if (panelCammand.TryPeek(out NavigationListCammand subCammand) && subCammand.Define == id)
+            {
                 return;
             }
 
             defaultIndexs ??= new int[] {0};
-
-            PanelDefine panel = m_NavigationMap[id];
-            Game.GetModule<InputController>().EnterNavigate(id, panel, defaultIndexs);
+            NavigationListCammand listCammand = new NavigationListCammand(id, defaultIndexs);
+            panelCammand.Push(listCammand);
         }
 
         public void ExitNavigate() 
         {
-            Game.GetModule<InputController>().ExitNavigate();
+            Game.GetModule<InputController>().PopAllCammand();
         }
 
         public Entity GetPanelEntity(PanelDefine id)

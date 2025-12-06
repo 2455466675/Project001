@@ -73,7 +73,7 @@ namespace GameFramework.Gameplay
 
         private Entity CreateCharacter()
         {
-            Entity entity = Game.GetModule<EntityManager>().CreateEntity<ActorComponent, MotorComponent>();
+            Entity entity = Game.GetModule<EntityManager>().CreateEntity<ActorComponent, TransformComponent, MotorComponent>();
             return entity;
         }
     }

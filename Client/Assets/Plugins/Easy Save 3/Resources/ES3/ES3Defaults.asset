@@ -42,10 +42,10 @@ MonoBehaviour:
     - UniTask.Linq
     - Eflatun.SceneReference
     - PsdPlugin
+    - Navigation
     - Core
     - LITJson
     - GameConfig
-    - Navigation
     - Utility
     - UniTask.TextMeshPro
     - HotUpdate_Gameplay

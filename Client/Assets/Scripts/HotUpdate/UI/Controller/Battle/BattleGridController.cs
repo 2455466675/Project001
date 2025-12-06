@@ -1,7 +1,4 @@
-using Cysharp.Threading.Tasks;
-using GameFramework.Core;
 using GameFramework.Gameplay;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameFramework.UI
@@ -17,8 +14,8 @@ namespace GameFramework.UI
         protected override void BindItemView(NavigationItemView itemView, DataModel dataModel)
         {
             Vector3 pos = itemView.transform.position;
-            dataModel.SetValue("posX", pos.x);
-            dataModel.SetValue("posZ", pos.z);
+            dataModel.SetValue(DataKey.PosX, pos.x);
+            dataModel.SetValue(DataKey.PosZ, pos.z);
         }
 
         protected override void RefreshItemView(NavigationItemView itemView, IReadOnlyDataModel dataModel)
@@ -26,38 +23,31 @@ namespace GameFramework.UI
             var widget = itemView.GetWidget<TileStateWidget>();
             if (widget != null)
             {
-                int state = dataModel.GetIntValue("state");
+                int state = dataModel.GetIntValue(DataKey.State);
                 widget.SetState(state);
             }
         }
 
         protected override void SelectItemView(NavigationItemView itemView, DataModel dataModel)
         {
-            int index = dataModel.GetIntValue("index");
+            int index = dataModel.GetIntValue(DataKey.Index);
             Game.GetSystem<BattleSystem>().GridManager.SelectTile(index);
         }
 
         protected override void DeselectItemView(NavigationItemView itemView, DataModel dataModel)
         {
-            int index = dataModel.GetIntValue("index");
+            int index = dataModel.GetIntValue(DataKey.Index);
             Game.GetSystem<BattleSystem>().GridManager.DeselectTile(index);
         }
 
         protected override void SubmitItemView(NavigationItemView itemView, DataModel dataModel)
         {
-            int index = dataModel.GetIntValue("index");
+            int index = dataModel.GetIntValue(DataKey.Index);
 
-            var bs = Game.GetSystem<BattleSystem>();
-            var e = bs.Entity;
-            var bfc = e.GetComponent<BattleTransformComponent>();
-            var bmc = e.GetComponent<BattleMotorComponent>();
+            DataModel param = new DataModel();
+            param.SetValue(DataKey.Index, index);
 
-            var coord = bs.GridManager.Index2Coord(index);
-            var path = bs.GridManager.AStarPath(bfc.CoordX, bfc.CoordY, coord.x, coord.y);
-
-            bmc.MoveAsync(path).Forget();
-
-            Game.GetModule<CameraManager>().LookAt(bs.GridManager.Coord2Pos(coord.x, coord.y));
+            Game.GetSystem<BattleSystem>().FlowManager.MoveNext(new MoveToTargetPosition(), param);
         }
     }
 }

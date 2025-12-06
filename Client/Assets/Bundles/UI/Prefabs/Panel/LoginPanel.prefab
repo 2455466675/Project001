@@ -1803,13 +1803,15 @@ MonoBehaviour:
   intervalTime: 0.15
   rowCount: 0
   columnCount: 0
-  childAlignment: 0
+  gridAlignment: 0
+  verticalAlignment: 0
+  horizontalAlignment: 0
+  isLoop: 0
   items:
   - {fileID: 3062646830010570784}
   - {fileID: 5897350823551100439}
   - {fileID: 2958603961328516610}
   - {fileID: 6298874538438018289}
-  isLoop: 0
 --- !u!114 &1838098392913995590
 MonoBehaviour:
   m_ObjectHideFlags: 0

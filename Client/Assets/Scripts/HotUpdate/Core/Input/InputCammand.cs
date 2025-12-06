@@ -1,6 +1,6 @@
 namespace GameFramework.Core 
 {
-    public abstract class InputCammand : GameCammand, IInputable
+    public class InputCammand : GameCammand, IInputable
     {
         /// <summary>
         /// ÊäÈë²Ù×÷
@@ -8,6 +8,8 @@ namespace GameFramework.Core
         /// <param name="context"></param>
         public void InputAction(InputContext context)
         {
+            OnInputAction(context);
+
             if (TryPeek(out GameCammand cammand))
             {
                 if (cammand is InputCammand icammand) 
@@ -15,7 +17,6 @@ namespace GameFramework.Core
                     icammand.InputAction(context);
                 }
             }
-            OnInputAction(context);
         }
 
         protected virtual void OnInputAction(InputContext context) 

@@ -363,43 +363,63 @@ namespace Navigation
         private int MovePointHorizontal(int beginIndex, bool minus, int c)
         {
             int index;
-
             if (minus)
             {
                 index = beginIndex - c;
 
                 if (IsHorizontal)
                 {
-                    if (index < minIndex && isLoop)
+                    if (index < minIndex)
                     {
-                        index = maxIndex;
+                        if (isLoop)
+                        {
+                            index = maxIndex;
+                        }
                     }
                 }
 
                 if (IsGrid)
                 {
-                    if ((index + c) % columnCount == 0 && isLoop)
+                    if ((index + c) % columnCount == 0)
                     {
-                        index = beginIndex + (columnCount - 1) * c;
+                        if (isLoop)
+                        {
+                            index = beginIndex + (columnCount - 1) * c;
+                        }
+                        else
+                        {
+                            index = beginIndex;
+                        }
+
                     }
                 }
             }
             else
             {
                 index = beginIndex + c;
-                if (IsVertical)
+                if (IsHorizontal)
                 {
-                    if (index > maxIndex && isLoop)
+                    if (index > maxIndex)
                     {
-                        index = minIndex;
+                        if (isLoop)
+                        {
+                            index = minIndex;
+                        }
                     }
                 }
 
                 if (IsGrid)
                 {
-                    if (index % columnCount == 0 && isLoop)
+                    if (index % columnCount == 0)
                     {
-                        index = beginIndex - (columnCount - 1) * c;
+                        if (isLoop)
+                        {
+                            index = beginIndex - (columnCount - 1) * c;
+                        }
+                        else
+                        {
+                            index = beginIndex;
+                        }
                     }
                 }
             }

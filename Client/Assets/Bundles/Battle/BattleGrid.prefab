@@ -54,7 +54,7 @@ MonoBehaviour:
   gridAlignment: 2
   verticalAlignment: 0
   horizontalAlignment: 0
-  isLoop: 1
+  isLoop: 0
   items:
   - {fileID: 4742730176303812089}
   - {fileID: 2844212703117185573}

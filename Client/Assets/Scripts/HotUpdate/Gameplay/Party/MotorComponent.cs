@@ -4,21 +4,12 @@ using UnityEngine;
 
 namespace GameFramework.Gameplay
 {
-    public class CharacterAnimState : StateItemBase
-    {
-        protected ActorComponent Actor { get; private set; }
-
-        public CharacterAnimState(Featrue.Component component)
-        {
-            Actor = component.GetComponent<ActorComponent>();
-        }
-    }
     public class Idle2WalkTirgger : StateTriggerBase<WalkState>
     {
         public override bool Check(IBlackboard blackboard)
         {
-            float x = blackboard.GetBlackboardFloatValue("DirX");
-            float y = blackboard.GetBlackboardFloatValue("DirY");
+            float x = blackboard.GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = blackboard.GetBlackboardFloatValue(DataKey.VelocityY);
             return x != 0 || y != 0;
         }
     }
@@ -27,13 +18,13 @@ namespace GameFramework.Gameplay
     {
         public override bool Check(IBlackboard blackboard)
         {
-            float x = blackboard.GetBlackboardFloatValue("DirX");
-            float y = blackboard.GetBlackboardFloatValue("DirY");
+            float x = blackboard.GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = blackboard.GetBlackboardFloatValue(DataKey.VelocityY);
             return x != 0 || y != 0;
         }
     }
 
-    public class IdleState : CharacterAnimState
+    public class IdleState : ComponentStateBase
     {
         public IdleState(Featrue.Component component) : base(component)
         {
@@ -41,10 +32,7 @@ namespace GameFramework.Gameplay
 
         protected override void OnEnter()
         {
-            float x = GetBlackboardFloatValue("LastDirX");
-            float y = GetBlackboardFloatValue("LastDirY");
-            Actor.SetFloat("DirX", x);
-            Actor.SetFloat("DirY", y);
+
         }
     }
 
@@ -52,8 +40,8 @@ namespace GameFramework.Gameplay
     {
         public override bool Check(IBlackboard blackboard)
         {
-            float x = blackboard.GetBlackboardFloatValue("DirX");
-            float y = blackboard.GetBlackboardFloatValue("DirY");
+            float x = blackboard.GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = blackboard.GetBlackboardFloatValue(DataKey.VelocityY);
             return x == 0f && y == 0f;
         }
     }
@@ -62,14 +50,14 @@ namespace GameFramework.Gameplay
     {
         public override bool Check(IBlackboard blackboard)
         {
-            float x = blackboard.GetBlackboardFloatValue("DirX");
-            float y = blackboard.GetBlackboardFloatValue("DirY");
+            float x = blackboard.GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = blackboard.GetBlackboardFloatValue(DataKey.VelocityY);
             bool leftShift = blackboard.GetBlackboardBoolValue("LeftShift");
             return (x != 0f || y != 0f) && leftShift;
         }
     }
 
-    public class WalkState : CharacterAnimState
+    public class WalkState : ComponentStateBase
     {
         public WalkState(Featrue.Component component) : base(component)
         {
@@ -77,23 +65,22 @@ namespace GameFramework.Gameplay
 
         protected override void OnEnter()
         {
-            Actor.SetBool("IsWalk", true);
+            ActorComponent ac = GetComponent<ActorComponent>();
+            ac.SetBool("IsWalk", true);
         }
 
         protected override void OnExit()
         {
-            float x = GetBlackboardFloatValue("DirX");
-            float y = GetBlackboardFloatValue("DirY");
+            float x = GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = GetBlackboardFloatValue(DataKey.VelocityY);
             bool leftShift = GetBlackboardBoolValue("LeftShift");
-            Actor.SetBool("IsWalk", (x != 0 || y != 0) && leftShift);
+            ActorComponent ac = GetComponent<ActorComponent>();
+            ac.SetBool("IsWalk", (x != 0 || y != 0) && leftShift);
         }
 
         protected override void OnTick()
         {
-            float x = GetBlackboardFloatValue("DirX");
-            float y = GetBlackboardFloatValue("DirY");
-            Actor.SetFloat("DirX", x);
-            Actor.SetFloat("DirY", y);
+
         }
     }
 
@@ -101,8 +88,8 @@ namespace GameFramework.Gameplay
     {
         public override bool Check(IBlackboard blackboard)
         {
-            float x = blackboard.GetBlackboardFloatValue("DirX");
-            float y = blackboard.GetBlackboardFloatValue("DirY");
+            float x = blackboard.GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = blackboard.GetBlackboardFloatValue(DataKey.VelocityY);
             bool leftShift = blackboard.GetBlackboardBoolValue("LeftShift");
             return (x == 0f && y == 0f) || !leftShift;
         }
@@ -112,13 +99,13 @@ namespace GameFramework.Gameplay
     {
         public override bool Check(IBlackboard blackboard)
         {
-            float x = blackboard.GetBlackboardFloatValue("DirX");
-            float y = blackboard.GetBlackboardFloatValue("DirY");
+            float x = blackboard.GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = blackboard.GetBlackboardFloatValue(DataKey.VelocityY);
             return x == 0f && y == 0f;
         }
     }
 
-    public class RunState : CharacterAnimState
+    public class RunState : ComponentStateBase
     {
         public RunState(Featrue.Component component) : base(component)
         {
@@ -126,20 +113,19 @@ namespace GameFramework.Gameplay
 
         protected override void OnEnter()
         {
-            Actor.SetBool("IsRun", true);
+            ActorComponent ac = GetComponent<ActorComponent>();
+            ac.SetBool("IsRun", true);
         }
 
         protected override void OnExit()
         {
-            Actor.SetBool("IsRun", false);
+            ActorComponent ac = GetComponent<ActorComponent>();
+            ac.SetBool("IsRun", false);
         }
 
         protected override void OnTick()
         {
-            float x = GetBlackboardFloatValue("DirX");
-            float y = GetBlackboardFloatValue("DirY");
-            Actor.SetFloat("DirX", x);
-            Actor.SetFloat("DirY", y);
+
         }
     }
 
@@ -260,7 +246,7 @@ namespace GameFramework.Gameplay
             switch (input)
             {
                 case InputDefine.Move:
-                    SetXY(context.X, context.Y);
+                    SetVelocity(context.X, context.Y);
                     break;
                 case InputDefine.LeftShift:                    
                     SetLeftShift(context.BoolValue);
@@ -273,12 +259,16 @@ namespace GameFramework.Gameplay
             m_Target = target;
         }
 
-        private void SetXY(float x, float y)
+        private void SetVelocity(float x, float y)
         {
-            m_Machine.SetBlackboardValue("LastDirX", m_Machine.GetBlackboardFloatValue("DirX"));
-            m_Machine.SetBlackboardValue("LastDirY", m_Machine.GetBlackboardFloatValue("DirY"));
-            m_Machine.SetBlackboardValue("DirX", x);
-            m_Machine.SetBlackboardValue("DirY", y);
+            if (x != 0f || y != 0f)
+            {
+                var tc = GetComponent<TransformComponent>();
+                tc.SetDirection(x, y);
+            }
+
+            m_Machine.SetBlackboardValue(DataKey.VelocityX, x);
+            m_Machine.SetBlackboardValue(DataKey.VelocityY, y);
         }
 
         private void SetLeftShift(bool v)
@@ -384,8 +374,8 @@ namespace GameFramework.Gameplay
                 m_Step.IsValid = false;
             }
 
-            float x = m_Machine.GetBlackboardFloatValue("DirX");
-            float y = m_Machine.GetBlackboardFloatValue("DirY");
+            float x = m_Machine.GetBlackboardFloatValue(DataKey.VelocityX);
+            float y = m_Machine.GetBlackboardFloatValue(DataKey.VelocityY);
             
             if (x != 0f || y != 0f)
             {
@@ -427,7 +417,7 @@ namespace GameFramework.Gameplay
                 float dirY = trace.dirY;                
                 var target = new Vector3(trace.x, trace.y, trace.z);
                 ac.MovePosition(target);
-                SetXY(dirX, dirY);
+                SetVelocity(dirX, dirY);
                 SetLeftShift(m_Target.m_Step.LeftShift);
 
                 PushTrace(traces);
@@ -447,7 +437,7 @@ namespace GameFramework.Gameplay
                     return;
                 }
        
-                SetXY(0f, 0f);
+                SetVelocity(0f, 0f);
                 SetLeftShift(false);
                 m_State = MotorState.Idle;
             }

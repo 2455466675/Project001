@@ -37,18 +37,20 @@ namespace GameFramework.Gameplay
         public void StartUp()
         {
             GetComponent<ActorComponent>().SetAnimatorController(ActorAnimator.Battle);
-            SetXY(-1f, 0f);
-            SetXY(0f, 0f);
+            GetComponent<TransformComponent>().SetDirection(-1f, 0f);
             m_Machine.Run<IdleState>();
             isStartUp = true;
         }
 
-        private void SetXY(float x, float y)
+        private void SetVelocity(float x, float y)
         {
-            m_Machine.SetBlackboardValue("LastDirX", m_Machine.GetBlackboardFloatValue("DirX"));
-            m_Machine.SetBlackboardValue("LastDirY", m_Machine.GetBlackboardFloatValue("DirY"));
-            m_Machine.SetBlackboardValue("DirX", x);
-            m_Machine.SetBlackboardValue("DirY", y);
+            if (x != 0f || y != 0f)
+            {
+                var tc = GetComponent<TransformComponent>();
+                tc.SetDirection(x, y);
+            }
+            m_Machine.SetBlackboardValue(DataKey.VelocityX, x);
+            m_Machine.SetBlackboardValue(DataKey.VelocityY, y);
         }
 
         public async UniTask MoveAsync(List<Vector2Int> path)
@@ -60,7 +62,7 @@ namespace GameFramework.Gameplay
 
             ActorComponent actor = GetComponent<ActorComponent>();
 
-            float dirX = m_Machine.GetBlackboardFloatValue("LastDirX");
+            float dirX = GetComponent<TransformComponent>().DirX;
 
             for (int i = 0; i < path.Count; i++)
             {
@@ -99,7 +101,7 @@ namespace GameFramework.Gameplay
                         }
                     }
 
-                    SetXY(dirX, 0f);
+                    SetVelocity(dirX, 0f);
 
                     int d = Utility.Math.Abs(point.x - beforPoint.x) + Utility.Math.Abs(point.y - beforPoint.y);
 
@@ -117,7 +119,7 @@ namespace GameFramework.Gameplay
                 }
             }
 
-            SetXY(0f, 0f);
+            SetVelocity(0f, 0f);
 
             Vector2Int endPoint = path[^1];
             GetComponent<BattleTransformComponent>().SetCoordPosition(endPoint.x, endPoint.y);
