@@ -35,7 +35,7 @@ namespace GameFramework.UI
             current?.PopAll();
         }
 
-        public void PushCammand(InputCammand cammand)
+        public void PushCammand(InputCommand cammand)
         {
             current?.Push(cammand);
         }
@@ -45,7 +45,7 @@ namespace GameFramework.UI
             current?.Pop();
         }
 
-        public bool TryPeek<T>(out T cmd) where T : InputCammand
+        public bool TryPeek<T>(out T cmd) where T : InputCommand
         {
             if (current == null)
             {

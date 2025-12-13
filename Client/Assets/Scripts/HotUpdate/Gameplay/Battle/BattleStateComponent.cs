@@ -110,7 +110,10 @@ namespace GameFramework.Gameplay
     {
         public override bool Check(IBlackboard blackboard)
         {
-            return false;
+            int actioning = Game.GetSystem<BattleSystem>().FlowManager.Actioning;
+            int sp1 = blackboard.GetBlackboardIntValue(DataKey.SP_1);
+            int sp2 = blackboard.GetBlackboardIntValue(DataKey.SP_2);
+            return sp2 <= 0;
         }
     }
 
@@ -214,6 +217,28 @@ namespace GameFramework.Gameplay
 
             int battleId = GetBlackboardIntValue(DataKey.BattleId);
             Game.GetSystem<BattleSystem>().FlowManager.DoAction(battleId);
+        }
+
+        protected override void OnTick()
+        {
+            var ac = GetComponent<AttributeComponent>();
+
+            int sp1 = ac.GetAttributeValue(AttributeDefine.SP_1);
+            int sp2 = ac.GetAttributeValue(AttributeDefine.SP_2);
+
+            SetBlackboardValue(DataKey.SP_1, sp1);
+            SetBlackboardValue(DataKey.SP_2, sp2);
+        }
+
+        protected override void OnExit()
+        {
+            var ac = GetComponent<AttributeComponent>();
+
+            int sp1 = ac.GetAttributeValue(AttributeDefine.SP_1);
+            int sp2 = ac.GetAttributeValue(AttributeDefine.SP_2);
+
+            SetBlackboardValue(DataKey.SP_1, sp1);
+            SetBlackboardValue(DataKey.SP_2, sp2);
         }
     }
 

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace GameFramework.Gameplay
@@ -12,9 +11,17 @@ namespace GameFramework.Gameplay
         public const int Blue = 3;
     }
 
+    public class TileMask
+    {
+        public int layer;
+        public int state;
+    }
+
     public class TileItem : DataModelWrapper
     {
         private Stack<int> states = new Stack<int>();
+
+        private Stack<TileMask> masks = new Stack<TileMask>();
 
         public void PushState(int state)
         {
@@ -22,69 +29,84 @@ namespace GameFramework.Gameplay
             UpdateState();
         }
 
-        public void PopState()
+        public void PushState(int layer, int state)
         {
-            if (states.Count <= 1)
+            TileMask mask = null;
+            if (masks.TryPeek(out TileMask m))
             {
-                return;
+                if (layer < m.layer)
+                {
+                    return;
+                }
+
+                if (layer == m.layer)
+                {
+                    mask = m;
+                }
             }
-            states.Pop();
+
+            if (mask == null)
+            {
+                mask = new TileMask();
+                mask.layer = layer;
+                masks.Push(mask);
+            }
+
+            mask.state = state;
+
             UpdateState();
+        }
+
+        public void PopState(int layer)
+        {
+            if (masks.TryPeek(out TileMask m))
+            {
+                if (layer > m.layer)
+                {
+                    return;
+                }
+
+                while (true)
+                {
+                    m = masks.Pop();
+                    if (m.layer <= layer)
+                    {
+                        break;
+                    }
+                }
+
+                UpdateState();
+            }
         }
 
         private void UpdateState()
         {
-            if (states.TryPeek(out int state))
+            if (masks.TryPeek(out TileMask mask))
             {
-                SetValue(DataKey.State, state);
+                SetValue(DataKey.State, mask.state);
             }
         }
 
         public bool Passable()
         {
-            //int battleId = GetIntValue(DataKey.BattleId);
-            //return battleId <= 0;
-            return true;
+            int battleId = GetIntValue(DataKey.BattleId);
+            return battleId <= 0;
         }
     }
 
     public class BattleGridManager
     {
-        private static readonly List<(int, int)> neighbor = new List<(int, int)>()
-        {
-            (0, 1),
-            (1, 0),
-            (0, -1),
-            (-1, 0),
-        };
-
-        private class Node
-        {
-            public int X { get; private set; }
-            public int Y { get; private set; }
-            public int G { get; private set; }
-            public int H { get; private set; }
-            public int F => G + H;
-            public Node Parent { get; private set; }
-
-            public Node(int x, int y, int g, int h, Node parent)
-            {
-                X = x;
-                Y = y;
-                G = g;
-                H = h;
-                Parent = parent;
-            }
-        }
-
         private List<TileItem> tiles;
 
         public int RowCount { get; private set; }
         public int ColCount { get; private set; }
 
+        private Stack<int> layers;
+
         public BattleGridManager()
         {
             tiles = new List<TileItem>();
+            layers = new Stack<int>();
         }
 
         public void InitGrid(int r, int c)
@@ -92,7 +114,14 @@ namespace GameFramework.Gameplay
             RowCount = r; 
             ColCount = c;
 
+            BattleUtils.RowCount = r;
+            BattleUtils.ColCount = c;
+
+            layers.Clear();
             tiles.Clear();
+
+            List<Vector2Int> points = new List<Vector2Int>();
+
             int count = r * c;
             for (int i = 0; i < count; i++)
             {
@@ -100,9 +129,12 @@ namespace GameFramework.Gameplay
                 tile.SetValue(DataKey.Index, i);
                 tile.SetValue(DataKey.PosX, 0f);
                 tile.SetValue(DataKey.PosZ, 0f);
-                tile.PushState(TileState.Green);
                 tiles.Add(tile);
+
+                points.Add(BattleUtils.Index2Coord(i));
             }
+
+            Draw(0, TileState.Green, points);
         }
 
         public IReadOnlyList<DataModel> GetTiles()
@@ -131,197 +163,82 @@ namespace GameFramework.Gameplay
 
         public TileItem GetTile(int coordX, int coordY)
         {
-            int index = Coord2Index(coordX, coordY);
+            int index = BattleUtils.Coord2Index(coordX, coordY);
             return GetTile(index);
         }
 
-        public void SelectTile(int index)
+        public void Draw(int layer, int state, List<Vector2Int> coords)
         {
-            var tile = GetTile(index);
-            tile?.PushState(TileState.Red);
-        }
-
-        public void DeselectTile(int index)
-        {
-            var tile = GetTile(index);
-            tile?.PopState();
-        }
-
-        public void DrawTiles(int x, int y, int r, int state)
-        {
-            var points = GetCirclePoints(x, y, r);
-
-            foreach (var item in points)
+            MDebug.Log("Draw", layer, "--", coords.Count);
+            if (coords == null || coords.Count == 0)
             {
-                var tile = GetTile(item.Item1, item.Item2);
-                tile?.PushState(state);
-            }
-        }
-
-        public static List<(int, int)> GetCirclePoints(int x, int y, int r)
-        {
-            var points = new HashSet<(int, int)>();
-
-            if (r == 0)
-            {
-                points.Add((x, y));
-                return points.ToList();
+                return;
             }
 
-            for (int i = 1; i <= r; i++)
+            if (layers.TryPeek(out int l))
             {
-                for (int dx = -i; dx <= i; dx++)
+                if (layer < l)
                 {
-                    int rd = i - Utility.Math.Abs(dx);
-                    if (rd == 0)
-                    {
-                        points.Add((x + dx, y));
-                    }
-                    else
-                    {
-                        points.Add((x + dx, y + rd));
-                        points.Add((x + dx, y - rd));
-                    }
+                    return;
                 }
-            }
 
-            return points.ToList();
-        }
-
-        public Vector3 Coord2Pos(int coordX, int coordY)
-        {
-            int index = Coord2Index(coordX, coordY);
-            TileItem tile = GetTile(index);
-            if (tile == null)
-            {
-                MDebug.Error("tile is null : ", coordX, coordY, index);
-                return Vector3.zero;
+                if (layer > l)
+                {
+                    layers.Push(layer);
+                }
             }
             else
             {
-                float x = tile.GetFloatValue(DataKey.PosX);
-                float z = tile.GetFloatValue(DataKey.PosZ);
-                return new Vector3(x, 0.05f, z);
+                layers.Push(layer);
+            }
+
+            foreach (var item in coords)
+            {
+                int x = item.x;
+                int y = item.y;
+                var tile = GetTile(x, y);
+                tile?.PushState(layer, state);
             }
         }
 
-        public int Coord2Index(int x, int y)
+        public void Wipe()
         {
-            if (x < 0 || x >= ColCount)
+            MDebug.Log("Wipe");
+            while (true)
             {
-                return -1; 
-            }
-            if (y < 0 || y >= RowCount) 
-            {
-                return -1; 
-            }
-            return y * RowCount + x;
-        }
-
-        public Vector2Int Index2Coord(int index)
-        {
-            int x = index % ColCount;
-            int y = index / ColCount;
-            return new Vector2Int(x, y);
-        }
-
-        private void ResetState()
-        {
-            foreach (var item in tiles)
-            {
-                item.PopState();
-            }
-        }
-
-        public List<Vector2Int> AStarPath(int startX, int startY, int targetX, int targetY)
-        {
-            if (!CheckIndexValid(startX, startY) || !CheckIndexValid(targetX, targetY))
-            {
-                return new List<Vector2Int>();
-            }
-
-            bool[,] closeList = new bool[ColCount, RowCount];
-            List<Node> openList = new List<Node>();
-
-            Node startNode = new Node(startX, startY, 0, H_Value(startX, startY, targetX, targetY), null);
-            openList.Add(startNode);
-
-            while (openList.Count > 0)
-            {
-                Node currNode = openList.Aggregate((min, next) => next.F < min.F ? next : min);
-                openList.Remove(currNode);
-
-                int x = currNode.X;
-                int y = currNode.Y;
-
-                if (closeList[x, y])
+                if (layers.TryPeek(out int l))
                 {
-                    continue;
+                    if (l <= 0)
+                    {
+                        break;
+                    }
+
+                    foreach (var item in tiles)
+                    {
+                        item.PopState(l);
+                    }
+                    layers.Pop();
                 }
                 else
                 {
-                    closeList[x, y] = true;
+                    break;
                 }
+            }
+        }
 
-                if (x == targetX && y == targetY)
+        public void Wipe(int layer)
+        {
+            if (layers.TryPeek(out int l))
+            {
+                if (layer <= l)
                 {
-                    return ReconstructPath(currNode);
-                }
-
-                for (int i = 0; i < neighbor.Count; i++)
-                {
-                    var dir = neighbor[i];
-                    int nx = x + dir.Item1;
-                    int ny = y + dir.Item2;
-
-                    if (!CheckIndexValid(nx, ny))
+                    layers.Pop();
+                    foreach (var item in tiles)
                     {
-                        continue;
+                        item.PopState(l);
                     }
-
-                    if (closeList[nx, ny])
-                    {
-                        continue;
-                    }
-
-                    Node neighborNode = new Node(nx, ny, currNode.G + 1, H_Value(nx, ny, targetX, targetY), currNode);
-                    openList.Add(neighborNode);
-                }
+                }           
             }
-            return new List<Vector2Int>();
-        }
-
-        private bool CheckIndexValid(int x, int y)
-        {
-            if (x < 0 || x >= ColCount || y < 0 || y >= RowCount)
-            {
-                return false;
-            }
-
-            TileItem item = GetTile(x, y);
-            if (item == null)
-            {
-                return false;
-            }
-
-            return item.Passable();
-        }
-
-        private int H_Value(int startX, int startY, int targetX, int targetY)
-        {
-            return Utility.Math.Abs(startX - targetX) + Utility.Math.Abs(startY - targetY);
-        }
-
-        private List<Vector2Int> ReconstructPath(Node node)
-        {
-            List<Vector2Int> path = new List<Vector2Int>();
-            while (node != null)
-            {
-                path.Add(new Vector2Int(node.X, node.Y));
-                node = node.Parent;
-            }
-            path.Reverse();
-            return path;
         }
     }
 }

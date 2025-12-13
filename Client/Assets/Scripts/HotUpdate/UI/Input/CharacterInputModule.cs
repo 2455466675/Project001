@@ -4,7 +4,7 @@ using GameFramework.Gameplay;
 
 namespace GameFramework.UI
 {
-    public class CharacterCammand : InputCammand 
+    public class CharacterCommand : InputCommand 
     {
         protected override bool CheckLocked()
         {
@@ -43,7 +43,7 @@ namespace GameFramework.UI
 
         public CharacterInputModule()
         {
-            Push(new CharacterCammand());
+            Push(new CharacterCommand());
         }
 
         protected override void OnInputAction(InputContext context)

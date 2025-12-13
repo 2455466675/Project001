@@ -67,7 +67,7 @@ namespace GameFramework.Gameplay
             for (int i = 0; i < path.Count; i++)
             {
                 Vector2Int point = path[i];
-                Vector3 pp = Game.GetSystem<BattleSystem>().GridManager.Coord2Pos(point.x, point.y);
+                Vector3 pp = BattleUtils.Coord2Pos(point.x, point.y);
 
                 if (i == 0)
                 {

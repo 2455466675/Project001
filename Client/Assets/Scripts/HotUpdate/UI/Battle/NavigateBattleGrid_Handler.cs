@@ -9,8 +9,9 @@ namespace GameFramework.UI
         {
             int x = arg.coordX;
             int y = arg.coordY;
-            int index = Game.GetSystem<BattleSystem>().GridManager.Coord2Index(x, y);
-            Game.GetSystem<BattleViewSystem>().SelectGrid(index);
+            var type = arg.type;
+            int index = BattleUtils.Coord2Index(x, y);
+            Game.GetSystem<BattleViewSystem>().FocusBattleGrid(index, type);
         }
     }
 }

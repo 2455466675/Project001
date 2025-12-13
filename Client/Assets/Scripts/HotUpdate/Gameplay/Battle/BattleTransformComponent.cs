@@ -18,11 +18,9 @@ namespace GameFramework.Gameplay
 
         public void SetCoordPosition(int coordX, int coordY)
         {
-            var GridManager = Game.GetSystem<BattleSystem>().GridManager;
-
             if (this.coordX >= 0 && this.coordY >= 0)
             {
-                var tileItem = GridManager.GetTile(this.coordX, this.coordY);
+                var tileItem = BattleUtils.GetTile(this.coordX, this.coordY);
                 if (tileItem != null)
                 {
                     tileItem.SetValue(DataKey.BattleId, 0);
@@ -38,9 +36,9 @@ namespace GameFramework.Gameplay
 
             if (this.coordX >= 0 && this.coordY >= 0)
             {
-                var tileItem = GridManager.GetTile(this.coordX, this.coordY);
+                var tileItem = BattleUtils.GetTile(this.coordX, this.coordY);
                 if (tileItem != null)
-                {                    
+                {
                     tileItem.SetValue(DataKey.BattleId, GetComponent<BattleUnitComponent>().BattleId);
                 }
                 else
@@ -54,7 +52,7 @@ namespace GameFramework.Gameplay
 
         public void SyncActorPosition()
         {
-            GetComponent<ActorComponent>().Position = Game.GetSystem<BattleSystem>().GridManager.Coord2Pos(coordX, coordY);
+            GetComponent<ActorComponent>().Position = BattleUtils.Coord2Pos(coordX, coordY);
         }
     }
 }

@@ -17,4 +17,13 @@ namespace GameFramework.UI
             Game.GetModule<InputController>().PopCammand();
         }
     }
+
+    [GameEvent]
+    public class NavigateClearEvent_Handler : GameEventHandlerBase<NavigateClearEventArgs>
+    {
+        public override void Invoke(NavigateClearEventArgs arg)
+        {
+            Game.GetModule<InputController>().PopAllCammand();
+        }
+    }
 }

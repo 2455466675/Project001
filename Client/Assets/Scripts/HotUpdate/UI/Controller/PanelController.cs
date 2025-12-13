@@ -35,6 +35,14 @@ namespace GameFramework.UI
             OnOutFocus();
         }
 
+        public void SetAlpha(float alpha)
+        {
+            if (m_Panel != null)
+            {
+                m_Panel.SetAlpha(alpha);
+            }
+        }
+
         protected T GetWidget<T>() where T : UIWidget
         {
             return m_Panel.GetWidget<T>();

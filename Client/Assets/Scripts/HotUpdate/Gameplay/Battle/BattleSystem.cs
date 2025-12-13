@@ -7,6 +7,12 @@ using GameFramework.Featrue;
 namespace GameFramework.Gameplay 
 {
 
+    public enum NavigateBattleGridType
+    {
+        SelectMovePosition,
+        SelectEffectArea,
+    }
+
     public struct EnterBattleEventArgs : IGameEventArgs
     {
         public bool isEnter;
@@ -74,7 +80,10 @@ namespace GameFramework.Gameplay
             {
                 return entities[battleId];
             }
-            return null;
+            else
+            {
+                return null;                
+            }
         }
 
         public void SyncBattleUnitRotation()
@@ -113,15 +122,16 @@ namespace GameFramework.Gameplay
                 ac.SyncRotation();
 
                 var btf = entity.GetComponent<BattleTransformComponent>();
-                btf.SetCoordPosition(4 + i, 5 + i);
+                btf.SetCoordPosition(4 + i, 5);
 
                 //GridManager.DrawTiles(4, 5, 3, TileState.Blue);
 
                 var attrComponet = entity.GetComponent<AttributeComponent>();
                 attrComponet.SetAttributeValue(AttributeDefine.HP_1, 100);
                 attrComponet.SetAttributeValue(AttributeDefine.SP_1, 100);
-                attrComponet.SetAttributeValue(AttributeDefine.SP_RATE, 10);
-                attrComponet.AddAttributeEffect((int)AttributeDefine.SP_RATE + 10000, 5000);
+                attrComponet.SetAttributeValue(AttributeDefine.SP_2, 0);
+                attrComponet.SetAttributeValue(AttributeDefine.SP_RATE, 1);
+                attrComponet.AddAttributeEffect((int)AttributeDefine.SP_RATE + 10000, 1000);
 
                 entities.Add(battleId, entity);
 

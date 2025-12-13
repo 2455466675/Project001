@@ -36,9 +36,16 @@ namespace GameFramework.Core
         public T LoadAsset<T>(string path) where T : UnityEngine.Object
         {
             var handle = YooAssets.LoadAssetSync<T>(path);
-            T result = handle.GetAssetObject<T>();
-            handle.Release();
-            return result;
+            if (handle == null)
+            {
+                return default;
+            }
+            else
+            {
+                T result = handle.GetAssetObject<T>();
+                handle.Release();
+                return result;
+            }
         }
 
         /// <summary>
@@ -51,17 +58,31 @@ namespace GameFramework.Core
         {
             var handle = YooAssets.LoadAssetAsync<T>(path);
             await handle;
-            T result = handle.GetAssetObject<T>();
-            handle.Release();
-            return result;
+            if (handle == null)
+            {
+                return default;
+            }
+            else
+            {
+                T result = handle.GetAssetObject<T>();
+                handle.Release();
+                return result;
+            }
         }
 
         public T[] LoadAllAssets<T>(string path) where T : UnityEngine.Object
         {
             var handle = YooAssets.LoadAllAssetsSync<T>(path);
-            T[] result = handle.AllAssetObjects.Cast<T>().ToArray();
-            handle.Release();
-            return result;
+            if (handle == null)
+            {
+                return new T[0];
+            }
+            else
+            {
+                T[] result = handle.AllAssetObjects.Cast<T>().ToArray();
+                handle.Release();
+                return result;
+            }
         }
 
         public SceneHandle LoadScene(string path, LoadSceneMode mode) 
@@ -95,7 +116,7 @@ namespace GameFramework.Core
         }
 
         /*
-         * 会把字体资源也卸载了。。。。
+         * TODO 会把字体资源也卸载了。。。。
          */
         public async UniTask UnloadUnusedAssetsAsync() 
         {

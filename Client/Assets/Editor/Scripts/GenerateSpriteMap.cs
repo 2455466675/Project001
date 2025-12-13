@@ -8,7 +8,7 @@ using GameFramework;
 
 public class GenerateSpriteMap
 {
-    [MenuItem("Tools/MyTools/GenerateSpriteMap")]
+    [MenuItem("Tools/MyTools/Generate Sprite Map")]
     public static void Generate() 
     {
     //    SpriteMap map = new SpriteMap();

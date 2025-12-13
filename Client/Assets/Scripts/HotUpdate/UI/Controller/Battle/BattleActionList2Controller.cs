@@ -10,10 +10,11 @@ namespace GameFramework.UI
         protected override void OnShow()
         {
             List<DataModel> list = new List<DataModel>();
-            for (int i = 0; i < 7; i++)
+            int count = Utility.Math.Random(2, 8);
+            for (int i = 0; i < count; i++)
             {
                 DataModel model = new DataModel();
-                model.SetValue(DataKey.Id, i + 5);
+                model.SetValue(DataKey.Id, count * 10 + i);
                 list.Add(model);
             }
 
@@ -33,6 +34,7 @@ namespace GameFramework.UI
         {
             int id = dataModel.GetIntValue(DataKey.Id);
             MDebug.Log("id = ", id);
+            Game.GetSystem<BattleSystem>().FlowManager.MoveNext();
         }
     }
 }

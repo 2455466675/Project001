@@ -1,6 +1,6 @@
 namespace GameFramework.Core 
 {
-    public class InputCammand : GameCammand, IInputable
+    public class InputCommand : GameCommand, IInputable
     {
         /// <summary>
         /// ÊäÈë²Ù×÷
@@ -10,11 +10,11 @@ namespace GameFramework.Core
         {
             OnInputAction(context);
 
-            if (TryPeek(out GameCammand cammand))
+            if (TryPeek(out GameCommand command))
             {
-                if (cammand is InputCammand icammand) 
+                if (command is InputCommand icommand) 
                 {
-                    icammand.InputAction(context);
+                    icommand.InputAction(context);
                 }
             }
         }

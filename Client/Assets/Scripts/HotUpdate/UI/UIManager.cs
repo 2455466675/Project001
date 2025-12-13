@@ -56,6 +56,7 @@ namespace GameFramework.UI
             {
                 return;
             }
+            MDebug.Log("HidePanel : ", id);
             Entity entity = m_Panels[id];
             entity.GetComponent<PanelComponent>().Hide();
 
@@ -108,24 +109,24 @@ namespace GameFramework.UI
 
             InputController inputController = Game.GetModule<InputController>();
 
-            PanelCammand panelCammand;
-            if(inputController.TryPeek(out PanelCammand cammand) && cammand.Define == panel)
+            PanelCommand panelCammand;
+            if(inputController.TryPeek(out PanelCommand cammand) && cammand.Define == panel)
             {
                 panelCammand = cammand;
             }
             else
             {
-                panelCammand = new PanelCammand(panel);
+                panelCammand = new PanelCommand(panel);
                 inputController.PushCammand(panelCammand);
             }
 
-            if (panelCammand.TryPeek(out NavigationListCammand subCammand) && subCammand.Define == id)
+            if (panelCammand.TryPeek(out NavigationListCommand subCammand) && subCammand.Define == id)
             {
                 return;
             }
 
             defaultIndexs ??= new int[] {0};
-            NavigationListCammand listCammand = new NavigationListCammand(id, defaultIndexs);
+            NavigationListCommand listCammand = new NavigationListCommand(id, defaultIndexs);
             panelCammand.Push(listCammand);
         }
 

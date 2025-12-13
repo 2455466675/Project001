@@ -3,7 +3,7 @@ using GameFramework.Gameplay;
 
 namespace GameFramework.UI
 {
-    public class BattleCammand : InputCammand
+    public class BattleCommand : InputCommand
     {
         protected override void OnInputAction(InputContext context)
         {

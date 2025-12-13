@@ -36,6 +36,14 @@ namespace GameFramework
         public static IGameEvent Event { get; private set; }
         private static IGameplay Gameplay { get; }
 
+        public static float DeltaTime
+        {
+            get
+            {
+                return Time.deltaTime;
+            }
+        }
+
         static Game()
         {
             m_GameModules = new Dictionary<Type, GameModule>();

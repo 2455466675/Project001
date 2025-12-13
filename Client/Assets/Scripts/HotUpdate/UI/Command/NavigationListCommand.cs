@@ -2,12 +2,12 @@ using GameFramework.Core;
 
 namespace GameFramework.UI 
 {
-    public class NavigationListCammand : InputCammand
+    public class NavigationListCommand : InputCommand
     {
         public NavigationDefine Define { get; private set; }
         private int[] defaultIndexs;
 
-        public NavigationListCammand(NavigationDefine define, int[] defaultIndexs) : base()
+        public NavigationListCommand(NavigationDefine define, int[] defaultIndexs) : base()
         {
             this.Define = define;
             this.defaultIndexs = defaultIndexs;
@@ -21,6 +21,7 @@ namespace GameFramework.UI
 
         protected override bool OnPush()
         {
+            MDebug.Log("OnPush", Define);
             var list = GetList();
             if (list == null)
             {
@@ -52,6 +53,7 @@ namespace GameFramework.UI
 
         protected override void OnSink()
         {
+            MDebug.Log("OnSink", Define);
             var list = GetList();
             list?.OutFocus();
         }

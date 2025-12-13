@@ -30,24 +30,44 @@ namespace GameFramework.UI
 
         protected override void SelectItemView(NavigationItemView itemView, DataModel dataModel)
         {
-            int index = dataModel.GetIntValue(DataKey.Index);
-            Game.GetSystem<BattleSystem>().GridManager.SelectTile(index);
+            int index = dataModel.GetIntValue(DataKey.Index);            
+            Game.GetSystem<BattleViewSystem>().SelectBattleTile(index);
         }
 
         protected override void DeselectItemView(NavigationItemView itemView, DataModel dataModel)
         {
             int index = dataModel.GetIntValue(DataKey.Index);
-            Game.GetSystem<BattleSystem>().GridManager.DeselectTile(index);
+            Game.GetSystem<BattleViewSystem>().DeselectBattleTile(index);
         }
 
         protected override void SubmitItemView(NavigationItemView itemView, DataModel dataModel)
         {
             int index = dataModel.GetIntValue(DataKey.Index);
+            Game.GetSystem<BattleViewSystem>().SubmitBattleTile(index);
+        }
 
-            DataModel param = new DataModel();
-            param.SetValue(DataKey.Index, index);
+        protected override void MoveUpItemView(NavigationItemView itemView, DataModel dataModel)
+        {
+            int index = dataModel.GetIntValue(DataKey.Index);
+            Game.GetSystem<BattleViewSystem>().MoveUp(index);
+        }
 
-            Game.GetSystem<BattleSystem>().FlowManager.MoveNext(new MoveToTargetPosition(), param);
+        protected override void MoveDownItemView(NavigationItemView itemView, DataModel dataModel)
+        {
+            int index = dataModel.GetIntValue(DataKey.Index);
+            Game.GetSystem<BattleViewSystem>().MoveDown(index);
+        }
+
+        protected override void MoveLeftItemView(NavigationItemView itemView, DataModel dataModel)
+        {
+            int index = dataModel.GetIntValue(DataKey.Index);
+            Game.GetSystem<BattleViewSystem>().MoveLeft(index);
+        }
+
+        protected override void MoveRightItemView(NavigationItemView itemView, DataModel dataModel)
+        {
+            int index = dataModel.GetIntValue(DataKey.Index);
+            Game.GetSystem<BattleViewSystem>().MoveRight(index);
         }
     }
 }

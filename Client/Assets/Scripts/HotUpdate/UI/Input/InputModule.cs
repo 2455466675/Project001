@@ -2,7 +2,7 @@ using GameFramework.Core;
 
 namespace GameFramework.UI
 {
-    public abstract class InputModule : InputCammand
+    public abstract class InputModule : InputCommand
     {
         public abstract InputModuleType ModuleType { get; }
 

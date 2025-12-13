@@ -56,6 +56,7 @@ namespace GameFramework.UI
         public void Show(NavigationView view)
         {
             m_View = view;
+            ClearBinders();
             Register();
             OnShow();
         }

@@ -10,7 +10,8 @@ namespace GameFramework.UI
         protected override void OnShow()
         {
             List<DataModel> list = new List<DataModel>();
-            for (int i = 0; i < 5; i++)
+            int count = Utility.Math.Random(4, 7);
+            for (int i = 0; i < count; i++)
             {
                 DataModel model = new DataModel();
                 model.SetValue(DataKey.Id, i);
@@ -29,11 +30,17 @@ namespace GameFramework.UI
             }
         }
 
+        protected override void SelectItemView(NavigationItemView itemView, DataModel dataModel)
+        {
+            int id = dataModel.GetIntValue(DataKey.Id);
+            MDebug.Log("SelectItemView = ", id);
+        }
+
         protected override void SubmitItemView(NavigationItemView itemView, DataModel dataModel)
         {
             int id = dataModel.GetIntValue(DataKey.Id);
             MDebug.Log("id = ", id);
-            Game.GetSystem<BattleSystem>().FlowManager.MoveNext(new SelectBattleAction2());
+            Game.GetSystem<BattleSystem>().FlowManager.MoveNext();
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameFramework.Core
 {
-    public class ActorAnimator : MonoBehaviour
+    public class ActorAnimator : MonoBehaviour, IAnimator
     {
         public const string Normal = "normal";
         public const string Battle = "battle";
@@ -78,7 +78,15 @@ namespace GameFramework.Core
         {
             if (m_Animator != null)
             {
-                m_Animator.SetTrigger(name);
+                m_Animator.SetTrigger(name);               
+            }
+        }
+
+        public void PlayAnim(string name)
+        {
+            if (m_Animator != null)
+            {
+                m_Animator.Play(name);
             }
         }
 

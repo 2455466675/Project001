@@ -18,19 +18,21 @@ namespace GameFramework.UI
 
         public void Show() 
         {
-            if (canvasGroup != null) 
-            {
-                canvasGroup.alpha = 1f;
-            }
+            SetAlpha(1f);
             transform.SetAsLastSibling();
         }
 
         public void Hide() 
         {
+            SetAlpha(0f);        
+        }
+
+        public void SetAlpha(float alpha)
+        {
             if (canvasGroup != null)
             {
-                canvasGroup.alpha = 0f;
-            }          
+                canvasGroup.alpha = alpha;
+            }
         }
 
 #if UNITY_EDITOR

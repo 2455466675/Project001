@@ -9,4 +9,9 @@ namespace GameFramework
     {
 
     }
+
+    public struct NavigateClearEventArgs : IGameEventArgs
+    {
+
+    }
 }

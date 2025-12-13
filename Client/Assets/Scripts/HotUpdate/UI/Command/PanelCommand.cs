@@ -2,12 +2,12 @@ using GameFramework.Core;
 
 namespace GameFramework.UI 
 {
-    public class PanelCammand : InputCammand
+    public class PanelCommand : InputCommand
     {
         public PanelDefine Define { get; private set; }
         private object content;
 
-        public PanelCammand(PanelDefine define, object content = null)
+        public PanelCommand(PanelDefine define, object content = null)
         {
             Define = define;
             this.content = content;

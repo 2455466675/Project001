@@ -2,18 +2,18 @@ using System.Collections.Generic;
 
 namespace GameFramework.Core 
 {
-    public abstract class GameCammand
+    public abstract class GameCommand
     {
         public bool IsLocked => CheckLocked();
-        public int Count => subCammands.Count;
+        public int Count => subCommands.Count;
 
-        private readonly Stack<GameCammand> subCammands;
+        private readonly Stack<GameCommand> subCommands;
 
         protected bool IsPopAll { get; private set; }
 
-        public GameCammand()
+        public GameCommand()
         {
-            subCammands = new Stack<GameCammand>();
+            subCommands = new Stack<GameCommand>();
         }
 
         #region 操作接口
@@ -21,34 +21,34 @@ namespace GameFramework.Core
         /// <summary>
         /// 弹出最上面的子命令
         /// </summary>
-        /// <returns>cammand is clean?</returns>
+        /// <returns>command is clean?</returns>
         public bool Pop()
         {
-            if (subCammands.Count == 0)
+            if (subCommands.Count == 0)
             {
                 return !IsLocked;
             }
 
-            if (TryPeek(out GameCammand cammand))
+            if (TryPeek(out GameCommand command))
             {
-                bool isOver = cammand.Pop(); //总是在操作最上层的那一个命令
+                bool isOver = command.Pop(); //总是在操作最上层的那一个命令
                 if (!isOver)
                 {
                     return false;
                 }
 
-                cammand.OnPop();
-                subCammands.Pop();
+                command.OnPop();
+                subCommands.Pop();
 
-                if (subCammands.Count == 0)
+                if (subCommands.Count == 0)
                 {
                     return !IsLocked;
                 }
                 else
                 {
-                    if (TryPeek(out cammand))
+                    if (TryPeek(out command))
                     {
-                        bool success = cammand.Rise();
+                        bool success = command.Rise();
                         if (!success)
                         {
                             return Pop();   //如果下一个命令上升失败，将其也弹出
@@ -71,7 +71,7 @@ namespace GameFramework.Core
             IsPopAll = true;
             while (Count > 0)
             {
-                GameCammand top = Top();
+                GameCommand top = Top();
                 if (top == null)
                 {
                     break;
@@ -89,25 +89,30 @@ namespace GameFramework.Core
         /// <summary>
         /// 压入一个子命令
         /// </summary>
-        /// <param name="cammand"></param>
+        /// <param name="command"></param>
         /// <returns>是否成功</returns>
-        public bool Push(GameCammand cammand)
+        public bool Push(GameCommand command)
         {
-            if (cammand == null)
-            {
-                return false;
-            }
-            bool success = cammand.OnPush();
-            if (!success)
+            if (command == null)
             {
                 return false;
             }
 
-            if (TryPeek(out GameCammand peek))
+            GameCommand peek = null;
+            if (TryPeek(out peek))
             {
                 peek.Sink();
             }
-            subCammands.Push(cammand);
+
+            subCommands.Push(command);
+            bool success = command.OnPush();
+            if (!success)
+            {
+                subCommands.Pop();
+                peek?.Rise();
+                return false;
+            }
+
             return true;
         }
 
@@ -115,13 +120,13 @@ namespace GameFramework.Core
         /// 命令树最上面的一个命令
         /// </summary>
         /// <returns></returns>
-        public GameCammand Top()
+        public GameCommand Top()
         {
-            GameCammand temp = this;
-            GameCammand cammand = this;
-            while (cammand.TryPeek(out cammand))
+            GameCommand temp = this;
+            GameCommand command = this;
+            while (command.TryPeek(out command))
             {
-                temp = cammand;
+                temp = command;
             }
             return temp;
         }
@@ -129,31 +134,31 @@ namespace GameFramework.Core
         /// <summary>
         /// TryPeek操作
         /// </summary>
-        /// <param name="cammand"></param>
+        /// <param name="command"></param>
         /// <returns></returns>
         //public bool TryPeek(out GameCammand cammand)
         //{
         //    return subCammands.TryPeek(out cammand);
         //}
 
-        public bool TryPeek<T>(out T cammand) where T : GameCammand
+        public bool TryPeek<T>(out T command) where T : GameCommand
         {
             if (Count == 0) 
             {
-                cammand = default;
+                command = default;
                 return false;
             }
 
-            if (subCammands.TryPeek(out GameCammand gc))
+            if (subCommands.TryPeek(out GameCommand gc))
             {
                 if (gc is T tc) 
                 {
-                    cammand = tc;
+                    command = tc;
                     return true;
                 }
             }
 
-            cammand = default;
+            command = default;
             return false;
         }
 
@@ -161,13 +166,13 @@ namespace GameFramework.Core
         {
             if (Count > 0)
             {
-                foreach (var sub in subCammands)
+                foreach (var sub in subCommands)
                 {
                     sub.Clear();
                 }
             }
 
-            subCammands.Clear();
+            subCommands.Clear();
         }
 
         #endregion
@@ -187,9 +192,9 @@ namespace GameFramework.Core
             }
             else
             {
-                if (TryPeek(out GameCammand cammand))
+                if (TryPeek(out GameCommand command))
                 {
-                    return cammand.Rise();
+                    return command.Rise();
                 }
                 return true;
             }
@@ -201,9 +206,9 @@ namespace GameFramework.Core
         private void Sink()
         {
             OnSink();
-            if (TryPeek(out GameCammand cammand))
+            if (TryPeek(out GameCommand command))
             {
-                cammand.Sink();
+                command.Sink();
             }
         }
 
@@ -236,6 +241,7 @@ namespace GameFramework.Core
         /// </summary>
         protected virtual void OnSink()
         {
+            MDebug.Log("virtual OnSink");
         }
         /// <summary>
         /// 是否锁定此命令
@@ -248,7 +254,7 @@ namespace GameFramework.Core
         #endregion
     }
 
-    public class CammandStack : GameCammand
+    public class CommandStack : GameCommand
     {
 
     }

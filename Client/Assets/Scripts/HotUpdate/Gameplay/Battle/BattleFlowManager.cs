@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Featrue;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameFramework.Gameplay
 {
@@ -90,16 +92,31 @@ namespace GameFramework.Gameplay
                 return;
             }
 
-            executor = new BattleExecutor();
-
             DataModel param = new DataModel();
             param.SetValue(DataKey.BattleId, battleId);
-            executor.MoveNext(new SelectMoveTargetPosition(), param);
+            executor = new BattleExecutor(param);
+            MoveNext(null);
         }
 
-        public void MoveNext(BattleExecutorCammand cammand, DataModel param = null)
+        public void ActionOver()
         {
-            executor?.MoveNext(cammand, param);
+            Entity entity = Game.GetSystem<BattleSystem>().GetBattleUnit(Actioning);
+            if (entity == null)
+            {
+                return;
+            }
+
+            Game.Event.Publish(new NavigateClearEventArgs());
+
+            var ac = entity.GetComponent<AttributeComponent>();
+            ac.SetAttributeValue(AttributeDefine.SP_2, 0);
+
+            Actioning = 0;
+        }
+
+        public void MoveNext(DataModel param = null)
+        {
+            executor?.MoveNext(param);
         }
 
         public void MoveBack()
@@ -108,20 +125,32 @@ namespace GameFramework.Gameplay
         }
     }
 
-    public class BattleExecutor : GameCammand
+    public class BattleExecutor : GameCommand
     {
         protected DataModel pipelineParam;
 
-        public BattleExecutor()
+        public BattleExecutor(DataModel param)
         {
             pipelineParam = new DataModel();
-        }
-
-        public void MoveNext(BattleExecutorCammand cammand, DataModel param)
-        {
             pipelineParam.AddRange(param);
+            BattleExecutorCommand cammand = new StartupCommand();
             cammand.SetParam(pipelineParam);
             Push(cammand);
+        }
+
+        public void MoveNext(DataModel param)
+        {
+            pipelineParam.AddRange(param);
+
+            if (TryPeek<BattleExecutorCommand>(out var cammand))
+            {
+                cammand = cammand.Next();
+                if (cammand != null)
+                {
+                    cammand.SetParam(pipelineParam);
+                    Push(cammand);
+                }
+            }
         }
 
         public void MoveBack()
@@ -135,7 +164,7 @@ namespace GameFramework.Gameplay
                     break;
                 }
 
-                if (TryPeek<BattleExecutorCammand>(out var cammand))
+                if (TryPeek<BattleExecutorCommand>(out var cammand))
                 {
                     if (cammand.IsAnchor)
                     {
@@ -151,14 +180,26 @@ namespace GameFramework.Gameplay
         }
     }
 
-    public class BattleExecutorCammand : GameCammand
+    public class BattleExecutorCommand : GameCommand
     {
         protected DataModel pipelineParam;
         public virtual bool IsAnchor => false;
 
+        public bool IsStartingPoint { get; set; }
+
+        protected override bool CheckLocked()
+        {
+            return IsStartingPoint;
+        }
+
         public void SetParam(DataModel param)
         {
             this.pipelineParam = param;
+        }
+
+        public virtual BattleExecutorCommand Next()
+        {
+            return null;
         }
     }
 
@@ -166,9 +207,21 @@ namespace GameFramework.Gameplay
     {
         public int coordX;
         public int coordY;
+
+        public NavigateBattleGridType type;
     }
 
-    public class SelectMoveTargetPosition : BattleExecutorCammand
+    public class StartupCommand : BattleExecutorCommand
+    {
+        public override BattleExecutorCommand Next()
+        {
+            BattleExecutorCommand cammand = new SelectMoveTargetPosition();
+            cammand.IsStartingPoint = true;
+            return cammand;
+        }
+    }
+
+    public class SelectMoveTargetPosition : BattleExecutorCommand
     {
         public override bool IsAnchor => true;
 
@@ -182,6 +235,11 @@ namespace GameFramework.Gameplay
             return Execute();
         }
 
+        protected override void OnSink()
+        {
+            Game.Event.Publish(new NavigateBackEventArgs());
+        }
+
         private bool Execute()
         {
             int battleId = pipelineParam.GetIntValue(DataKey.BattleId);
@@ -193,15 +251,20 @@ namespace GameFramework.Gameplay
             }
 
             var btc = entity.GetComponent<BattleTransformComponent>();
-            Game.GetModule<CameraManager>().LookAt(Game.GetSystem<BattleSystem>().GridManager.Coord2Pos(btc.CoordX, btc.CoordY));
+            Game.GetModule<CameraManager>().LookAt(BattleUtils.Coord2Pos(btc.CoordX, btc.CoordY));
 
-            Game.Event.Publish(new NavigateBattleGridArgs() { coordX = btc.CoordX, coordY = btc.CoordY });
+            Game.Event.Publish(new NavigateBattleGridArgs() { coordX = btc.CoordX, coordY = btc.CoordY, type = NavigateBattleGridType.SelectMovePosition });
 
             return true;
         }
+
+        public override BattleExecutorCommand Next()
+        {
+            return new MoveToTargetPosition();
+        }
     }
 
-    public class MoveToTargetPosition : BattleExecutorCammand
+    public class MoveToTargetPosition : BattleExecutorCommand
     {
         public override bool IsAnchor => false;
 
@@ -212,6 +275,7 @@ namespace GameFramework.Gameplay
 
         protected override bool OnPush()
         {
+
             Execute().Forget();
 
             return true;
@@ -244,17 +308,17 @@ namespace GameFramework.Gameplay
             var bs = Game.GetSystem<BattleSystem>();
 
             int index = pipelineParam.GetIntValue(DataKey.Index);
-            var coord = bs.GridManager.Index2Coord(index);
+            var coord = BattleUtils.Index2Coord(index);
 
             int targetX = coord.x;
             int targetY = coord.y;
 
-            Game.GetModule<CameraManager>().LookAt(bs.GridManager.Coord2Pos(targetX, targetY));
+            Game.GetModule<CameraManager>().LookAt(BattleUtils.Coord2Pos(targetX, targetY));
 
             var bfc = entity.GetComponent<BattleTransformComponent>();
             var bmc = entity.GetComponent<BattleMotorComponent>();
 
-            var path = bs.GridManager.AStarPath(bfc.CoordX, bfc.CoordY, targetX, targetY);
+            var path = BattleUtils.AStarPath(bfc.CoordX, bfc.CoordY, targetX, targetY, H_Value, CheckIndexValid);
 
             coordX = bfc.CoordX;
             coordY = bfc.CoordY;
@@ -263,11 +327,37 @@ namespace GameFramework.Gameplay
             
             await bmc.MoveAsync(path);
 
-            Game.GetSystem<BattleSystem>().FlowManager.MoveNext(new SelectBattleAction());
+            Game.GetSystem<BattleSystem>().FlowManager.MoveNext();
+        }
+
+        private bool CheckIndexValid(int x, int y)
+        {
+            if (x < 0 || x >= BattleUtils.ColCount || y < 0 || y >= BattleUtils.RowCount)
+            {
+                return false;
+            }
+
+            TileItem item = BattleUtils.GetTile(x, y);
+            if (item == null)
+            {
+                return false;
+            }
+
+            return item.Passable();
+        }
+
+        private int H_Value(int startX, int startY, int targetX, int targetY)
+        {
+            return Utility.Math.Abs(startX - targetX) + Utility.Math.Abs(startY - targetY);
+        }
+
+        public override BattleExecutorCommand Next()
+        {
+            return new SelectBattleAction();
         }
     }
 
-    public class SelectBattleAction : BattleExecutorCammand
+    public class SelectBattleAction : BattleExecutorCommand
     {
         public override bool IsAnchor => true;
 
@@ -280,13 +370,16 @@ namespace GameFramework.Gameplay
 
         protected override void OnPop()
         {
-            MDebug.Log("SelectBattleAction OnPop");
-
             Game.Event.Publish(new NavigateBackEventArgs());
+        }
+
+        public override BattleExecutorCommand Next()
+        {
+            return new SelectBattleAction2();
         }
     }
 
-    public class SelectBattleAction2 : BattleExecutorCammand
+    public class SelectBattleAction2 : BattleExecutorCommand
     {
         public override bool IsAnchor => true;
 
@@ -299,8 +392,115 @@ namespace GameFramework.Gameplay
 
         protected override void OnPop()
         {
-            MDebug.Log("SelectBattleAction2 OnPop");
             Game.Event.Publish(new NavigateBackEventArgs());
+        }
+
+        protected override void OnSink()
+        {
+            Game.Event.Publish(new PanelAlphaEventArgs() { panel = PanelDefine.BattleActionPanel, alpha = 0f });
+            Game.Event.Publish(new PanelAlphaEventArgs() { panel = PanelDefine.BattleActionPanel2, alpha = 0f });
+        }
+
+        protected override bool OnRise()
+        {
+            Game.Event.Publish(new PanelAlphaEventArgs() { panel = PanelDefine.BattleActionPanel, alpha = 1f });
+            Game.Event.Publish(new PanelAlphaEventArgs() { panel = PanelDefine.BattleActionPanel2, alpha = 1f });
+            return true;
+        }
+
+        public override BattleExecutorCommand Next()
+        {
+            return new SelectEffectArea();
+        }
+    }
+
+    public class SelectEffectArea : BattleExecutorCommand
+    {
+        public override bool IsAnchor => true;
+
+        protected override bool OnPush()
+        {
+            return Execute();
+        }
+
+        protected override void OnPop()
+        {
+            Game.Event.Publish(new NavigateBackEventArgs());
+        }
+
+        protected override void OnSink()
+        {
+            Game.Event.Publish(new NavigateBackEventArgs());
+        }
+
+        private bool Execute()
+        {
+            int battleId = pipelineParam.GetIntValue(DataKey.BattleId);
+
+            Entity entity = Game.GetSystem<BattleSystem>().GetBattleUnit(battleId);
+            if (entity == null)
+            {
+                return false;
+            }
+
+            var btc = entity.GetComponent<BattleTransformComponent>();
+            Game.GetModule<CameraManager>().LookAt(BattleUtils.Coord2Pos(btc.CoordX, btc.CoordY));
+
+            Game.Event.Publish(new NavigateBattleGridArgs() { coordX = btc.CoordX, coordY = btc.CoordY, type = NavigateBattleGridType.SelectEffectArea });
+
+            return true;
+        }
+
+        public override BattleExecutorCommand Next()
+        {          
+            return new EffectCommand();
+        }
+    }
+
+    public class EffectCommand : BattleExecutorCommand
+    {
+        protected override bool OnPush()
+        {
+            Play().Forget();
+
+            return true;
+        }
+
+        private async UniTask Play()
+        {
+            int index = pipelineParam.GetIntValue(DataKey.Index);
+            var coord = BattleUtils.Index2Coord(index);
+
+            List<Vector2Int> area = new List<Vector2Int>();
+
+            List<Vector2Int> areaPoints = new List<Vector2Int>()
+            {
+                 new Vector2Int(0, 0),
+                 new Vector2Int(0, 1),
+                 new Vector2Int(1, 0),
+                 new Vector2Int(-1, 0),
+                 new Vector2Int(0, -1),
+            };
+
+            foreach (var item in areaPoints)
+            {
+                area.Add(coord + item);
+            }
+
+            int battleId = pipelineParam.GetIntValue(DataKey.BattleId);
+
+            Entity entity = Game.GetSystem<BattleSystem>().GetBattleUnit(battleId);
+            var ac = entity.GetComponent<ActorComponent>();
+
+            ActionData actionData = new ActionData();
+            actionData.actor = ac;
+            actionData.points = areaPoints;
+
+            var handle = Game.GetModule<ActionManager>().Play("TestSkill1001", actionData);
+
+            await handle.Task;
+
+            Game.GetSystem<BattleSystem>().FlowManager.ActionOver();
         }
     }
 }

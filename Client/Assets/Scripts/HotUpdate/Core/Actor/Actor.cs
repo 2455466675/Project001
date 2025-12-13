@@ -2,11 +2,10 @@ using UnityEngine;
 
 namespace GameFramework.Core
 {
-    public class Actor : MonoBehaviour
+    public class Actor : MonoBehaviour, IActor
     {
         public int Id { get; set; }
-        public ActorAnimator Animator => m_Animator;
-
+        
         [SerializeField]
         private Rigidbody m_Rigidbody;
         [SerializeField]
@@ -15,6 +14,8 @@ namespace GameFramework.Core
         private ActorAnimator m_Animator;
         [SerializeField]
         private Transform[] m_Bones;
+
+        public Transform Transform => transform;
 
         public Vector3 Velocity
         {
@@ -119,6 +120,60 @@ namespace GameFramework.Core
             {
                 m_Collider.isTrigger = isKinematic;
             }
+        }
+
+        public void SetAnimatorController(string name)
+        {
+            if (m_Animator == null)
+            {
+                return;
+            }
+            m_Animator.SetAnimatorController(name);
+        }
+
+        public void SetBool(string name, bool value)
+        {
+            if (m_Animator == null)
+            {
+                return;
+            }
+            m_Animator.SetBool(name, value);
+        }
+
+        public void SetFloat(string name, float value)
+        {
+            if (m_Animator == null)
+            {
+                return;
+            }
+            m_Animator.SetFloat(name, value);
+        }
+
+        public void SetInteger(string name, int value)
+        {
+            if (m_Animator == null)
+            {
+                return;
+            }
+            m_Animator.SetInteger(name, value);
+        }
+
+        public void SetTrigger(string name)
+        {
+            if (m_Animator == null)
+            {
+                return;
+            }
+            m_Animator.SetTrigger(name);
+        }
+
+        public void PlayAnim(string name)
+        {
+            if (m_Animator == null)
+            {
+                return;
+            }
+            m_Animator.PlayAnim(name);
         }
 
 #if UNITY_EDITOR
