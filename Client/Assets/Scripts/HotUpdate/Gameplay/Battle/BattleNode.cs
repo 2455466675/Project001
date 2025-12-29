@@ -7,6 +7,9 @@ namespace GameFramework.Gameplay
     {
         [SerializeField]
         private BattleGridNode m_GridNode;
+        [SerializeField]
+        private Transform m_EffectCanvas;
+        public Transform EffectCanvas => m_EffectCanvas;
 
         public T LoadGrid<T>(int r, int c) where T : Component
         {

@@ -15,14 +15,25 @@ MonoBehaviour:
   actionName: TestSkill1001
   desc: test
   commands:
-  - rid: 3035083333439324236
+  - rid: 3035083443512279116
+  - rid: 3035083443512279117
   references:
     version: 2
     RefIds:
-    - rid: 3035083333439324236
-      type: {class: PlayAnimActionCommand, ns: GameFramework.UI, asm: HotUpdate_UI}
+    - rid: 3035083443512279116
+      type: {class: PlayAnim, ns: GameFramework.UI, asm: HotUpdate_UI}
       data:
         priority: 0
-        timepoint: 1
-        duration: 5
+        timepoint: 0
+        duration: 1
         animName: skill_001
+    - rid: 3035083443512279117
+      type: {class: SwordEffect, ns: GameFramework.UI, asm: HotUpdate_UI}
+      data:
+        priority: 0
+        timepoint: 0.5
+        duration: 1
+        assetPath: Assets/Lana Studio/Casual RPG VFX/Prefabs/Slash/Slash_fire_once.prefab
+        offest: {x: 0, y: 0, z: 0}
+        scale: {x: 0.5, y: 0.5, z: 0.5}
+        rotation: {x: 0, y: 90, z: 0}

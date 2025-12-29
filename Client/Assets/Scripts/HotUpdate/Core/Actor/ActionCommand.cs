@@ -7,6 +7,7 @@ namespace GameFramework.Core
     public class ActionData
     {
         public IActor actor;
+        public int direction;
         public List<Vector2Int> points;
         public object userData;
     }

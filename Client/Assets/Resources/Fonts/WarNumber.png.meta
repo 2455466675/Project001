@@ -1,0 +1,1367 @@
+fileFormatVersion: 2
+guid: a7a7a4f50b64383409ca332248e285ee
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6975363599022676583
+    second: WarNumber_0
+  - first:
+      213: -9161044491224317123
+    second: WarNumber_1
+  - first:
+      213: -2281322010059522288
+    second: WarNumber_2
+  - first:
+      213: -4460417610314365184
+    second: WarNumber_3
+  - first:
+      213: 4123951412060010159
+    second: WarNumber_4
+  - first:
+      213: 8893986531136389740
+    second: WarNumber_5
+  - first:
+      213: -6472113636287878594
+    second: WarNumber_6
+  - first:
+      213: -6711092686136681761
+    second: WarNumber_7
+  - first:
+      213: 622105512459126720
+    second: WarNumber_8
+  - first:
+      213: 3969377245523659737
+    second: WarNumber_9
+  - first:
+      213: 3707398263919617097
+    second: WarNumber_10
+  - first:
+      213: -5923462570659308332
+    second: WarNumber_11
+  - first:
+      213: 8816662636522019569
+    second: WarNumber_12
+  - first:
+      213: -1437181082473032789
+    second: WarNumber_13
+  - first:
+      213: -5703160245497727121
+    second: WarNumber_14
+  - first:
+      213: 7937815790956432537
+    second: WarNumber_15
+  - first:
+      213: -1435058996780838657
+    second: WarNumber_16
+  - first:
+      213: -6381132349628718051
+    second: WarNumber_17
+  - first:
+      213: -2773541228093976122
+    second: WarNumber_18
+  - first:
+      213: -7482064437329575927
+    second: WarNumber_19
+  - first:
+      213: -2321267596661444982
+    second: WarNumber_20
+  - first:
+      213: -4977642558122510862
+    second: WarNumber_21
+  - first:
+      213: -2857904530063324583
+    second: WarNumber_22
+  - first:
+      213: 8183289545721731881
+    second: WarNumber_23
+  - first:
+      213: 34310942240860698
+    second: WarNumber_24
+  - first:
+      213: 6678867059885281779
+    second: WarNumber_25
+  - first:
+      213: -2818118954710898077
+    second: WarNumber_26
+  - first:
+      213: 5920304588727080360
+    second: WarNumber_27
+  - first:
+      213: 5700760139484164633
+    second: WarNumber_28
+  - first:
+      213: 8040418773898482777
+    second: WarNumber_29
+  - first:
+      213: 8498903314108036533
+    second: WarNumber_30
+  - first:
+      213: 7358024358572448338
+    second: WarNumber_31
+  - first:
+      213: 6018685801370314568
+    second: WarNumber_32
+  - first:
+      213: 7147839317823369523
+    second: WarNumber_33
+  - first:
+      213: -560244462767194264
+    second: WarNumber_34
+  - first:
+      213: 8991402836845922259
+    second: WarNumber_35
+  - first:
+      213: -4923886271023961368
+    second: WarNumber_36
+  - first:
+      213: -6756581969272581385
+    second: WarNumber_37
+  - first:
+      213: 8678806023247854471
+    second: WarNumber_38
+  - first:
+      213: -7145997327043300840
+    second: WarNumber_39
+  - first:
+      213: 8086318729021493851
+    second: WarNumber_40
+  - first:
+      213: -4059572787186897304
+    second: WarNumber_41
+  - first:
+      213: 5528611681916673309
+    second: WarNumber_42
+  - first:
+      213: -5396710590663934560
+    second: WarNumber_43
+  - first:
+      213: -558720630235484920
+    second: WarNumber_44
+  - first:
+      213: -8599598613249984132
+    second: WarNumber_45
+  - first:
+      213: -3686445278515060433
+    second: WarNumber_46
+  - first:
+      213: -7256609993462159127
+    second: WarNumber_47
+  - first:
+      213: -5223168965920860868
+    second: WarNumber_48
+  - first:
+      213: -5006323227202861075
+    second: WarNumber_49
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WarNumber_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 236
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 995201583c7823f90800000000000000
+      internalID: -6975363599022676583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 202
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d338601929e6dd080800000000000000
+      internalID: -9161044491224317123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_2
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 236
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01f3f1408bd1750e0800000000000000
+      internalID: -2281322010059522288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_3
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 202
+        width: 32
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 007c053d0d96912c0800000000000000
+      internalID: -4460417610314365184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_4
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 236
+        width: 31
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa6becaa5f73b3930800000000000000
+      internalID: 4123951412060010159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_5
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 202
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c624e71b0a9cd6b70800000000000000
+      internalID: 8893986531136389740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_6
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 236
+        width: 23
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3a691340fe6e26a0800000000000000
+      internalID: -6472113636287878594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_7
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 202
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdad91442c86dd2a0800000000000000
+      internalID: -6711092686136681761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_8
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 236
+        width: 23
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c740f2eaa922a800800000000000000
+      internalID: 622105512459126720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_9
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 202
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dbc4faf29f061730800000000000000
+      internalID: 3969377245523659737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_10
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 202
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94424d11413537330800000000000000
+      internalID: 3707398263919617097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_11
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 202
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dc97830d22abcda0800000000000000
+      internalID: -5923462570659308332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_12
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 202
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fa9a5a84f31b5a70800000000000000
+      internalID: 8816662636522019569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba398458b6b1e0ce0800000000000000
+      internalID: -1437181082473032789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 123
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f677afd29fd4ad0b0800000000000000
+      internalID: -5703160245497727121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_15
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 160
+        width: 33
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99cc170d769c82e60800000000000000
+      internalID: 7937815790956432537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_16
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 123
+        width: 35
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff056291275a51ce0800000000000000
+      internalID: -1435058996780838657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_17
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 160
+        width: 35
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1460abcfe9a177a0800000000000000
+      internalID: -6381132349628718051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_18
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 123
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c1de89a2f66289d0800000000000000
+      internalID: -2773541228093976122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_19
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 160
+        width: 33
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9004362390e5a2890800000000000000
+      internalID: -7482064437329575927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_20
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 160
+        width: 33
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8eae506b6339cfd0800000000000000
+      internalID: -2321267596661444982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_21
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 160
+        width: 32
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f5bd30577cdbeab0800000000000000
+      internalID: -4977642558122510862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_22
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 160
+        width: 32
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95a8893c8fea658d0800000000000000
+      internalID: -2857904530063324583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_23
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 160
+        width: 32
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92b59e22c72e09170800000000000000
+      internalID: 8183289545721731881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_24
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 123
+        width: 25
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1aec24ce95e97000800000000000000
+      internalID: 34310942240860698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 87
+        width: 35
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f1158e643a10bc50800000000000000
+      internalID: 6678867059885281779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_26
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 87
+        width: 34
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36a69a1edb704e8d0800000000000000
+      internalID: -2818118954710898077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_27
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 87
+        width: 34
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a5513508a5292250800000000000000
+      internalID: 5920304588727080360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_28
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 123
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 912f8a7942b2d1f40800000000000000
+      internalID: 5700760139484164633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_29
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 123
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 954d99f564e459f60800000000000000
+      internalID: 8040418773898482777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_30
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 123
+        width: 33
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5bcc9f88b22f570800000000000000
+      internalID: 8498903314108036533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_31
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 123
+        width: 33
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25ad16d6b24fc1660800000000000000
+      internalID: 7358024358572448338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 43
+        width: 38
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8476d5519daa68350800000000000000
+      internalID: 6018685801370314568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_33
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 43
+        width: 38
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 331be6a1df9323360800000000000000
+      internalID: 7147839317823369523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_34
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 87
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86fb16121ac9938f0800000000000000
+      internalID: -560244462767194264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_35
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 87
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d704aadd31e7cc70800000000000000
+      internalID: 8991402836845922259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_36
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 87
+        width: 35
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8eaa13d3687daabb0800000000000000
+      internalID: -4923886271023961368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_37
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 87
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f2d2b13f7ccb32a0800000000000000
+      internalID: -6756581969272581385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_38
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 87
+        width: 23
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78b753a8810517870800000000000000
+      internalID: 8678806023247854471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 42
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81271bbca4154dc90800000000000000
+      internalID: -7145997327043300840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_40
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 43
+        width: 40
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b521ae77a00683070800000000000000
+      internalID: 8086318729021493851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_41
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 0
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86ee1effe0089a7c0800000000000000
+      internalID: -4059572787186897304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_42
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 43
+        width: 38
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1dd7b9680399bc40800000000000000
+      internalID: 5528611681916673309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_43
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 0
+        width: 41
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ad33ef8f480b15b0800000000000000
+      internalID: -5396710590663934560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_44
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 43
+        width: 36
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80da12a0c860f38f0800000000000000
+      internalID: -558720630235484920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_45
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 43
+        width: 36
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c79fa46bf9618a880800000000000000
+      internalID: -8599598613249984132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_46
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 0
+        width: 40
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f21a1320d8d17dcc0800000000000000
+      internalID: -3686445278515060433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_47
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 43
+        width: 36
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e8632a78a75b4b90800000000000000
+      internalID: -7256609993462159127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_48
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 0
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c355170cf739387b0800000000000000
+      internalID: -5223168965920860868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarNumber_49
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 0
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de749cbac87f58ab0800000000000000
+      internalID: -5006323227202861075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -495,6 +495,7 @@ namespace GameFramework.Gameplay
             ActionData actionData = new ActionData();
             actionData.actor = ac;
             actionData.points = areaPoints;
+            actionData.direction = Utility.Math.Random(1, 5);
 
             var handle = Game.GetModule<ActionManager>().Play("TestSkill1001", actionData);
 

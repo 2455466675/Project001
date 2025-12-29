@@ -111,13 +111,9 @@ namespace GameFramework.UI
 
             areaPoints = new List<Vector2Int>()
             {
-                 new Vector2Int(0, 0),
                  new Vector2Int(1, 0),
-                 new Vector2Int(2, 0),
                  new Vector2Int(1, 1),
                  new Vector2Int(1, -1),
-                 new Vector2Int(2, 2),
-                 new Vector2Int(2, -2),
             };
         }
 
@@ -252,7 +248,7 @@ namespace GameFramework.UI
 
             if (type == NavigateBattleGridType.SelectEffectArea)
             {
-                drawer = new FixedPointEffectDrawer(1, index, 1);
+                drawer = new FixedDirectionEffectDrawer(1, index, 1);
             }
            
             BattleGridCommand cammand = new BattleGridCommand(m_Controller, new int[] { index });

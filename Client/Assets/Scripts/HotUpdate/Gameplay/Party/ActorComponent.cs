@@ -259,7 +259,11 @@ namespace GameFramework.Gameplay
 
         public Transform GetBone(string name)
         {
-            throw new System.NotImplementedException();
+            if (m_Actor == null)
+            {
+                return null;
+            }
+            return m_Actor.GetBone(name);
         }
     }
 }

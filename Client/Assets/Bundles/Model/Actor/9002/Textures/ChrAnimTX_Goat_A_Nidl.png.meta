@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: 55e0d860412582e40a36e061670ad8c9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1931463318951619068
+    second: ChrAnimTX_Goat_A_Nidl_0
+  - first:
+      213: 7573332055426559484
+    second: ChrAnimTX_Goat_A_Nidl_1
+  - first:
+      213: 5893877814608879150
+    second: ChrAnimTX_Goat_A_Nidl_2
+  - first:
+      213: -3429444680603484057
+    second: ChrAnimTX_Goat_A_Nidl_3
+  - first:
+      213: 3104261999260199928
+    second: ChrAnimTX_Goat_A_Nidl_4
+  - first:
+      213: -4334426385578537304
+    second: ChrAnimTX_Goat_A_Nidl_5
+  - first:
+      213: 2296462610575836603
+    second: ChrAnimTX_Goat_A_Nidl_6
+  - first:
+      213: 4029399963008762945
+    second: ChrAnimTX_Goat_A_Nidl_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 203
+        width: 66
+        height: 52
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf9eeceb7afedca10800000000000000
+      internalID: 1931463318951619068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_1
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 205
+        width: 66
+        height: 50
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfd67c11161e91960800000000000000
+      internalID: 7573332055426559484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 205
+        width: 66
+        height: 50
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2e515135a24bc150800000000000000
+      internalID: 5893877814608879150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 153
+        width: 66
+        height: 48
+      alignment: 9
+      pivot: {x: 0.62, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 760c6c3ab3a2860d0800000000000000
+      internalID: -3429444680603484057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_4
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 149
+        width: 66
+        height: 52
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fbe5ab57dd841b20800000000000000
+      internalID: 3104261999260199928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_5
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 157
+        width: 68
+        height: 44
+      alignment: 9
+      pivot: {x: 0.62, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aec286ca2609d3c0800000000000000
+      internalID: -4334426385578537304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 107
+        width: 72
+        height: 40
+      alignment: 9
+      pivot: {x: 0.62, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb5c65fb39caedf10800000000000000
+      internalID: 2296462610575836603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChrAnimTX_Goat_A_Nidl_7
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 106
+        width: 72
+        height: 40
+      alignment: 9
+      pivot: {x: 0.62, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1440c1deaed4be730800000000000000
+      internalID: 4029399963008762945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ef441384f1ab4cd4191525eb06f83534
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ChrAnimTX_Goat_A_Nidl_0: 1931463318951619068
+      ChrAnimTX_Goat_A_Nidl_1: 7573332055426559484
+      ChrAnimTX_Goat_A_Nidl_2: 5893877814608879150
+      ChrAnimTX_Goat_A_Nidl_3: -3429444680603484057
+      ChrAnimTX_Goat_A_Nidl_4: 3104261999260199928
+      ChrAnimTX_Goat_A_Nidl_5: -4334426385578537304
+      ChrAnimTX_Goat_A_Nidl_6: 2296462610575836603
+      ChrAnimTX_Goat_A_Nidl_7: 4029399963008762945
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
