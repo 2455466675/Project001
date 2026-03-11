@@ -1,0 +1,24 @@
+{
+    "name": "GF_HotUpdate_Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b1b8bc4790a37c94a9c40c39eceba6be",
+        "GUID:e97659994c3821a41a0da22ac4b90e8d",
+        "GUID:2a278d979931ae145a91df3225abcb31",
+        "GUID:e34a5702dd353724aa315fb8011f08c3",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:13ba8ce62aa80c74598530029cb2d649",
+        "GUID:ca24a47bd52ce7c499f10e7e812d9f25",
+        "GUID:a46182c8d5f590146a5a3324bbd42749",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
