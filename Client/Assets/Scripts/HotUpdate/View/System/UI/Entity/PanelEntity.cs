@@ -15,9 +15,9 @@ namespace GameFramework.View.UI
 
         public void Init(PanelDefine id)
         {
-            var cfg = Game.ConfigManager.Find<PanelCfg>((int)id);
+            var cfg = Game.Config.Find<PanelCfg>((int)id);
             var group = GameRoot.GetNode<UINode>().GetGroup(cfg.GroupType);
-            var go = Game.ResourcesManager.LoadAndInstantiate(cfg.Path, group);
+            var go = Game.Resources.LoadAndInstantiate(cfg.Path, group);
             panel = go.GetComponent<UIPanel>();
 
             controller = Game.GetSystem<UISystem>().GetPanelController(id);

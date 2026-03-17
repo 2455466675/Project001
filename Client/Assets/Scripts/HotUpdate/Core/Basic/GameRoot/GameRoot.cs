@@ -17,7 +17,7 @@ namespace GameFramework.Core
 
         internal static async UniTask LoadGameRoot()
         {
-            await Game.ResourcesManager.LoadAndInstantiateAsync("Assets/Bundles/Common/GameRoot", null);
+            await Game.Resources.LoadAndInstantiateAsync("Assets/Bundles/Common/GameRoot", null);
         }
 
         public static T GetNode<T>() where T : GameNode

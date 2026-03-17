@@ -158,7 +158,7 @@ namespace GameFramework.Core
             foreach (var name in fileNames)
             {
                 string path = string.Format("Assets/Bundles/Common/{0}.json", name);
-                TextAsset textAsset = await Game.ResourcesManager.LoadAssetAsync<TextAsset>(path);
+                TextAsset textAsset = await Game.Resources.LoadAssetAsync<TextAsset>(path);
                 if (textAsset != null)
                 {
                     ClassPriorityListWrapper wrapper = JsonMapper.ToObject<ClassPriorityListWrapper>(textAsset.text);

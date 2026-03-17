@@ -4,8 +4,9 @@ namespace GameFramework
 {
     public static class Game
     {
-        public static GameResourcesManager ResourcesManager { get; private set; }
-        public static GameConfigManager ConfigManager { get; private set; }
+        public static GameResourcesManager Resources { get; private set; }
+        public static GameConfigManager Config { get; private set; }
+        public static GameMessageDispatcher Message { get; private set; }
 
         private static GameAssemblyManager assemblyManager;
         private static GameSystemManager systemManager;
@@ -15,18 +16,20 @@ namespace GameFramework
         {
             MDebug.Log("Game Start!");
 
-            ResourcesManager = new GameResourcesManager();
-            ConfigManager = new GameConfigManager();
+            Resources = new GameResourcesManager();
+            Config = new GameConfigManager();
+            Message = new GameMessageDispatcher();
             assemblyManager = new GameAssemblyManager();
             systemManager = new GameSystemManager();
             gameplayManager = new GameplayManager();
 
-            await ResourcesManager.Init();
-            await ConfigManager.Init();
+            await Resources.Init();
+            await Config.Init();
             await assemblyManager.Init();
             await systemManager.Init();
 
             gameplayManager.Init();
+            Message.Init();
 
             await GameRoot.LoadGameRoot();
 

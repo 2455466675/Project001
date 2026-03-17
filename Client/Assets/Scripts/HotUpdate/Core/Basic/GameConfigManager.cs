@@ -32,7 +32,7 @@ namespace GameFramework.Core
 
         public async UniTask Init()
         {
-            TextAsset textAsset = await Game.ResourcesManager.LoadAssetAsync<TextAsset>("Assets/Bundles/Config/cfg");
+            TextAsset textAsset = await Game.Resources.LoadAssetAsync<TextAsset>("Assets/Bundles/Config/cfg");
             using (MemoryStream stream = new MemoryStream(textAsset.bytes))
             {
                 using (BinaryReader br = new BinaryReader(stream))
