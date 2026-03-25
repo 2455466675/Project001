@@ -19,16 +19,16 @@ namespace GameFramework.View.UI
 
         public void SetTextById(string textId) 
         {
-            //var textItem = Game.GetModule<ConfigManager>().GetTextItem(textId);
-            //if (textItem == null) 
-            //{
-            //    SetText(string.Format("error : {0}", textId));
-            //}
-            //else
-            //{
-            //    this.m_Text.text = textItem.Text;
-            //    this.m_Text.color = textItem.Color;
-            //}
+            var textItem = Game.Config.GetTextItem(textId);
+            if (textItem == null)
+            {
+                SetText(string.Format("text error : {0}", textId));
+            }
+            else
+            {
+                this.m_Text.text = textItem.Text;
+                this.m_Text.color = textItem.Color;
+            }
         }
 
         private void OnValidate()

@@ -824,10 +824,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18902cfc5073e1e469b5b5761971291b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UICamera: {fileID: 0}
-  canvas: {fileID: 0}
-  mask: {fileID: 0}
-  groups: []
+  UICamera: {fileID: 2269336493127326102}
+  canvas: {fileID: 1055370259940104832}
+  mask: {fileID: 2124929618157553794}
+  groups:
+  - type: 1
+    transform: {fileID: 5642407745728952144}
+  - type: 2
+    transform: {fileID: 3517151803351261968}
+  - type: 3
+    transform: {fileID: 8569307952608205056}
+  - type: 4
+    transform: {fileID: 8838366017133511964}
 --- !u!1 &7491868648333661856
 GameObject:
   m_ObjectHideFlags: 0

@@ -129,13 +129,13 @@ namespace GameFramework.View.UI
             {
                 return;
             }
-            Binder binder = CreateBinder(dataIndex);
+            Binder binder = CreateBinder(itemView.GetInstanceID());
             BindItemView(itemView, datas[dataIndex], binder);
         }
 
         private void OnUnbindData(NavigationItemView itemView, int dataIndex)
         {
-            RemoveBinder(dataIndex);
+            RemoveBinder(itemView.GetInstanceID());
         }
 
         private void OnSelect(NavigationItemView itemView, int dataIndex)
@@ -258,7 +258,7 @@ namespace GameFramework.View.UI
         /// <returns></returns>
         protected virtual bool CheckIsLocked()
         {
-            return true;
+            return false;
         }
 
         private void Register() 

@@ -14,7 +14,7 @@ namespace GameFramework.Core
         public Type type;
     }
 
-    public class GameAssemblyManager
+    internal class GameAssemblyManager
     {
         private static List<string> AotDllList = new List<string>
         {

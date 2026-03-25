@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameFramework.Core
 {
-    public class GameplayManager
+    internal class GameplayManager
     {
         private class Gameplay
         {
@@ -31,6 +31,19 @@ namespace GameFramework.Core
             foreach (var gameplay in sortGameplays)
             {
                 gameplay.OnExit();
+            }
+        }
+
+        public T GetModule<T>() where T : class, IGameplay
+        {
+            Type type = typeof(T);
+            if (gameplays.ContainsKey(type))
+            {
+                return gameplays[type].inst as T;
+            }
+            else
+            {
+                return default;
             }
         }
 

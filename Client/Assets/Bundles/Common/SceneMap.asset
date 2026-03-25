@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480af7225a344cc41b1f8c5a9efe83c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 26eec4cf591245a40b94b6f40edee9ea, type: 3}
   m_Name: SceneMap
   m_EditorClassIdentifier: 
   data:
   - id: 1001
-    loadSceneMode: 0
     path: Assets/Bundles/Scene/TestScene01
-    desc: TestScene01
-  - id: 2001
     loadSceneMode: 0
+    desc: TestScene01
+  - id: 1002
     path: Assets/Bundles/Scene/LoginScene
+    loadSceneMode: 0
     desc: LoginScene
-  - id: 3001
-    loadSceneMode: 1
+  - id: 1003
     path: Assets/Bundles/Scene/BattleScene
+    loadSceneMode: 1
     desc: BattleScene

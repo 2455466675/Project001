@@ -33,6 +33,10 @@ namespace Navigation
 
         private NavigationItem[] current;
 
+        public int MinIndex => minIndex;
+        public int MaxIndex => maxIndex;
+        public int Pointer => pointer;
+
         #region Event
 
         public event Action OnListInFocus;

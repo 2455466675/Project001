@@ -5,8 +5,8 @@ namespace GameFramework.Core
 
     }
 
-    public struct GameMessage : IGameMessage
-    {
+    //public struct GameMessage : IGameMessage
+    //{
 
-    }
+    //}
 }

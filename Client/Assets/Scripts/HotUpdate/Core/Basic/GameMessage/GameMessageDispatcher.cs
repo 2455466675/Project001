@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GameFramework.Core
 {
@@ -21,9 +22,13 @@ namespace GameFramework.Core
             for (int i = 0; i < items.Length; i++)
             {
                 var item = items[i];
+
                 object obj = Activator.CreateInstance(item.type);
                 if (obj is IGameMessageHandler handler)
                 {
+                    GameMessageAttribute attribute = item.type.GetCustomAttribute(typeof(GameMessageAttribute), false) as GameMessageAttribute;
+                    handler.Priority = attribute.priority;
+
                     Type t = handler.Type;
                     if (!handlers.ContainsKey(t))
                     {
@@ -31,6 +36,11 @@ namespace GameFramework.Core
                     }
                     handlers[t].Add(handler);
                 }
+            }
+
+            foreach (var list in handlers.Values)
+            {
+                list.Sort((a, b) => a.Priority - b.Priority);    
             }
         }
 

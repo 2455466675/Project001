@@ -35,16 +35,15 @@ namespace GameFramework
 
             MDebug.Log("Game Start Finish!");
 
-            //GetSystem<GameSaveSystem>().SaveGame(1);
-            GetSystem<GameSaveSystem>().LoadGame(1);
+            Message.SendMessage(new GameStartMessage());
         }
 
-        public static void Update(float deltaTime)
+        internal static void Update(float deltaTime)
         {
             systemManager.Update(deltaTime);
         }
 
-        public static void FixedUpdate(float fixedDeltaTime)
+        internal static void FixedUpdate(float fixedDeltaTime)
         {
             systemManager.FixedUpdate(fixedDeltaTime);
         }
@@ -52,6 +51,16 @@ namespace GameFramework
         public static T GetSystem<T>() where T : class, IGameSystem
         {
             return systemManager.GetSystem<T>();
+        }
+
+        public static T GetModule<T>() where T : class, IGameplay
+        {
+            return gameplayManager.GetModule<T>();
+        }
+
+        public static void GameplayExit()
+        {
+            gameplayManager.Exit();
         }
 
         public static GameTypeItem[] GetTypes<T>() where T : GameAttribute

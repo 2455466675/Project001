@@ -263,6 +263,9 @@ namespace Navigation
         private int itemCount;
         private Dictionary<int, NavigationItem> items;
 
+        public int ItemCount => itemCount;
+        public int DataCount => dataCount;
+
         public override void Init()
         {
             if (isInit)
