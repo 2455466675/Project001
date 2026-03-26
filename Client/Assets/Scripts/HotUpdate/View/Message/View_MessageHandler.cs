@@ -48,10 +48,10 @@ namespace GameFramework.View
             {
                 case 0:
                     Game.GetSystem<UISystem>().CloseNavigate();
-                    Game.GetSystem<UISystem>().ShowPanel(PanelDefine.LoginPanel);
+                    Game.GetSystem<UISystem>().ShowPanel(PanelDefine.LoadingPanel);
                     break;
                 case 1:
-                    Game.GetSystem<UISystem>().HidePanel(PanelDefine.LoginPanel);
+                    Game.GetSystem<UISystem>().HidePanel(PanelDefine.LoadingPanel);
                     break;
                 case 2:
 

@@ -11,11 +11,6 @@
             "sheet":1
         }, 
         {
-            "excel":"window.xlsx",
-            "type":"WindowCfg",
-            "sheet":1
-        },  
-        {
             "excel":"panel.xlsx",
             "type":"PanelCfg",
             "sheet":1
@@ -26,11 +21,6 @@
             "sheet":1
         },
         {
-            "excel":"hero.xlsx",
-            "type":"HeroCfg",
-            "sheet":1
-        },
-        {
             "excel":"item.xlsx",
             "type":"ItemCfg",
             "sheet":1
@@ -38,21 +28,6 @@
         {
             "excel":"color.xlsx",
             "type":"ColorCfg",
-            "sheet":1
-        },
-        {
-            "excel":"monster.xlsx",
-            "type":"MonsterCfg",
-            "sheet":1
-        },
-        {
-            "excel":"backpack.xlsx",
-            "type":"BackpackCfg",
-            "sheet":1
-        },
-        {
-            "excel":"battle/battle_role_action.xlsx",
-            "type":"BattleRoleActionCfg",
             "sheet":1
         },
 		{
