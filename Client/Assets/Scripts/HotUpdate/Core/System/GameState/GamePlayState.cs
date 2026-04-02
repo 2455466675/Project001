@@ -26,6 +26,8 @@ namespace GameFramework.Core
             Game.Message.SendMessage(new GamePlayMessage() { status = 0 });
             await Game.GetSystem<GameSceneSystem>().LoadScene(1001);
             await Game.GetSystem<GameSceneSystem>().LoadBattleScene();
+            Game.GetSystem<GameSaveSystem>().LoadGame(0);
+            Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Normal);
             Game.Message.SendMessage(new GamePlayMessage() { status = 1 });
         }
     }

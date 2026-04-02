@@ -50,6 +50,11 @@ namespace GameFramework.Core
             Game.FixedUpdate(Time.fixedDeltaTime);
         }
 
+        private void LateUpdate()
+        {
+            Game.LateUpdate(Time.deltaTime);
+        }
+
         private T GetNodeInner<T>() where T : GameNode
         {
             if (nodes == null || nodes.Count == 0) 

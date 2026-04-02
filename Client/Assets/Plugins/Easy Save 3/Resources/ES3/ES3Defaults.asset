@@ -38,10 +38,10 @@ MonoBehaviour:
     - GF_HotUpdate_Core
     - YooAsset.Editor
     - Assembly-CSharp
+    - GF_HotUpdate_View
     - UniTask.Linq
     - Eflatun.SceneReference
     - PsdPlugin
-    - GF_HotUpdate_View
     - LITJson
     - GameConfig
     - MVC
@@ -49,13 +49,14 @@ MonoBehaviour:
     - GF_HotUpdate_Utility
     - ECS
     - Assembly-CSharp-firstpass
+    - GF_HotUpdate_Logic
     - Navigation
     - Base
     - HybridCLR.Runtime
     - UniTask.Editor
+    - AOT_Utility
     - FSM
     - ScriptablePacker
-    - GF_HotUpdate_Logic
     - UniTask.Addressables
     - UniTask.DOTween
     - UI

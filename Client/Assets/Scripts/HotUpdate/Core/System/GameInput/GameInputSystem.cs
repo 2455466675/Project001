@@ -88,10 +88,15 @@ namespace GameFramework.Core
             wrapper5.OnInput += OnInput;
             wrappers.Add(wrapper5);
 
-            InputActionWrapper wrapper6 = new M_KeyboardActionWrapper();
-            wrapper6.Initialize(gameInput.Player.M_Keyboard);
+            Move2ActionWrapper wrapper6 = new Move2ActionWrapper();
+            wrapper6.Initialize(gameInput.Player.Move2);
             wrapper6.OnInput += OnInput;
             wrappers.Add(wrapper6);
+
+            InputActionWrapper wrapper7 = new M_KeyboardActionWrapper();
+            wrapper7.Initialize(gameInput.Player.M_Keyboard);
+            wrapper7.OnInput += OnInput;
+            wrappers.Add(wrapper7);
 
             this.wrappers = wrappers.ToArray();
         }

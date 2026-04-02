@@ -154,7 +154,7 @@ namespace GameFramework.Core
         private async UniTask<Dictionary<string, int>> GetGamePriorityDatas()
         {
             Dictionary<string, int> datas = new Dictionary<string, int>();
-            List<string> fileNames = new List<string>() { "GameModuleAttribute", "GameplayAttribute" };
+            List<string> fileNames = new List<string>() { "GameSystemAttribute", "GameplayAttribute" };
             foreach (var name in fileNames)
             {
                 string path = string.Format("Assets/Bundles/Common/{0}.json", name);

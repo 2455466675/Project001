@@ -22,13 +22,8 @@ namespace FSM
             }
         }
 
-        private List<TriggerHandler> triggers;
+        private List<TriggerHandler> triggers = new List<TriggerHandler>();
         private IStateMachine machine;
-
-        public StateBase()
-        {
-            triggers = new List<TriggerHandler>();
-        }
 
         public void AddTrigger<TTarget>(IStateTrigger trigger) where TTarget : IState
         {

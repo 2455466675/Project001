@@ -1,0 +1,33 @@
+
+{
+    "items" : [
+        {
+            "typeFullName" : "GameFramework.Core.GameInputSystem",
+            "priority"     : -90
+        },
+        {
+            "typeFullName" : "GameFramework.Core.GameSaveSystem",
+            "priority"     : -100
+        },
+        {
+            "typeFullName" : "GameFramework.Core.GameSceneSystem",
+            "priority"     : -50
+        },
+        {
+            "typeFullName" : "GameFramework.Core.GameStateSystem",
+            "priority"     : 0
+        },
+        {
+            "typeFullName" : "GameFramework.Logic.GameEntityFactory",
+            "priority"     : 50
+        },
+        {
+            "typeFullName" : "GameFramework.Logic.GameActorManager",
+            "priority"     : 60
+        },
+        {
+            "typeFullName" : "GameFramework.View.UISystem",
+            "priority"     : 100
+        }
+    ]
+}

@@ -47,7 +47,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SmoothValue: 0.1
-    - _TransitionValue: 1
+    - _TransitionValue: -0.1
     - _Value: 1
     m_Colors:
     - _MainColor: {r: 0, g: 0, b: 0, a: 0}

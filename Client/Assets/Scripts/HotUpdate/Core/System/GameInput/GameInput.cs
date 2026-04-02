@@ -39,10 +39,19 @@ namespace GameFramework.Core
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Move2"",
+                    ""type"": ""Value"",
+                    ""id"": ""9bc6357f-71ef-4654-b303-f8c4e1004341"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""f3ecef96-93a8-479d-8077-d68fde34ce4c"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -51,7 +60,7 @@ namespace GameFramework.Core
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""b55bd5e1-7298-43ca-a6a4-cda817c2f728"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -142,61 +151,6 @@ namespace GameFramework.Core
                     ""name"": ""right"",
                     ""id"": ""bc96e44b-4276-4d41-a238-3a76eefb6a17"",
                     ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""17e6c68b-a8c8-41e7-90a3-78873dd005f7"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""714eb63c-afb4-4d31-b118-29737a70e63d"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""fe10d222-d44f-41f4-a304-564b520f9321"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""ef30b05b-b5eb-4b28-ad51-c6eead311322"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""823af6f0-5445-42b1-934a-cd523e72ab07"",
-                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -302,6 +256,61 @@ namespace GameFramework.Core
                     ""action"": ""GM"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""08e96090-b7cb-4195-8517-4f294ba0a836"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move2"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""a865ad6a-c2e4-4539-879e-0b0f9aadc423"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""736a2037-aaea-445c-9e07-5026f9f8a0e1"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""388008d8-fca4-4406-a4ea-5b2c37eb7468"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""c0b3fdef-d3b4-4bc4-9aa8-1bbe7342e7c2"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -311,6 +320,7 @@ namespace GameFramework.Core
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+            m_Player_Move2 = m_Player.FindAction("Move2", throwIfNotFound: true);
             m_Player_Submit = m_Player.FindAction("Submit", throwIfNotFound: true);
             m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
             m_Player_ESC = m_Player.FindAction("ESC", throwIfNotFound: true);
@@ -384,6 +394,7 @@ namespace GameFramework.Core
         private readonly InputActionMap m_Player;
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
+        private readonly InputAction m_Player_Move2;
         private readonly InputAction m_Player_Submit;
         private readonly InputAction m_Player_Cancel;
         private readonly InputAction m_Player_ESC;
@@ -395,6 +406,7 @@ namespace GameFramework.Core
             private @GameInput m_Wrapper;
             public PlayerActions(@GameInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
+            public InputAction @Move2 => m_Wrapper.m_Player_Move2;
             public InputAction @Submit => m_Wrapper.m_Player_Submit;
             public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
             public InputAction @ESC => m_Wrapper.m_Player_ESC;
@@ -413,6 +425,9 @@ namespace GameFramework.Core
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Move2.started += instance.OnMove2;
+                @Move2.performed += instance.OnMove2;
+                @Move2.canceled += instance.OnMove2;
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
@@ -438,6 +453,9 @@ namespace GameFramework.Core
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @Move2.started -= instance.OnMove2;
+                @Move2.performed -= instance.OnMove2;
+                @Move2.canceled -= instance.OnMove2;
                 @Submit.started -= instance.OnSubmit;
                 @Submit.performed -= instance.OnSubmit;
                 @Submit.canceled -= instance.OnSubmit;
@@ -476,6 +494,7 @@ namespace GameFramework.Core
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
+            void OnMove2(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
             void OnCancel(InputAction.CallbackContext context);
             void OnESC(InputAction.CallbackContext context);

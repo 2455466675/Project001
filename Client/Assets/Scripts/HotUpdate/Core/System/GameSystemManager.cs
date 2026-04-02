@@ -20,13 +20,15 @@ namespace GameFramework.Core
 
         private Dictionary<Type, GameSystem> systems;
         private List<IUpdateable> updateableSystems;
-        private List<IFixedUpdateable> fixedUpdateableSystem;
+        private List<IFixedUpdateable> fixedUpdateableSystems;
+        private List<ILateUpdateable> lateUpdateableSystems;
 
         public async UniTask Init()
         {
             systems = new Dictionary<Type, GameSystem>();
             updateableSystems = new List<IUpdateable>();
-            fixedUpdateableSystem = new List<IFixedUpdateable>();
+            fixedUpdateableSystems = new List<IFixedUpdateable>();
+            lateUpdateableSystems = new List<ILateUpdateable>();
 
             List<GameSystem> sortList = new List<GameSystem>();
             var items = Game.GetTypes<GameSystemAttribute>();
@@ -69,7 +71,12 @@ namespace GameFramework.Core
 
                 if (inst is IFixedUpdateable fu)
                 {
-                    fixedUpdateableSystem.Add(fu);
+                    fixedUpdateableSystems.Add(fu);
+                }
+
+                if (inst is ILateUpdateable lu)
+                {
+                    lateUpdateableSystems.Add(lu);
                 }
 
                 if (inst is IInit i)
@@ -109,9 +116,17 @@ namespace GameFramework.Core
 
         public void FixedUpdate(float fixedDeltaTime)
         {
-            for (int i = 0; i < fixedUpdateableSystem.Count; i++)
+            for (int i = 0; i < fixedUpdateableSystems.Count; i++)
             {
-                fixedUpdateableSystem[i].FixedUpdate(fixedDeltaTime);
+                fixedUpdateableSystems[i].FixedUpdate(fixedDeltaTime);
+            }
+        }
+
+        public void LateUpdate(float deltaTime)
+        {
+            for (int i = 0; i < lateUpdateableSystems.Count; i++)
+            {
+                lateUpdateableSystems[i].LateUpdate(deltaTime);
             }
         }
     }

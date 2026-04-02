@@ -15,7 +15,7 @@ public class GamePriorityEditorWindow : EditorWindow
     private string jsonFilePath = "Bundles/Common/{0}.json";
 
     private int selectedIndex = 0;
-    private string[] options = new string[] { "GameModuleAttribute", "GameplayAttribute",};
+    private string[] options = new string[] { "GameSystemAttribute", "GameplayAttribute", };
 
     [MenuItem("Tools/MyTools/Game Priority Editor")]
     public static void ShowWindow()

@@ -1,12 +1,12 @@
 using GameFramework.Core;
 using GameFramework.View.UI;
 using GameFramework.Utility.GameDefine;
+using GameFramework.Logic;
 
 namespace GameFramework.View
 {
     public class ViewMessageHandler
     {
-
     }
 
     [GameMessage(99)]
@@ -56,6 +56,22 @@ namespace GameFramework.View
                 case 2:
 
                     break;
+            }
+        }
+    }
+
+    [GameMessage]
+    public class UIPanelMessage_Handler : GameMessageHandler<UIPanelMessage>
+    {
+        public override void Receive(UIPanelMessage message)
+        {
+            if (message.isVisible)
+            {
+                Game.GetSystem<UISystem>().ShowPanel(message.panel);
+            }
+            else
+            {
+                Game.GetSystem<UISystem>().HidePanel(message.panel);
             }
         }
     }

@@ -1,4 +1,5 @@
 using GameFramework.Core;
+using UnityEngine.XR;
 
 namespace GameFramework.Logic
 {
@@ -9,7 +10,20 @@ namespace GameFramework.Logic
 
         public override void OnInput(InputContext context)
         {
-            //TODO 
+            switch (context.Input)
+            {
+                case InputActionDefine.Move:
+                case InputActionDefine.Move2:
+                case InputActionDefine.LeftShift:
+                    Game.GetModule<PartyModule>().OnInput(context);
+                    break;
+
+                case InputActionDefine.Cancel:
+                    Game.GetModule<BattleModule>().EnterBattle();
+                    break;
+                case InputActionDefine.Esc:
+                    break;
+            }
         }
     }
 }

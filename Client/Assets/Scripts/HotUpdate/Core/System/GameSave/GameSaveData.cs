@@ -13,9 +13,12 @@ namespace GameFramework.Core
         public Dictionary<string, IGameSaveItem> GetData()
         {
             Dictionary<string, IGameSaveItem> result = new Dictionary<string, IGameSaveItem>();
-            foreach (var item in data)
+            if (data != null)
             {
-                result[item.Key] = item.Value;
+                foreach (var item in data)
+                {
+                    result[item.Key] = item.Value;
+                }
             }
             return result;
         }

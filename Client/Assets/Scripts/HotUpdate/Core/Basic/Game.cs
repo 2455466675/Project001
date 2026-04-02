@@ -41,12 +41,21 @@ namespace GameFramework
         internal static void Update(float deltaTime)
         {
             systemManager.Update(deltaTime);
+            gameplayManager.Update(deltaTime);
         }
 
         internal static void FixedUpdate(float fixedDeltaTime)
         {
             systemManager.FixedUpdate(fixedDeltaTime);
+            gameplayManager.FixedUpdate(fixedDeltaTime);
         }
+
+        internal static void LateUpdate(float deltaTime)
+        {
+            systemManager.LateUpdate(deltaTime);
+            gameplayManager.LateUpdate(deltaTime);
+        }
+
 
         public static T GetSystem<T>() where T : class, IGameSystem
         {

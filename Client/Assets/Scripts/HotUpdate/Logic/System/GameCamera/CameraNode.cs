@@ -8,6 +8,14 @@ namespace GameFramework.Logic
     {
         [SerializeField]
         private Camera mainCamera;
+        [SerializeField]
+        private Transform positonNode;
+        [SerializeField]
+        private Transform rotationNode;
+        [SerializeField]
+        private Transform offestNode;
+        [SerializeField]
+        private Transform shakeNode;
 
         public void AddOverlayCamera(Camera overlayCamera) 
         {
@@ -26,20 +34,25 @@ namespace GameFramework.Logic
 
         public void SetPosition(Vector3 position)
         {
-            if (mainCamera == null)
+            if (positonNode == null)
             {
                 return;
             }
-            mainCamera.transform.position = position;
+            positonNode.position = position;
         }
 
         public void SetRotation(Quaternion rotation)
         {
-            if (mainCamera == null)
+            if (rotationNode == null)
             {
                 return;
             }
-            mainCamera.transform.rotation = rotation;
+            rotationNode.rotation = rotation;
+        }
+
+        public void Shake() 
+        {
+
         }
     }
 }

@@ -13,6 +13,9 @@ namespace ECS
         private HashSet<IUpdateableComponent> updateableComponents;
         private HashSet<IUpdateableComponent> addUpdateableComponents;
         private HashSet<IUpdateableComponent> remUpdateableComponents;
+        private HashSet<ILateUpdateableComponent> lateUpdateableComponents;
+        private HashSet<ILateUpdateableComponent> addLateUpdateableComponents;
+        private HashSet<ILateUpdateableComponent> remLateUpdateableComponents;
         private HashSet<IFixedUpdateableComponent> fixedUpdateableComponents;
         private HashSet<IFixedUpdateableComponent> addfixedUpdateableComponents;
         private HashSet<IFixedUpdateableComponent> remfixedUpdateableComponents;
@@ -25,6 +28,9 @@ namespace ECS
             updateableComponents = new HashSet<IUpdateableComponent>();
             addUpdateableComponents = new HashSet<IUpdateableComponent>();
             remUpdateableComponents = new HashSet<IUpdateableComponent>();
+            lateUpdateableComponents = new HashSet<ILateUpdateableComponent>();
+            addLateUpdateableComponents = new HashSet<ILateUpdateableComponent>();
+            remLateUpdateableComponents = new HashSet<ILateUpdateableComponent>();
             fixedUpdateableComponents = new HashSet<IFixedUpdateableComponent>();
             addfixedUpdateableComponents = new HashSet<IFixedUpdateableComponent>();
             remfixedUpdateableComponents = new HashSet<IFixedUpdateableComponent>();
@@ -79,6 +85,32 @@ namespace ECS
                     fixedUpdateableComponents.Remove(item);
                 }
                 remfixedUpdateableComponents.Clear();
+            }
+        }
+
+        public void LateUpdate(float deltaTime)
+        {
+            if (addLateUpdateableComponents.Count > 0)
+            {
+                foreach (var item in addLateUpdateableComponents)
+                {
+                    lateUpdateableComponents.Add(item);
+                }
+                addLateUpdateableComponents.Clear();
+            }
+
+            foreach (var item in lateUpdateableComponents)
+            {
+                item.LateUpdate(deltaTime);
+            }
+
+            if (remLateUpdateableComponents.Count > 0)
+            {
+                foreach (var item in remLateUpdateableComponents)
+                {
+                    lateUpdateableComponents.Remove(item);
+                }
+                remLateUpdateableComponents.Clear();
             }
         }
 
@@ -255,6 +287,10 @@ namespace ECS
             {
                 addUpdateableComponents.Add(update);
             }
+            if (component is ILateUpdateableComponent lateUpdate)
+            {
+                addLateUpdateableComponents.Add(lateUpdate);
+            }
             if (component is IFixedUpdateableComponent fixedUpdate)
             {
                 addfixedUpdateableComponents.Add(fixedUpdate);
@@ -266,6 +302,10 @@ namespace ECS
             if (component is IUpdateableComponent update)
             {
                 remUpdateableComponents.Add(update);
+            }
+            if (component is ILateUpdateableComponent lateUpdate)
+            {
+                remLateUpdateableComponents.Add(lateUpdate);
             }
             if (component is IFixedUpdateableComponent fixedUpdate)
             {

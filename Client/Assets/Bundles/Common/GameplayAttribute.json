@@ -1,0 +1,13 @@
+
+{
+    "items" : [
+        {
+            "typeFullName" : "GameFramework.Core.SampleModule",
+            "priority"     : 0
+        },
+        {
+            "typeFullName" : "GameFramework.Logic.PartyModule",
+            "priority"     : 0
+        }
+    ]
+}

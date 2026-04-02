@@ -47,7 +47,7 @@ namespace GameFramework.Core
         {
             try
             {
-                MDebug.Log("Load Game!");
+                MDebug.Log("Load Game, index = ", index);
                 IGameSaveReader reader = new GameSaveReader();
 
                 IGameSaveData data = Load(index);

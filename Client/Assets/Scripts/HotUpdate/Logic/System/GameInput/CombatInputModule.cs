@@ -9,7 +9,19 @@ namespace GameFramework.Logic
 
         public override void OnInput(InputContext context)
         {
-            //TODO 
+            switch (context.Input)
+            {
+                case InputActionDefine.Move:
+                case InputActionDefine.Move2:
+                case InputActionDefine.LeftShift:
+                    break;
+
+                case InputActionDefine.Cancel:
+                    Game.GetModule<BattleModule>().ExitBattle();
+                    break;
+                case InputActionDefine.Esc:
+                    break;
+            }
         }
     }
 }
