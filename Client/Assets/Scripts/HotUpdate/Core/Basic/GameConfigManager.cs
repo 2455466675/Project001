@@ -33,7 +33,9 @@ namespace GameFramework.Core
         public async UniTask Init()
         {
             TextAsset textAsset = await Game.Resources.LoadAssetAsync<TextAsset>("Assets/Bundles/Config/cfg");
-            using (MemoryStream stream = new MemoryStream(textAsset.bytes))
+            var data = CfgDecryptor.Decrypt(textAsset.bytes, "aabuen(k23Llg?");
+
+            using (MemoryStream stream = new MemoryStream(data))
             {
                 using (BinaryReader br = new BinaryReader(stream))
                 {
@@ -51,24 +53,22 @@ namespace GameFramework.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T Find<T>(int id) where T : class, IConfig
+        public T Find<T>(int id) where T : class, ICfg
         {
-            Type t = typeof(T);
-            if (!cfgData.CfgDatas.ContainsKey(t))
+            var container = cfgData.GetContainer<T>();
+            if (container == null)
             {
                 return null;
             }
-            var container = cfgData.CfgDatas[t] as CfgContainerBase<T>;
             return container.Find(id);
         }
-        public T Find<T>(string id) where T : class, IConfig
+        public T Find<T>(string id) where T : class, ICfg
         {
-            Type t = typeof(T);
-            if (!cfgData.CfgDatas.ContainsKey(t))
+            var container = cfgData.GetContainer<T>();
+            if (container == null)
             {
                 return null;
             }
-            var container = cfgData.CfgDatas[t] as CfgContainerBase<T>;
             return container.Find(id);
         }
         /// <summary>
@@ -77,14 +77,13 @@ namespace GameFramework.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public T Find<T>(Func<T, bool> func) where T : class, IConfig
+        public T Find<T>(Func<T, bool> func) where T : class, ICfg
         {
-            Type t = typeof(T);
-            if (!cfgData.CfgDatas.ContainsKey(t))
+            var container = cfgData.GetContainer<T>();
+            if (container == null)
             {
                 return null;
             }
-            var container = cfgData.CfgDatas[t] as CfgContainerBase<T>;
             return container.Find(func);
         }
 
@@ -93,15 +92,13 @@ namespace GameFramework.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T[] FindAll<T>() where T : class, IConfig
+        public T[] FindAll<T>() where T : class, ICfg
         {
-            Type t = typeof(T);
-            if (!cfgData.CfgDatas.ContainsKey(t))
+            var container = cfgData.GetContainer<T>();
+            if (container == null)
             {
                 return new T[0];
             }
-
-            var container = cfgData.CfgDatas[t] as CfgContainerBase<T>;
             return container.FindAll();
         }
 
@@ -111,15 +108,13 @@ namespace GameFramework.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public T[] FindAll<T>(Func<T, bool> func) where T : class, IConfig
+        public T[] FindAll<T>(Func<T, bool> func) where T : class, ICfg
         {
-            Type t = typeof(T);
-            if (!cfgData.CfgDatas.ContainsKey(t))
+            var container = cfgData.GetContainer<T>();
+            if (container == null)
             {
                 return new T[0];
             }
-
-            var container = cfgData.CfgDatas[t] as CfgContainerBase<T>;
             return container.FindAll(func);
         }
 

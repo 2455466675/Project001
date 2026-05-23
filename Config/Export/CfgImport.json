@@ -1,0 +1,36 @@
+{
+    "encryptKey": "aabuen(k23Llg?",
+    "mergedFolders": [
+        {
+            "folder": "language/",
+            "type": "LanguageCfg"
+        }
+    ],
+    "singleFiles":
+    [ 
+        {
+            "excel":"gm.xlsx",
+            "type":"GmCfg",
+        }, 
+        {
+            "excel":"panel.xlsx",
+            "type":"PanelCfg",
+        },  
+        {
+            "excel":"actor.xlsx",
+            "type":"ActorCfg",
+        },
+        {
+            "excel":"item.xlsx",
+            "type":"ItemCfg",
+        },
+        {
+            "excel":"color.xlsx",
+            "type":"ColorCfg",
+        },
+		{
+            "excel":"login.xlsx",
+            "type":"LoginCfg",
+        }
+    ]
+}
