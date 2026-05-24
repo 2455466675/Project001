@@ -1,5 +1,6 @@
 using MVC;
 using GameFramework.Utility.GameDefine;
+using GameFramework.Logic;
 
 namespace GameFramework.View.UI
 {
@@ -8,7 +9,7 @@ namespace GameFramework.View.UI
     {
         protected override void OnShow()
         {
-            ObservableList<UISampleData> datas = new ObservableList<UISampleData>();
+            Logic.DataModelList<UISampleData> datas = new Logic.DataModelList<UISampleData>();
             for (int i = 0; i < 4; i++)
             {
                 datas.Add(new UISampleData() { Id = i, Name = "name_fixed_" + i });

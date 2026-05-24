@@ -25,15 +25,15 @@ namespace GameFramework.View.UI
     public abstract class NavigationController<T> : Controller, INavigationController where T : DataModel
     {
         private NavigationView view;
-        private ObservableList<T> datas;
+        private Logic.DataModelList<T> datas;
 
-        protected void SetData(ObservableList<T> datas)
+        protected void SetData(Logic.DataModelList<T> datas)
         {
             if (view == null)
             {
                 return;
             }
-            datas ??= new ObservableList<T>();
+            datas ??= new Logic.DataModelList<T>();
             this.datas = datas;
 
             this.Binder.Binding(this, datas, d => d.Count, (c, d) => 
@@ -268,7 +268,7 @@ namespace GameFramework.View.UI
             {
                 return;
             }
-
+            MDebug.Log("Register");
             view.OnSelectItem += OnSelect;
             view.OnDeselectItem += OnDeselect;
             view.OnSubmitItem += OnSubmit;

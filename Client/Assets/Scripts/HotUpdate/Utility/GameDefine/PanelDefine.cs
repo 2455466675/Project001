@@ -11,5 +11,7 @@ namespace GameFramework.Utility.GameDefine
         LoadingPanel = 1002,
 
         BattleLoadingPanel = 1007,
+
+        BattleFormation = 9001,
     }
 }

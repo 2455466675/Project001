@@ -1,5 +1,6 @@
-using MVC;
+using GameFramework.Logic;
 using GameFramework.Utility.GameDefine;
+using MVC;
 
 namespace GameFramework.View.UI
 {
@@ -8,7 +9,7 @@ namespace GameFramework.View.UI
     {
         protected override void OnShow()
         {
-            ObservableList<UISampleData> datas = new ObservableList<UISampleData>();
+            DataModelList<UISampleData> datas = new DataModelList<UISampleData>();
             for (int i = 0; i < 100; i++)
             {
                 datas.Add(new UISampleData() { Id = i, Name = "name_fluid_" + i });

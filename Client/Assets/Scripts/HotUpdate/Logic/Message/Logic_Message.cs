@@ -8,4 +8,10 @@ namespace GameFramework.Logic
         public bool isVisible;
         public PanelDefine panel;
     }
+
+    public struct UINavigationMessage : IGameMessage
+    {
+        public int[] indexs;
+        public NavigationDefine navigation;
+    }
 }

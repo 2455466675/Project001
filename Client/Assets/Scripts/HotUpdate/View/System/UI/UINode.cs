@@ -11,6 +11,8 @@ namespace GameFramework.View.UI
         Normal = 2,
         Top = 3,
         Log = 4,
+
+        Battle = 99,
     }
 
     [Serializable]

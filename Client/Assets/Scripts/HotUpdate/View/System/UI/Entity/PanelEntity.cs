@@ -8,9 +8,10 @@ namespace GameFramework.View.UI
 {
     public class PanelEntity
     {
+        public bool IsShowing { get; private set; }
+
         private UIPanel panel;
         private IPanelController controller;
-
         private Dictionary<NavigationDefine, NavigationListEntity> navigationListEntities;
 
         public void Init(PanelDefine id)
@@ -65,6 +66,12 @@ namespace GameFramework.View.UI
 
         public void Show(object content)
         {
+            if (IsShowing)
+            {
+                return;
+            }
+            IsShowing = true;
+
             controller?.Show(panel, content);
             foreach (var item in navigationListEntities)
             {
@@ -74,6 +81,12 @@ namespace GameFramework.View.UI
 
         public void Hide()
         {
+            if (!IsShowing)
+            {
+                return;
+            }
+            IsShowing = false;
+
             controller?.Hide();
             foreach (var item in navigationListEntities)
             {

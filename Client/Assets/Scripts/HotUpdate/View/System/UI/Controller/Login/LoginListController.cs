@@ -28,7 +28,7 @@ namespace GameFramework.View.UI
     {
         protected override void OnShow()
         {
-            ObservableList<LoginListItem> items = new ObservableList<LoginListItem>();
+            Logic.DataModelList<LoginListItem> items = new Logic.DataModelList<LoginListItem>();
             LoginCfg[] cfgs = Game.Config.FindAll<LoginCfg>();
             foreach (LoginCfg cfg in cfgs)
             {

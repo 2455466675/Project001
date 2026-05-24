@@ -23,11 +23,19 @@ namespace GameFramework.View
             navigationManager.Init();
         }
 
+        /// <summary>
+        /// 进入导航模式。导航到一个导航组
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="defaultIndexs"></param>
         public void Navigate(NavigationDefine id, int[] defaultIndexs = null)
         {
             navigationManager.Navigate(id, defaultIndexs);
         }
 
+        /// <summary>
+        /// 退出导航模式
+        /// </summary>
         public void CloseNavigate()
         {
             navigationManager.CloseNavigate();

@@ -75,4 +75,13 @@ namespace GameFramework.View
             }
         }
     }
+
+    [GameMessage]
+    public class UINavigationMessage_Handler : GameMessageHandler<UINavigationMessage>
+    {
+        public override void Receive(UINavigationMessage message)
+        {            
+            Game.GetSystem<UISystem>().Navigate(message.navigation, message.indexs);
+        }
+    }
 }

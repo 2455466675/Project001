@@ -19,7 +19,8 @@ namespace GameFramework.Logic
                 case InputActionDefine.Cancel:
                     Game.GetModule<BattleModule>().ExitBattle();
                     break;
-                case InputActionDefine.Esc:
+                case InputActionDefine.M_Keyboard:
+                    Game.Message.SendMessage(new UINavigationMessage() { navigation = Utility.GameDefine.NavigationDefine.BattlePlayer });
                     break;
             }
         }
