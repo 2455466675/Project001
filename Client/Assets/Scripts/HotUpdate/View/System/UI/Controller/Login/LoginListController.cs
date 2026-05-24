@@ -1,11 +1,12 @@
 using Config;
 using GameFramework.Core;
+using GameFramework.Logic;
 using MVC;
 using UnityEngine;
 
 namespace GameFramework.View.UI
 {
-    public class LoginListItem : ObservableModel
+    public class LoginListItem : DataModel
     {
         private int id;
         public int Id

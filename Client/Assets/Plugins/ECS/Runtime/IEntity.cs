@@ -4,7 +4,7 @@ namespace ECS
     {
         public int Eid { get; }
 
-        internal void Init(int eid, IComponentFactory componentFactory);
+        internal void Init(int eid, IWorld componentFactory);
         internal void Destroy();      
     }
 }

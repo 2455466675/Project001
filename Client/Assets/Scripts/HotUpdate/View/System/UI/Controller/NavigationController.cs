@@ -1,3 +1,4 @@
+using GameFramework.Logic;
 using MVC;
 
 namespace GameFramework.View.UI
@@ -21,7 +22,7 @@ namespace GameFramework.View.UI
         bool CheckIsLocked();
     }
 
-    public abstract class NavigationController<T> : Controller, INavigationController where T : ObservableModel
+    public abstract class NavigationController<T> : Controller, INavigationController where T : DataModel
     {
         private NavigationView view;
         private ObservableList<T> datas;

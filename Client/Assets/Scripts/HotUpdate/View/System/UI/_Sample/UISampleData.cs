@@ -1,6 +1,8 @@
+using GameFramework.Logic;
+
 namespace GameFramework.View.UI
 {
-    public class UISampleData : MVC.ObservableModel
+    public class UISampleData : DataModel
     {
         private int id;
         public int Id

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace ECS
 {
-    public class EntityManager : IComponentFactory
+    public class World : IWorld
     {
         private int eidGenerator;
         private Dictionary<int, IEntity> entites;
@@ -232,6 +232,15 @@ namespace ECS
 
         #endregion
 
+        public void DestroyEntity(Entity entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+            DestroyEntity(entity.Eid);
+        }
+
         public void DestroyEntity(int eid)
         {
             if (!entites.ContainsKey(eid))
@@ -244,14 +253,14 @@ namespace ECS
             entites.Remove(eid);
         }
 
-        T IComponentFactory.CreateComponent<T>(IEntity entity)
+        T IWorld.CreateComponent<T>(IEntity entity)
         {
             T component = CreateComponent<T>();
             component.Init(entity);
             return component;
         }
 
-        void IComponentFactory.DestroyComponent(IComponent component)
+        void IWorld.DestroyComponent(IComponent component)
         {
             UnregisterComponent(component);
             component.Destroy();

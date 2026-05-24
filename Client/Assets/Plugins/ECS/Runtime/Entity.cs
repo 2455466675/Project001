@@ -10,7 +10,7 @@ namespace ECS
         int IEntity.Eid => throw new NotImplementedException();
 
         private List<IComponent> components;
-        private IComponentFactory componentFactory;
+        private IWorld componentFactory;
 
         internal Entity()
         {
@@ -21,7 +21,7 @@ namespace ECS
             components.Add(component);
         }
 
-        void IEntity.Init(int eid, IComponentFactory componentFactory)
+        void IEntity.Init(int eid, IWorld componentFactory)
         {
             Eid = eid;
             components = new List<IComponent>();
