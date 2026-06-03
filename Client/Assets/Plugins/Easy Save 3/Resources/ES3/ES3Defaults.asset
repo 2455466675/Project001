@@ -43,13 +43,13 @@ MonoBehaviour:
     - Eflatun.SceneReference
     - PsdPlugin
     - LITJson
+    - GF_HotUpdate_Logic
     - MVC
     - UniTask.TextMeshPro
     - GF_HotUpdate_Utility
     - GameConfig
     - ECS
     - Assembly-CSharp-firstpass
-    - GF_HotUpdate_Logic
     - Navigation
     - Base
     - HybridCLR.Runtime

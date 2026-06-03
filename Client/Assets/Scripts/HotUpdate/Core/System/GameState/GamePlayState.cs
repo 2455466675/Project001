@@ -3,6 +3,13 @@ using FSM;
 
 namespace GameFramework.Core
 {
+    public enum GamePlayStatus
+    {
+        Begin = 0,
+        Loaded = 1,
+        Exit = 2,
+    }
+
     public class GamePlayState : StateBase
     {
         protected override void OnInit()
@@ -17,18 +24,21 @@ namespace GameFramework.Core
 
         protected override void OnExit()
         {
-            Game.Message.SendMessage(new GamePlayMessage() { status = 2 });
+            Game.Message.SendMessage(new GamePlayMessage() { status = GamePlayStatus.Exit });
             Game.GameplayExit();
         }
 
         private async UniTaskVoid Load()
         {
-            Game.Message.SendMessage(new GamePlayMessage() { status = 0 });
+            Game.Message.SendMessage(new GamePlayMessage() { status = GamePlayStatus.Begin });
+            await Game.GetSystem<GameTransitionManager>().Transition(Utility.GameDefine.TransitionType.LoadGame, LoadGame);
+            Game.Message.SendMessage(new GamePlayMessage() { status = GamePlayStatus.Loaded });
+        }
+
+        private async UniTask LoadGame()
+        {
             await Game.GetSystem<GameSceneSystem>().LoadScene(1001);
             await Game.GetSystem<GameSceneSystem>().LoadBattleScene();
-            Game.GetSystem<GameSaveSystem>().LoadGame(0);
-            Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Normal);
-            Game.Message.SendMessage(new GamePlayMessage() { status = 1 });
         }
     }
 }

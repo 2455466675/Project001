@@ -757,7 +757,7 @@ public class ObjectTreeViewer : EditorWindow
             var fields = GetAllFields(type);
             foreach (var field in fields)
             {
-                if (field.Name.Contains("k__BackingField")) continue;
+                if (IsIgnoreField(field)) continue;
 
                 try
                 {
@@ -779,7 +779,7 @@ public class ObjectTreeViewer : EditorWindow
             var props = GetAllProperties(type);
             foreach (var prop in props)
             {
-                if (!IsAutoProperty(prop)) continue;
+                if (IsIgnoreProperty(prop)) continue;
 
                 try
                 {
@@ -924,7 +924,7 @@ public class ObjectTreeViewer : EditorWindow
             var fields = GetAllFields(type);
             foreach (var field in fields)
             {
-                if (field.Name.Contains("k__BackingField")) continue;
+                if (IsIgnoreField(field)) continue;
 
                 try
                 {
@@ -946,7 +946,7 @@ public class ObjectTreeViewer : EditorWindow
             var props = GetAllProperties(type);
             foreach (var prop in props)
             {
-                if (!IsAutoProperty(prop)) continue;
+                if (IsIgnoreProperty(prop)) continue;
 
                 try
                 {
@@ -974,11 +974,70 @@ public class ObjectTreeViewer : EditorWindow
         return nextId++;
     }
 
+    private static Dictionary<string, bool> Assemblys = new Dictionary<string, bool>()
+    {
+        ["GameConfig"] = true,
+        ["GF_HotUpdate_Utility"] = true,
+        ["GF_HotUpdate_Core"] = true,
+        ["GF_HotUpdate_Logic"] = true,
+        ["GF_HotUpdate_View"] = true,
+        ["mscorlib"] = true,
+        ["System"] = true,
+        ["System.Core"] = true,
+    };
+
     private bool IsAutoProperty(PropertyInfo property)
     {
         var backingFieldName = $"<{property.Name}>k__BackingField";
         var backingField = property.DeclaringType?.GetField(backingFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
         return backingField != null && backingField.GetCustomAttribute<CompilerGeneratedAttribute>() != null;
+    }
+
+    private bool IsIgnoreProperty(PropertyInfo property)
+    {
+        if (!IsAutoProperty(property))
+        {
+            return true;
+        }
+
+        if (property.MemberType == MemberTypes.Event)
+        {
+            return true;
+        }
+
+        return IsIgnoreType(property.PropertyType);
+    }
+
+    private bool IsIgnoreField(FieldInfo field)
+    {
+        if (field.Name.Contains("k__BackingField"))
+        {
+            return true;
+        }
+
+        if (field.MemberType == MemberTypes.Event)
+        {
+            return true;
+        }
+
+        return IsIgnoreType(field.FieldType);
+    }
+
+    private bool IsIgnoreType(Type type)
+    {
+        if (Assemblys.ContainsKey(type.Assembly.GetName().Name))
+        {
+            return false;
+        }
+
+        string namespaceName = type.Namespace;
+        bool isUnityType = namespaceName != null && namespaceName.Contains("UnityEngine");
+        if (isUnityType)
+        {
+            return true;
+        }
+
+        return true;
     }
 
     private bool IsSimpleValueType(Type type)

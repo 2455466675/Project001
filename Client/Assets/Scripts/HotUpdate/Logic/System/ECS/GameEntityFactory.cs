@@ -1,6 +1,6 @@
 using ECS;
-using System;
 using GameFramework.Core;
+using System;
 
 namespace GameFramework.Logic
 {
@@ -13,6 +13,7 @@ namespace GameFramework.Logic
         {
             world = new World();
             world.Init();
+            world.CreatedEntity += OnCreatedEntity;
         }
 
         void IUpdateable.Update(float deltaTime)
@@ -30,49 +31,99 @@ namespace GameFramework.Logic
             world.LateUpdate(deltaTime);
         }
 
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <returns></returns>
         public Entity CreateEntity()
         {
-            return world.CreateEntity();
+            var entity = world.CreateEntity();
+            return entity;
         }
 
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <returns></returns>
         public Entity CreateEntity(params Type[] components)
         {
-            return world.CreateEntity(components);
+            var entity = world.CreateEntity(components);
+            return entity;
         }
 
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <returns></returns>
         public Entity CreateEntity<T>() where T : ComponentBase, new()
         {
-            return world.CreateEntity<T>();
+            var entity = world.CreateEntity<T>();
+            return entity;
         }
 
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <returns></returns>
         public Entity CreateEntity<T0, T1>() where T0 : ComponentBase, new() where T1 : ComponentBase, new()
         {
-            return world.CreateEntity<T0, T1>();
+            var entity = world.CreateEntity<T0, T1>();
+            return entity;
         }
 
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <returns></returns>
         public Entity CreateEntity<T0, T1, T2>() where T0 : ComponentBase, new() where T1 : ComponentBase, new() where T2 : ComponentBase, new()
         {
-            return world.CreateEntity<T0, T1, T2>();
+            var entity = world.CreateEntity<T0, T1, T2>();
+            return entity;
         }
 
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <returns></returns>
         public Entity CreateEntity<T0, T1, T2, T3>() where T0 : ComponentBase, new() where T1 : ComponentBase, new() where T2 : ComponentBase, new() where T3 : ComponentBase, new()
         {
-            return world.CreateEntity<T0, T1, T2, T3>();
+            var entity = world.CreateEntity<T0, T1, T2, T3>();
+            return entity;
         }
 
+        /// <summary>
+        /// 创建实体
+        /// </summary>
+        /// <returns></returns>
         public Entity CreateEntity<T0, T1, T2, T3, T4>() where T0 : ComponentBase, new() where T1 : ComponentBase, new() where T2 : ComponentBase, new() where T3 : ComponentBase, new() where T4 : ComponentBase, new()
         {
-            return world.CreateEntity<T0, T1, T2, T3, T4>();
+            var entity = world.CreateEntity<T0, T1, T2, T3, T4>();
+            return entity;
+        }
+
+        public Entity GetEntity(int eid)
+        {
+            return world.GetEntity(eid);
         }
 
         public void DestroyEntity(Entity entity)
         {
-            world.DestroyEntity(entity);
+            if (entity == null)
+            {
+                return;
+            }
+            DestroyEntity(entity.Eid);
         }
 
         public void DestroyEntity(int eid)
         {
             world.DestroyEntity(eid);
+            Game.Message.SendMessage(new DestroyEntityMessage() { eid = eid });
+        }
+
+        private void OnCreatedEntity(int eid)
+        {
+            Game.Message.SendMessage(new CreateEntityMessage() { eid = eid });
         }
     }
 }

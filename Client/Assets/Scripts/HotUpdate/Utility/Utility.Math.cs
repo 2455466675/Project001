@@ -16,6 +16,11 @@ namespace GameFramework.Utility
                 return Mathf.Min(v1, v2);
             }
 
+            public static float Min(float v1, float v2)
+            {
+                return Mathf.Min(v1, v2);
+            }
+
             public static int Floor(float v)
             {
                 return Mathf.FloorToInt(v);

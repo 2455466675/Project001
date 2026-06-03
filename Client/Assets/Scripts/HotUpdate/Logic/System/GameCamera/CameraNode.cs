@@ -9,6 +9,8 @@ namespace GameFramework.Logic
         [SerializeField]
         private Camera mainCamera;
         [SerializeField]
+        private GameObject volume;
+        [SerializeField]
         private Transform positonNode;
         [SerializeField]
         private Transform rotationNode;
@@ -41,18 +43,32 @@ namespace GameFramework.Logic
             positonNode.position = position;
         }
 
+        public void SetOffestPosition(Vector3 position)
+        {
+            if (offestNode == null)
+            {
+                return;
+            }
+            offestNode.localPosition = position;
+        }
+
         public void SetRotation(Quaternion rotation)
         {
             if (rotationNode == null)
             {
                 return;
             }
-            rotationNode.rotation = rotation;
+            rotationNode.localRotation = rotation;
         }
 
         public void Shake() 
         {
 
+        }
+
+        public void SetVolume(bool enable)
+        {
+            volume.SetActive(enable);
         }
     }
 }

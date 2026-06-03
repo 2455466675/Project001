@@ -14,6 +14,11 @@ namespace ECS
             Awake();
         }
 
+        void IComponent.Start()
+        {
+            Start();
+        }
+
         void IComponent.Destroy()
         {
             OnDestroy();
@@ -31,7 +36,16 @@ namespace ECS
             return inst.GetComponent<T>();
         }
 
+        /// <summary>
+        /// 组件被附加到实体时触发
+        /// </summary>
         protected virtual void Awake() { }
+
+        protected virtual void Start() { }
+
+        /// <summary>
+        /// 组件被销毁时触发
+        /// </summary>
         protected virtual void OnDestroy() { }
     }
 }

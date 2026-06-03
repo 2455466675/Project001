@@ -27,9 +27,9 @@ namespace GameFramework.View.UI
             for (int i = 0; i < m_Widgets.Length; i++)
             {
                 WidgetItem item = m_Widgets[i];
-                if (item.widget.GetType() == type) 
+                if (item.widget is T result) 
                 {
-                    return item.widget as T;
+                    return result;
                 }
             }
             return default;
@@ -42,13 +42,12 @@ namespace GameFramework.View.UI
                 return default;
             }
 
-            Type type = typeof(T);
             for (int i = 0; i < m_Widgets.Length; i++)
             {
                 WidgetItem item = m_Widgets[i];
-                if (item.key == key && item.widget.GetType() == type)
+                if (item.key == key && item.widget is T result)
                 {
-                    return item.widget as T;
+                    return result;
                 }
             }
             return default;

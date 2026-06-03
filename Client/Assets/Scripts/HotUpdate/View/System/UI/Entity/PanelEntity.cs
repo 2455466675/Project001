@@ -71,7 +71,6 @@ namespace GameFramework.View.UI
                 return;
             }
             IsShowing = true;
-
             controller?.Show(panel, content);
             foreach (var item in navigationListEntities)
             {

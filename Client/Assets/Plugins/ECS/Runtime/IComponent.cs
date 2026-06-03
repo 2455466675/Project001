@@ -5,6 +5,8 @@ namespace ECS
         public int Eid { get; }
         internal void Init(IEntity entity);
 
+        internal void Start();
+
         internal void Destroy();
     }
 }

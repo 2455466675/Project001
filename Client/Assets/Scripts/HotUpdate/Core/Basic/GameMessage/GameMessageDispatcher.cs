@@ -6,8 +6,46 @@ namespace GameFramework.Core
 {
     public class GameMessageDispatcher
     {
+        private interface IMessageAction
+        {
+
+        }
+
+        private class MessageAction<T> : IMessageAction where T : struct, IGameMessage
+        {
+            private List<Action<T>> actions;
+
+            public MessageAction()
+            {
+                actions = new List<Action<T>>();
+            }
+
+            public void Invoke(T message)
+            {
+                for (int i = 0; i < actions.Count; i++)
+                {
+                    actions[i]?.Invoke(message);
+                }
+            }
+
+            public void Add(Action<T> action)
+            {
+                actions.Add(action);
+            }
+
+            public void Remove(Action<T> action)
+            {
+                actions.Remove(action);
+            }
+
+            public void Clear()
+            {
+                actions.Clear();
+            }
+        }
+
         private Dictionary<Type, List<IGameMessageHandler>> handlers;
-        private Dictionary<Type, List<object>> subscribers;
+        private Dictionary<Type, IMessageAction> actions;
 
         internal GameMessageDispatcher()
         {
@@ -16,7 +54,7 @@ namespace GameFramework.Core
         public void Init()
         {
             handlers = new Dictionary<Type, List<IGameMessageHandler>>();
-            subscribers = new Dictionary<Type, List<object>>();
+            actions = new Dictionary<Type, IMessageAction>();
 
             var items = Game.GetTypes<GameMessageAttribute>();
             for (int i = 0; i < items.Length; i++)
@@ -59,37 +97,30 @@ namespace GameFramework.Core
                 }
             }
 
-            if (subscribers.ContainsKey(t))
+            if (actions.ContainsKey(t))
             {
-                List<object> list = subscribers[t];
-                foreach (var item in list)
-                {
-                    if (item is Action<T> handler)
-                    {
-                        handler.Invoke(message);
-                    }
-                }
+                (actions[t] as MessageAction<T>).Invoke(message);
             }
         }
 
         public void Subscribe<T>(Action<T> handler) where T : struct, IGameMessage
         {
             Type t = typeof(T);
-            if (!subscribers.ContainsKey(t))
+            if (!actions.ContainsKey(t))
             {
-                subscribers.Add(t, new List<object>());
+                actions.Add(t, new MessageAction<T>());
             }
-            subscribers[t].Add(handler);
+            (actions[t] as MessageAction<T>).Add(handler);
         }
 
         public void Unsubscribe<T>(Action<T> handler) where T : struct, IGameMessage
         {
             Type t = typeof(T);
-            if (!subscribers.ContainsKey(t))
+            if (!actions.ContainsKey(t))
             {
                 return;
             }
-            subscribers[t].Remove(handler);
+            (actions[t] as MessageAction<T>).Remove(handler);
         }
     }
 }

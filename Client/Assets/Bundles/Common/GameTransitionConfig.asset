@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023c2339fd5630045a27849c0e6b76c9, type: 3}
+  m_Name: GameTransitionConfig
+  m_EditorClassIdentifier: 
+  configList:
+  - transitionType: 0
+    fadeInTime: 0
+    transitionTime: 2000
+    fadeOutTime: 0
+  - transitionType: 1
+    fadeInTime: 0
+    transitionTime: 2000
+    fadeOutTime: 0
+  - transitionType: 2
+    fadeInTime: 500
+    transitionTime: 1000
+    fadeOutTime: 500
+  - transitionType: 3
+    fadeInTime: 500
+    transitionTime: 1000
+    fadeOutTime: 500

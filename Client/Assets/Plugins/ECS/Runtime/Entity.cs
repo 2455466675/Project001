@@ -1,5 +1,7 @@
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System;
 using System.Collections.Generic;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace ECS
 {
@@ -7,7 +9,7 @@ namespace ECS
     {
         public int Eid { get; private set; }
 
-        int IEntity.Eid => throw new NotImplementedException();
+        int IEntity.Eid => this.Eid;
 
         private List<IComponent> components;
         private IWorld componentFactory;
@@ -43,6 +45,8 @@ namespace ECS
         {
             T component = componentFactory.CreateComponent<T>(this);
             AddComponent(component);
+            component.Init(this);
+            component.Start();
             return component;
         }
 
@@ -66,10 +70,36 @@ namespace ECS
             return inst.GetComponent<T>();
         }
 
+        public ComponentBase GetComponent(Type type)
+        {
+            for (int i = 0; i < components.Count; i++)
+            {
+                IComponent component = components[i];
+                if (component.GetType() == type)
+                {
+                    return component as ComponentBase;
+                }
+            }
+            return null;
+        }
+
         public T AddComponent<T>() where T : ComponentBase, new()
         {
             IAddComponent inst = this;
             return inst.AddComponent<T>();
+        }
+
+        public ComponentBase AddComponent(Type type)
+        {
+            IComponent component = componentFactory.CreateComponent(type);
+            if (component == null)
+            {
+                return null;
+            }
+            AddComponent(component);
+            component.Init(this);
+            component.Start();
+            return component as ComponentBase;
         }
     }
 }

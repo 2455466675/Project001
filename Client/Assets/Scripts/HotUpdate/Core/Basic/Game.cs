@@ -28,8 +28,8 @@ namespace GameFramework
             await assemblyManager.Init();
             await systemManager.Init();
 
-            gameplayManager.Init();
             Message.Init();
+            gameplayManager.Init();
 
             await GameRoot.LoadGameRoot();
 

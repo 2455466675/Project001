@@ -8,9 +8,7 @@ namespace GameFramework.Utility.GameDefine
         TestPanel2 = 2,
 
         LoginPanel = 1001,
-        LoadingPanel = 1002,
-
-        BattleLoadingPanel = 1007,
+        GameTransitionPanel = 1002,
 
         BattleFormation = 9001,
     }

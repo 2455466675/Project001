@@ -6,6 +6,7 @@ namespace ECS
 {
     public class World : IWorld
     {
+        private bool isInited;
         private int eidGenerator;
         private Dictionary<int, IEntity> entites;
 
@@ -19,6 +20,8 @@ namespace ECS
         private HashSet<IFixedUpdateableComponent> fixedUpdateableComponents;
         private HashSet<IFixedUpdateableComponent> addfixedUpdateableComponents;
         private HashSet<IFixedUpdateableComponent> remfixedUpdateableComponents;
+
+        public event Action<int> CreatedEntity;
 
         public void Init()
         {
@@ -34,10 +37,17 @@ namespace ECS
             fixedUpdateableComponents = new HashSet<IFixedUpdateableComponent>();
             addfixedUpdateableComponents = new HashSet<IFixedUpdateableComponent>();
             remfixedUpdateableComponents = new HashSet<IFixedUpdateableComponent>();
+
+            isInited = true;
         }
 
         public void Update(float deltaTime)
         {
+            if (!isInited)
+            {
+                return;
+            }
+
             if (addUpdateableComponents.Count > 0)
             {
                 foreach (var item in addUpdateableComponents)
@@ -64,6 +74,11 @@ namespace ECS
 
         public void FixedUpdate(float fixedDeltaTime)
         {
+            if (!isInited)
+            {
+                return;
+            }
+
             if (addfixedUpdateableComponents.Count > 0)
             {
                 foreach (var item in addfixedUpdateableComponents)
@@ -90,6 +105,11 @@ namespace ECS
 
         public void LateUpdate(float deltaTime)
         {
+            if (!isInited)
+            {
+                return;
+            }
+
             if (addLateUpdateableComponents.Count > 0)
             {
                 foreach (var item in addLateUpdateableComponents)
@@ -118,28 +138,57 @@ namespace ECS
 
         public Entity CreateEntity()
         {
+            if (!isInited)
+            {
+                return null;
+            }
+
             int eid = eidGenerator++;
             IEntity entity = new Entity();
             entity.Init(eid, this);
             entites.Add(eid, entity);
+
+            CreatedEntity?.Invoke(eid);
+
             return (Entity)entity;
         }
 
         public Entity CreateEntity(params Type[] components)
         {
+            if (!isInited)
+            {
+                return null;
+            }
+            IWorld world = this;
             Entity entity = CreateEntity();
 
             int length = components.Length;
             IComponent[] temps = new IComponent[length];
             for (int i = 0; i < length; i++)
             {
-                IComponent c = CreateComponent(components[i]);
+                Type ctype = components[i];
+                if (ctype == null)
+                {
+                    continue;
+                }
+
+                IComponent c = world.CreateComponent(ctype);
+                if (c == null)
+                {
+                    continue;
+                }
+
                 entity.AddComponent(c);
                 temps[i] = c;
             }
             for (int i = 0; i < length; i++)
             {
-                temps[i].Init(entity);
+                temps[i]?.Init(entity);
+            }
+
+            for (int i = 0; i < length; i++)
+            {
+                temps[i]?.Start();
             }
 
             return entity;
@@ -147,17 +196,28 @@ namespace ECS
 
         public Entity CreateEntity<T>() where T : ComponentBase, new()
         {
+            if (!isInited)
+            {
+                return null;
+            }
+
             Entity entity = CreateEntity();
 
             IComponent c = CreateComponent<T>();
             entity.AddComponent(c);
             c.Init(entity);
+            c.Start();
 
             return entity;
         }
 
         public Entity CreateEntity<T0, T1>() where T0 : ComponentBase, new() where T1 : ComponentBase, new()
         {
+            if (!isInited)
+            {
+                return null;
+            }
+
             Entity entity = CreateEntity();
 
             IComponent c0 = CreateComponent<T0>();
@@ -166,12 +226,19 @@ namespace ECS
             entity.AddComponent(c1);
             c0.Init(entity);
             c1.Init(entity);
+            c0.Start();
+            c1.Start();
 
             return entity;
         }
 
         public Entity CreateEntity<T0, T1, T2>() where T0 : ComponentBase, new() where T1 : ComponentBase, new() where T2 : ComponentBase, new()
         {
+            if (!isInited)
+            {
+                return null;
+            }
+
             Entity entity = CreateEntity();
 
             IComponent c0 = CreateComponent<T0>();
@@ -183,12 +250,20 @@ namespace ECS
             c0.Init(entity);
             c1.Init(entity);
             c2.Init(entity);
+            c0.Start();
+            c1.Start();
+            c2.Start();
 
             return entity;
         }
 
         public Entity CreateEntity<T0, T1, T2, T3>() where T0 : ComponentBase, new() where T1 : ComponentBase, new() where T2 : ComponentBase, new() where T3 : ComponentBase, new()
         {
+            if (!isInited)
+            {
+                return null;
+            }
+
             Entity entity = CreateEntity();
 
             IComponent c0 = CreateComponent<T0>();
@@ -203,12 +278,21 @@ namespace ECS
             c1.Init(entity);
             c2.Init(entity);
             c3.Init(entity);
+            c0.Start();
+            c1.Start();
+            c2.Start();
+            c3.Start();
 
             return entity;
         }
 
         public Entity CreateEntity<T0, T1, T2, T3, T4>() where T0 : ComponentBase, new() where T1 : ComponentBase, new() where T2 : ComponentBase, new() where T3 : ComponentBase, new() where T4 : ComponentBase, new()
         {
+            if (!isInited)
+            {
+                return null;
+            }
+
             Entity entity = CreateEntity();
 
             IComponent c0 = CreateComponent<T0>();
@@ -226,14 +310,34 @@ namespace ECS
             c2.Init(entity);
             c3.Init(entity);
             c4.Init(entity);
+            c0.Start();
+            c1.Start();
+            c2.Start();
+            c3.Start();
+            c4.Start();
 
             return entity;
         }
 
         #endregion
 
+        public Entity GetEntity(int eid)
+        {
+            if (!entites.ContainsKey(eid))
+            {
+                return null;
+            }
+
+            return (Entity)entites[eid];
+        }
+
         public void DestroyEntity(Entity entity)
         {
+            if (!isInited)
+            {
+                return;
+            }
+
             if (entity == null)
             {
                 return;
@@ -243,6 +347,11 @@ namespace ECS
 
         public void DestroyEntity(int eid)
         {
+            if (!isInited)
+            {
+                return;
+            }
+
             if (!entites.ContainsKey(eid))
             {
                 return;
@@ -256,7 +365,6 @@ namespace ECS
         T IWorld.CreateComponent<T>(IEntity entity)
         {
             T component = CreateComponent<T>();
-            component.Init(entity);
             return component;
         }
 
@@ -266,15 +374,18 @@ namespace ECS
             component.Destroy();
         }
 
-        private T CreateComponent<T>() where T : IComponent, new()
+        IComponent IWorld.CreateComponent(Type componentType)
         {
-            T component = new T();
-            RegisterComponent(component);
-            return component;
-        }
+            if (componentType == null)
+            {
+                return null;
+            }
 
-        private IComponent CreateComponent(Type componentType)
-        {
+            if (!typeof(IComponent).IsAssignableFrom(componentType))
+            {
+                return null;
+            }
+
             if (!componentFactories.TryGetValue(componentType, out var factory))
             {
                 var constructor = componentType.GetConstructor(Type.EmptyTypes);
@@ -286,6 +397,13 @@ namespace ECS
             }
 
             IComponent component = factory();
+            RegisterComponent(component);
+            return component;
+        }
+
+        private T CreateComponent<T>() where T : IComponent, new()
+        {
+            T component = new T();
             RegisterComponent(component);
             return component;
         }

@@ -1,6 +1,7 @@
 using GameFramework.Core;
 using GameFramework.Utility.GameDefine;
 using GameFramework.View.UI;
+using MVC;
 
 namespace GameFramework.View
 {
@@ -43,6 +44,7 @@ namespace GameFramework.View
 
         public void ShowPanel(PanelDefine id, object content = null)
         {
+            MDebug.Log($"ShowPanel:{id}");
             entityManager.ShowPanel(id, content);
         }
 

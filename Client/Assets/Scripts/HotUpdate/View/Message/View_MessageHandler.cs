@@ -1,7 +1,7 @@
 using GameFramework.Core;
+using GameFramework.Logic;
 using GameFramework.View.UI;
 using GameFramework.Utility.GameDefine;
-using GameFramework.Logic;
 
 namespace GameFramework.View
 {
@@ -9,11 +9,12 @@ namespace GameFramework.View
     {
     }
 
-    [GameMessage(99)]
+    [GameMessage(-99)]
     public class GameStartMessage_Handler : GameMessageHandler<GameStartMessage>
     {
         public override void Receive(GameStartMessage message)
         {
+            Game.Message.SendMessage(new UIPanelMessage() { isVisible = true, panel = Utility.GameDefine.PanelDefine.GameTransitionPanel });
         }
     }
 
@@ -38,23 +39,20 @@ namespace GameFramework.View
         }
     }
 
-    [GameMessage]
+    [GameMessage(99)]
     public class GamePlayMessage_Handler : GameMessageHandler<GamePlayMessage>
     {
         public override void Receive(GamePlayMessage message)
         {
-            int status = message.status;
+            GamePlayStatus status = message.status;
             switch (status)
             {
-                case 0:
+                case GamePlayStatus.Begin:
                     Game.GetSystem<UISystem>().CloseNavigate();
-                    Game.GetSystem<UISystem>().ShowPanel(PanelDefine.LoadingPanel);
                     break;
-                case 1:
-                    Game.GetSystem<UISystem>().HidePanel(PanelDefine.LoadingPanel);
+                case GamePlayStatus.Loaded:
                     break;
-                case 2:
-
+                case GamePlayStatus.Exit:
                     break;
             }
         }
@@ -82,6 +80,24 @@ namespace GameFramework.View
         public override void Receive(UINavigationMessage message)
         {            
             Game.GetSystem<UISystem>().Navigate(message.navigation, message.indexs);
+        }
+    }
+
+    [GameMessage]
+    public class CreateEntity_Handler : GameMessageHandler<CreateEntityMessage>
+    {
+        public override void Receive(CreateEntityMessage message)
+        {
+            Game.GetSystem<GameProjector>().CreateProjection(message.eid);
+        }
+    }
+
+    [GameMessage]
+    public class ProjectComponent_Handler : GameMessageHandler<ProjectComponentMessage>
+    {
+        public override void Receive(ProjectComponentMessage message)
+        {
+            Game.GetSystem<GameProjector>().ProjectComponent(message.eid, message.type);
         }
     }
 }

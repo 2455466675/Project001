@@ -1,11 +1,12 @@
 using GameFramework.Core;
+using GameFramework.Logic;
 
-namespace GameFramework.Logic
+namespace GameFramework.View
 {
     [GameInputModule]
-    public class CombatInputModule : InputModuleBase
+    public class NormalInputModule : InputModuleBase
     {
-        public override InputModuleType ModuleType => InputModuleType.Combat;
+        public override InputModuleType ModuleType => InputModuleType.Normal;
 
         public override void OnInput(InputContext context)
         {
@@ -14,13 +15,13 @@ namespace GameFramework.Logic
                 case InputActionDefine.Move:
                 case InputActionDefine.Move2:
                 case InputActionDefine.LeftShift:
+                    Game.GetModule<PartyModule>().OnInput(context);
                     break;
 
                 case InputActionDefine.Cancel:
-                    Game.GetModule<BattleModule>().ExitBattle();
+                    Game.GetModule<BattleModule>().EnterBattle();
                     break;
-                case InputActionDefine.M_Keyboard:
-                    Game.Message.SendMessage(new UINavigationMessage() { navigation = Utility.GameDefine.NavigationDefine.BattlePlayer });
+                case InputActionDefine.Esc:
                     break;
             }
         }
