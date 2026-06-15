@@ -82,22 +82,4 @@ namespace GameFramework.View
             Game.GetSystem<UISystem>().Navigate(message.navigation, message.indexs);
         }
     }
-
-    [GameMessage]
-    public class CreateEntity_Handler : GameMessageHandler<CreateEntityMessage>
-    {
-        public override void Receive(CreateEntityMessage message)
-        {
-            Game.GetSystem<GameProjector>().CreateProjection(message.eid);
-        }
-    }
-
-    [GameMessage]
-    public class ProjectComponent_Handler : GameMessageHandler<ProjectComponentMessage>
-    {
-        public override void Receive(ProjectComponentMessage message)
-        {
-            Game.GetSystem<GameProjector>().ProjectComponent(message.eid, message.type);
-        }
-    }
 }

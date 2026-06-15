@@ -9,12 +9,6 @@ namespace GameFramework.Logic
         public int eid;
     }
 
-    public struct ProjectComponentMessage : IGameMessage
-    {
-        public int eid;
-        public Type type;
-    }
-
     public struct DestroyEntityMessage : IGameMessage
     {
         public int eid;

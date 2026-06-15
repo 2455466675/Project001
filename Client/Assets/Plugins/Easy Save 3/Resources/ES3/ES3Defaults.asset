@@ -31,9 +31,12 @@ MonoBehaviour:
     assemblyNames:
     - HybridCLR.Editor
     - ES3
+    - MCPForUnity.Runtime
     - YooAsset
+    - com.qingzheng.object-tree-viewer.Editor
     - Eflatun.SceneReference.Editor
     - PPv2URPConverters
+    - MCPForUnity.Editor
     - UniTask
     - GF_HotUpdate_Core
     - YooAsset.Editor

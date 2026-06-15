@@ -80,7 +80,7 @@ namespace GameFramework.Logic
             Transform parent = GameRoot.GetNode<ActorNode>().GetActorNode(ActorType.Pool);
             actor.transform.SetParent(null);
             actor.transform.SetParent(parent);
-            actor.LocalPosition = Vector3.zero;
+            actor.transform.localPosition = Vector3.zero;
 
             pool.Enqueue(actor);
         }

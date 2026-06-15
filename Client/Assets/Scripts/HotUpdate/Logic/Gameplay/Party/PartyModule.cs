@@ -95,7 +95,7 @@ namespace GameFramework.Logic
 
         private Entity CreateCharacter()
         {
-            Entity entity = Game.GetSystem<GameEntityFactory>().CreateEntity<MemberComponent, ActorComponent, MotorComponent>();
+            Entity entity = Game.GetSystem<GameEntityFactory>().CreateEntity<MemberComponent, ActorComponent, MotorComponent, MotorAnimatorComponent>();
             return entity;
         }
     }

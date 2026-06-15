@@ -27,7 +27,7 @@ namespace GameFramework.Logic
         [SerializeField]
         private AnimatorController[] m_Controllers;
 
-        public void SetAnimatorController(string name)
+        public void SetAnimatorController(string controllerName)
         {
             if (m_Animator == null)
             {
@@ -41,7 +41,7 @@ namespace GameFramework.Logic
 
             foreach (var item in m_Controllers)
             {
-                if (item.name == name)
+                if (item.name == controllerName)
                 {
                     m_Animator.runtimeAnimatorController = item.controller;
                     return;
@@ -49,7 +49,7 @@ namespace GameFramework.Logic
             }
         }
 
-        public void SetFloat(string name, float value)
+        public void SetAnimatorValue(string name, float value)
         {
             if (m_Animator != null)
             {
@@ -57,7 +57,7 @@ namespace GameFramework.Logic
             }
         }
 
-        public void SetInteger(string name, int value)
+        public void SetAnimatorValue(string name, int value)
         {
             if (m_Animator != null)
             {
@@ -65,7 +65,7 @@ namespace GameFramework.Logic
             }
         }
 
-        public void SetBool(string name, bool value)
+        public void SetAnimatorValue(string name, bool value)
         {
             if (m_Animator != null)
             {
@@ -73,7 +73,7 @@ namespace GameFramework.Logic
             }
         }
 
-        public void SetTrigger(string name)
+        public void SetAnimatorValue(string name)
         {
             if (m_Animator != null)
             {
@@ -81,7 +81,7 @@ namespace GameFramework.Logic
             }
         }
 
-        public void PlayAnim(string name)
+        public void PlayAnimation(string name)
         {
             if (m_Animator != null)
             {

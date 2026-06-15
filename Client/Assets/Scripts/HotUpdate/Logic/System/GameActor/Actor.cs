@@ -2,195 +2,117 @@ using UnityEngine;
 
 namespace GameFramework.Logic
 {
-    public class Actor : MonoBehaviour, IActor
+    public class Actor : MonoBehaviour, IAnimator
     {
         public int Id { get; set; }
 
         [SerializeField]
         private Rigidbody m_Rigidbody;
-        [SerializeField]
-        private Collider m_Collider;
-        [SerializeField]
-        private ActorAnimator m_Animator;
-        [SerializeField]
-        private Transform[] m_Bones;
 
-        public Transform Transform => transform;
+        [SerializeField]
+        private Puppet puppet;
 
-        public Vector3 Velocity
+        public Vector3 GetPosition()
         {
-            get
-            {
-                if (m_Rigidbody == null)
-                {
-                    return Vector3.zero;
-                }
-                else
-                {
-                    return m_Rigidbody.linearVelocity;
-                }
-            }
-            set
-            {
-                if (m_Rigidbody == null)
-                {
-                    return;
-                }
-                else
-                {
-                    m_Rigidbody.linearVelocity = value;
-                }
-            }
+            return transform.position;
         }
 
-        public Vector3 Position
+        public void SetPosition(Vector3 position)
         {
-            get
-            {
-                return transform.position;
-            }
-            set
-            {
-                transform.position = value;
-            }
+            transform.position = position;
         }
 
-        public Vector3 LocalPosition
+        public void SetVelocity(Vector3 velocity)
         {
-            get
+            if (m_Rigidbody != null)
             {
-                return transform.localPosition;
-            }
-            set
-            {
-                transform.localPosition = value;
-            }
-        }
-
-        public Quaternion Rotation
-        {
-            get
-            {
-                return transform.rotation;
-            }
-            set
-            {
-                transform.rotation = value;
+                m_Rigidbody.linearVelocity = velocity;
             }
         }
 
         public void MovePosition(Vector3 pos)
         {
-            if (m_Rigidbody == null)
-            {
-                return;
-            }
-            else
+            if (m_Rigidbody != null)
             {
                 m_Rigidbody.MovePosition(pos);
-            }
+            }            
         }
+
+        #region Puppet
 
         public Transform GetBone(string name)
         {
-            if (m_Bones == null || m_Bones.Length == 0)
+            if (puppet == null)
             {
                 return null;
             }
 
-            foreach (var item in m_Bones)
-            {
-                if (item.gameObject.name == name)
-                {
-                    return item;
-                }
-            }
-
-            return m_Bones[0];
-        }
-
-        public void SetKinematic(bool isKinematic)
-        {
-            if (m_Rigidbody != null)
-            {
-                m_Rigidbody.isKinematic = isKinematic;
-            }
-
-            if (m_Collider != null)
-            {
-                m_Collider.isTrigger = isKinematic;
-            }
+            return puppet.GetBone(name);
         }
 
         public void SetAnimatorController(string name)
         {
-            if (m_Animator == null)
+            if (puppet == null)
             {
                 return;
             }
-            m_Animator.SetAnimatorController(name);
+            puppet.SetAnimatorController(name);
         }
 
-        public void SetBool(string name, bool value)
+        public void SetAnimatorValue(string name, bool value)
         {
-            if (m_Animator == null)
+            if (puppet == null)
             {
                 return;
             }
-            m_Animator.SetBool(name, value);
+            puppet.SetAnimatorValue(name, value);
         }
 
-        public void SetFloat(string name, float value)
+        public void SetAnimatorValue(string name, float value)
         {
-            if (m_Animator == null)
+            if (puppet == null)
             {
                 return;
             }
-            m_Animator.SetFloat(name, value);
+            puppet.SetAnimatorValue(name, value);
         }
 
-        public void SetInteger(string name, int value)
+        public void SetAnimatorValue(string name, int value)
         {
-            if (m_Animator == null)
+            if (puppet == null)
             {
                 return;
             }
-            m_Animator.SetInteger(name, value);
+            puppet.SetAnimatorValue(name, value);
         }
 
-        public void SetTrigger(string name)
+        public void SetAnimatorValue(string name)
         {
-            if (m_Animator == null)
+            if (puppet == null)
             {
                 return;
             }
-            m_Animator.SetTrigger(name);
+            puppet.SetAnimatorValue(name);
         }
 
-        public void PlayAnim(string name)
+        public void PlayAnimation(string name)
         {
-            if (m_Animator == null)
+            if (puppet == null)
             {
                 return;
             }
-            m_Animator.PlayAnim(name);
+            puppet.PlayAnimation(name);
         }
+
+        #endregion
 
 #if UNITY_EDITOR
 
         private void OnValidate()
         {
-            if (m_Animator == null)
-            {
-                m_Animator = GetComponentInChildren<ActorAnimator>();
-            }
             if (m_Rigidbody == null)
             {
                 m_Rigidbody = GetComponentInChildren<Rigidbody>();
-            }
-            if (m_Collider == null)
-            {
-                m_Collider = GetComponentInChildren<Collider>();
             }
         }
 #endif

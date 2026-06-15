@@ -7,6 +7,16 @@
       "dependencies": {},
       "hash": "01754c8fb47bd49697b3428993109e7a972a7968"
     },
+    "com.coplaydev.unity-mcp": {
+      "version": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.test-framework": "1.1.31"
+      },
+      "hash": "78ee5418415953b79c358bfe6355fcc3fde7912b"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
@@ -23,6 +33,13 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
       "hash": "b849990020c30ac6ead4e4fb4881428f86dcde0d"
+    },
+    "com.qingzheng.object-tree-viewer": {
+      "version": "https://github.com/2455466675/ObjectTreeViewer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4d5c7ec14286b528520073d274064983d87fc70f"
     },
     "com.tuyoogame.yooasset": {
       "version": "2.3.16",

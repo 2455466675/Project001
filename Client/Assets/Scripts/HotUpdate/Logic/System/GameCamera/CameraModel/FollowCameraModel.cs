@@ -47,8 +47,7 @@ namespace GameFramework.Logic
             {
                 return;
             }
-            var (x, y, z) = actorComponent.GetPosition();
-            cameraNode.SetPosition(new Vector3(x, y, z));
+            cameraNode.SetPosition(actorComponent.GetPosition());
         }
     }
 }
