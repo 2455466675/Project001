@@ -14,6 +14,8 @@ namespace GameFramework.Logic
         void SetPosition(float x, float y, float z);
         void SetPosition(Vector3 position);
         Vector3 GetPosition();
+        void SetVelocity(Vector3 velocity);
+        void MovePosition(Vector3 position);
     }
 
     public class ActorComponent : ComponentBase, IActorComponent
