@@ -18,10 +18,10 @@ namespace GameFramework.View
             controllerManager.Init();
 
             entityManager = new UIEntityManager();
-            entityManager.Init();
+            entityManager.Init(controllerManager);
 
             navigationManager = new UINavigationManager();
-            navigationManager.Init();
+            navigationManager.Init(controllerManager);
         }
 
         /// <summary>

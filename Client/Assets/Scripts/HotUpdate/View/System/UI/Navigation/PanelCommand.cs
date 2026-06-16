@@ -3,12 +3,12 @@ using GameFramework.Utility.GameDefine;
 
 namespace GameFramework.View.UI
 {
-    public class PanelCammand : GameInputCammand
+    public class PanelCommand : GameInputCommand
     {
         public PanelDefine Define { get; private set; }
         private object content;
 
-        public PanelCammand(PanelDefine define, object content = null)
+        public PanelCommand(PanelDefine define, object content = null)
         {
             Define = define;
             this.content = content;

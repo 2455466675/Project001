@@ -10,7 +10,7 @@ namespace GameFramework.Logic
         void SetActorId(int actorId);
         void RefreshActor();
         void RecycleActor();
-        void SetVisable(bool visable);
+        void SetVisible(bool visible);
         void SetPosition(float x, float y, float z);
         void SetPosition(Vector3 position);
         Vector3 GetPosition();
@@ -148,13 +148,13 @@ namespace GameFramework.Logic
             actor = null;
         }
 
-        public void SetVisable(bool visable)
+        public void SetVisible(bool visible)
         {
             if (actor == null)
             {
                 return;
             }
-            if (visable)
+            if (visible)
             {
                 actor.gameObject.SetActive(true);
                 SyncPosition();

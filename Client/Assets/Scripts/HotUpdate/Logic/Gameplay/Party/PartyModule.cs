@@ -68,7 +68,7 @@ namespace GameFramework.Logic
             {
                 var entity = characters[i];
                 var ac = entity.GetComponent<ActorComponent>();
-                ac.SetVisable(true);
+                ac.SetVisible(true);
 
                 var mc = entity.GetComponent<MotorComponent>();                
                 mc.StartUp();
@@ -81,7 +81,7 @@ namespace GameFramework.Logic
             {
                 var entity = characters[i];
                 var ac = entity.GetComponent<ActorComponent>();
-                ac.SetVisable(false);
+                ac.SetVisible(false);
 
                 var mc = entity.GetComponent<MotorComponent>();
                 mc.ShutDown();

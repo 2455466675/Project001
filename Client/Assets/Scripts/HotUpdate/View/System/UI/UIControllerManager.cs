@@ -87,7 +87,7 @@ namespace GameFramework.View.UI
             }
             else
             {
-                return new NavigationDefine[0];
+                return Array.Empty<NavigationDefine>();
             }
         }
 

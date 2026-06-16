@@ -3,31 +3,31 @@ using GameFramework.Utility.GameDefine;
 
 namespace GameFramework.View.UI
 {
-    public class NavigateCammand : GameInputCammand
+    public class NavigateCommand : GameInputCommand
     {
         private bool isDirty;
 
         public void Navigate(NavigationDefine navigationDefine, PanelDefine panelDefine, int[] defaultIndexs)
         {
-            PanelCammand panelCammand;
+            PanelCommand panelCommand;
 
-            if (TryPeek(out PanelCammand cammand) && cammand.Define == panelDefine)
+            if (TryPeek(out PanelCommand command) && command.Define == panelDefine)
             {
-                panelCammand = cammand;
+                panelCommand = command;
             }
             else
             {
-                panelCammand = new PanelCammand(panelDefine);
-                Push(panelCammand);
+                panelCommand = new PanelCommand(panelDefine);
+                Push(panelCommand);
             }
 
-            if (panelCammand.TryPeek(out NavigationListCammand subCammand) && subCammand.Define == navigationDefine)
+            if (panelCommand.TryPeek(out NavigationListCommand subCommand) && subCommand.Define == navigationDefine)
             {
                 return;
             }
 
-            NavigationListCammand listCammand = new NavigationListCammand(navigationDefine, defaultIndexs);
-            panelCammand.Push(listCammand);
+            NavigationListCommand listCommand = new NavigationListCommand(navigationDefine, defaultIndexs);
+            panelCommand.Push(listCommand);
         }
 
         protected override void OnInputAction(InputContext context)

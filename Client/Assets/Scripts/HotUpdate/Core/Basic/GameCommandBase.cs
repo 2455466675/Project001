@@ -2,56 +2,56 @@ using System.Collections.Generic;
 
 namespace GameFramework.Core
 {
-    public abstract class GameCammandBase
+    public abstract class GameCommandBase
     {
         public bool IsLocked => CheckLocked();
-        public int Count => subCammands.Count;
+        public int Count => subCommands.Count;
 
-        private readonly Stack<GameCammandBase> subCammands;
+        private readonly Stack<GameCommandBase> subCommands;
 
         protected bool IsPopAll { get; private set; }
 
-        public GameCammandBase()
+        public GameCommandBase()
         {
-            subCammands = new Stack<GameCammandBase>();
+            subCommands = new Stack<GameCommandBase>();
         }
 
-        #region ²Ù×÷½Ó¿Ú
+        #region ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½
 
         /// <summary>
-        /// µ¯³ö×îÉÏÃæµÄ×ÓÃüÁî
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <returns>cammand is clean?</returns>
+        /// <returns>command is clean?</returns>
         public bool Pop()
         {
-            if (subCammands.Count == 0)
+            if (subCommands.Count == 0)
             {
                 return !IsLocked;
             }
 
-            if (TryPeek(out GameCammandBase cammand))
+            if (TryPeek(out GameCommandBase command))
             {
-                bool isOver = cammand.Pop(); //×ÜÊÇÔÚ²Ù×÷×îÉÏ²ãµÄÄÇÒ»¸öÃüÁî
+                bool isOver = command.Pop(); //ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (!isOver)
                 {
                     return false;
                 }
 
-                cammand.OnPop();
-                subCammands.Pop();
+                command.OnPop();
+                subCommands.Pop();
 
-                if (subCammands.Count == 0)
+                if (subCommands.Count == 0)
                 {
                     return !IsLocked;
                 }
                 else
                 {
-                    if (TryPeek(out cammand))
+                    if (TryPeek(out command))
                     {
-                        bool success = cammand.Rise();
+                        bool success = command.Rise();
                         if (!success)
                         {
-                            return Pop();   //Èç¹ûÏÂÒ»¸öÃüÁîÉÏÉýÊ§°Ü£¬½«ÆäÒ²µ¯³ö
+                            return Pop();   //ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½
                         }
                     }
                     return false;
@@ -64,14 +64,14 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// Çå¿Õ£¬Ö±µ½Óöµ½Ò»¸ö¾²Ì¬ÃüÁî
+        /// ï¿½ï¿½Õ£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         public void PopAll()
         {
             IsPopAll = true;
             while (Count > 0)
             {
-                GameCammandBase top = Top();
+                GameCommandBase top = Top();
                 if (top == null)
                 {
                     break;
@@ -87,73 +87,73 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// Ñ¹ÈëÒ»¸ö×ÓÃüÁî
+        /// Ñ¹ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <param name="cammand"></param>
-        /// <returns>ÊÇ·ñ³É¹¦</returns>
-        public bool Push(GameCammandBase cammand)
+        /// <param name="command"></param>
+        /// <returns>ï¿½Ç·ï¿½É¹ï¿½</returns>
+        public bool Push(GameCommandBase command)
         {
-            if (cammand == null)
+            if (command == null)
             {
                 return false;
             }
-            bool success = cammand.OnPush();
+            bool success = command.OnPush();
             if (!success)
             {
                 return false;
             }
 
-            if (TryPeek(out GameCammandBase peek))
+            if (TryPeek(out GameCommandBase peek))
             {
                 peek.Sink();
             }
-            subCammands.Push(cammand);
+            subCommands.Push(command);
             return true;
         }
 
         /// <summary>
-        /// ×îÉÏÃæµÄÒ»¸öÃüÁî
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <returns></returns>
-        public GameCammandBase Top()
+        public GameCommandBase Top()
         {
-            GameCammandBase temp = this;
-            GameCammandBase cammand = this;
-            while (cammand.TryPeek(out cammand))
+            GameCommandBase temp = this;
+            GameCommandBase command = this;
+            while (command.TryPeek(out command))
             {
-                temp = cammand;
+                temp = command;
             }
             return temp;
         }
 
         /// <summary>
-        /// TryPeek²Ù×÷
+        /// TryPeekï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <param name="cammand"></param>
+        /// <param name="command"></param>
         /// <returns></returns>
-        //public bool TryPeek(out GameCammandBase cammand)
+        //public bool TryPeek(out GameCommandBase command)
         //{
-        //    return subCammands.TryPeek(out cammand);
+        //    return subCommands.TryPeek(out command);
         //}
 
-        public bool TryPeek<T>(out T cammand) where T : GameCammandBase
+        public bool TryPeek<T>(out T command) where T : GameCommandBase
         {
             if (Count == 0)
             {
-                cammand = default;
+                command = default;
                 return false;
             }
 
-            if (subCammands.TryPeek(out GameCammandBase gc))
+            if (subCommands.TryPeek(out GameCommandBase gc))
             {
                 if (gc is T tc)
                 {
-                    cammand = tc;
+                    command = tc;
                     return true;
                 }
             }
 
-            cammand = default;
+            command = default;
             return false;
         }
 
@@ -162,9 +162,9 @@ namespace GameFramework.Core
         #region
 
         /// <summary>
-        /// ÃüÁîÉýµ½Õ»¶¥
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ»ï¿½ï¿½
         /// </summary>
-        /// <returns>ÊÇ·ñ³É¹¦</returns>
+        /// <returns>ï¿½Ç·ï¿½É¹ï¿½</returns>
         private bool Rise()
         {
             bool success = OnRise();
@@ -174,58 +174,58 @@ namespace GameFramework.Core
             }
             else
             {
-                if (TryPeek(out GameCammandBase cammand))
+                if (TryPeek(out GameCommandBase command))
                 {
-                    return cammand.Rise();
+                    return command.Rise();
                 }
                 return true;
             }
         }
 
         /// <summary>
-        /// ÃüÁîÏÂ³Á
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½Â³ï¿½
         /// </summary>
         private void Sink()
         {
             OnSink();
-            if (TryPeek(out GameCammandBase cammand))
+            if (TryPeek(out GameCommandBase command))
             {
-                cammand.Sink();
+                command.Sink();
             }
         }
 
         #endregion
 
-        #region ×ÓÀàÊµÏÖ
+        #region ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// <summary>
-        /// µ±ÃüÁîµ¯³öÊ±
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½îµ¯ï¿½ï¿½Ê±
         /// </summary>
         protected virtual void OnPop()
         {
         }
         /// <summary>
-        /// µ±ÃüÁîÈëÕ»Ê±
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ»Ê±
         /// </summary>
-        /// <returns>ÊÇ·ñ³É¹¦</returns>
+        /// <returns>ï¿½Ç·ï¿½É¹ï¿½</returns>
         protected virtual bool OnPush()
         {
             return true;
         }
         /// <summary>
-        /// µ±ÃüÁîÉýµ½Õ»¶¥Ê±
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ»ï¿½ï¿½Ê±
         /// </summary>
         protected virtual bool OnRise()
         {
             return true;
         }
         /// <summary>
-        /// µ±ÃüÁîÏÂ³ÁÊ±
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â³ï¿½Ê±
         /// </summary>
         protected virtual void OnSink()
         {
         }
         /// <summary>
-        /// ÊÇ·ñËø¶¨´ËÃüÁî
+        /// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <returns></returns>
         protected virtual bool CheckLocked()

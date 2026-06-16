@@ -1,12 +1,12 @@
 namespace GameFramework.Core
 {
-    public class GameInputCammand : GameCammandBase, IInputable
+    public class GameInputCommand : GameCommandBase, IInputable
     {
         public void OnInput(InputContext context)
         {
-            if (TryPeek(out GameInputCammand cammand))
+            if (TryPeek(out GameInputCommand command))
             {
-                cammand.OnInput(context);
+                command.OnInput(context);
             }
             OnInputAction(context);
         }

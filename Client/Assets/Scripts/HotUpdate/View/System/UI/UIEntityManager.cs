@@ -5,10 +5,12 @@ namespace GameFramework.View.UI
 {
     public class UIEntityManager
     {
+        private UIControllerManager controllerManager;
         private Dictionary<PanelDefine, PanelEntity> panelEntities;
 
-        public void Init()
+        public void Init(UIControllerManager controllerManager)
         {
+            this.controllerManager = controllerManager;
             panelEntities = new Dictionary<PanelDefine, PanelEntity>();
         }
 
@@ -45,7 +47,7 @@ namespace GameFramework.View.UI
 
         public NavigationListEntity GetNavigationListEntity(NavigationDefine id)
         {
-            PanelDefine panelDefine = Game.GetSystem<UISystem>().GetPanelDefine(id);
+            PanelDefine panelDefine = controllerManager.GetPanelDefine(id);
             PanelEntity panelEntity = GetPanelEntity(panelDefine);
             if (panelEntity == null)
             {

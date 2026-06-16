@@ -65,7 +65,7 @@ namespace GameFramework.Core
             battleScene = entity;
         }
 
-        public void SetBattleSceneVisable(bool visable)
+        public void SetBattleSceneVisible(bool visible)
         {
             if (battleScene == null || !battleScene.IsValid)
             {
@@ -77,8 +77,8 @@ namespace GameFramework.Core
                 return;
             }
 
-            battleScene.SetVisible(visable);
-            mainScene.SetVisible(!visable);
+            battleScene.SetVisible(visible);
+            mainScene.SetVisible(!visible);
         }
     }
 }

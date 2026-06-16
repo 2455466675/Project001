@@ -3,12 +3,12 @@ using GameFramework.Utility.GameDefine;
 
 namespace GameFramework.View.UI
 {
-    public class NavigationListCammand : GameInputCammand
+    public class NavigationListCommand : GameInputCommand
     {
         public NavigationDefine Define { get; private set; }
         private int[] defaultIndexs;
 
-        public NavigationListCammand(NavigationDefine define, int[] defaultIndexs) : base()
+        public NavigationListCommand(NavigationDefine define, int[] defaultIndexs) : base()
         {
             this.Define = define;
             this.defaultIndexs = defaultIndexs;

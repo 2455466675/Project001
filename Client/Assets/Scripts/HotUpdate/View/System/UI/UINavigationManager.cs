@@ -1,34 +1,35 @@
-using GameFramework.Core;
 using GameFramework.Utility.GameDefine;
 
 namespace GameFramework.View.UI
 {
     public class UINavigationManager
     {
-        private NavigateCammand cammand;
+        private UIControllerManager controllerManager;
+        private NavigateCommand command;
 
-        public void Init()
+        public void Init(UIControllerManager controllerManager)
         {
-            cammand = new NavigateCammand();
+            this.controllerManager = controllerManager;
+            command = new NavigateCommand();
         }
 
         public void Navigate(NavigationDefine id, int[] defaultIndexs)
         {
-            PanelDefine panelDefine = Game.GetSystem<UISystem>().GetPanelDefine(id);
+            PanelDefine panelDefine = controllerManager.GetPanelDefine(id);
             if (panelDefine == PanelDefine.None)
             {
                 return;
             }
 
             defaultIndexs ??= new int[] { 0 };
-            cammand.Navigate(id, panelDefine, defaultIndexs);
-            cammand.RegisterInputSystem();
+            command.Navigate(id, panelDefine, defaultIndexs);
+            command.RegisterInputSystem();
         }
 
         public void CloseNavigate()
         {
-            cammand.PopAll();
-            cammand.RegisterInputSystem();
+            command.PopAll();
+            command.RegisterInputSystem();
         }
     }
 }
