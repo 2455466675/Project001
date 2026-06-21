@@ -13,7 +13,7 @@ namespace GameFramework.Core
 
         async UniTask IAsyncInit.Init()
         {
-            SceneConfigMap map = await Game.Resources.LoadAssetAsync<SceneConfigMap>("Assets/Bundles/Common/SceneMap");
+            SceneConfigMap map = await Game.Assets.LoadAssetAsync<SceneConfigMap>("Assets/Bundles/Common/SceneMap");
             List<SceneConfig> configs = map.GetConfigList();
             entities = new Dictionary<int, SceneEntity>(configs.Count);
 

@@ -73,7 +73,7 @@ namespace GameFramework.Core
                 return;
             }
             state = State.Loading;
-            var handle = Game.Resources.LoadScene(cfg.Path, cfg.LoadSceneMode);
+            var handle = Game.Assets.LoadScene(cfg.Path, cfg.LoadSceneMode);
             this.handle = handle;
             state = State.Visible;
         }
@@ -91,7 +91,7 @@ namespace GameFramework.Core
 
             state = State.Loading;
 
-            var handle = Game.Resources.LoadScentAsync(cfg.Path, cfg.LoadSceneMode);
+            var handle = Game.Assets.LoadSceneAsync(cfg.Path, cfg.LoadSceneMode);
             await handle;
 
             this.handle = handle;

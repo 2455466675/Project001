@@ -32,7 +32,7 @@ namespace GameFramework.Core
 
         public async UniTask Init()
         {
-            TextAsset textAsset = await Game.Resources.LoadAssetAsync<TextAsset>("Assets/Bundles/Config/cfg");
+            TextAsset textAsset = await Game.Assets.LoadAssetAsync<TextAsset>("Assets/Bundles/Config/cfg");
             var data = CfgDecryptor.Decrypt(textAsset.bytes, "aabuen(k23Llg?");
 
             using (MemoryStream stream = new MemoryStream(data))
@@ -43,7 +43,7 @@ namespace GameFramework.Core
                     cfgData.Deserialize(br);
                 }
             }
-
+            Game.Assets.ReleaseAsset(textAsset);
             textItems = new Dictionary<string, TextItem>();
         }
 

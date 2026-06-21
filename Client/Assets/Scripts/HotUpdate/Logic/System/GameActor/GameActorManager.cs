@@ -31,7 +31,7 @@ namespace GameFramework.Logic
                 }
                 else
                 {
-                    GameObject obj = Game.Resources.LoadAndInstantiate(cfg.PrefabPath, null);
+                    GameObject obj = Game.Assets.Instantiate(cfg.PrefabPath, null);
                     actor = obj.GetComponent<Actor>();
                     actor.Id = id;
                 }
@@ -59,7 +59,7 @@ namespace GameFramework.Logic
                 }
                 else
                 {
-                    GameObject obj = await Game.Resources.LoadAndInstantiateAsync(cfg.PrefabPath, null);
+                    GameObject obj = await Game.Assets.InstantiateAsync(cfg.PrefabPath, null);
                     actor = obj.GetComponent<Actor>();
                     actor.Id = id;
                 }

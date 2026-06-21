@@ -13,7 +13,7 @@ namespace GameFramework.Core
 
         async UniTask IAsyncInit.Init()
         {
-            config = await Game.Resources.LoadAssetAsync<GameTransitionConfig>("Assets/Bundles/Common/GameTransitionConfig");
+            config = await Game.Assets.LoadAssetAsync<GameTransitionConfig>("Assets/Bundles/Common/GameTransitionConfig");
         }
 
         public async UniTask Transition(TransitionType transitionType, Func<UniTask> parallelTask)
