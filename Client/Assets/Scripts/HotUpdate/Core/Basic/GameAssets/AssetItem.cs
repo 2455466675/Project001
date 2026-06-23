@@ -96,45 +96,59 @@ namespace GameFramework.Core
             }
 
             T asset = handle.AssetObject as T;
-            refCount++;
-
-            return asset;
-        }
-
-        public void ReleaseAsset(UnityEngine.Object asset)
-        {
             if (asset == null)
             {
-                return;
-            }
-
-            if (!IsDone)
-            {
-                return;
-            }
-
-            int instanceID = asset.GetInstanceID();
-            if (instances.Contains(instanceID))
-            {
-                instances.Remove(instanceID);
-                UnityEngine.Object.Destroy(asset);
+                MDebug.Error($"资源类型不匹配:{handle.GetAssetInfo().AssetType.Name} to {typeof(T).Name}");
             }
             else
             {
-                if (instanceID == handle.AssetObject.GetInstanceID())
-                {
-                    refCount--;
-                }                
+                refCount++;
             }
+            
+            return asset;
+        }
+
+        public bool ReleaseAsset(UnityEngine.Object asset)
+        {
+            if (asset == null)
+            {
+                return false;
+            }
+
+            int instanceID = asset.GetInstanceID();
+
+            // 实例对象是独立于 handle 的真实对象，其销毁不应受 handle 状态影响，必须始终执行，否则会残留 GameObject
+            if (instances.Remove(instanceID))
+            {
+                UnityEngine.Object.Destroy(asset);
+                return true;
+            }
+
+            if (handle == null || !handle.IsValid || !handle.IsDone)
+            {
+                return false;
+            }
+
+            if (instanceID == handle.AssetObject.GetInstanceID())
+            {
+                refCount--;
+            }
+
+            return refCount <= 0;
         }
 
         public void Release()
         {
+            if (handle == null)
+            {
+                return;
+            }
+
             if (RefCount <= 0)
             {
                 handle.Release();
                 handle = null;
-            }            
+            }
         }
 
         private void AddInstance(UnityEngine.Object asset)
