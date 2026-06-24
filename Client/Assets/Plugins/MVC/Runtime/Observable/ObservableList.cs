@@ -116,6 +116,11 @@ namespace MVC
             items = new List<T>(collection);
         }
 
+        public ObservableList(int capacity)
+        {
+            items = new List<T>(capacity);
+        }
+
         public void Add(T item)
         {
             if (IsReadOnly)

@@ -35,6 +35,14 @@ namespace GameFramework.Core
             saveSummary = handler;
         }
 
+        public void LoadSaveSummary()
+        {
+            MDebug.Log("LoadSaveSummary");
+            var data = LoadSummary();
+            saveSummary?.Load(data);
+            MDebug.Log("LoadSaveSummary End");
+        }
+
         public void SaveGame(int index) 
         {
             try
@@ -119,7 +127,7 @@ namespace GameFramework.Core
             IGameSaveData data = null;
             if (ES3.FileExists(SummaryFilePath))
             {
-                data = ES3.Load<GameSaveData>(SummaryKey, FilePath);
+                data = ES3.Load<GameSaveData>(SummaryKey, SummaryFilePath);
             }
             data ??= new GameSaveData();
             return data;

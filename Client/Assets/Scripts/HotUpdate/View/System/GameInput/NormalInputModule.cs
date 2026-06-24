@@ -22,6 +22,8 @@ namespace GameFramework.View
                     Game.GetModule<BattleModule>().EnterBattle();
                     break;
                 case InputActionDefine.Esc:
+                case InputActionDefine.M_Keyboard:
+                    Game.GetSystem<GameSaveSystem>().SaveGame(0);
                     break;
             }
         }

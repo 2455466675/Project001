@@ -34,7 +34,6 @@ MonoBehaviour:
     - MCPForUnity.Runtime
     - YooAsset
     - com.qingzheng.object-tree-viewer.Editor
-    - Eflatun.SceneReference.Editor
     - PPv2URPConverters
     - MCPForUnity.Editor
     - UniTask
@@ -43,7 +42,6 @@ MonoBehaviour:
     - Assembly-CSharp
     - GF_HotUpdate_View
     - UniTask.Linq
-    - Eflatun.SceneReference
     - PsdPlugin
     - LITJson
     - GF_HotUpdate_Logic

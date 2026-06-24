@@ -28,7 +28,6 @@ namespace GameFramework.Core
     {
         public override void Receive(GameStartMessage message)
         {
-            MDebug.Log("GameStartMessage_Handler");
             Game.GetSystem<GameStateSystem>().Start();
         }
     }

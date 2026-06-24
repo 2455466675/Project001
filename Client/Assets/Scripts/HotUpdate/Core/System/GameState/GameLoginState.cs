@@ -24,6 +24,7 @@ namespace GameFramework.Core
         {
             Game.Message.SendMessage(new GameLoginMessage() { status = 0 });
             await Game.GetSystem<GameSceneSystem>().LoadScene(1002);
+            Game.GetSystem<GameSaveSystem>().LoadSaveSummary();
             Game.Message.SendMessage(new GameLoginMessage() { status = 1 });
         }
     }
