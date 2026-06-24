@@ -2,13 +2,23 @@ using System.Collections.Generic;
 
 namespace GameFramework.Core
 {
+    public interface IGameSaveSummary
+    {
+        IGameSaveData Save(int index);
+        void Load(IGameSaveData data);
+    }
+
     [GameSystem]
     public class GameSaveSystem : IGameSystem, IInit
     {
         private const string DataKey = "SAVE_DATA_{0}";
         private const string FilePath = "saveData";
 
+        private const string SummaryKey = "SUMMARY";
+        private const string SummaryFilePath = "saveSummaryData";
+
         private List<IGameSavable> savables;
+        private IGameSaveSummary saveSummary;
 
         void IInit.Init()
         {
@@ -18,6 +28,11 @@ namespace GameFramework.Core
         public void Register(IGameSavable savable)
         {
             savables.Add(savable);
+        }
+
+        public void RegisterSaveSummaryHandler(IGameSaveSummary handler)
+        {
+            saveSummary = handler;
         }
 
         public void SaveGame(int index) 
@@ -34,6 +49,9 @@ namespace GameFramework.Core
 
                 IGameSaveData data = writer.GetData();
                 Save(index, data);
+
+                IGameSaveData summaryData = saveSummary.Save(index);
+                SaveSummary(summaryData);
 
                 MDebug.Log("Save Game Finish!");
             }
@@ -86,6 +104,22 @@ namespace GameFramework.Core
             {
                 string key = GetSaveDataKey(index);
                 data = ES3.Load<GameSaveData>(key, FilePath);
+            }
+            data ??= new GameSaveData();
+            return data;
+        }
+
+        private void SaveSummary(IGameSaveData data)
+        {
+            ES3.Save(SummaryKey, data as GameSaveData, SummaryFilePath);
+        }
+
+        private IGameSaveData LoadSummary()
+        {
+            IGameSaveData data = null;
+            if (ES3.FileExists(SummaryFilePath))
+            {
+                data = ES3.Load<GameSaveData>(SummaryKey, FilePath);
             }
             data ??= new GameSaveData();
             return data;
