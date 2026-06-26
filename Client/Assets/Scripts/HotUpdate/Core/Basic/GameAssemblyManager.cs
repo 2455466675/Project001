@@ -64,7 +64,7 @@ namespace GameFramework.Core
         private async UniTask LoadMetadataForAOTAssembly()
         {
 #if UNITY_EDITOR
-            //await UniTask.Yield();
+            await UniTask.CompletedTask;
 #else           
             HomologousImageMode mode = HomologousImageMode.SuperSet;
             foreach (var aotDllName in AotDllList)
@@ -95,6 +95,7 @@ namespace GameFramework.Core
                 assemblies.Add(assembly);
                 Debug.Log("Load Assembly : " + assembly.GetName().Name);
             }
+            await UniTask.CompletedTask;
 #else
             foreach (var name in HotUpdateDllList)
             {

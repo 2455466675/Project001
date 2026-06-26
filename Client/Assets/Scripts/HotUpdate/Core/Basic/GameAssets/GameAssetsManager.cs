@@ -23,7 +23,7 @@ namespace GameFramework.Core
 
         public async UniTask Init()
         {
-
+            await UniTask.CompletedTask;
         }
 
         public T LoadFromResources<T>(string path) where T : UnityEngine.Object

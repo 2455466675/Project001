@@ -46,6 +46,7 @@ namespace GameFramework.Logic
             Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Combat);
             Game.GetSystem<GameCameraController>().SetCameraModel(CameraModel.Controlled);
             Game.Message.SendMessage(new UIPanelMessage() { isVisible = true, panel = Utility.GameDefine.PanelDefine.BattleFormation });
+            await UniTask.CompletedTask;
         }
 
         private async UniTask UnloadBattle()
@@ -55,6 +56,7 @@ namespace GameFramework.Logic
             Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Normal);
             Game.GetSystem<GameCameraController>().SetCameraModel(CameraModel.Follow);
             Game.GetModule<PartyModule>().StartUp();
+            await UniTask.CompletedTask;
         }
     }
 }   
