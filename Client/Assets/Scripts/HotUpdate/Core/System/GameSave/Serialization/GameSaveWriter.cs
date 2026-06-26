@@ -36,6 +36,15 @@ namespace GameFramework.Core
             current.Write(key, value);
         }
 
+        public void Write(string key, long value)
+        {
+            if (current == null)
+            {
+                return;
+            }
+            current.Write(key, value);
+        }
+
         public void Write(string key, bool value)
         {
             if (current == null)
@@ -72,7 +81,7 @@ namespace GameFramework.Core
             current.Write(key, value);
         }
 
-        public void Write<T>(string key, T value) where T : class
+        public void Write(string key, ISavableData value)
         {
             if (current == null)
             {
@@ -81,7 +90,7 @@ namespace GameFramework.Core
             current.Write(key, value);
         }
 
-        public void Write<T>(string key, List<T> value) where T : class
+        public void Write<T>(string key, List<T> value) where T : class, ISavableData
         {
             if (current == null)
             {
@@ -90,7 +99,7 @@ namespace GameFramework.Core
             current.Write(key, value);
         }
 
-        public void Write<T>(string key, Dictionary<int, T> value) where T : class
+        public void Write<T>(string key, Dictionary<int, T> value) where T : class, ISavableData
         {
             if (current == null)
             {
@@ -99,7 +108,7 @@ namespace GameFramework.Core
             current.Write(key, value);
         }
 
-        public void Write<T>(string key, Dictionary<string, T> value) where T : class
+        public void Write<T>(string key, Dictionary<string, T> value) where T : class, ISavableData
         {
             if (current == null)
             {

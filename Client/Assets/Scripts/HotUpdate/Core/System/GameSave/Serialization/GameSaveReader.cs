@@ -37,6 +37,18 @@ namespace GameFramework.Core
             }
         }
 
+        public long ReadLong(string key)
+        {
+            if (current == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return current.ReadLong(key);
+            }
+        }
+
         public bool ReadBool(string key)
         {
             if (current == null)
@@ -85,7 +97,7 @@ namespace GameFramework.Core
             }
         }
 
-        public T ReadData<T>(string key) where T : class
+        public T ReadData<T>(string key) where T : class, ISavableData
         {
             if (current == null)
             {
@@ -97,7 +109,7 @@ namespace GameFramework.Core
             }
         }
 
-        public List<T> ReadList<T>(string key) where T : class
+        public List<T> ReadList<T>(string key) where T : class, ISavableData
         {
             if (current == null)
             {
@@ -109,7 +121,7 @@ namespace GameFramework.Core
             }
         }
 
-        public Dictionary<int, T> ReadDicWithIntKey<T>(string key) where T : class
+        public Dictionary<int, T> ReadDicWithIntKey<T>(string key) where T : class, ISavableData
         {
             if (current == null)
             {
@@ -121,7 +133,7 @@ namespace GameFramework.Core
             }
         }
 
-        public Dictionary<string, T> ReadDicWithStringKey<T>(string key) where T : class
+        public Dictionary<string, T> ReadDicWithStringKey<T>(string key) where T : class, ISavableData
         {
             if (current == null)
             {

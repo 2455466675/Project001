@@ -1,31 +1,40 @@
+using System;
 using System.Collections.Generic;
 
 namespace GameFramework.Core
 {
-    public interface IGameSaveSummary
-    {
-        IGameSaveData Save(int index);
-        void Load(IGameSaveData data);
-    }
-
     [GameSystem]
     public class GameSaveSystem : IGameSystem, IInit
     {
-        private const string DataKey = "SAVE_DATA_{0}";
-        private const string FilePath = "saveData";
+        private const string SaveFileName = "saveData";
+        private const string SaveKeyFormat = "SAVE_DATA_{0}";
 
+        private const string SummaryFileName = "saveSummaryData";
         private const string SummaryKey = "SUMMARY";
-        private const string SummaryFilePath = "saveSummaryData";
 
-        private List<IGameSavable> savables;
+        private List<ISavableGameModule> savables;
         private IGameSaveSummary saveSummary;
+        private IGameSaveStorage storage;
 
         void IInit.Init()
         {
-            savables = new List<IGameSavable>();
+            savables = new List<ISavableGameModule>();
+            // 默认使用 ES3 后端;通过 SetStorage 可替换为其它持久化实现而无需改动本系统
+            storage = new ES3GameSaveStorage();
         }
 
-        public void Register(IGameSavable savable)
+        /// <summary>
+        /// 替换持久化后端。便于切换存储方案(自定义二进制、云存档)或在测试中注入内存实现。
+        /// </summary>
+        public void SetStorage(IGameSaveStorage customStorage)
+        {
+            if (customStorage != null)
+            {
+                storage = customStorage;
+            }
+        }
+
+        public void Register(ISavableGameModule savable)
         {
             savables.Add(savable);
         }
@@ -38,12 +47,12 @@ namespace GameFramework.Core
         public void LoadSaveSummary()
         {
             MDebug.Log("LoadSaveSummary");
-            var data = LoadSummary();
+            IGameSaveData data = storage.Load(SummaryFileName, SummaryKey);
             saveSummary?.Load(data);
             MDebug.Log("LoadSaveSummary End");
         }
 
-        public void SaveGame(int index) 
+        public void SaveGame(int index)
         {
             try
             {
@@ -56,14 +65,14 @@ namespace GameFramework.Core
                 }
 
                 IGameSaveData data = writer.GetData();
-                Save(index, data);
+                storage.Save(SaveFileName, GetSaveKey(index), data);
 
                 IGameSaveData summaryData = saveSummary.Save(index);
-                SaveSummary(summaryData);
+                storage.Save(SummaryFileName, SummaryKey, summaryData);
 
                 MDebug.Log("Save Game Finish!");
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 MDebug.Error(e);
             }
@@ -76,7 +85,7 @@ namespace GameFramework.Core
                 MDebug.Log("Load Game, index = ", index);
                 IGameSaveReader reader = new GameSaveReader();
 
-                IGameSaveData data = Load(index);
+                IGameSaveData data = storage.Load(SaveFileName, GetSaveKey(index));
                 reader.SetData(data);
 
                 foreach (var savable in savables)
@@ -87,52 +96,36 @@ namespace GameFramework.Core
 
                 MDebug.Log("Load Game Finish!");
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 MDebug.Error(e);
             }
         }
 
-        private string GetSaveDataKey(int index)
+        public void DeleteSaveData(int index)
         {
-            string key = string.Format(DataKey, index);
-            return key;
-        }
-
-        private void Save(int index, IGameSaveData data)
-        {
-            string key = GetSaveDataKey(index);
-            ES3.Save(key, data as GameSaveData, FilePath);
-        }
-
-        private IGameSaveData Load(int index)
-        {
-            IGameSaveData data = null;
-            if (ES3.FileExists(FilePath))
+            try
             {
-                string key = GetSaveDataKey(index);
-                data = ES3.Load<GameSaveData>(key, FilePath);
+                MDebug.Log("Delete Save Data, index = ", index);
+
+                // 删除该槽位的键而非写入空数据,避免存档文件残留无效内容;读取缺失键已由 storage 兜底
+                storage.Delete(SaveFileName, GetSaveKey(index));
+
+                // summary 是所有槽位打包的单一 blob,需让其重置该槽位后整体重新落盘
+                IGameSaveData summaryData = saveSummary.Delete(index);
+                storage.Save(SummaryFileName, SummaryKey, summaryData);
+
+                MDebug.Log("Delete Save Data Finish!");
             }
-            data ??= new GameSaveData();
-            return data;
-        }
-
-        private void SaveSummary(IGameSaveData data)
-        {
-            ES3.Save(SummaryKey, data as GameSaveData, SummaryFilePath);
-        }
-
-        private IGameSaveData LoadSummary()
-        {
-            IGameSaveData data = null;
-            if (ES3.FileExists(SummaryFilePath))
+            catch (Exception e)
             {
-                data = ES3.Load<GameSaveData>(SummaryKey, SummaryFilePath);
+                MDebug.Error(e);
             }
-            data ??= new GameSaveData();
-            return data;
+        }
+
+        private string GetSaveKey(int index)
+        {
+            return string.Format(SaveKeyFormat, index);
         }
     }
 }
-
-

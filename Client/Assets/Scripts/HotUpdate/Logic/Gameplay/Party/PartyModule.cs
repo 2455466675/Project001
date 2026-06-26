@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace GameFramework.Logic
 {
     [Gameplay]
-    public class PartyModule : IGameplay, IGameSavable
+    public class PartyModule : IGameplay, ISavableGameModule
     {
         public Entity Leader => leader;
         private Entity leader;
@@ -32,12 +32,12 @@ namespace GameFramework.Logic
 
         }
 
-        void IGameSavable.OnSaveGame(IWriter writer)
+        void ISavableGameModule.OnSaveGame(IWriter writer)
         {
             
         }
 
-        void IGameSavable.OnLoadGame(IReader reader)
+        void ISavableGameModule.OnLoadGame(IReader reader)
         {
             MDebug.Log("OnLoadGame");
             var ac = leader.GetComponent<ActorComponent>();

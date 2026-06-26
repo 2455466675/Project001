@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace GameFramework.Core
 {
-    [Serializable]
-    public class SampleData
+    public class SampleData : ISavableData
     {
         public static SampleData CreateSampleData(int index)
         {
@@ -16,19 +15,17 @@ namespace GameFramework.Core
             sampleData.DoubleValue = UnityEngine.Random.Range(1.1f, 1.9f);
             sampleData.StringValue = "StringValue_" + index.ToString();
 
+            sampleData.subData = new SampleData();
+
             return sampleData;
         }
 
-        [SerializeField]
         public int intValue;
-        [SerializeField]
         public bool boolValue;
-        [SerializeField]
         public float floatValue;
-        [SerializeField]
         private double doubleValue;
-        [SerializeField]
         private string stringValue;
+        private SampleData subData;
 
         public double DoubleValue
         {
@@ -40,9 +37,30 @@ namespace GameFramework.Core
             get { return stringValue; }
             set { stringValue = value; }
         }
+
+        void ISavableData.OnWrite(IWriter writer)
+        {
+            writer.Write("int_value", intValue);
+            writer.Write("bool_value", boolValue);
+            writer.Write("float_value", floatValue);
+            writer.Write("double_value", doubleValue);
+            writer.Write("string_value", stringValue);
+            writer.Write("sub_data", subData);
+        }
+
+        void ISavableData.OnRead(IReader reader)
+        {
+            intValue = reader.ReadInt("int_value");
+            boolValue = reader.ReadBool("bool_value");
+            floatValue = reader.ReadFloat("float_value");
+            doubleValue = reader.ReadDouble("double_value");
+            stringValue = reader.ReadString("string_value");
+            subData = reader.ReadData<SampleData>("sub_data");
+        }
     }
+
     [Gameplay]
-    public class SampleModule : IGameplay, IGameSavable
+    public class SampleModule : IGameplay, ISavableGameModule
     {
         private int intValue;
         private bool boolValue;
@@ -60,7 +78,7 @@ namespace GameFramework.Core
         {
             MDebug.Log("SampleModule OnInit !");
 
-
+            SaveTypeRegistry.Register<SampleData>(1);
         }
 
         public void OnExit()

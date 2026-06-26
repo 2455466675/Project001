@@ -41,6 +41,7 @@ namespace GameFramework.Logic
                     slot.State = slotData.ReadInt("state");
                     slot.Level = slotData.ReadInt("level");
                     slot.Money = slotData.ReadInt("money");
+                    slot.LastTime = slotData.ReadLong("last_time");
                 }
                 else
                 {
@@ -55,10 +56,27 @@ namespace GameFramework.Logic
         IGameSaveData IGameSaveSummary.Save(int index)
         {
             var targetSlot = slots[index];
+            targetSlot.State = 1;
             targetSlot.Level = Utility.Util.Math.Random(5, 27);
             targetSlot.Money = Utility.Util.Math.Random(783, 2232);
             targetSlot.LastTime = DateTimeOffset.Now.ToUnixTimeSeconds();
 
+            return BuildData();
+        }
+
+        IGameSaveData IGameSaveSummary.Delete(int index)
+        {
+            var targetSlot = slots[index];
+            targetSlot.State = 0;
+            targetSlot.Level = 0;
+            targetSlot.Money = 0;
+            targetSlot.LastTime = 0;
+
+            return BuildData();
+        }
+
+        private IGameSaveData BuildData()
+        {
             GameSaveData data = new GameSaveData();
             Dictionary<string, IGameSaveItem> items = new Dictionary<string, IGameSaveItem>();
             for (int i = 0; i < SAVE_SLOT_COUNT; i++)
@@ -68,7 +86,7 @@ namespace GameFramework.Logic
                 GameSaveItem item = new GameSaveItem();
                 item.Write("index", slot.Index);
                 item.Write("state", slot.State);
-                //item.Write("last_time", slot.LastTime);
+                item.Write("last_time", slot.LastTime);
                 item.Write("level", slot.Level);
                 item.Write("money", slot.Money);
                 items.Add(key, item);

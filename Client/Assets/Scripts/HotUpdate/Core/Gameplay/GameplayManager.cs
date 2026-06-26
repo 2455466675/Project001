@@ -138,7 +138,7 @@ namespace GameFramework.Core
             GameSaveSystem saveSystem = Game.GetSystem<GameSaveSystem>();
             foreach (var gameplay in sortGameplays)
             {
-                if (gameplay is IGameSavable savable)
+                if (gameplay is ISavableGameModule savable)
                 {
                     saveSystem.Register(savable);
                 }
