@@ -5,7 +5,7 @@ namespace GameFramework.View.UI
     [NavigationController(Utility.GameDefine.NavigationDefine.BattlePlayer)]
     public class BattleFormationPlayerController : NavigationController<BattleUnitData>
     {
-        protected override void OnShow()
+        protected override void RegisterData()
         {
             MDebug.Log("战斗阵型-玩家");
 

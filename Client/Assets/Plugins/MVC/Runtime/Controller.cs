@@ -1,6 +1,6 @@
 namespace MVC
 {
-    public class Controller : IBindingManager
+    public class Controller : IBindingManager, IObserver
     {
         private readonly BindingManager bindingManager = new BindingManager();
         private readonly Binder binder = new Binder();

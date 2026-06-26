@@ -1,6 +1,6 @@
 namespace GameFramework.View.UI 
 {
-    public abstract class UIWidget : UIView
+    public abstract class UIWidget : UIView, MVC.IObserver
     {
 
     }

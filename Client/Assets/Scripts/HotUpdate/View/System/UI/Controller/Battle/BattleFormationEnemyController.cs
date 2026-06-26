@@ -22,7 +22,7 @@ namespace GameFramework.View.UI
     [NavigationController(Utility.GameDefine.NavigationDefine.BattleEnemy)]
     public class BattleFormationEnemyController : NavigationController<BattleUnitData>
     {
-        protected override void OnShow()
+        protected override void RegisterData()
         {
             MDebug.Log("战斗阵型-敌人");
 

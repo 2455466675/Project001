@@ -14,14 +14,14 @@ namespace MVC
             handlers = new List<BindingHandler>();
         }
 
-        public void Binding<TS>(TS subject, string propertyName, Action<TS> action) where TS : INotifyPropertyChanged
+        public void Binding<TSubject>(TSubject subject, string propertyName, Action<TSubject> action) where TSubject : INotifyPropertyChanged
         {
-            BindingHandler handler = new BindingHandler<TS>(subject, propertyName, action);
+            BindingHandler handler = new BindingHandler<TSubject>(subject, propertyName, action);
             handler.Handling();
             handlers.Add(handler);
         }
 
-        public void Binding<TS, TValue>(TS subject, Expression<Func<TS, TValue>> expression, Action<TS> action) where TS : INotifyPropertyChanged
+        public void Binding<TSubject, TValue>(TSubject subject, Expression<Func<TSubject, TValue>> expression, Action<TSubject> action) where TSubject : INotifyPropertyChanged
         {
             if (expression.Body is not MemberExpression memberExpression)
             {
@@ -31,14 +31,14 @@ namespace MVC
             Binding(subject, memberExpression.Member.Name, action);
         }
 
-        public void Binding<TO, TS>(TO observer, TS subject, string propertyName, Action<TO, TS> action) where TS : INotifyPropertyChanged
+        public void Binding<TObserver, TSubject>(TObserver observer, TSubject subject, string propertyName, Action<TObserver, TSubject> action) where TObserver : IObserver where TSubject : INotifyPropertyChanged
         {
-            BindingHandler handler = new BindingHandler<TO, TS>(observer, subject, propertyName, action);
+            BindingHandler handler = new BindingHandler<TObserver, TSubject>(observer, subject, propertyName, action);
             handler.Handling();
             handlers.Add(handler);
         }
 
-        public void Binding<TO, TS, TValue>(TO observer, TS subject, Expression<Func<TS, TValue>> expression, Action<TO, TS> action) where TS : INotifyPropertyChanged
+        public void Binding<TObserver, TSubject, TValue>(TObserver observer, TSubject subject, Expression<Func<TSubject, TValue>> expression, Action<TObserver, TSubject> action) where TObserver : IObserver where TSubject : INotifyPropertyChanged
         {
             if (expression.Body is not MemberExpression memberExpression)
             {

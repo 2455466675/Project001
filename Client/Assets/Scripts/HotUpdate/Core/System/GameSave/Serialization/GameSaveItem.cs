@@ -17,25 +17,21 @@ namespace GameFramework.Core
         [Serializable]
         private class SavableDict<T>
         {
-            public int Count => Math.Min(keys.Count, values.Count);
-
-            public List<T> keys;
+            public int Count => Math.Min(keys.Count, values.Count);            
+            public List<T> keys;            
             public List<SavableEntry> values;
 
-            public SavableDict(int Count)
+            public SavableDict()
             {
-                keys = new List<T>(Count);
-                values = new List<SavableEntry>(Count);
+                keys = new List<T>();
+                values = new List<SavableEntry>();
             }
-        }
 
-        [Serializable]
-        private class SerializableItem<T>
-        {
-            public int Count => Math.Min(keys.Count, values.Count);
-
-            public List<T> keys = new List<T>();
-            public List<object> values = new List<object>();
+            public SavableDict(int count)
+            {
+                keys = new List<T>(count);
+                values = new List<SavableEntry>(count);
+            }
         }
 
         [SerializeField]
@@ -133,8 +129,8 @@ namespace GameFramework.Core
             int index = 0;
             foreach (var item in value)
             {
-                dic.keys[index] = item.Key;
-                dic.values[index] = CreateEntry(SaveTypeRegistry.GetTypeId(item.Value), item.Value);
+                dic.keys.Add(item.Key);
+                dic.values.Add(CreateEntry(SaveTypeRegistry.GetTypeId(item.Value), item.Value));
                 index++;
             }
             savableDictIntKey[key] = dic;
@@ -151,8 +147,8 @@ namespace GameFramework.Core
             int index = 0;
             foreach (var item in value)
             {
-                dic.keys[index] = item.Key;
-                dic.values[index] = CreateEntry(SaveTypeRegistry.GetTypeId(item.Value), item.Value);
+                dic.keys.Add(item.Key);
+                dic.values.Add(CreateEntry(SaveTypeRegistry.GetTypeId(item.Value), item.Value));
                 index++;
             }
             savableDictStrKey[key] = dic;

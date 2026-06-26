@@ -7,6 +7,7 @@ namespace GameFramework.Utility.GameDefine
         TestList2,
 
         LoginList,
+        GameSaveList,
 
         BattleEnemy,
         BattlePlayer,

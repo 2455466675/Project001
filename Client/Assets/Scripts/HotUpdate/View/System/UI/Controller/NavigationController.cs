@@ -48,6 +48,7 @@ namespace GameFramework.View.UI
         {
             this.view = view;
             Register();
+            RegisterData();
             OnShow();
         }
 
@@ -229,7 +230,10 @@ namespace GameFramework.View.UI
         #endregion
 
         #region 生命周期
-
+        /// <summary>
+        /// 在这里获取列表需要的数据 （该方法在OnShow之前执行）
+        /// </summary>
+        protected virtual void RegisterData() { }
         protected virtual void OnShow() { }
         protected virtual void OnHide() { }
         protected virtual void BindItemView(NavigationItemView itemView, T dataModel, Binder binder) { }
@@ -268,7 +272,7 @@ namespace GameFramework.View.UI
             {
                 return;
             }
-            MDebug.Log("Register");
+
             view.OnSelectItem += OnSelect;
             view.OnDeselectItem += OnDeselect;
             view.OnSubmitItem += OnSubmit;

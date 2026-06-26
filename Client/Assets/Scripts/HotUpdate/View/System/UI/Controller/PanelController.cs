@@ -4,6 +4,9 @@ namespace GameFramework.View.UI
 {
     public interface IPanelController
     {
+        string AssetPath { get; }
+        GroupType PanelGroup { get; }
+
         bool CheckIsLocked();
         void Show(UIPanel panel, object content);
         void Hide();
@@ -15,6 +18,10 @@ namespace GameFramework.View.UI
     {
         private UIPanel panel;
         private object content;
+
+        string IPanelController.AssetPath => this.AssetPath;
+
+        GroupType IPanelController.PanelGroup => this.PanelGroup;
 
         bool IPanelController.CheckIsLocked()
         {
@@ -47,6 +54,9 @@ namespace GameFramework.View.UI
         {
             OnOutFocus();
         }
+
+        protected virtual string AssetPath { get; }
+        protected virtual GroupType PanelGroup { get; }
 
         protected T GetWidget<T>() where T : UIWidget
         {

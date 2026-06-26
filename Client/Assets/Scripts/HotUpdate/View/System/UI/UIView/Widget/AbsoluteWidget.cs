@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GameFramework.View.UI
 {
-    public class GameObjectWidget : UIWidget
+    public class AbsoluteWidget : UIWidget
     {
         [SerializeField]
         private GameObject go;

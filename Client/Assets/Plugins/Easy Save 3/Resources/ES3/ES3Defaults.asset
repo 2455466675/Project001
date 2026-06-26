@@ -40,9 +40,9 @@ MonoBehaviour:
     - GF_HotUpdate_Core
     - YooAsset.Editor
     - Assembly-CSharp
-    - GF_HotUpdate_View
     - UniTask.Linq
     - PsdPlugin
+    - GF_HotUpdate_View
     - LITJson
     - GF_HotUpdate_Logic
     - MVC

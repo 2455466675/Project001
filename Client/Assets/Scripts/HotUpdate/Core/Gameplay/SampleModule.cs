@@ -78,7 +78,7 @@ namespace GameFramework.Core
         {
             MDebug.Log("SampleModule OnInit !");
 
-            SaveTypeRegistry.Register<SampleData>(1);
+            
         }
 
         public void OnExit()

@@ -7,7 +7,7 @@ namespace GameFramework.View.UI
     [NavigationController(NavigationDefine.TestList1)]
     public class ListControllerSample1 : NavigationController<UISampleData>
     {
-        protected override void OnShow()
+        protected override void RegisterData()
         {
             DataModelList<UISampleData> datas = new DataModelList<UISampleData>();
             for (int i = 0; i < 100; i++)

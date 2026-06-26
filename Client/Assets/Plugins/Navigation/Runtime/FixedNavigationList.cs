@@ -48,6 +48,12 @@ namespace Navigation
                 return;
             }
 
+            items.RemoveAll(x => x == null);
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].SetListIndex(i);
+            }
+
             pointer = 0;
             minIndex = 0;
             maxIndex = items.Count - 1;
@@ -240,7 +246,7 @@ namespace Navigation
 
                 //将无效的元素剔除
                 argItems = argItems.Where(item => item.IsValid).ToArray();
-                index = argItems?.Select(item => item.IndexOfList).ToArray();
+                index = argItems?.Select(item => item.IndexOfData).ToArray();
 
                 isSuccess = argItems != null && argItems.Length > 0;
                 pointer = argItems != null ? items.IndexOf(argItems[0]) : 0;

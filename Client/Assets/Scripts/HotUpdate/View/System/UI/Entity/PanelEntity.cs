@@ -3,6 +3,7 @@ using GameFramework.Core;
 using GameFramework.Utility;
 using GameFramework.Utility.GameDefine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameFramework.View.UI
 {
@@ -16,16 +17,31 @@ namespace GameFramework.View.UI
 
         public void Init(PanelDefine id)
         {
-            var cfg = Game.Config.Find<PanelCfg>((int)id);
-            var group = GameRoot.GetNode<UINode>().GetGroup(cfg.GroupType);
-            var go = Game.Assets.Instantiate(cfg.Path, group);
-            panel = go.GetComponent<UIPanel>();
 
             controller = Game.GetSystem<UISystem>().GetPanelController(id);
             if (controller == null)
             {
                 MDebug.Error("PanelController is null : ", id.ToString());
+                return;
             }
+
+            string assetPath;
+            Transform group;
+
+            if (string.IsNullOrEmpty(controller.AssetPath))
+            {
+                var cfg = Game.Config.Find<PanelCfg>((int)id);  //废弃
+                assetPath = cfg.Path;
+                group = GameRoot.GetNode<UINode>().GetGroup(cfg.GroupType);
+            }
+            else
+            {
+                assetPath = controller.AssetPath;
+                group = GameRoot.GetNode<UINode>().GetGroup(controller.PanelGroup);
+            }
+
+            var go = Game.Assets.Instantiate(assetPath, group);
+            panel = go.GetComponent<UIPanel>();
 
             var views = panel.GetNavigationViews();
             var defines = Game.GetSystem<UISystem>().GetNavigationDefines(id);

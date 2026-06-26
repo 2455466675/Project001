@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8733316718525010309}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -108,7 +107,6 @@ RectTransform:
   m_Children:
   - {fileID: 8813007317798575642}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -130,9 +128,9 @@ MonoBehaviour:
   canvasGroup: {fileID: 3198371711607660169}
   scrollbar: {fileID: 8942182816021279350}
   list: {fileID: 0}
-  showDuration: 0.5
   tickCount: 1
   tickInterval: 0.3
+  showDuration: 0.5
   fadeIn: 0.2
   fadeOut: 0.3
 --- !u!225 &3198371711607660169
@@ -180,7 +178,6 @@ RectTransform:
   m_Children:
   - {fileID: 8733316718525010309}
   m_Father: {fileID: 7484135916781984777}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -208,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.22264141, g: 0.17601274, b: 0.17601274, a: 0.41568628}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -304,7 +301,6 @@ RectTransform:
   m_Children:
   - {fileID: 6599333335525898085}
   m_Father: {fileID: 8813007317798575642}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

@@ -26,7 +26,7 @@ namespace GameFramework.View.UI
     [NavigationController(Utility.GameDefine.NavigationDefine.LoginList)]
     public class LoginListController : NavigationController<LoginListItem>
     {
-        protected override void OnShow()
+        protected override void RegisterData()
         {
             Logic.DataModelList<LoginListItem> items = new Logic.DataModelList<LoginListItem>();
             LoginCfg[] cfgs = Game.Config.FindAll<LoginCfg>();
@@ -61,8 +61,15 @@ namespace GameFramework.View.UI
                 case 1:
                     Game.GetSystem<GameStateSystem>().GamePhase = GamePhase.Play;
                     break;
+                case 2:
+                    Game.GetSystem<UISystem>().Navigate(Utility.GameDefine.NavigationDefine.GameSaveList);
+                    break;
                 case 4:
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#else
                     Application.Quit();
+#endif
                     break;                
             }
         }

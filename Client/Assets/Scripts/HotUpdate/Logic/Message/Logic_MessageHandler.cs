@@ -34,6 +34,7 @@ namespace GameFramework.Logic
     {
         public override void Receive(GameStartMessage message)
         {
+            SaveTypeRegistration.Register();
             Game.GetSystem<GameCameraController>().Start();
         }
     }
