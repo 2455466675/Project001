@@ -5,6 +5,8 @@ namespace GameFramework.View.UI
     [UIPanelController(Utility.GameDefine.PanelDefine.GameTransitionPanel)]
     public class GameTransitionPanelController : PanelController
     {
+        protected override string AssetPath => "Assets/Bundles/UI/Prefabs/Panel/GameTransitionPanel";
+
         protected override void OnShow()
         {
             Game.Message.Subscribe<GameTransitionFadeInMessage>(FadeIn);

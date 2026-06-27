@@ -30,7 +30,9 @@ namespace GameFramework.Core
 
         private async UniTaskVoid Load()
         {
+
             Game.Message.SendMessage(new GamePlayMessage() { status = GamePlayStatus.Begin });
+            Game.GetSystem<GameSaveSystem>().LoadGame(GetIntValue("save_index"));
             await Game.GetSystem<GameTransitionManager>().Transition(Utility.GameDefine.TransitionType.LoadGame, LoadGame);
             Game.Message.SendMessage(new GamePlayMessage() { status = GamePlayStatus.Loaded });
         }
@@ -39,6 +41,7 @@ namespace GameFramework.Core
         {
             await Game.GetSystem<GameSceneSystem>().LoadScene(1001);
             await Game.GetSystem<GameSceneSystem>().LoadBattleScene();
+            Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Normal);
         }
     }
 }

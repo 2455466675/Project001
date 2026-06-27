@@ -24,9 +24,9 @@ namespace GameFramework.View.UI
         }
 
 
-        public void Show()
+        public void Show(object content)
         {
-            controller?.Show(view);
+            controller?.Show(view, content);
         }
 
         public void Hide()

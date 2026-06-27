@@ -29,9 +29,11 @@ namespace GameFramework.View
         /// </summary>
         /// <param name="id"></param>
         /// <param name="defaultIndexs"></param>
-        public void Navigate(NavigationDefine id, int[] defaultIndexs = null)
+        /// <param name="content">额外参数</param>
+        public void Navigate(NavigationDefine id, int[] defaultIndexs = null, object content = null)
         {
-            navigationManager.Navigate(id, defaultIndexs);
+            MDebug.Log($"菜单导航:{id}");
+            navigationManager.Navigate(id, defaultIndexs, content);
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace GameFramework.View
 
         public void ShowPanel(PanelDefine id, object content = null)
         {
-            MDebug.Log($"ShowPanel:{id}");
+            MDebug.Log($"展示面板:{id}");
             entityManager.ShowPanel(id, content);
         }
 

@@ -48,13 +48,13 @@ MonoBehaviour:
     - MVC
     - UniTask.TextMeshPro
     - GF_HotUpdate_Utility
-    - GameConfig
     - ECS
     - Assembly-CSharp-firstpass
     - Navigation
     - Base
     - HybridCLR.Runtime
     - UniTask.Editor
+    - GameConfig
     - AOT_Utility
     - FSM
     - ScriptablePacker

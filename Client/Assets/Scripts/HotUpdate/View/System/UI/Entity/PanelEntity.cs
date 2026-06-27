@@ -25,21 +25,16 @@ namespace GameFramework.View.UI
                 return;
             }
 
-            string assetPath;
-            Transform group;
-
-            if (string.IsNullOrEmpty(controller.AssetPath))
+            string assetPath = controller.AssetPath;
+            if (string.IsNullOrEmpty(assetPath))
             {
-                var cfg = Game.Config.Find<PanelCfg>((int)id);  //废弃
-                assetPath = cfg.Path;
-                group = GameRoot.GetNode<UINode>().GetGroup(cfg.GroupType);
-            }
-            else
-            {
-                assetPath = controller.AssetPath;
-                group = GameRoot.GetNode<UINode>().GetGroup(controller.PanelGroup);
+                MDebug.Error("面板资源路径未配置 : ", id.ToString());
+                return;
             }
 
+            MDebug.Log($"加载面板:{id}， {assetPath}");
+
+            Transform group = GameRoot.GetNode<UINode>().GetGroup(controller.PanelGroup);
             var go = Game.Assets.Instantiate(assetPath, group);
             panel = go.GetComponent<UIPanel>();
 
@@ -90,7 +85,7 @@ namespace GameFramework.View.UI
             controller?.Show(panel, content);
             foreach (var item in navigationListEntities)
             {
-                item.Value.Show();
+                item.Value.Show(content);
             }
         }
 

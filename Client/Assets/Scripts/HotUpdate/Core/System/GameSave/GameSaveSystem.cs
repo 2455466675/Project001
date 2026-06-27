@@ -6,9 +6,8 @@ namespace GameFramework.Core
     [GameSystem]
     public class GameSaveSystem : IGameSystem, IInit
     {
-        // 一档一文件:这样取单档原始字节(上传)、整文件覆盖(下载)都干净,不会误伤其它档位
+        // 一档一文件
         private const string SlotFileFormat = "save_slot_{0}";
-        // 档内用固定 key,使 blob 不携带源档位信息,从而能被还原到任意目标档位
         private const string SlotDataKey = "DATA";
 
         private const string SummaryFileName = "saveSummaryData";

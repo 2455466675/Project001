@@ -24,10 +24,6 @@ namespace Config
 			_GmCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(GmCfg), _GmCfgContainer);
 
-			ICfgContainer _PanelCfgContainer = new PanelCfgContainer();
-			_PanelCfgContainer.Deserialize(reader);
-			_cfgDatas.Add(typeof(PanelCfg), _PanelCfgContainer);
-
 			ICfgContainer _ActorCfgContainer = new ActorCfgContainer();
 			_ActorCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(ActorCfg), _ActorCfgContainer);

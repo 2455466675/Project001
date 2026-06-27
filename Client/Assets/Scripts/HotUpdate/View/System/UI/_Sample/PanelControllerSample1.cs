@@ -5,6 +5,8 @@ namespace GameFramework.View.UI
     //[UIPanelController(PanelDefine.TestPanel, NavigationDefine.TestList1)]
     public class PanelControllerSample1 : PanelController
     {
+        protected override string AssetPath => "Assets/Bundles/UI/Prefabs/Panel/TestPanel1";
+
         protected override void OnShow()
         {
             //UISampleData dataModel = new UISampleData();

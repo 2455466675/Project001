@@ -1,4 +1,5 @@
 using MVC;
+using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
 namespace GameFramework.View.UI
 {
@@ -55,8 +56,8 @@ namespace GameFramework.View.UI
             OnOutFocus();
         }
 
-        protected virtual string AssetPath { get; }
-        protected virtual GroupType PanelGroup { get; }
+        protected abstract string AssetPath { get; }
+        protected virtual GroupType PanelGroup => GroupType.Normal;
 
         protected T GetWidget<T>() where T : UIWidget
         {
@@ -68,7 +69,7 @@ namespace GameFramework.View.UI
             return panel.GetWidget<T>(key);
         }
 
-        protected T GetContent<T>() where T : class
+        protected T GetContent<T>()
         {
             if (content == null)
             {
@@ -76,7 +77,14 @@ namespace GameFramework.View.UI
             }
             else
             {
-                return content as T;
+                if (content is T result)
+                {
+                    return result;
+                }
+                else
+                {
+                    return default;
+                }
             }
         }
 

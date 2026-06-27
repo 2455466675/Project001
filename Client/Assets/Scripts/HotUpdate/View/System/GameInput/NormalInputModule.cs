@@ -23,7 +23,7 @@ namespace GameFramework.View
                     break;
                 case InputActionDefine.Esc:
                 case InputActionDefine.M_Keyboard:
-                    Game.GetSystem<GameSaveSystem>().SaveGame(0);
+                    Game.GetSystem<UISystem>().Navigate(Utility.GameDefine.NavigationDefine.GameSaveList, null, GameSaveType.Write);
                     break;
             }
         }

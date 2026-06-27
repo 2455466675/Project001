@@ -62,15 +62,26 @@ namespace GameFramework.View.UI
 
         protected override void SubmitItemView(NavigationItemView itemView, GameSaveSlot dataModel)
         {
-            MDebug.Log("GameSaveListController.SubmitItemView", dataModel.Index);
-            var hasData = Game.GetSystem<GameSaveSummary>().HasSaveData(dataModel.Index);
-            if (hasData)
+            int index = dataModel.Index;
+            bool isRead = GetContent<GameSaveType>() == GameSaveType.Read;
+            if (isRead)
             {
-                Game.GetSystem<GameStateSystem>().GamePhase = GamePhase.Play;
+                var hasData = Game.GetSystem<GameSaveSummary>().HasSaveData(index);
+                if (hasData)
+                {
+                    MDebug.Log($"读档：{index}");
+                    Game.GetSystem<GameStateSystem>().SetValue("save_index", index);
+                    Game.GetSystem<GameStateSystem>().GamePhase = GamePhase.Play;
+                }
+                else
+                {
+                    MDebug.Log("此处没有存档", dataModel.Index);
+                }
             }
             else
             {
-                MDebug.Log("此处没有存档", dataModel.Index);
+                MDebug.Log($"存档：{index}");
+                Game.GetSystem<GameSaveSystem>().SaveGame(index);
             }
         }
     }

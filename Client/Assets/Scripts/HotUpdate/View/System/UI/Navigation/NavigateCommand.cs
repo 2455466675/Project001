@@ -7,7 +7,7 @@ namespace GameFramework.View.UI
     {
         private bool isDirty;
 
-        public void Navigate(NavigationDefine navigationDefine, PanelDefine panelDefine, int[] defaultIndexs)
+        public void Navigate(NavigationDefine navigationDefine, PanelDefine panelDefine, int[] defaultIndexs, object content)
         {
             PanelCommand panelCommand;
 
@@ -17,7 +17,7 @@ namespace GameFramework.View.UI
             }
             else
             {
-                panelCommand = new PanelCommand(panelDefine);
+                panelCommand = new PanelCommand(panelDefine, content);
                 Push(panelCommand);
             }
 

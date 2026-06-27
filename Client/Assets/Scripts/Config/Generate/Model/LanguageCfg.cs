@@ -12,20 +12,17 @@ namespace Config
 	{
 		public string Id { get; private set; }
 		public string Text { get; private set; }
-		public int Color { get; private set; }
 
 		internal void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadString();
 			Text = reader.ReadString();
-			Color = reader.ReadInt32();
 		}
 
 		internal void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
 			writer.Write(Text);
-			writer.Write(Color);
 		}
 	}
 

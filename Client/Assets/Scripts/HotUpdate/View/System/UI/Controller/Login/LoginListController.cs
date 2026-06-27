@@ -62,7 +62,7 @@ namespace GameFramework.View.UI
                     Game.GetSystem<GameStateSystem>().GamePhase = GamePhase.Play;
                     break;
                 case 2:
-                    Game.GetSystem<UISystem>().Navigate(Utility.GameDefine.NavigationDefine.GameSaveList);
+                    Game.GetSystem<UISystem>().Navigate(Utility.GameDefine.NavigationDefine.GameSaveList, null, GameSaveType.Read);
                     break;
                 case 4:
 #if UNITY_EDITOR
@@ -72,6 +72,17 @@ namespace GameFramework.View.UI
 #endif
                     break;                
             }
+        }
+
+        protected override bool CheckItemIsValid(LoginListItem dataModel)
+        {
+            int id = dataModel.Id;
+            if (id != 2)
+            {
+                return true;
+            }
+
+            return Game.GetSystem<GameSaveSummary>().HasAnySaveData();
         }
     }
 }

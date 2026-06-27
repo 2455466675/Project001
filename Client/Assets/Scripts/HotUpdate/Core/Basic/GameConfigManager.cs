@@ -18,12 +18,9 @@ namespace GameFramework.Core
         public class TextItem
         {
             public string Text { get; private set; }
-            public Color Color { get; private set; }
-
-            public TextItem(string text, Color color)
+            public TextItem(string text)
             {
                 Text = text;
-                Color = color;
             }
         }
 
@@ -128,31 +125,11 @@ namespace GameFramework.Core
             var item = GetTextItem(id);
             if (item == null)
             {
-                return string.Empty;
+                return id;
             }
             else
             {
                 return item.Text;
-            }
-        }
-
-        public TextItem GetTextItem(string id)
-        {
-            if (textItems.TryGetValue(id, out var item))
-            {
-                return item;
-            }
-            else
-            {
-                var cfg = Find<LanguageCfg>(id);
-                if (cfg == null)
-                {
-                    return null;
-                }
-                var color = GetColor(cfg.Color);
-                item = new TextItem(cfg.Text, color);
-                textItems.Add(id, item);
-                return item;
             }
         }
 
@@ -165,6 +142,25 @@ namespace GameFramework.Core
             }
             var color = Util.Color.GetColorByHtmlStr(cfg.Color);
             return color;
+        }
+
+        private TextItem GetTextItem(string id)
+        {
+            if (textItems.TryGetValue(id, out var item))
+            {
+                return item;
+            }
+            else
+            {
+                var cfg = Find<LanguageCfg>(id);
+                if (cfg == null)
+                {
+                    return null;
+                }
+                item = new TextItem(cfg.Text);
+                textItems.Add(id, item);
+                return item;
+            }
         }
     }
 }

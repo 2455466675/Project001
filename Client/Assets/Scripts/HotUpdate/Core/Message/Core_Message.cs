@@ -14,6 +14,7 @@ namespace GameFramework.Core
     public struct GamePlayMessage : IGameMessage
     {
         public GamePlayStatus status;
+        public int arg1;
     }
 
     public struct GameTransitionFadeInMessage : IGameMessage

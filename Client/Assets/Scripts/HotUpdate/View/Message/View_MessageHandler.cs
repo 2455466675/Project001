@@ -30,7 +30,9 @@ namespace GameFramework.View
                     GameRoot.GetNode<UINode>().ShowMask();
                     break;
                 case 1:
-                    Game.GetSystem<UISystem>().Navigate(NavigationDefine.LoginList);
+                    //有存档数据优先选中“读取游戏”，否则选中“开始游戏”
+                    int index = Game.GetSystem<GameSaveSummary>().HasAnySaveData() ? 1 : 0;
+                    Game.GetSystem<UISystem>().Navigate(NavigationDefine.LoginList, new int[] { index });
                     break;
                 case 2:
                     GameRoot.GetNode<UINode>().HideMask();

@@ -13,7 +13,7 @@ namespace GameFramework.View.UI
             command = new NavigateCommand();
         }
 
-        public void Navigate(NavigationDefine id, int[] defaultIndexs)
+        public void Navigate(NavigationDefine id, int[] defaultIndexs, object content)
         {
             PanelDefine panelDefine = controllerManager.GetPanelDefine(id);
             if (panelDefine == PanelDefine.None)
@@ -22,7 +22,7 @@ namespace GameFramework.View.UI
             }
 
             defaultIndexs ??= new int[] { 0 };
-            command.Navigate(id, panelDefine, defaultIndexs);
+            command.Navigate(id, panelDefine, defaultIndexs, content);
             command.RegisterInputSystem();
         }
 

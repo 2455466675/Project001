@@ -5,6 +5,12 @@ using System.Collections.Generic;
 
 namespace GameFramework.Logic
 {
+    public enum GameSaveType
+    {
+        Read,
+        Write,
+    }
+
     [GameSystem]
     public class GameSaveSummary : IGameSystem, IGameSaveSummary, IInit
     {

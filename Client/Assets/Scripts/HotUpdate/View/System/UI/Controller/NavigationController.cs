@@ -1,11 +1,12 @@
 using GameFramework.Logic;
 using MVC;
+using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
 namespace GameFramework.View.UI
 {
     public interface INavigationController
     {
-        void Show(NavigationView view);
+        void Show(NavigationView view, object content);
 
         void Hide();
 
@@ -26,6 +27,7 @@ namespace GameFramework.View.UI
     {
         private NavigationView view;
         private Logic.DataModelList<T> datas;
+        private object content;
 
         protected void SetData(Logic.DataModelList<T> datas)
         {
@@ -44,9 +46,10 @@ namespace GameFramework.View.UI
 
         #region INavigationController
 
-        void INavigationController.Show(NavigationView view)
+        void INavigationController.Show(NavigationView view, object content)
         {
             this.view = view;
+            this.content = content;
             Register();
             RegisterData();
             OnShow();
@@ -59,6 +62,7 @@ namespace GameFramework.View.UI
             ClearBinding();
             view = null;
             datas = null;
+            content = null;
         }
 
         void INavigationController.Move(float h, float v)
@@ -264,6 +268,25 @@ namespace GameFramework.View.UI
         protected virtual bool CheckIsLocked()
         {
             return false;
+        }
+
+        protected TContent GetContent<TContent>()
+        {
+            if (content == null)
+            {
+                return default;
+            }
+            else
+            {
+                if (content is TContent result)
+                {
+                    return result;
+                }
+                else
+                {
+                    return default;
+                }                
+            }
         }
 
         private void Register() 

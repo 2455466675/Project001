@@ -7,19 +7,6 @@ namespace GameFramework.Core
     {
         public override void Receive(GamePlayMessage message)
         {
-            GamePlayStatus status = message.status;
-            switch (status)
-            {
-                case GamePlayStatus.Begin:
-
-                    break;
-                case GamePlayStatus.Loaded:
-                    Game.GetSystem<GameSaveSystem>().LoadGame(0);
-                    Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Normal);                    
-                    break;
-                case GamePlayStatus.Exit:
-                    break;
-            }
         }
     }
 

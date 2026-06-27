@@ -13,10 +13,6 @@
             "type":"GmCfg",
         }, 
         {
-            "excel":"panel.xlsx",
-            "type":"PanelCfg",
-        },  
-        {
             "excel":"actor.xlsx",
             "type":"ActorCfg",
         },

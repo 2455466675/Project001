@@ -1,4 +1,5 @@
 using FSM;
+using UnityEditor.Experimental.GraphView;
 
 namespace GameFramework.Core
 {
@@ -49,5 +50,26 @@ namespace GameFramework.Core
         {
             machine.Run<GameInitState>();
         }
+
+        public void SetValue(string key, int value)
+        {
+            machine.SetValue(key, value);
+        }
+
+        public void SetValue(string key, float value)
+        {
+            machine.SetValue(key, value);
+        }
+
+        public void SetValue(string key, bool value)
+        {
+            machine.SetValue(key, value);
+        }
+
+        public void SetValue(string key, string value)
+        {
+            machine.SetValue(key, value);
+        }
+
     }
 }
