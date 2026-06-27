@@ -6,8 +6,10 @@ namespace GameFramework.Core
     [GameSystem]
     public class GameSaveSystem : IGameSystem, IInit
     {
-        private const string SaveFileName = "saveData";
-        private const string SaveKeyFormat = "SAVE_DATA_{0}";
+        // 一档一文件:这样取单档原始字节(上传)、整文件覆盖(下载)都干净,不会误伤其它档位
+        private const string SlotFileFormat = "save_slot_{0}";
+        // 档内用固定 key,使 blob 不携带源档位信息,从而能被还原到任意目标档位
+        private const string SlotDataKey = "DATA";
 
         private const string SummaryFileName = "saveSummaryData";
         private const string SummaryKey = "SUMMARY";
@@ -65,10 +67,10 @@ namespace GameFramework.Core
                 }
 
                 IGameSaveData data = writer.GetData();
-                storage.Save(SaveFileName, GetSaveKey(index), data);
+                storage.Save(GetSlotFileName(index), SlotDataKey, data);
 
-                IGameSaveData summaryData = saveSummary.Save(index);
-                storage.Save(SummaryFileName, SummaryKey, summaryData);
+                saveSummary.Save(index);
+                PersistSummary();
 
                 MDebug.Log("Save Game Finish!");
             }
@@ -85,7 +87,7 @@ namespace GameFramework.Core
                 MDebug.Log("Load Game, index = ", index);
                 IGameSaveReader reader = new GameSaveReader();
 
-                IGameSaveData data = storage.Load(SaveFileName, GetSaveKey(index));
+                IGameSaveData data = storage.Load(GetSlotFileName(index), SlotDataKey);
                 reader.SetData(data);
 
                 foreach (var savable in savables)
@@ -108,12 +110,10 @@ namespace GameFramework.Core
             {
                 MDebug.Log("Delete Save Data, index = ", index);
 
-                // 删除该槽位的键而非写入空数据,避免存档文件残留无效内容;读取缺失键已由 storage 兜底
-                storage.Delete(SaveFileName, GetSaveKey(index));
+                storage.Delete(GetSlotFileName(index), SlotDataKey);
 
-                // summary 是所有槽位打包的单一 blob,需让其重置该槽位后整体重新落盘
-                IGameSaveData summaryData = saveSummary.Delete(index);
-                storage.Save(SummaryFileName, SummaryKey, summaryData);
+                saveSummary.Delete(index);
+                PersistSummary();
 
                 MDebug.Log("Delete Save Data Finish!");
             }
@@ -123,9 +123,56 @@ namespace GameFramework.Core
             }
         }
 
-        private string GetSaveKey(int index)
+        /// <summary>
+        /// 导出某档位的原始字节。档位为空时返回 null。
+        /// </summary>
+        public byte[] ExportSlotRaw(int index)
         {
-            return string.Format(SaveKeyFormat, index);
+            return storage.ReadRaw(GetSlotFileName(index));
+        }
+
+        /// <summary>
+        /// 导入存档数据
+        /// </summary>
+        public void ImportSlotRaw(int index, byte[] blob)
+        {
+            storage.WriteRaw(GetSlotFileName(index), blob);
+        }
+
+        /// <summary>
+        /// json转摘要数据
+        /// </summary>
+        /// <param name="index">存档index</param>
+        /// <param name="json"></param>
+        public void JsonToSummary(int index, string json)
+        {
+            saveSummary?.JsonToSummary(index, json);
+        }
+
+        /// <summary>
+        /// 摘要数据转json
+        /// </summary>
+        /// <param name="index">存档index</param>
+        /// <returns></returns>
+        public string SummaryToJson(int index)
+        {
+            return saveSummary?.SummaryToJson(index);
+        }
+
+        /// <summary>
+        /// 保存摘要数据
+        /// </summary>
+        public void PersistSummary()
+        {
+            if (saveSummary != null)
+            {
+                storage.Save(SummaryFileName, SummaryKey, saveSummary.Capture());
+            }
+        }
+
+        private string GetSlotFileName(int index)
+        {
+            return string.Format(SlotFileFormat, index);
         }
     }
 }

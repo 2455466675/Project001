@@ -1,5 +1,6 @@
-using GameFramework.Core;
 using System;
+using UnityEngine;
+using GameFramework.Core;
 using System.Collections.Generic;
 
 namespace GameFramework.Logic
@@ -10,7 +11,9 @@ namespace GameFramework.Logic
         public const int SAVE_SLOT_COUNT = 10;
 
         private static string SlotKey(int index) => $"SLOT_{index}";
-        
+
+        private const string ContentKey = "content";
+
         private DataModelList<GameSaveSlot> slots;
 
         void IInit.Init()
@@ -25,76 +28,74 @@ namespace GameFramework.Logic
                 slot.State = 0;
                 slots.Add(slot);
             }
-
         }
 
         void IGameSaveSummary.Load(IGameSaveData data)
         {
             var items = data.GetData();
-
             for (int i = 0; i < SAVE_SLOT_COUNT; i++)
             {
-                var key = SlotKey(i);
-                var slot = slots[i];
-                if (items.TryGetValue(key, out var slotData))
+                string json = "";          
+                if (items.TryGetValue(SlotKey(i), out var slotData))
                 {
-                    slot.State = slotData.ReadInt("state");
-                    slot.Level = slotData.ReadInt("level");
-                    slot.Money = slotData.ReadInt("money");
-                    slot.LastTime = slotData.ReadLong("last_time");
-                }
-                else
-                {
-                    slot.State = 0;
-                    slot.Level = 0;
-                    slot.Money = 0;
-                }
+                    json = slotData.ReadString(ContentKey);
+                }                
+                ((IGameSaveSummary)this).JsonToSummary(i, json);
             }
-
         }
 
-        IGameSaveData IGameSaveSummary.Save(int index)
+        void IGameSaveSummary.Save(int index)
         {
             var targetSlot = slots[index];
             targetSlot.State = 1;
             targetSlot.Level = Utility.Util.Math.Random(5, 27);
             targetSlot.Money = Utility.Util.Math.Random(783, 2232);
             targetSlot.LastTime = DateTimeOffset.Now.ToUnixTimeSeconds();
-
-            return BuildData();
         }
 
-        IGameSaveData IGameSaveSummary.Delete(int index)
+        void IGameSaveSummary.Delete(int index)
         {
-            var targetSlot = slots[index];
-            targetSlot.State = 0;
-            targetSlot.Level = 0;
-            targetSlot.Money = 0;
-            targetSlot.LastTime = 0;
-
-            return BuildData();
+            ((IGameSaveSummary)this).JsonToSummary(index, "");
         }
 
-        private IGameSaveData BuildData()
+        void IGameSaveSummary.JsonToSummary(int index, string json)
         {
-            GameSaveData data = new GameSaveData();
-            Dictionary<string, IGameSaveItem> items = new Dictionary<string, IGameSaveItem>();
-            for (int i = 0; i < SAVE_SLOT_COUNT; i++)
+            if (index < 0 || index >= slots.Count)
             {
-                var key = SlotKey(i);
-                var slot = slots[i];
-                GameSaveItem item = new GameSaveItem();
-                item.Write("index", slot.Index);
-                item.Write("state", slot.State);
-                item.Write("last_time", slot.LastTime);
-                item.Write("level", slot.Level);
-                item.Write("money", slot.Money);
-                items.Add(key, item);
+                return;
             }
 
-            data.SetData(items);
+            SaveSlotSummary summary;
+            if (string.IsNullOrEmpty(json))
+            {
+                summary = new SaveSlotSummary();
+            }
+            else
+            {
+                summary = JsonUtility.FromJson<SaveSlotSummary>(json);
+            }
 
-            return data;
+            var slot = slots[index];
+            slot.ApplySummary(summary);
+        }
+
+        string IGameSaveSummary.SummaryToJson(int index)
+        {
+            SaveSlotSummary summary;
+            if (index < 0 || index >= slots.Count)
+            {
+                summary = new SaveSlotSummary();
+            }
+            else
+            {
+                summary = slots[index].ExportSummary();
+            }
+            return JsonUtility.ToJson(summary);
+        }
+
+        IGameSaveData IGameSaveSummary.Capture()
+        {
+            return BuildData();
         }
 
         /// <summary>
@@ -130,6 +131,26 @@ namespace GameFramework.Logic
         public DataModelList<GameSaveSlot> GetSaveSlots()
         {
             return slots;
+        }
+
+        private IGameSaveData BuildData()
+        {
+            GameSaveData data = new GameSaveData();
+            Dictionary<string, IGameSaveItem> items = new Dictionary<string, IGameSaveItem>();
+            for (int i = 0; i < SAVE_SLOT_COUNT; i++)
+            {
+                var key = SlotKey(i);
+                var slot = slots[i];
+                GameSaveItem item = new GameSaveItem();
+                item.Write("index", slot.Index);
+                item.Write("state", slot.State);
+                item.Write(ContentKey, JsonUtility.ToJson(slot.ExportSummary()));
+                items.Add(key, item);
+            }
+
+            data.SetData(items);
+
+            return data;
         }
     }
 }

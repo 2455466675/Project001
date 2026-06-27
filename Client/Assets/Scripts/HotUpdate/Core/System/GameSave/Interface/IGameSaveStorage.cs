@@ -27,5 +27,17 @@ namespace GameFramework.Core
         /// 指定文件中是否存在某个键。
         /// </summary>
         bool Exists(string fileName, string key);
+
+        /// <summary>
+        /// 读取整个文件的原始字节。文件不存在返回 null。
+        /// 供云存档把单档文件当不透明 blob 上传,绕开序列化格式。
+        /// </summary>
+        byte[] ReadRaw(string fileName);
+
+        /// <summary>
+        /// 用原始字节整体覆盖一个文件。
+        /// 供云存档把下载下来的 blob 还原成本地档案文件。
+        /// </summary>
+        void WriteRaw(string fileName, byte[] bytes);
     }
 }

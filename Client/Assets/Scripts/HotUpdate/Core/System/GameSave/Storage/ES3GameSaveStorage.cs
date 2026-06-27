@@ -31,5 +31,25 @@ namespace GameFramework.Core
         {
             return ES3.FileExists(fileName) && ES3.KeyExists(key, fileName);
         }
+
+        public byte[] ReadRaw(string fileName)
+        {
+            if (!ES3.FileExists(fileName))
+            {
+                return null;
+            }
+            // LoadRawBytes 返回解压/解密后的整份文件内容,正好作为可跨平台传输的 blob
+            return ES3.LoadRawBytes(fileName);
+        }
+
+        public void WriteRaw(string fileName, byte[] bytes)
+        {
+            if (bytes == null || bytes.Length == 0)
+            {
+                return;
+            }
+            // SaveRaw 是整文件覆盖且带备份提交,断电也不会留下半截坏档
+            ES3.SaveRaw(bytes, fileName);
+        }
     }
 }
