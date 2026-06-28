@@ -18,7 +18,7 @@ MonoBehaviour:
     loadSceneMode: 0
     desc: TestScene01
   - id: 1002
-    path: Assets/Bundles/Scene/LoginScene
+    path: Assets/Bundles/Scene/BasicScene
     loadSceneMode: 0
     desc: LoginScene
   - id: 1003

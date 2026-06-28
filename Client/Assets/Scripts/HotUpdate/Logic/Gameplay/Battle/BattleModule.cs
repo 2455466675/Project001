@@ -42,7 +42,8 @@ namespace GameFramework.Logic
         private async UniTask LoadBattle()
         {
             Game.GetModule<PartyModule>().ShutDown();
-            Game.GetSystem<GameSceneSystem>().SetBattleSceneVisible(true);
+            //加载战斗场景
+            await Game.GetSystem<GameSceneSystem>().LoadScene(1003);
             Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Combat);
             Game.GetSystem<GameCameraController>().SetCameraModel(CameraModel.Controlled);
             Game.Message.SendMessage(new UIPanelMessage() { isVisible = true, panel = Utility.GameDefine.PanelDefine.BattleFormation });
@@ -52,7 +53,8 @@ namespace GameFramework.Logic
         private async UniTask UnloadBattle()
         {
             Game.Message.SendMessage(new UIPanelMessage() { isVisible = false, panel = Utility.GameDefine.PanelDefine.BattleFormation });
-            Game.GetSystem<GameSceneSystem>().SetBattleSceneVisible(false);
+            //卸载战斗场景
+            await Game.GetSystem<GameSceneSystem>().UnloadScene(1003);
             Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Normal);
             Game.GetSystem<GameCameraController>().SetCameraModel(CameraModel.Follow);
             Game.GetModule<PartyModule>().StartUp();

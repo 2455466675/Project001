@@ -40,7 +40,6 @@ namespace GameFramework.Core
         private async UniTask LoadGame()
         {
             await Game.GetSystem<GameSceneSystem>().LoadScene(1001);
-            await Game.GetSystem<GameSceneSystem>().LoadBattleScene();
             Game.GetSystem<GameInputSystem>().Switch(InputModuleType.Normal);
         }
     }

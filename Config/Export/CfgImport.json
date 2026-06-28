@@ -20,6 +20,10 @@
             "excel":"item.xlsx",
             "type":"ItemCfg",
         },
+		{  
+			"excel":"scene.xlsx",
+            "type":"SceneCfg",
+        },
         {
             "excel":"color.xlsx",
             "type":"ColorCfg",

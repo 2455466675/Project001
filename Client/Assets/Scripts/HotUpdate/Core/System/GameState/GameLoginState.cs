@@ -23,7 +23,7 @@ namespace GameFramework.Core
         private async UniTaskVoid Load()
         {
             Game.Message.SendMessage(new GameLoginMessage() { status = 0 });
-            await Game.GetSystem<GameSceneSystem>().LoadScene(1002);
+            await Game.GetSystem<GameSceneSystem>().LoadScene(1000);
             Game.GetSystem<GameSaveSystem>().LoadSaveSummary();
             Game.Message.SendMessage(new GameLoginMessage() { status = 1 });
         }

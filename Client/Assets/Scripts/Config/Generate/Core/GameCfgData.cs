@@ -32,6 +32,10 @@ namespace Config
 			_ItemCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(ItemCfg), _ItemCfgContainer);
 
+			ICfgContainer _SceneCfgContainer = new SceneCfgContainer();
+			_SceneCfgContainer.Deserialize(reader);
+			_cfgDatas.Add(typeof(SceneCfg), _SceneCfgContainer);
+
 			ICfgContainer _ColorCfgContainer = new ColorCfgContainer();
 			_ColorCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(ColorCfg), _ColorCfgContainer);

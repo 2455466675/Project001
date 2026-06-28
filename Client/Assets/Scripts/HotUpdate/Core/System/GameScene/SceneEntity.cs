@@ -1,9 +1,19 @@
-using UnityEngine;
-using YooAsset;
+using Config;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using YooAsset;
 
 namespace GameFramework.Core
 {
+    public enum SceneMode 
+    {
+        Basic = 0,
+        Single = 1,
+        Overlay = 2,
+    }
+
+
     internal class SceneEntity
     {
         private enum State
@@ -15,16 +25,20 @@ namespace GameFramework.Core
         }
 
         public int SceneId => cfg.Id;
+        public SceneMode SceneMode { get; private set; }
         public bool IsLoaded => handle != null && handle.SceneObject.isLoaded;
         public bool IsValid => handle != null && handle.SceneObject.IsValid();
 
-        private readonly SceneConfig cfg;
+        private readonly SceneCfg cfg;
         private SceneHandle handle;
         private State state;
+        private LoadSceneMode loadSceneMode;
 
-        internal SceneEntity(SceneConfig cfg)
+        internal SceneEntity(SceneCfg cfg)
         {
             this.cfg = cfg;
+            this.SceneMode = (SceneMode)cfg.LoadMode;
+            loadSceneMode = this.SceneMode == SceneMode.Basic ? LoadSceneMode.Single : LoadSceneMode.Additive;
         }
 
         internal void SetVisible(bool visible)
@@ -42,9 +56,16 @@ namespace GameFramework.Core
 
             if (state == State.None || state == State.Loading)
             {
-                MDebug.Log("state == State.None || state == State.Loading", SceneId);
+                MDebug.Warn($"{SceneId} : 场景尚未加载完成。state = {state}");
                 return;
             }
+
+            if (SceneMode != SceneMode.Single)
+            {
+                MDebug.Warn($"{SceneId} : 此场景不允许隐藏。如果是Overlay场景，请选择卸载它");
+                return;
+            }
+
             GameObject[] objects = handle.SceneObject.GetRootGameObjects();
             foreach (GameObject obj in objects)
             {
@@ -53,6 +74,9 @@ namespace GameFramework.Core
             state = visible ? State.Visible : State.Unvisible;
         }
 
+        /// <summary>
+        /// 设置当前场景为激活场景
+        /// </summary>
         internal void ActivateScene()
         {
             if (handle == null)
@@ -73,7 +97,7 @@ namespace GameFramework.Core
                 return;
             }
             state = State.Loading;
-            var handle = Game.Assets.LoadScene(cfg.Path, cfg.LoadSceneMode);
+            var handle = Game.Assets.LoadScene(cfg.Path, loadSceneMode);
             this.handle = handle;
             state = State.Visible;
         }
@@ -91,8 +115,13 @@ namespace GameFramework.Core
 
             state = State.Loading;
 
-            var handle = Game.Assets.LoadSceneAsync(cfg.Path, cfg.LoadSceneMode);
-            await handle;
+            var handle = await Game.Assets.LoadSceneAsync(cfg.Path, loadSceneMode);
+            if (handle == null || handle.Status != EOperationStatus.Succeed)
+            {
+                MDebug.Log($"场景加载失败 : {cfg.Path}");
+                state = State.None;
+                return;
+            }
 
             this.handle = handle;
             state = State.Visible;
@@ -100,15 +129,16 @@ namespace GameFramework.Core
 
         internal async UniTask UnloadAsync()
         {
-            if (handle == null)
+            if (state == State.Loading)
             {
                 return;
-            }
-            if (handle.IsValid)
+            }            
+            if (handle != null && handle.IsValid)
             {
                 await handle.UnloadAsync();
             }
             handle = null;
+            state = State.None;
         }
     }
 }

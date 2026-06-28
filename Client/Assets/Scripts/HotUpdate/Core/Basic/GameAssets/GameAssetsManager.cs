@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
@@ -143,9 +144,10 @@ namespace GameFramework.Core
             return handle;
         }
 
-        public SceneHandle LoadSceneAsync(string path, LoadSceneMode mode)
+        public async UniTask<SceneHandle> LoadSceneAsync(string path, LoadSceneMode mode)
         {
             var handle = YooAssets.LoadSceneAsync(path, mode);
+            await handle;
             return handle;
         }
 
