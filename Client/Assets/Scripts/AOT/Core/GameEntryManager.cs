@@ -12,17 +12,19 @@ namespace GameFrameworkAOT
         public string entryAssemblyName;
         public string entryClassName;
         public string entryMethodName;
+        public string packageName;
 
         public GameEntryManager(GameInitConfig config) 
         {
             this.entryAssemblyName = config.entryAssemblyName;
             this.entryClassName = config.entryClassName;
             this.entryMethodName = config.entryMethodName;
+            this.packageName = config.packageName;
         }
 
         public async UniTask Start()
         {
-            Debug.Log($"¿ªÊ¼Æô¶¯ÓÎÏ·:{entryAssemblyName}.{entryClassName}.{entryMethodName}");
+            Debug.Log($"ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·:{entryAssemblyName}.{entryClassName}.{entryMethodName}");
 
             Assembly assembly;
 #if UNITY_EDITOR
@@ -55,7 +57,7 @@ namespace GameFrameworkAOT
                 return;
             }
 
-            entryMethod.Invoke(null, null);
+            entryMethod.Invoke(null, new object[] { packageName });
         }
     }
 }

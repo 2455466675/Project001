@@ -11,15 +11,17 @@ namespace GameFrameworkAOT
         public EPlayMode playMode;
 
         /// <summary>
-        /// ÓÎÏ·Èë¿Ú³ÌĞò¼¯
+        /// æ¸¸æˆå…¥å£ç¨‹åºé›†
         /// </summary>
         public string entryAssemblyName = "HotUpdate_Base";
+
         /// <summary>
-        /// ÓÎÏ·Èë¿ÚÀà
+        /// æ¸¸æˆå…¥å£ç±»
         /// </summary>
         public string entryClassName = "GameFramework.Game";
+
         /// <summary>
-        /// ÓÎÏ·Èë¿Ú·½·¨
+        /// æ¸¸æˆå…¥å£æ–¹æ³•
         /// </summary>
         public string entryMethodName = "Start";
     }

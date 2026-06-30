@@ -1,25 +1,27 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using YooAsset;
 
 namespace GameFramework.Core
 {
     public class GameAssetsManager
     {
-        private const string DefaultPackageName = "DefaultPackage";
+        // 资源后端通过构造注入，更换底层框架只需替换传入的 IAssetProvider 实现。
+        private readonly IAssetProvider provider;
 
-        private Dictionary<string, AssetItem> assets;
-        private Dictionary<string, AssetRequester> requesters;
-        private Dictionary<int, string> activeAssets;
+        private Dictionary<string, AssetEntry> assetEntries;
+        private Dictionary<string, AssetEntry> loadingEntries;
+        private Dictionary<int, string> activeEntries;
+        private List<string> unloadBuffer;
 
-        internal GameAssetsManager()
+        internal GameAssetsManager(IAssetProvider provider)
         {
-            assets = new Dictionary<string, AssetItem>();
-            requesters = new Dictionary<string, AssetRequester>();
-            activeAssets = new Dictionary<int, string>();
+            this.provider = provider;
+            assetEntries = new Dictionary<string, AssetEntry>();
+            loadingEntries = new Dictionary<string, AssetEntry>();
+            activeEntries = new Dictionary<int, string>();
+            unloadBuffer = new List<string>();
         }
 
         public async UniTask Init()
@@ -27,110 +29,110 @@ namespace GameFramework.Core
             await UniTask.CompletedTask;
         }
 
-        public T LoadFromResources<T>(string path) where T : UnityEngine.Object
+        public T LoadFromResources<T>(string assetPath) where T : UnityEngine.Object
         {
-            return Resources.Load<T>(path);
+            return Resources.Load<T>(assetPath);
         }
 
         #region Raw
 
-        public T LoadAsset<T>(string path) where T : UnityEngine.Object
+        public T LoadAsset<T>(string assetPath) where T : UnityEngine.Object
         {
-            AssetItem assetItem = CreateAssetItem<T>(path);
-            if (assetItem == null)
+            var entry = CreateAssetEntry<RawAssetEntry>(assetPath);
+            if (entry == null)
             {
-                return null;
+                return default;
             }
-            T asset = assetItem.GetAsset<T>();
-            ActiveAsset(asset, path);
+            T asset = entry.GetAsset<T>();
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
-        public async UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object
+        public async UniTask<T> LoadAssetAsync<T>(string assetPath) where T : UnityEngine.Object
         {
-            AssetItem assetItem = await CreateAssetItemAsync<T>(path);
-            if (assetItem == null)
+            var entry = await CreateAssetEntryAsync<RawAssetEntry>(assetPath);
+            if (entry == null)
             {
-                return null;
+                return default;
             }
-            T asset = assetItem.GetAsset<T>();
-            ActiveAsset(asset, path);
+            T asset = entry.GetAsset<T>();
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
         #endregion
 
-        #region Instantiate
+        #region Prefab
 
-        public GameObject Instantiate(string path)
+        public GameObject Instantiate(string assetPath)
         {
-            AssetItem assetItem = CreateAssetItem<GameObject>(path);          
-            if (assetItem == null)
+            var entry = CreateAssetEntry<PrefabAssetEntry>(assetPath);          
+            if (entry == null)
             {
                 return null;
             }
-            GameObject asset = assetItem.Instantiate();
-            ActiveAsset(asset, path);
+            GameObject asset = entry.Instantiate();
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
-        public GameObject Instantiate(string path, Transform parent)
+        public GameObject Instantiate(string assetPath, Transform parent)
         {
-            AssetItem assetItem = CreateAssetItem<GameObject>(path);
-            if (assetItem == null)
+            var entry = CreateAssetEntry<PrefabAssetEntry>(assetPath);
+            if (entry == null)
             {
                 return null;
             }
-            GameObject asset = assetItem.Instantiate(parent);
-            ActiveAsset(asset, path);
+            GameObject asset = entry.Instantiate(parent);
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
-        public GameObject Instantiate(string path, Transform parent, bool worldPositionStays)
+        public GameObject Instantiate(string assetPath, Transform parent, bool worldPositionStays)
         {
-            AssetItem assetItem = CreateAssetItem<GameObject>(path);
-            if (assetItem == null)
+            var entry = CreateAssetEntry<PrefabAssetEntry>(assetPath);
+            if (entry == null)
             {
                 return null;
             }
-            GameObject asset = assetItem.Instantiate(parent, worldPositionStays);
-            ActiveAsset(asset, path);
+            GameObject asset = entry.Instantiate(parent, worldPositionStays);
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
-        public GameObject Instantiate(string path, Vector3 position, Quaternion rotation)
+        public GameObject Instantiate(string assetPath, Vector3 position, Quaternion rotation)
         {
-            AssetItem assetItem = CreateAssetItem<GameObject>(path);
-            if (assetItem == null)
+            var entry = CreateAssetEntry<PrefabAssetEntry>(assetPath);
+            if (entry == null)
             {
                 return null;
             }
-            GameObject asset = assetItem.Instantiate(position, rotation);
-            ActiveAsset(asset, path);
+            GameObject asset = entry.Instantiate(position, rotation);
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
-        public GameObject Instantiate(string path, Vector3 position, Quaternion rotation, Transform parent)
+        public GameObject Instantiate(string assetPath, Vector3 position, Quaternion rotation, Transform parent)
         {
-            AssetItem assetItem = CreateAssetItem<GameObject>(path);
-            if (assetItem == null)
+            var entry = CreateAssetEntry<PrefabAssetEntry>(assetPath);
+            if (entry == null)
             {
                 return null;
             }
-            GameObject asset = assetItem.Instantiate(position, rotation, parent);
-            ActiveAsset(asset, path);
+            GameObject asset = entry.Instantiate(position, rotation, parent);
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
-        public async UniTask<GameObject> InstantiateAsync(string path, Transform parent)
+        public async UniTask<GameObject> InstantiateAsync(string assetPath, Transform parent)
         {
-            AssetItem assetItem = await CreateAssetItemAsync<GameObject>(path);
-            if (assetItem == null)
+            var entry = await CreateAssetEntryAsync<PrefabAssetEntry>(assetPath);
+            if (entry == null)
             {
                 return null;
             }
-            GameObject asset = assetItem.Instantiate(parent);
-            ActiveAsset(asset, path);
+            GameObject asset = entry.Instantiate(parent);
+            ActiveAsset(asset, assetPath);
             return asset;
         }
 
@@ -138,17 +140,72 @@ namespace GameFramework.Core
 
         #region Scene
 
-        public SceneHandle LoadScene(string path, LoadSceneMode mode)
+        public ISceneHandle LoadScene(string assetPath, LoadSceneMode mode)
         {
-            var handle = YooAssets.LoadSceneSync(path, mode);
-            return handle;
+            return provider.LoadSceneSync(assetPath, mode);
         }
 
-        public async UniTask<SceneHandle> LoadSceneAsync(string path, LoadSceneMode mode)
+        public async UniTask<ISceneHandle> LoadSceneAsync(string assetPath, LoadSceneMode mode)
         {
-            var handle = YooAssets.LoadSceneAsync(path, mode);
-            await handle;
-            return handle;
+            return await provider.LoadSceneAsync(assetPath, mode);
+        }
+
+        #endregion
+
+        #region Sprite
+
+        public Sprite GetSprite(string spriteName)
+        {
+            //TODO
+            //spriteName to AssetBundle assetPath
+            //AssetItem
+
+            bool isMultiple = false;
+            string assetPath = "";
+
+            if (isMultiple)
+            {
+                var entry = CreateAssetEntry<SubAssetEntry>(assetPath);
+                if (entry == null)
+                {
+                    return null;
+                }
+                return entry.GetSubAssetObject<Sprite>(spriteName);
+            }
+            else
+            {
+                var entry = CreateAssetEntry<SpriteAtlasAssetEntry>(assetPath);
+                if (entry == null)
+                {
+                    return null;
+                }
+                return entry.GetSprite(spriteName);
+            }
+        }
+
+        public async UniTask<Sprite> GetSpriteAsync(string spriteName)
+        {
+            bool isMultiple = false;
+
+            string assetPath = "";
+            if (isMultiple)
+            {
+                var entry = await CreateAssetEntryAsync<SubAssetEntry>(assetPath);
+                if (entry == null)
+                {
+                    return null;
+                }
+                return entry.GetSubAssetObject<Sprite>(spriteName);
+            }
+            else
+            {
+                var entry = await CreateAssetEntryAsync<SpriteAtlasAssetEntry>(assetPath);
+                if (entry == null)
+                {
+                    return null;
+                }
+                return entry.GetSprite(spriteName);
+            }
         }
 
         #endregion
@@ -161,123 +218,144 @@ namespace GameFramework.Core
             }
 
             int instanceID = asset.GetInstanceID();
-            if (!activeAssets.TryGetValue(instanceID, out var assetPath))
+            if (!activeEntries.TryGetValue(instanceID, out var assetPath))
             {
                 return;
             }
 
-            if (!assets.TryGetValue(assetPath, out var assetItem))
+            if (!assetEntries.TryGetValue(assetPath, out var entry))
             {
                 return;
             }
-            
-            if (assetItem.ReleaseAsset(asset))
-            {
-                activeAssets.Remove(instanceID);    
-            }
 
-            if (assetItem.RefCount <= 0)
+            // 只做逻辑层减引用，归零的 Entry 暂时保留作缓存，handle 不立即释放，
+            // 留待 UnloadUnusedAssetsAsync 在安全时机统一回收，避免“放了又拿”造成的加载抖动。
+            if (entry.ReleaseAsset(asset))
             {
-                assetItem.Release();
-                assets.Remove(assetPath);
+                activeEntries.Remove(instanceID);
             }
         }
 
         public async UniTask UnloadUnusedAssetsAsync()
         {
-            var package = YooAssets.GetPackage(DefaultPackageName);
-            await package.UnloadUnusedAssetsAsync();
+            // 仍有异步加载在途时跳过：YooAsset 在加载未结束时卸载可能命中正在使用的 Bundle，且时机上也没必要。
+            if (loadingEntries.Count > 0)
+            {
+                return;
+            }
+
+            // 先把逻辑层已无引用的 Entry 释放给底层（Release 持有的 handle），
+            // 之后 YooAsset 才能在 UnloadUnusedAssetsAsync 中真正卸载这些资源所在的 Bundle。
+            unloadBuffer.Clear();
+            foreach (var kv in assetEntries)
+            {
+                if (kv.Value.RefCount <= 0)
+                {
+                    unloadBuffer.Add(kv.Key);
+                }
+            }
+
+            for (int i = 0; i < unloadBuffer.Count; i++)
+            {
+                string assetPath = unloadBuffer[i];
+                if (assetEntries.TryGetValue(assetPath, out var entry))
+                {
+                    assetEntries.Remove(assetPath);
+                    entry.Release();
+                }
+            }
+            unloadBuffer.Clear();
+
+            await provider.UnloadUnusedAssetsAsync();
         }
 
-        private AssetItem CreateAssetItem<T>(string path) where T : UnityEngine.Object
+        private T CreateAssetEntry<T>(string assetPath) where T : AssetEntry, new()
         {
-            if (assets.TryGetValue(path, out AssetItem assetItem))
+            if (assetEntries.TryGetValue(assetPath, out AssetEntry existing))
             {
-                return assetItem;
+                return Cast<T>(existing, assetPath);
             }
 
             // 已有异步加载在途：接管其句柄并强制同步完成，避免重复创建 handle 造成泄漏。
-            // 该句柄归异步流程所有，其失败释放与登记清理统一交由异步侧处理，这里不碰，防止双重 Release。
-            if (requesters.TryGetValue(path, out AssetRequester requester))
+            // 句柄的完成判定与失败释放统一收敛在 AssetEntry 内部单点处理，这里只需要根据成败决定是否登记。
+            // 失败时不登记，loadingEntries 的清理交由异步侧的 finally 完成，避免重复清理。
+            if (loadingEntries.TryGetValue(assetPath, out AssetEntry loading))
             {
-                AssetHandle pending = requester.Handle;
-                pending.WaitForAsyncComplete();
-
-                if (pending.Status != EOperationStatus.Succeed)
+                if (loading.WaitForAsyncComplete())
                 {
-                    return null;
+                    assetEntries[assetPath] = loading;
+                    return Cast<T>(loading, assetPath);
                 }
-
-                assetItem = new AssetItem(pending);
-                assets[path] = assetItem;
-                return assetItem;
-            }
-
-            AssetHandle handle = YooAssets.LoadAssetSync<T>(path);
-            if (handle.Status != EOperationStatus.Succeed)
-            {
-                Debug.LogError($"[GameAssetsManager] 同步加载资源失败: {path}, {handle.LastError}");
-                handle.Release();
                 return null;
             }
 
-            assetItem = new AssetItem(handle);
-            assets[path] = assetItem;
-            return assetItem;
+            T entry = new T();
+            entry.SetProvider(provider);
+            if (entry.LoadAsset(assetPath))
+            {
+                assetEntries[assetPath] = entry;
+                return entry;
+            }
+            return null;
         }
 
-        private async UniTask<AssetItem> CreateAssetItemAsync<T>(string path) where T : UnityEngine.Object
+        private async UniTask<T> CreateAssetEntryAsync<T>(string assetPath) where T : AssetEntry, new()
         {
-            if (assets.TryGetValue(path, out AssetItem assetItem))
+            if (assetEntries.TryGetValue(assetPath, out AssetEntry existing))
             {
-                return assetItem;
+                return Cast<T>(existing, assetPath);
             }
 
-            if (requesters.TryGetValue(path, out AssetRequester requester))
+            if (loadingEntries.TryGetValue(assetPath, out AssetEntry loading))
             {
-                await requester.Task;
-                assets.TryGetValue(path, out assetItem);
-                return assetItem;
+                bool ok = await loading.Task;
+                if (!ok)
+                {
+                    return null;
+                }
+                return Cast<T>(loading, assetPath);
             }
 
-            requester = new AssetRequester();
-            requesters[path] = requester;
-
-            AssetHandle handle = YooAssets.LoadAssetAsync<T>(path);
-            requester.Handle = handle; // 登记在途句柄，使同步路径可接管并强制完成
+            T entry = new T();
+            entry.SetProvider(provider);
+            loadingEntries[assetPath] = entry;
 
             try
             {
-                await handle;
-
-                // 同步加载可能在 await 期间已接管同一 handle 并落表，此时直接复用，避免重复包装与重复释放
-                if (assets.TryGetValue(path, out AssetItem existing))
+                bool success = await entry.LoadAssetAsync(assetPath);
+                if (!success)
                 {
-                    return existing;
-                }
-
-                if (handle.Status != EOperationStatus.Succeed)
-                {
-                    Debug.LogError($"[GameAssetsManager] 异步加载资源失败: {path}, {handle.LastError}");
-                    handle.Release();
                     return null;
                 }
 
-                assetItem = new AssetItem(handle);
-                assets[path] = assetItem;
-                return assetItem;
+                if (assetEntries.TryGetValue(assetPath, out existing))
+                {
+                    return Cast<T>(existing, assetPath);
+                }
+
+                assetEntries[assetPath] = entry;
+                return entry;
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"[GameAssetsManager] 异步加载资源异常: {path}\n{e}");
-                handle.Release();
+                Debug.LogError($"[GameAssetsManager] 异步加载资源异常: {assetPath}\n{e}");
                 return null;
             }
             finally
             {
-                requesters.Remove(path);
-                requester.SetResult(handle);
+                loadingEntries.Remove(assetPath);
             }
+        }
+
+        // 同一 assetPath 被以不同 Entry 类型请求时，显式报错。
+        private static T Cast<T>(AssetEntry entry, string assetPath) where T : AssetEntry
+        {
+            if (entry is T typed)
+            {
+                return typed;
+            }
+            Debug.LogError($"[GameAssetsManager] 资源类型不匹配: {assetPath} 已作为 {entry.GetType().Name} 加载, 无法作为 {typeof(T).Name} 获取");
+            return null;
         }
 
         private void ActiveAsset(UnityEngine.Object asset, string assetPath)
@@ -286,7 +364,7 @@ namespace GameFramework.Core
             {
                 return;
             }
-            activeAssets[asset.GetInstanceID()] = assetPath;
+            activeEntries[asset.GetInstanceID()] = assetPath;
         }
     }
 }

@@ -70,11 +70,12 @@ namespace GameFramework.Core
             foreach (var aotDllName in AotDllList)
             {
                 string path = GetDllPath(aotDllName);
-                TextAsset textAsset = await Game.ResourcesManager.LoadAssetAsync<TextAsset>(path);
+                TextAsset textAsset = await Game.Assets.LoadAssetAsync<TextAsset>(path);
                 if (textAsset != null )
                 {
                     LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(textAsset.bytes, mode);
                     Debug.Log($"LoadMetadataForAOTAssembly : {aotDllName}. ret:{err}");
+                    Game.Assets.ReleaseAsset(textAsset);
                 }
                 else
                 {
@@ -100,13 +101,14 @@ namespace GameFramework.Core
             foreach (var name in HotUpdateDllList)
             {
                 string path = GetDllPath(name);
-                TextAsset textAsset = await Game.ResourcesManager.LoadAssetAsync<TextAsset>(path);
+                TextAsset textAsset = await Game.Assets.LoadAssetAsync<TextAsset>(path);
  
                 if (textAsset != null)
                 {
                     Assembly assembly = Assembly.Load(textAsset.bytes);
                     assemblies.Add(assembly);
                     Debug.Log("Load Assembly : " + assembly.GetName().Name);
+                    Game.Assets.ReleaseAsset(textAsset);
                 }
                 else
                 {

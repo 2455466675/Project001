@@ -12,11 +12,11 @@ namespace GameFramework
         private static GameSystemManager systemManager;
         private static GameplayManager gameplayManager;
 
-        public static async void Start()
+        public static async void Start(string packageName)
         {
             MDebug.Log("Game Start!");
 
-            Assets = new GameAssetsManager();
+            Assets = new GameAssetsManager(new YooAssetProvider(packageName));
             Config = new GameConfigManager();
             Message = new GameMessageDispatcher();
             assemblyManager = new GameAssemblyManager();

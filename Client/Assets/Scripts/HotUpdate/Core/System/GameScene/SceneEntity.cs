@@ -2,7 +2,6 @@ using Config;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using YooAsset;
 
 namespace GameFramework.Core
 {
@@ -30,7 +29,7 @@ namespace GameFramework.Core
         public bool IsValid => handle != null && handle.SceneObject.IsValid();
 
         private readonly SceneCfg cfg;
-        private SceneHandle handle;
+        private ISceneHandle handle;
         private State state;
         private LoadSceneMode loadSceneMode;
 
@@ -116,7 +115,7 @@ namespace GameFramework.Core
             state = State.Loading;
 
             var handle = await Game.Assets.LoadSceneAsync(cfg.Path, loadSceneMode);
-            if (handle == null || handle.Status != EOperationStatus.Succeed)
+            if (handle == null || !handle.IsSucceed)
             {
                 MDebug.Log($"场景加载失败 : {cfg.Path}");
                 state = State.None;
