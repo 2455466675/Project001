@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using GameFramework.Core;
 using System.Collections.Generic;
+using LITJson;
 
 namespace GameFramework.Logic
 {
@@ -78,7 +79,7 @@ namespace GameFramework.Logic
             }
             else
             {
-                summary = JsonUtility.FromJson<SaveSlotSummary>(json);
+                summary = JsonMapper.ToObject<SaveSlotSummary>(json);
             }
 
             var slot = slots[index];
@@ -96,7 +97,7 @@ namespace GameFramework.Logic
             {
                 summary = slots[index].ExportSummary();
             }
-            return JsonUtility.ToJson(summary);
+            return JsonMapper.ToJson(summary);
         }
 
         IGameSaveData IGameSaveSummary.Capture()
@@ -150,7 +151,7 @@ namespace GameFramework.Logic
                 GameSaveItem item = new GameSaveItem();
                 item.Write("index", slot.Index);
                 item.Write("state", slot.State);
-                item.Write(ContentKey, JsonUtility.ToJson(slot.ExportSummary()));
+                item.Write(ContentKey, JsonMapper.ToJson(slot.ExportSummary()));
                 items.Add(key, item);
             }
 

@@ -26,6 +26,7 @@ namespace GameFramework.View.UI
             if (entity != null)
             {
                 entity.Hide();
+                entity.Destroy();
             }
             else
             {
@@ -65,9 +66,9 @@ namespace GameFramework.View.UI
             if (panel == null)
             {
                 panel = new PanelEntity();
-                panel.Init(id);
                 panelEntities.Add(id, panel);
             }
+            panel.Init(id);
             return panel;
         }
     }

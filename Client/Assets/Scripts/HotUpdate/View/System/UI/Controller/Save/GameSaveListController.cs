@@ -53,6 +53,12 @@ namespace GameFramework.View.UI
                 DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(d.LastTime).LocalDateTime;
                 w.SetText($"存档时间：{dateTime:yyyy年MM月dd日 HH:mm:ss}");
             });
+
+            var imageView = itemView.GetWidget<ImageWidget>("ImageView");
+            binder.Binding(imageView, dataModel, d => d.Index, (w, d) => 
+            {
+                w.SetSprite($"icon_001_{d.Index}");
+            });
         }
 
         protected override void SelectItemView(NavigationItemView itemView, GameSaveSlot dataModel)

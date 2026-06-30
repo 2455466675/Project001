@@ -8,18 +8,39 @@ namespace GameFramework.View.UI
         [SerializeField]
         private Image image;
 
+        private Sprite lastSprite;
+
         public void SetSprite(string spriteName)
         {
+            if (image == null)
+            {
+                return;
+            }
 
-        }
-
-        public void SetSprite(Sprite sprite) 
-        {
-            if (image != null) 
+            ReleaseSprite();
+            Sprite sprite = Game.Assets.GetSprite(spriteName);
+            if (sprite != null)
             {
                 image.sprite = sprite;
+                lastSprite = sprite;
             }
         }
+
+        private void OnDestroy()
+        {
+            ReleaseSprite();
+        }
+
+        private void ReleaseSprite()
+        {
+            if (lastSprite != null)
+            {
+                Game.Assets.ReleaseAsset(lastSprite);
+                lastSprite = null;
+            }
+        }
+
+#if UNITY_EDITOR
 
         private void OnValidate()
         {
@@ -28,5 +49,8 @@ namespace GameFramework.View.UI
                 image = GetComponent<Image>();
             }
         }
+
+#endif
+
     }
 }

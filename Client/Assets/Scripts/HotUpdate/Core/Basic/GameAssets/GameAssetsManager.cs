@@ -7,13 +7,15 @@ namespace GameFramework.Core
 {
     public class GameAssetsManager
     {
-        // 资源后端通过构造注入，更换底层框架只需替换传入的 IAssetProvider 实现。
+        // 资源管理器接口
         private readonly IAssetProvider provider;
 
-        private Dictionary<string, AssetEntry> assetEntries;
-        private Dictionary<string, AssetEntry> loadingEntries;
-        private Dictionary<int, string> activeEntries;
-        private List<string> unloadBuffer;
+        private readonly Dictionary<string, AssetEntry> assetEntries;   //已加载完成的资源
+        private readonly Dictionary<string, AssetEntry> loadingEntries; //正在加载中的资源
+        private readonly Dictionary<int, string> activeEntries; //活跃资源（InstanceID => AssetPath）
+        private readonly List<string> unloadBuffer;
+
+        private readonly SpritePathProxy spritePathProxy;
 
         internal GameAssetsManager(IAssetProvider provider)
         {
@@ -22,11 +24,13 @@ namespace GameFramework.Core
             loadingEntries = new Dictionary<string, AssetEntry>();
             activeEntries = new Dictionary<int, string>();
             unloadBuffer = new List<string>();
+
+            spritePathProxy = new SpritePathProxy();
         }
 
         public async UniTask Init()
         {
-            await UniTask.CompletedTask;
+            await spritePathProxy.Init();            
         }
 
         public T LoadFromResources<T>(string assetPath) where T : UnityEngine.Object
@@ -156,13 +160,12 @@ namespace GameFramework.Core
 
         public Sprite GetSprite(string spriteName)
         {
-            //TODO
-            //spriteName to AssetBundle assetPath
-            //AssetItem
-
-            bool isMultiple = false;
-            string assetPath = "";
-
+            string assetPath = spritePathProxy.GetAssetPath(spriteName, out bool isMultiple);
+            if (string.IsNullOrEmpty(assetPath))
+            {
+                MDebug.Error($"没有找到精灵对应的资源路径 : {spriteName}");
+                return null;
+            }
             if (isMultiple)
             {
                 var entry = CreateAssetEntry<SubAssetEntry>(assetPath);
@@ -170,7 +173,9 @@ namespace GameFramework.Core
                 {
                     return null;
                 }
-                return entry.GetSubAssetObject<Sprite>(spriteName);
+                Sprite sprite = entry.GetSubAssetObject<Sprite>(spriteName);
+                ActiveAsset(sprite, assetPath);
+                return sprite;
             }
             else
             {
@@ -179,15 +184,20 @@ namespace GameFramework.Core
                 {
                     return null;
                 }
-                return entry.GetSprite(spriteName);
+                Sprite sprite = entry.GetSprite(spriteName);
+                ActiveAsset(sprite, assetPath);
+                return sprite;
             }
         }
 
         public async UniTask<Sprite> GetSpriteAsync(string spriteName)
         {
-            bool isMultiple = false;
-
-            string assetPath = "";
+            string assetPath = spritePathProxy.GetAssetPath(spriteName, out bool isMultiple);
+            if (string.IsNullOrEmpty(assetPath))
+            {
+                MDebug.Error($"没有找到精灵对应的资源路径 : {spriteName}");
+                return null;
+            }
             if (isMultiple)
             {
                 var entry = await CreateAssetEntryAsync<SubAssetEntry>(assetPath);
@@ -232,20 +242,20 @@ namespace GameFramework.Core
             // 留待 UnloadUnusedAssetsAsync 在安全时机统一回收，避免“放了又拿”造成的加载抖动。
             if (entry.ReleaseAsset(asset))
             {
+                MDebug.Log($"资源释放 : {instanceID} => {assetPath}");
                 activeEntries.Remove(instanceID);
             }
         }
 
         public async UniTask UnloadUnusedAssetsAsync()
         {
-            // 仍有异步加载在途时跳过：YooAsset 在加载未结束时卸载可能命中正在使用的 Bundle，且时机上也没必要。
+            // 仍有异步加载在途时跳过
             if (loadingEntries.Count > 0)
             {
                 return;
             }
 
-            // 先把逻辑层已无引用的 Entry 释放给底层（Release 持有的 handle），
-            // 之后 YooAsset 才能在 UnloadUnusedAssetsAsync 中真正卸载这些资源所在的 Bundle。
+            // 释放逻辑层已无引用的Entry
             unloadBuffer.Clear();
             foreach (var kv in assetEntries)
             {
@@ -255,6 +265,7 @@ namespace GameFramework.Core
                 }
             }
 
+            MDebug.Log($"开始卸载资源，总数 = {unloadBuffer.Count}");
             for (int i = 0; i < unloadBuffer.Count; i++)
             {
                 string assetPath = unloadBuffer[i];
@@ -262,11 +273,13 @@ namespace GameFramework.Core
                 {
                     assetEntries.Remove(assetPath);
                     entry.Release();
+                    MDebug.Log($"卸载资源 : {assetPath}");
                 }
             }
             unloadBuffer.Clear();
-
             await provider.UnloadUnusedAssetsAsync();
+
+            MDebug.Log($"卸载资源完成！");
         }
 
         private T CreateAssetEntry<T>(string assetPath) where T : AssetEntry, new()

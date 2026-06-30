@@ -16,6 +16,7 @@ namespace GameFramework.Core
         async UniTask IAsyncInit.Init()
         {
             entities = new Dictionary<int, SceneEntity>();
+            await UniTask.CompletedTask;
         }
 
         public async UniTask LoadScene(int id)
@@ -51,14 +52,15 @@ namespace GameFramework.Core
                 }
 
                 await entity.LoadAsync();
+                entity.ActivateScene();
 
                 if (mainScene != null)
                 {
-                    await mainScene.UnloadAsync();
+                    await mainScene.UnloadAsync();                    
                 }
-
-                entity.ActivateScene();
                 mainScene = entity;
+
+                await Game.Assets.UnloadUnusedAssetsAsync();
             }
 
             if (entity.SceneMode == SceneMode.Overlay)
@@ -69,17 +71,15 @@ namespace GameFramework.Core
                 }
 
                 await entity.LoadAsync();
+                entity.ActivateScene();
 
                 if (overlayScene != null)
                 {
                     await overlayScene.UnloadAsync();
                 }
                 mainScene?.SetVisible(false);
-                entity.ActivateScene();
                 overlayScene = entity;
-            }
-
-            //await Game.GetModule<AssetsManager>().UnloadUnusedAssetsAsync();
+            }            
         }
 
         /// <summary>
@@ -93,8 +93,9 @@ namespace GameFramework.Core
             {
                 return;
             }
-            await overlayScene.UnloadAsync();
             mainScene?.ActivateScene();
+            await overlayScene.UnloadAsync();
+            await Game.Assets.UnloadUnusedAssetsAsync();
             mainScene?.SetVisible(true);
             overlayScene = null;
         }

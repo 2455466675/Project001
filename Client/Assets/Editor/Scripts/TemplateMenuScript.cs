@@ -10,49 +10,49 @@ public class TemplateMenuScript
     [MenuItem("GameObject/MyUI/List/FluidNavigationList")]
     public static void CreateLoopNavigationList()
     {
-        string path = "Assets/Editor/UITemplate/FluidNavigationList.prefab";
+        string path = "Assets/Bundles/UI/Prefabs/UITemplate/FluidNavigationList.prefab";
         Instantiate(path);
     }
 
     [MenuItem("GameObject/MyUI/List/FixedNavigationList")]
     public static void CreateFixedNavigationList()
     {
-        string path = "Assets/Editor/UITemplate/FixedNavigationList.prefab";
+        string path = "Assets/Bundles/UI/Prefabs/UITemplate/FixedNavigationList.prefab";
         Instantiate(path);
     }
 
     [MenuItem("GameObject/MyUI/List/NavigationListBar")]
     public static void CreateNavigationListBar()
     {
-        string path = "Assets/Editor/UITemplate/NavigationListBar.prefab";
+        string path = "Assets/Bundles/UI/Prefabs/UITemplate/NavigationListBar.prefab";
         Instantiate(path);
     }
 
     [MenuItem("GameObject/MyUI/Text/TextView")]
     public static void CreateTextView()
     {
-        string path = "Assets/Editor/UITemplate/TextView.prefab";
+        string path = "Assets/Bundles/UI/Prefabs/UITemplate/TextView.prefab";
         Instantiate(path);
     }
 
     [MenuItem("GameObject/MyUI/Image/ImageView")]
     public static void CreateImageView()
     {
-        string path = "Assets/Editor/UITemplate/ImageView.prefab";
+        string path = "Assets/Bundles/UI/Prefabs/UITemplate/ImageView.prefab";
         Instantiate(path);
     }
 
     [MenuItem("GameObject/MyUI/Text/StaticTextView")]
     public static void CreateStaticTextView()
     {
-        string path = "Assets/Editor/UITemplate/StaticTextView.prefab";
+        string path = "Assets/Bundles/UI/Prefabs/UITemplate/StaticTextView.prefab";
         Instantiate(path);
     }
 
     [MenuItem("GameObject/MyUI/SliderView")]
     public static void CreateSliderView()
     {
-        string path = "Assets/Editor/UITemplate/SliderView.prefab";
+        string path = "Assets/Bundles/UI/Prefabs/UITemplate/SliderView.prefab";
         Instantiate(path);
     }
 

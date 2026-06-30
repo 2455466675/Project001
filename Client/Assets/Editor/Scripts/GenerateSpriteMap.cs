@@ -1,105 +1,111 @@
-using Newtonsoft.Json;
+using GameFramework;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
-using GameFramework_Old;
 
 public class GenerateSpriteMap
 {
-    [MenuItem("Tools/MyTools/GenerateSpriteMap")]
+    [MenuItem("Tools/MyTools/Generate Sprite Map")]
     public static void Generate() 
     {
-    //    SpriteMap map = new SpriteMap();
+        SpritePathListWrapper map = new SpritePathListWrapper();
 
-    //    Dictionary<string, SpriteItem> data = new Dictionary<string, SpriteItem>();
+        Dictionary<string, SpritePathData> data = new Dictionary<string, SpritePathData>();
 
-    //    List<SpriteAtlas> spriteAtlas = LoadAllAssetsInFolder<SpriteAtlas>("t:SpriteAtlas", "Assets/Bundles/ArtRes");
-    //    Debug.Log("spriteAtlas.Count:" + spriteAtlas.Count);
+        List<SpriteAtlas> spriteAtlas = LoadAllAssetsInFolder<SpriteAtlas>("t:SpriteAtlas", "Assets/Bundles/ArtResources");
+        Debug.Log("spriteAtlas.Count:" + spriteAtlas.Count);
 
-    //    foreach (var atlas in spriteAtlas)
-    //    {
-    //        Sprite[] temp = new Sprite[atlas.spriteCount];
-    //        atlas.GetSprites(temp);
+        foreach (var atlas in spriteAtlas)
+        {
+            Sprite[] temp = new Sprite[atlas.spriteCount];
+            atlas.GetSprites(temp);
 
-    //        string atlasPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(atlas), null);
+            string atlasPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(atlas), null);
 
-    //        foreach (var s in temp)
-    //        {
-    //            string name = s.name;
-    //            if (name.EndsWith("(Clone)")) 
-    //            {
-    //                name = name.Replace("(Clone)", string.Empty);
-    //            }
+            foreach (var s in temp)
+            {
+                string name = s.name;
+                if (name.EndsWith("(Clone)"))
+                {
+                    name = name.Replace("(Clone)", string.Empty);
+                }
 
-    //            SpriteItem item = new SpriteItem();
-    //            item.name = name;
-    //            item.isAtlasItem = true;
-    //            item.atlasPath = atlasPath;
-    //            item.assetPath = string.Empty;
+                SpritePathData item = new SpritePathData();
+                item.spriteName = name;
+                item.isMultiple = false;
+                item.assetPath = atlasPath;
+                
+                if (data.ContainsKey(name))
+                {
+                    Debug.LogError($"命名重复:{name}");
+                    continue;
+                }
+                else
+                {
+                    data.Add(name, item);
+                }
+            }
+        }
 
-    //            data[name] = item;
-    //        }
-    //    }
+        List<Sprite> sprites = LoadAllAssetsInFolder<Sprite>("t:Sprite", "Assets/Bundles/ArtResources");
+        Debug.Log("sprites.Count:" + sprites.Count);
 
-    //    List<Sprite> sprites = LoadAllAssetsInFolder<Sprite>("t:Sprite", "Assets/Bundles/ArtRes");
-    //    Debug.Log("sprites.Count:" + sprites.Count);
+        foreach (var s in sprites)
+        {
+            string name = s.name;
+            if (name.EndsWith("(Clone)"))
+            {
+                name = name.Replace("(Clone)", string.Empty);
+            }
 
-    //    foreach (var s in sprites)
-    //    {
-    //        string name = s.name;
-    //        if (name.EndsWith("(Clone)"))
-    //        {
-    //            name = name.Replace("(Clone)", string.Empty);
-    //        }
+            if (data.ContainsKey(name))
+            {
+                Debug.LogError($"命名重复:{name}");
+                continue;
+            }
 
-    //        if (data.ContainsKey(name)) 
-    //        {
-    //            continue;
-    //        }
+            SpritePathData item = new SpritePathData();
+            item.spriteName = name;
+            item.isMultiple = true;            
+            item.assetPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(s), null);
 
-    //        SpriteItem item = new SpriteItem();
-    //        item.name = name;
-    //        item.isAtlasItem = false;
-    //        item.atlasPath = string.Empty;
-    //        item.assetPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(s), null);
+            data.Add(name, item);
+        }
 
-    //        data[name] = item;
+        map.items = new List<SpritePathData>(data.Values);
 
-    //    }
+        string bundlePath = "Bundles/Common/SpritePathMap.json";
+        string json = LITJson.JsonMapper.ToJson(map);
+        string path = Path.Combine(Application.dataPath, bundlePath);
 
-    //    map.data = data;
+        File.WriteAllText(path, json);
 
-    //    string json = JsonConvert.SerializeObject(map);
-
-    //    string path = Path.Combine(Application.dataPath, "Resources/Game/sprite_map.json");
-
-    //    File.WriteAllText(path, json);
-
-    //    Debug.Log("Generate success : " + "Resources/Game/sprite_map.json");
+        Debug.Log("Generate success : " + path);
+        AssetDatabase.Refresh();
     }
 
 
-    //private static List<T> LoadAllAssetsInFolder<T>(string t, string folderPath) where T : UnityEngine.Object
-    //{
-    //    List<T> atlasList = new List<T>();
+    private static List<T> LoadAllAssetsInFolder<T>(string t, string folderPath) where T : UnityEngine.Object
+    {
+        List<T> atlasList = new List<T>();
 
-    //    string[] guids = AssetDatabase.FindAssets(t, new[] { folderPath });
+        string[] guids = AssetDatabase.FindAssets(t, new[] { folderPath });
 
-    //    foreach (string guid in guids)
-    //    {
-    //        string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-    //        T atlas = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+        foreach (string guid in guids)
+        {
+            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            T atlas = AssetDatabase.LoadAssetAtPath<T>(assetPath);
 
-    //        if (atlas != null)
-    //        {
-    //            atlasList.Add(atlas);
-    //        }
-    //    }
+            if (atlas != null)
+            {
+                atlasList.Add(atlas);
+            }
+        }
 
-    //    return atlasList;
-    //}
+        return atlasList;
+    }
 
     //private void Test()
     //{

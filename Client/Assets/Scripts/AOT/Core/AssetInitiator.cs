@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace GameFramework_Old.Core 
+namespace GameFramework.Core 
 {
     public class AssetInitiator : IEnumerator
     {

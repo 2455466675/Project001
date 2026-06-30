@@ -15,8 +15,14 @@ namespace GameFramework.View.UI
         private IPanelController controller;
         private Dictionary<NavigationDefine, NavigationListEntity> navigationListEntities;
 
+        private bool isInit;
+
         public void Init(PanelDefine id)
         {
+            if (isInit)
+            {
+                return;
+            }
 
             controller = Game.GetSystem<UISystem>().GetPanelController(id);
             if (controller == null)
@@ -50,6 +56,7 @@ namespace GameFramework.View.UI
                 navigationList.Init(views[i], defines[i]);
                 navigationListEntities.Add(defines[i], navigationList);
             }
+            isInit = true;
         }
 
         public void Destroy()
@@ -59,8 +66,12 @@ namespace GameFramework.View.UI
                 item.Value.Destroy();
             }
             navigationListEntities.Clear();
+
+            Game.Assets.ReleaseAsset(panel.gameObject);
+
             panel = null;
             controller = null;
+            isInit = false;
         }
 
         public NavigationListEntity GetNavigationListEntity(NavigationDefine navigationDefine)

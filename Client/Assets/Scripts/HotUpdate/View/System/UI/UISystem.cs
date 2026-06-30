@@ -46,7 +46,6 @@ namespace GameFramework.View
 
         public void ShowPanel(PanelDefine id, object content = null)
         {
-            MDebug.Log($"展示面板:{id}");
             entityManager.ShowPanel(id, content);
         }
 

@@ -50,11 +50,11 @@ MonoBehaviour:
     - GF_HotUpdate_Utility
     - ECS
     - Assembly-CSharp-firstpass
+    - GameConfig
     - Navigation
     - Base
     - HybridCLR.Runtime
     - UniTask.Editor
-    - GameConfig
     - AOT_Utility
     - FSM
     - ScriptablePacker

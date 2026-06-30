@@ -69,7 +69,7 @@ namespace GameFramework.Core
                     ""name"": ""ESC"",
                     ""type"": ""Button"",
                     ""id"": ""072c64de-1184-46b0-a142-bb82ffe15747"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -182,30 +182,8 @@ namespace GameFramework.Core
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b2261ca9-a47d-4679-911f-b1bf55d4c5b1"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Submit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""31d1b934-e28f-483f-bc39-22098f53e756"",
                     ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Cancel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b4d4664c-1649-4914-893e-49ce51bda8f0"",
-                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
