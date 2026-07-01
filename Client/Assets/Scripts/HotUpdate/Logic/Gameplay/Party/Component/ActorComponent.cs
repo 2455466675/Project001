@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using ECS;
 using GameFramework.Core;
 using UnityEngine;
@@ -18,39 +19,27 @@ namespace GameFramework.Logic
         void MovePosition(Vector3 position);
     }
 
+    /// <summary>
+    /// 实体与表现层 Actor 的桥接组件。
+    /// Actor 的加载时机由外部显式驱动（实体可能先于场景/Actor 就绪而创建），
+    /// 在 Actor 缺席期间用影子状态承接位置与动画控制器，待加载完成后一次性回填，
+    /// 从而让调用方无需感知加载是否完成。
+    /// </summary>
     public class ActorComponent : ComponentBase, IActorComponent
     {
-        private Actor actor;
         public int ActorId { get; private set; }
         public ActorType ActorType { get; private set; }
 
-        private Vector3 position;
+        private Actor actor;
 
-        private Vector3 ActorPosition
-        {
-            get
-            {
-                if (actor == null)
-                {
-                    return Vector3.zero;
-                }
-                else
-                {
-                    return actor.GetPosition();
-                }
-            }
-            set
-            {
-                if (actor == null)
-                {
-                    return;
-                }
-                else
-                {
-                    actor.SetPosition(value);
-                }
-            }
-        }
+        // Actor 缺席期间的影子状态，加载完成后回填给 Actor
+        private Vector3 position;
+        private string controllerName;
+        private bool visible = true;
+
+        // 加载代际：每次加载/回收自增。异步回调据此判断结果是否已过期，
+        // 防止短时间内的重复加载相互覆盖，导致先返回的 Actor 失去引用而泄漏。
+        private int loadToken;
 
         public void SetActorId(int id)
         {
@@ -62,13 +51,42 @@ namespace GameFramework.Logic
             ActorType = actorType;
         }
 
-        public void SetVelocity(Vector3 velocity)
+        public void RefreshActor()
         {
+            LoadAsync().Forget();
+        }
+
+        public void RecycleActor()
+        {
+            // 先让在途加载失效，避免其回调把已释放的引用重新挂回来
+            loadToken++;
+
             if (actor == null)
             {
                 return;
             }
-            actor.SetVelocity(velocity);
+            position = actor.GetPosition();
+            Game.GetSystem<GameActorManager>().ReleaseActor(actor);
+            actor = null;
+        }
+
+        public void SetVisible(bool visible)
+        {
+            this.visible = visible;
+            if (actor == null)
+            {
+                return;
+            }
+            if (visible)
+            {
+                actor.gameObject.SetActive(true);
+                actor.SetPosition(position);
+            }
+            else
+            {
+                position = actor.GetPosition();
+                actor.gameObject.SetActive(false);
+            }
         }
 
         public void SetPosition(float x, float y, float z)
@@ -79,90 +97,31 @@ namespace GameFramework.Logic
         public void SetPosition(Vector3 pos)
         {
             position = pos;
-            ActorPosition = pos;
-        }
-
-        public Vector3 GetPosition()
-        {
-            Vector3 pos = actor == null ? position : ActorPosition;
-            return pos;
+            if (actor != null)
+            {
+                actor.SetPosition(pos);
+            }
         }
 
         public void MovePosition(Vector3 pos)
         {
-            if (actor == null)
-            {
-                return;
-            }
             position = pos;
-            actor.MovePosition(pos);
+            if (actor != null)
+            {
+                actor.MovePosition(pos);
+            }
         }
 
-        public Transform GetBone(string name)
+        public Vector3 GetPosition()
         {
-            if (actor == null)
-            {
-                return null;
-            }
-            return actor.GetBone(name);
+            return actor != null ? actor.GetPosition() : position;
         }
 
-        public void RefreshActor()
+        public void SetVelocity(Vector3 velocity)
         {
-            RecycleActor();
-
-            actor = Game.GetSystem<GameActorManager>().LoadActor(ActorId);
-            if (actor == null)
+            if (actor != null)
             {
-                MDebug.Error("Actor is null : ", ActorId);
-                return;
-            }
-
-            SyncPosition();
-            actor.transform.SetParent(GetParent(), false);
-        }
-
-        public async void RefreshActorAsync()
-        {
-            RecycleActor();
-
-            actor = await Game.GetSystem<GameActorManager>().LoadActorAsync(ActorId);
-            if (actor == null)
-            {
-                MDebug.Error("Actor is null : ", ActorId);
-                return;
-            }
-
-            SyncPosition();
-            actor.transform.SetParent(GetParent(), false);
-        }
-
-        public void RecycleActor()
-        {
-            if (actor == null)
-            {
-                return;
-            }
-            position = ActorPosition;
-            Game.GetSystem<GameActorManager>().RecycleActor(actor);
-            actor = null;
-        }
-
-        public void SetVisible(bool visible)
-        {
-            if (actor == null)
-            {
-                return;
-            }
-            if (visible)
-            {
-                actor.gameObject.SetActive(true);
-                SyncPosition();
-            }
-            else
-            {
-                position = ActorPosition;
-                actor.gameObject.SetActive(false);
+                actor.SetVelocity(velocity);
             }
         }
 
@@ -171,26 +130,57 @@ namespace GameFramework.Logic
             RecycleActor();
         }
 
-        private Transform GetParent()
+        private async UniTask LoadAsync()
         {
-            Transform parent = GameRoot.GetNode<ActorNode>().GetActorNode(ActorType);
-            return parent;
+            RecycleActor();
+            int token = loadToken;
+
+            Actor loaded = await Game.GetSystem<GameActorManager>().LoadActorAsync(ActorId);
+            if (loaded == null)
+            {
+                MDebug.Error("Actor is null : ", ActorId);
+                return;
+            }
+
+            // 加载期间又发生了新的加载/回收请求，当前结果已过期，直接释放避免泄漏
+            if (token != loadToken)
+            {
+                Game.GetSystem<GameActorManager>().ReleaseActor(loaded);
+                return;
+            }
+
+            actor = loaded;
+            actor.transform.SetParent(GetParent(), false);
+            ApplyState();
         }
 
-        private void SyncPosition()
+        // Actor 就绪后一次性回填缺席期间累积的影子状态
+        private void ApplyState()
         {
-            MovePosition(position);
+            actor.MovePosition(position);
+            actor.SetPosition(position);
+            if (!string.IsNullOrEmpty(controllerName))
+            {
+                actor.SetAnimatorController(controllerName);
+            }
+            actor.gameObject.SetActive(visible);
+        }
+
+        private Transform GetParent()
+        {
+            return GameRoot.GetNode<ActorNode>().GetActorNode(ActorType);
         }
 
         #region Animator
 
         public void SetAnimatorController(string name)
         {
-            if (actor == null)
+            // 缓存控制器名，Actor 重载后据此恢复，避免重载丢失动画状态
+            controllerName = name;
+            if (actor != null)
             {
-                return;
+                actor.SetAnimatorController(name);
             }
-            actor.SetAnimatorController(name);
         }
 
         public void SetAnimatorValue(string name, bool value)

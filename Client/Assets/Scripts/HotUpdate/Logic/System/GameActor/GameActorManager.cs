@@ -1,104 +1,45 @@
 using Config;
-using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Core;
 using Cysharp.Threading.Tasks;
 
 namespace GameFramework.Logic
 {
+    /// <summary>
+    /// Actor 加载/释放的中间层。
+    /// 只负责屏蔽配置查询与资源实例化细节，本身不持有 Actor 引用，
+    /// 生命周期归属由调用方（ActorComponent）掌控，避免管理器与业务状态耦合。
+    /// </summary>
     [GameSystem]
-    public class GameActorManager : IGameSystem, IInit
+    public class GameActorManager : IGameSystem
     {
-        private Dictionary<int, Queue<Actor>> actorPool;
-
-        public void Init()
-        {
-            actorPool = new Dictionary<int, Queue<Actor>>();
-        }
-
-        public Actor LoadActor(int id)
-        {
-            Actor actor;
-
-            Queue<Actor> pool = GetPool(id);
-            if (pool.Count == 0)
-            {
-                ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
-                if (cfg == null)
-                {
-                    MDebug.Error("ActorCfg is null : ", id);
-                    return null;
-                }
-                else
-                {
-                    GameObject obj = Game.Assets.Instantiate(cfg.PrefabPath, null);
-                    actor = obj.GetComponent<Actor>();
-                    actor.Id = id;
-                }
-            }
-            else
-            {
-                actor = pool.Dequeue();
-            }
-
-            actor.transform.SetParent(null);
-            return actor;
-        }
-
         public async UniTask<Actor> LoadActorAsync(int id)
         {
-            Actor actor;
-            Queue<Actor> pool = GetPool(id);
-            if (pool.Count == 0)
+            ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
+            if (cfg == null)
             {
-                ActorCfg cfg = Game.Config.Find<ActorCfg>(id);
-                if (cfg == null)
-                {
-                    MDebug.Error("ActorCfg is null : ", id);
-                    return null;
-                }
-                else
-                {
-                    GameObject obj = await Game.Assets.InstantiateAsync(cfg.PrefabPath, null);
-                    actor = obj.GetComponent<Actor>();
-                    actor.Id = id;
-                }
+                MDebug.Error("ActorCfg is null : ", id);
+                return null;
             }
-            else
+
+            GameObject obj = await Game.Assets.InstantiateAsync(cfg.PrefabPath, null);
+            if (obj == null)
             {
-                actor = pool.Dequeue();
+                return null;
             }
-            actor.transform.SetParent(null);
+
+            Actor actor = obj.GetComponent<Actor>();
+            actor.Id = id;
             return actor;
         }
 
-        public void RecycleActor(Actor actor)
+        public void ReleaseActor(Actor actor)
         {
-            int id = actor.Id;
-            Queue<Actor> pool = GetPool(id);
-
-            Transform parent = GameRoot.GetNode<ActorNode>().GetActorNode(ActorType.Pool);
-            actor.transform.SetParent(null);
-            actor.transform.SetParent(parent);
-            actor.transform.localPosition = Vector3.zero;
-
-            pool.Enqueue(actor);
-        }
-
-        private Queue<Actor> GetPool(int id)
-        {
-            if (actorPool.ContainsKey(id))
+            if (actor == null)
             {
-                return actorPool[id];
+                return;
             }
-            else
-            {
-                Queue<Actor> pool = new Queue<Actor>();
-                actorPool[id] = pool;
-                return pool;
-            }
+            Game.Assets.ReleaseAsset(actor.gameObject);
         }
     }
 }
-
-
