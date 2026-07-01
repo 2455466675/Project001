@@ -1,9 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameFramework.EditorTools
 {
     // 阵形点位的编辑期标记：位置直接取自 Transform，有效性单独存储，仅用于编辑阶段摆放与勾选
-    // 归属 Editor 程序集，不进入运行时热更逻辑；运行时只消费采集后的 BattleFormationCfg
     public class BattleFormationPoint : MonoBehaviour
     {
         [SerializeField]

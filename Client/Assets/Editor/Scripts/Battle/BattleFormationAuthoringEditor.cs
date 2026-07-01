@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameFramework.Logic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -137,7 +137,7 @@ namespace GameFramework.EditorTools
             {
                 cfg.Formations.Add(data);
             }
-
+            cfg.Formations.Sort((a, b) => a.formationID.CompareTo(b.formationID));
             EditorUtility.SetDirty(cfg);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

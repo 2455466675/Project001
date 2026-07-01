@@ -100,7 +100,7 @@ public class BattleFormationManager
     {
         private readonly BattleFormationManager formationManager = new BattleFormationManager();
         // 当前战斗使用的阵形 id，后续可由关卡/挑战配置指定，暂以默认阵形驱动
-        private int currentFormationID = 1;
+        private int currentFormationID = 6;
 
         public BattleFormationManager Formation
         {

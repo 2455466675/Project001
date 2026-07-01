@@ -58,6 +58,7 @@ MonoBehaviour:
     - AOT_Utility
     - FSM
     - ScriptablePacker
+    - GF_Editor_Battle
     - UniTask.Addressables
     - UniTask.DOTween
     - UI

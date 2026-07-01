@@ -53,6 +53,7 @@ namespace GameFramework.View
                     Game.GetSystem<UISystem>().CloseNavigate();
                     break;
                 case GamePlayStatus.Loaded:
+                    //Game.GetSystem<AudioSystem>().PlayMusicAsync("Assets/Bundles/Audio/Music/music_002");
                     break;
                 case GamePlayStatus.Exit:
                     break;

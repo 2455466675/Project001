@@ -10,7 +10,7 @@ namespace GameFramework.View.UI
         {
             MDebug.Log("战斗阵型-敌人");
 
-            Logic.DataModelList<BattleFormationSite> list = new Logic.DataModelList<BattleFormationSite>();
+            Logic.DataModelList<BattleFormationSite> list = Game.GetModule<BattleModule>().Formation.EnemySites;
 
             SetData(list);
         }
