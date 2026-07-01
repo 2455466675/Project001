@@ -38,7 +38,7 @@ namespace GameFramework.Core
             if (map.TryGetValue(spriteName, out var data))
             {
                 isMultiple = data.isMultiple;
-                return data.assetPath;
+                return string.Concat(SpritePathData.RootPath, "/", data.assetPath);
             }
             else
             {

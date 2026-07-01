@@ -14,7 +14,7 @@ public class GenerateSpriteMap
 
         Dictionary<string, SpritePathData> data = new Dictionary<string, SpritePathData>();
 
-        List<SpriteAtlas> spriteAtlas = LoadAllAssetsInFolder<SpriteAtlas>("t:SpriteAtlas", "Assets/Bundles/ArtResources");
+        List<SpriteAtlas> spriteAtlas = LoadAllAssetsInFolder<SpriteAtlas>("t:SpriteAtlas", SpritePathData.RootPath);
         Debug.Log("spriteAtlas.Count:" + spriteAtlas.Count);
 
         foreach (var atlas in spriteAtlas)
@@ -22,7 +22,7 @@ public class GenerateSpriteMap
             Sprite[] temp = new Sprite[atlas.spriteCount];
             atlas.GetSprites(temp);
 
-            string atlasPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(atlas), null);
+            string atlasPath = ToRelativePath(System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(atlas), null));
 
             foreach (var s in temp)
             {
@@ -48,7 +48,7 @@ public class GenerateSpriteMap
             }
         }
 
-        List<Sprite> sprites = LoadAllAssetsInFolder<Sprite>("t:Sprite", "Assets/Bundles/ArtResources");
+        List<Sprite> sprites = LoadAllAssetsInFolder<Sprite>("t:Sprite", SpritePathData.RootPath);
         Debug.Log("sprites.Count:" + sprites.Count);
 
         foreach (var s in sprites)
@@ -59,7 +59,7 @@ public class GenerateSpriteMap
                 name = name.Replace("(Clone)", string.Empty);
             }
 
-            string assetPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(s), null);
+            string assetPath = ToRelativePath(System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(s), null));
 
             // 同上：散图与图集精灵可能同名，冲突时保留先注册者（图集先扫描，故图集优先）。
             if (data.ContainsKey(name))
@@ -88,6 +88,16 @@ public class GenerateSpriteMap
         AssetDatabase.Refresh();
     }
 
+
+    private static string ToRelativePath(string assetPath)
+    {
+        string prefix = SpritePathData.RootPath + "/";
+        if (assetPath.StartsWith(prefix))
+        {
+            return assetPath.Substring(prefix.Length);
+        }
+        return assetPath;
+    }
 
     private static List<T> LoadAllAssetsInFolder<T>(string t, string folderPath) where T : UnityEngine.Object
     {
