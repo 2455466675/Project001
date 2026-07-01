@@ -3,44 +3,31 @@ using MVC;
 
 namespace GameFramework.View.UI
 {
-    public class BattleUnitData : DataModel
-    {
-        private int id;
-        public int Id 
-        { 
-            get 
-            {
-                return id; 
-            }
-            set
-            {
-                SetValue(ref id, value);
-            }
-        }
-    }
-
     [NavigationController(Utility.GameDefine.NavigationDefine.BattleEnemy)]
-    public class BattleFormationEnemyController : NavigationController<BattleUnitData>
+    public class BattleFormationEnemyController : NavigationController<BattleFormationSite>
     {
         protected override void RegisterData()
         {
             MDebug.Log("战斗阵型-敌人");
 
-            Logic.DataModelList<BattleUnitData> list = new Logic.DataModelList<BattleUnitData>();
-
-            for (int i = 0; i < 6; i++)
-            {
-                BattleUnitData model = new BattleUnitData();
-                model.Id = i;
-                list.Add(model);
-            }
+            Logic.DataModelList<BattleFormationSite> list = new Logic.DataModelList<BattleFormationSite>();
 
             SetData(list);
         }
 
-        protected override void SelectItemView(NavigationItemView itemView, BattleUnitData dataModel)
+        protected override void BindItemView(NavigationItemView itemView, BattleFormationSite dataModel, Binder binder)
         {
-            MDebug.Log($"战斗阵型-敌人:SelectItemView{dataModel.Id}");
+            itemView.transform.position = dataModel.Position;
+        }
+
+        protected override void SelectItemView(NavigationItemView itemView, BattleFormationSite dataModel)
+        {
+            MDebug.Log($"战斗阵型-敌人:SelectItemView{dataModel.Index}");
+        }
+
+        protected override bool CheckItemIsValid(BattleFormationSite dataModel)
+        {
+            return dataModel.Valid && dataModel.State == 1;
         }
     }
 }

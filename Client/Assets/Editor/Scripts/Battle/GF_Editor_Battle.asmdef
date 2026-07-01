@@ -1,0 +1,18 @@
+{
+    "name": "GF_Editor_Battle",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7b28e099a820fb04fa57eecce19c07dc"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
