@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YooAsset;
 
@@ -15,7 +15,7 @@ namespace GameFrameworkAOT.Core
 
         void IStateNode.OnEnter()
         {
-            Debug.Log("¸üĞÂ×ÊÔ´Çåµ¥£¡");
+            Debug.Log("æ›´æ–°èµ„æºæ¸…å•ï¼");
             UpdateManifest().Forget();
         }
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class ConsoleToScreen : MonoBehaviour
 {
@@ -50,7 +50,7 @@ public class ConsoleToScreen : MonoBehaviour
 
     private void Update()
     {
-        // ×Ô¶¯¹ö¶¯µ½µ×²¿
+        // è‡ªåŠ¨æ»šåŠ¨åˆ°åº•éƒ¨
         _scrollPosition.y = Mathf.Infinity;
     }
 

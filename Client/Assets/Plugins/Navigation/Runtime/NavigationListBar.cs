@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,15 +16,15 @@ namespace Navigation
         private FluidNavigationList list;
 
         [SerializeField]
-        private int tickCount;  //Á¬Ğø¼¸´Î´¥·¢²ÅÏÔÊ¾»¬¶¯Ìõ
+        private int tickCount;  //è¿ç»­å‡ æ¬¡è§¦å‘æ‰æ˜¾ç¤ºæ»‘åŠ¨æ¡
         private int tickCounter;
 
         [SerializeField]
-        private float tickInterval; //Á¬Ğø¼ì²âÊ±¼ä
+        private float tickInterval; //è¿ç»­æ£€æµ‹æ—¶é—´
         private float tickIntervaler;
 
         [SerializeField]
-        private float showDuration; //»¬¶¯ÌõÏÔÊ¾³ÖĞøÊ±¼ä
+        private float showDuration; //æ»‘åŠ¨æ¡æ˜¾ç¤ºæŒç»­æ—¶é—´
         private float showDurationer;
 
         [SerializeField]

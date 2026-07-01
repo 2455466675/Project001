@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YooAsset;
 
@@ -33,16 +33,16 @@ namespace GameFrameworkAOT.Core
 
             float MB = 1048576f;
             float sizeMB = Mathf.Clamp(totalDownloadBytes / MB, 0.1f, float.MaxValue);
-            Debug.Log($"ÈÈ¸ü×ÊÔ´ÊıÁ¿ : {totalDownloadCount}; ÈÈ¸ü×ÊÔ´´óĞ¡ £º{sizeMB:f1}MB");
+            Debug.Log($"çƒ­æ›´èµ„æºæ•°é‡ : {totalDownloadCount}; çƒ­æ›´èµ„æºå¤§å° ï¼š{sizeMB:f1}MB");
 
-            // ĞèÒªÔÚÏÂÔØÇ°¼ì²â´ÅÅÌ¿Õ¼ä²»×ã
+            // éœ€è¦åœ¨ä¸‹è½½å‰æ£€æµ‹ç£ç›˜ç©ºé—´ä¸è¶³
 #if UNITY_EDITOR
 
 #elif UNITY_STANDALONE_WIN
             //DriveInfo drive = new DriveInfo(Path.GetPathRoot(Application.persistentDataPath));
             //if ((totalDownloadBytes + 100 * MB) > drive.AvailableFreeSpace)
             //{
-            //    Debug.Log($"Ê£Óà´æ´¢¿Õ¼ä²»×ã");
+            //    Debug.Log($"å‰©ä½™å­˜å‚¨ç©ºé—´ä¸è¶³");
             //    m_Machine.ChangeState<FsmFinish>();
             //    return;
             //}
@@ -51,14 +51,14 @@ namespace GameFrameworkAOT.Core
             downloader.DownloadErrorCallback = DownloadError;
             downloader.DownloadUpdateCallback = DownloadUpdate;
 
-            Debug.Log("¿ªÊ¼ÏÂÔØ×ÊÔ´ÎÄ¼ş£¡");
+            Debug.Log("å¼€å§‹ä¸‹è½½èµ„æºæ–‡ä»¶ï¼");
             downloader.BeginDownload();
             await downloader;
 
-            // ÏÂÔØ½á¹û
+            // ä¸‹è½½ç»“æœ
             if (downloader.Status != EOperationStatus.Succeed)
             {
-                Debug.Log("×ÊÔ´ÏÂÔØÊ§°Ü£¡");
+                Debug.Log("èµ„æºä¸‹è½½å¤±è´¥ï¼");
                 m_Machine.ChangeState<FsmFinish>();
             }
             else

@@ -1,4 +1,4 @@
-using GameFramework.Core;
+﻿using GameFramework.Core;
 using GameFramework.Utility.GameDefine;
 using GameFramework.View.UI;
 using MVC;

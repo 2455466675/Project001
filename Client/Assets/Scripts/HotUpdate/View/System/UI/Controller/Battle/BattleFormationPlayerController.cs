@@ -1,4 +1,4 @@
-using GameFramework.Logic;
+﻿using GameFramework.Logic;
 
 namespace GameFramework.View.UI
 {

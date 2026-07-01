@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -254,11 +254,11 @@ namespace Navigation
         private bool IsGrid => m_ListType == ListType.Grid;
 
         /// <summary>
-        /// Êı¾İÊıÁ¿
+        /// æ•°æ®æ•°é‡
         /// </summary>
         private int dataCount;
         /// <summary>
-        /// ×ÓÎïÌåÊıÁ¿
+        /// å­ç‰©ä½“æ•°é‡
         /// </summary>
         private int itemCount;
         private Dictionary<int, NavigationItem> items;

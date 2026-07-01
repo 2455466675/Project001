@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using YooAsset;
 
 namespace GameFrameworkAOT.Core 
@@ -13,7 +13,7 @@ namespace GameFrameworkAOT.Core
         }
         void IStateNode.OnEnter()
         {
-            Debug.Log("ÇåÀíÎ´Ê¹ÓÃµÄ»º´æÎÄ¼ş£¡");
+            Debug.Log("æ¸…ç†æœªä½¿ç”¨çš„ç¼“å­˜æ–‡ä»¶ï¼");
             var packageName = m_Machine.PackageName;
             var package = YooAssets.GetPackage(packageName);
             var operation = package.ClearCacheFilesAsync(EFileClearMode.ClearUnusedBundleFiles);

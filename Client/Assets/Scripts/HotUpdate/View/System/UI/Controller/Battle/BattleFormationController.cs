@@ -1,4 +1,4 @@
-using GameFramework.Utility.GameDefine;
+﻿using GameFramework.Utility.GameDefine;
 
 namespace GameFramework.View.UI 
 {

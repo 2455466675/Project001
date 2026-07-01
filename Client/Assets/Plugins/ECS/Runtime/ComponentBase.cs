@@ -1,4 +1,4 @@
-namespace ECS
+﻿namespace ECS
 {
     public abstract class ComponentBase : IComponent
     {

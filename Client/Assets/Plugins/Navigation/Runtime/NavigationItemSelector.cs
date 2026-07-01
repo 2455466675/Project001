@@ -1,4 +1,4 @@
-using UnityEngine;
+锘縰sing UnityEngine;
 
 namespace Navigation
 {
@@ -8,21 +8,21 @@ namespace Navigation
     public class NavigationItemSelector : MonoBehaviour
     {
         /// <summary>
-        /// 选中
+        /// 閫変腑
         /// </summary>
         public virtual void OnSelect()
         {
 
         }
         /// <summary>
-        /// 取消选中
+        /// 鍙栨秷閫変腑
         /// </summary>
         public virtual void OnDeselect()
         {
 
         }
         /// <summary>
-        /// 失焦
+        /// 澶辩劍
         /// </summary>
         public virtual void OnOutFocus()
         {

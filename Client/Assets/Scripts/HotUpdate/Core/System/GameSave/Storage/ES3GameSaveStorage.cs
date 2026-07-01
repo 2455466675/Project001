@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+﻿namespace GameFramework.Core
 {
     /// <summary>
     /// 基于 Easy Save 3 (ES3) 的存档持久化实现。

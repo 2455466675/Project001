@@ -1,8 +1,8 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 /// <summary>
-/// ×Ö·û´®ÏÂÀ­²Ëµ¥
+/// å­—ç¬¦ä¸²ä¸‹æ‹‰èœå•
 /// </summary>
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
 public class StringDropdownAttribute : PropertyAttribute

@@ -1,4 +1,4 @@
-using GameFramework;
+﻿using GameFramework;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -32,20 +32,19 @@ public class GenerateSpriteMap
                     name = name.Replace("(Clone)", string.Empty);
                 }
 
+                // spriteName 是运行时映射的唯一键，重名会导致取到非预期资源，因此冲突时保留先注册者并报出两个来源便于排查。
+                if (data.ContainsKey(name))
+                {
+                    Debug.LogError($"精灵名重复，已跳过图集精灵: {name} (已存在: {data[name].assetPath}, 冲突图集: {atlasPath})");
+                    continue;
+                }
+
                 SpritePathData item = new SpritePathData();
                 item.spriteName = name;
                 item.isMultiple = false;
                 item.assetPath = atlasPath;
-                
-                if (data.ContainsKey(name))
-                {
-                    Debug.LogError($"�����ظ�:{name}");
-                    continue;
-                }
-                else
-                {
-                    data.Add(name, item);
-                }
+
+                data.Add(name, item);
             }
         }
 
@@ -60,16 +59,19 @@ public class GenerateSpriteMap
                 name = name.Replace("(Clone)", string.Empty);
             }
 
+            string assetPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(s), null);
+
+            // 同上：散图与图集精灵可能同名，冲突时保留先注册者（图集先扫描，故图集优先）。
             if (data.ContainsKey(name))
             {
-                Debug.LogError($"�����ظ�:{name}");
+                Debug.LogError($"精灵名重复，已跳过散图: {name} (已存在: {data[name].assetPath}, 冲突散图: {assetPath})");
                 continue;
             }
 
             SpritePathData item = new SpritePathData();
             item.spriteName = name;
-            item.isMultiple = true;            
-            item.assetPath = System.IO.Path.ChangeExtension(AssetDatabase.GetAssetPath(s), null);
+            item.isMultiple = true;
+            item.assetPath = assetPath;
 
             data.Add(name, item);
         }
@@ -106,15 +108,4 @@ public class GenerateSpriteMap
 
         return atlasList;
     }
-
-    //private void Test()
-    //{
-    //    Texture2D tex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height, sprite.texture.format, false);
-    //    tex.SetPixels(sprite.texture.GetPixels((int)sprite.rect.xMin, (int)sprite.rect.yMin,
-    //        (int)sprite.rect.width, (int)sprite.rect.height));
-    //    tex.Apply();
-
-    //    // д���PNG�ļ�
-    //    System.IO.File.WriteAllBytes(outPath + "/" + sprite.name + ".png", tex.EncodeToPNG());
-    //}
 }

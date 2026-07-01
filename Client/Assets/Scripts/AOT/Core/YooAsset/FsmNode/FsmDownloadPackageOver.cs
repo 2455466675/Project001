@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace GameFrameworkAOT.Core
 {
@@ -12,7 +12,7 @@ namespace GameFrameworkAOT.Core
         }
         void IStateNode.OnEnter()
         {
-            Debug.Log("×ÊÔ´ÎÄ¼şÏÂÔØÍê±Ï£¡");
+            Debug.Log("èµ„æºæ–‡ä»¶ä¸‹è½½å®Œæ¯•ï¼");
             m_Machine.ChangeState<FsmClearCacheBundle>();
         }
         void IStateNode.OnUpdate()

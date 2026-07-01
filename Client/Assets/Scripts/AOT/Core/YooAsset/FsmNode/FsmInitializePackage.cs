@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using YooAsset;
 using System.Collections;
 using Cysharp.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace GameFrameworkAOT.Core
 
         void IStateNode.OnEnter()
         {
-            Debug.Log("³õÊ¼»¯×ÊÔ´°ü£¡");
+            Debug.Log("åˆå§‹åŒ–èµ„æºåŒ…ï¼");
             InitPackage().Forget();
         }
 
@@ -33,13 +33,13 @@ namespace GameFrameworkAOT.Core
             var playMode = m_Machine.PlayMode;
             var packageName = m_Machine.PackageName;
 
-            // ´´½¨×ÊÔ´°ü¹üÀà
+            // åˆ›å»ºèµ„æºåŒ…è£¹ç±»
             var package = YooAssets.TryGetPackage(packageName);
             package ??= YooAssets.CreatePackage(packageName);
 
             YooAssets.SetDefaultPackage(package);
 
-            // ±à¼­Æ÷ÏÂµÄÄ£ÄâÄ£Ê½
+            // ç¼–è¾‘å™¨ä¸‹çš„æ¨¡æ‹Ÿæ¨¡å¼
             InitializationOperation initializationOperation = null;
             if (playMode == EPlayMode.EditorSimulateMode)
             {
@@ -50,7 +50,7 @@ namespace GameFrameworkAOT.Core
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
-            // µ¥»úÔËĞĞÄ£Ê½
+            // å•æœºè¿è¡Œæ¨¡å¼
             if (playMode == EPlayMode.OfflinePlayMode)
             {
                 var createParameters = new OfflinePlayModeParameters();
@@ -58,7 +58,7 @@ namespace GameFrameworkAOT.Core
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
-            // Áª»úÔËĞĞÄ£Ê½
+            // è”æœºè¿è¡Œæ¨¡å¼
             if (playMode == EPlayMode.HostPlayMode)
             {
                 string defaultHostServer = GetHostServerURL();
@@ -70,14 +70,14 @@ namespace GameFrameworkAOT.Core
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
-            // WebGLÔËĞĞÄ£Ê½
+            // WebGLè¿è¡Œæ¨¡å¼
             if (playMode == EPlayMode.WebPlayMode)
             {
 #if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
             var createParameters = new WebPlayModeParameters();
 			string defaultHostServer = GetHostServerURL();
             string fallbackHostServer = GetHostServerURL();
-            string packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE"; //×¢Òâ£ºÈç¹ûÓĞ×ÓÄ¿Â¼£¬ÇëĞŞ¸Ä´Ë´¦£¡
+            string packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE"; //æ³¨æ„ï¼šå¦‚æœæœ‰å­ç›®å½•ï¼Œè¯·ä¿®æ”¹æ­¤å¤„ï¼
             IRemoteServices remoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
             createParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices);
             initializationOperation = package.InitializeAsync(createParameters);
@@ -90,7 +90,7 @@ namespace GameFrameworkAOT.Core
 
             await initializationOperation;
 
-            // ³õÊ¼»¯Ê§°Ü
+            // åˆå§‹åŒ–å¤±è´¥
             if (initializationOperation.Status != EOperationStatus.Succeed)
             {
                 Debug.LogWarning($"{initializationOperation.Error}");
@@ -102,11 +102,11 @@ namespace GameFrameworkAOT.Core
         }
 
         /// <summary>
-        /// »ñÈ¡×ÊÔ´·şÎñÆ÷µØÖ·
+        /// è·å–èµ„æºæœåŠ¡å™¨åœ°å€
         /// </summary>
         private string GetHostServerURL()
         {
-            //string hostServerIP = "http://10.0.2.2"; //°²×¿Ä£ÄâÆ÷µØÖ·
+            //string hostServerIP = "http://10.0.2.2"; //å®‰å“æ¨¡æ‹Ÿå™¨åœ°å€
             string hostServerIP = "http://127.0.0.1";
             string appVersion = "v1.0";
 
@@ -132,7 +132,7 @@ namespace GameFrameworkAOT.Core
         }
 
         /// <summary>
-        /// Ô¶¶Ë×ÊÔ´µØÖ·²éÑ¯·şÎñÀà
+        /// è¿œç«¯èµ„æºåœ°å€æŸ¥è¯¢æœåŠ¡ç±»
         /// </summary>
         private class RemoteServices : IRemoteServices
         {

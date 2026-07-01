@@ -1,4 +1,4 @@
-using Config;
+﻿using Config;
 using GameFramework.Core;
 using GameFramework.Utility;
 using GameFramework.Utility.GameDefine;

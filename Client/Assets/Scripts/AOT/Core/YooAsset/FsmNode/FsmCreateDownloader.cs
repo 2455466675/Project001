@@ -1,4 +1,4 @@
-using UnityEngine;
+锘縰sing UnityEngine;
 using YooAsset;
 
 namespace GameFrameworkAOT.Core 
@@ -14,7 +14,7 @@ namespace GameFrameworkAOT.Core
 
         void IStateNode.OnEnter()
         {
-            Debug.Log("创建资源下载器！");
+            Debug.Log("鍒涘缓璧勬簮涓嬭浇鍣紒");
             CreateDownloader();
         }
 

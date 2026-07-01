@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Text;
 
 namespace GameFramework.Utility
@@ -18,10 +18,10 @@ namespace GameFramework.Utility
 
                 byte[] decrypted = XXTEA.Decrypt(encrypted, key2);
 
-                // 验证
-                //Debug.Log("原始数据: " + Encoding.UTF8.GetString(data));
-                //Debug.Log("加密数据: " + Encoding.UTF8.GetString(encrypted));
-                //Debug.Log("解密数据: " + Encoding.UTF8.GetString(decrypted));
+                // 楠岃瘉
+                //Debug.Log("鍘熷鏁版嵁: " + Encoding.UTF8.GetString(data));
+                //Debug.Log("鍔犲瘑鏁版嵁: " + Encoding.UTF8.GetString(encrypted));
+                //Debug.Log("瑙ｅ瘑鏁版嵁: " + Encoding.UTF8.GetString(decrypted));
             }
 
             public static Byte[] Encrypt(Byte[] Data, Byte[] Key)

@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+﻿namespace GameFramework.Core
 {
     /// <summary>
     /// 存档摘要处理器。负责维护各存档槽位的概览信息(等级、金币、时间等),

@@ -1,4 +1,4 @@
-namespace GameFramework.Logic
+﻿namespace GameFramework.Logic
 {
     public class GameSaveSlot : DataModel
     {

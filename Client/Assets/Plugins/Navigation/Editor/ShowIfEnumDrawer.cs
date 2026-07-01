@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+ï»¿#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System.Reflection;
@@ -10,10 +10,10 @@ public class ShowIfEnumDrawer : PropertyDrawer
     {
         ShowIfEnumAttribute showIf = (ShowIfEnumAttribute)attribute;
 
-        // »ñÈ¡Ä¿±ê¶ÔÏó
+        // è·å–ç›®æ ‡å¯¹è±¡
         object target = property.serializedObject.targetObject;
 
-        // Í¨¹ı·´Éä»ñÈ¡Ã¶¾Ù×Ö¶ÎµÄÖµ
+        // é€šè¿‡åå°„è·å–æšä¸¾å­—æ®µçš„å€¼
         FieldInfo enumField = target.GetType().GetField(showIf.enumFieldName,
             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -21,7 +21,7 @@ public class ShowIfEnumDrawer : PropertyDrawer
         {
             object enumValue = enumField.GetValue(target);
 
-            // ¼ì²éÃ¶¾ÙÖµÊÇ·ñÆ¥Åä
+            // æ£€æŸ¥æšä¸¾å€¼æ˜¯å¦åŒ¹é…
             if (enumValue.Equals(showIf.enumValue))
             {
                 EditorGUI.PropertyField(position, property, label, true);
@@ -51,7 +51,7 @@ public class ShowIfEnumDrawer : PropertyDrawer
             }
             else
             {
-                return 0f; // Òş²ØÊ±¸ß¶ÈÎª0
+                return 0f; // éšè—æ—¶é«˜åº¦ä¸º0
             }
         }
 

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -28,7 +28,7 @@ namespace Navigation
         private bool isLoop;
 
         /// <summary>
-        /// µ±Ç°Ñ¡ÔñµÄË÷Òı
+        /// å½“å‰é€‰æ‹©çš„ç´¢å¼•
         /// </summary>
         private int[] index;
         private bool IsMultiple => index != null && index.Length > 1;
@@ -116,7 +116,7 @@ namespace Navigation
 
             if (IsMultiple)
             {
-                Debug.LogError("ÓĞ¶à¸öÑ¡ÖĞÔªËØÊ±²»ÔÊĞí´Ë²Ù×÷,ÔªËØÊıÁ¿:" + this.index.Length);
+                Debug.LogError("æœ‰å¤šä¸ªé€‰ä¸­å…ƒç´ æ—¶ä¸å…è®¸æ­¤æ“ä½œ,å…ƒç´ æ•°é‡:" + this.index.Length);
                 return;
             }
 
@@ -244,7 +244,7 @@ namespace Navigation
                     argItems[i] = items[j];
                 }
 
-                //½«ÎŞĞ§µÄÔªËØÌŞ³ı
+                //å°†æ— æ•ˆçš„å…ƒç´ å‰”é™¤
                 argItems = argItems.Where(item => item.IsValid).ToArray();
                 index = argItems?.Select(item => item.IndexOfData).ToArray();
 
@@ -261,10 +261,10 @@ namespace Navigation
         }
 
         /// <summary>
-        /// ×İÏòÒÆ¶¯
+        /// çºµå‘ç§»åŠ¨
         /// </summary>
-        /// <param name="beginIndex">ÆğÊ¼Ë÷Òı</param>
-        /// <param name="minus">´ÓÆğÊ¼Ë÷Òı¿ªÊ¼¼õÈ¥</param>
+        /// <param name="beginIndex">èµ·å§‹ç´¢å¼•</param>
+        /// <param name="minus">ä»èµ·å§‹ç´¢å¼•å¼€å§‹å‡å»</param>
         /// <returns></returns>
         private int MovePointVertical(int beginIndex, bool minus)
         {
@@ -290,7 +290,7 @@ namespace Navigation
 
                 if (index == beginIndex)
                 {
-                    Debug.LogError("ÁĞ±íË÷Òı³öÏÖÁËÒì³££¬Ã»ÓĞ¿ÉÓÃÔªËØ¡£index:" + index);
+                    Debug.LogError("åˆ—è¡¨ç´¢å¼•å‡ºç°äº†å¼‚å¸¸ï¼Œæ²¡æœ‰å¯ç”¨å…ƒç´ ã€‚index:" + index);
                     return -1;
                 }
                 else if (index < minIndex || index > maxIndex)
@@ -311,10 +311,10 @@ namespace Navigation
         }
 
         /// <summary>
-        /// ºáÏòÒÆ¶¯
+        /// æ¨ªå‘ç§»åŠ¨
         /// </summary>
-        /// <param name="beginIndex">ÆğÊ¼Ë÷Òı</param>
-        /// <param name="minus">´ÓÆğÊ¼Ë÷Òı¿ªÊ¼¼õÈ¥</param>
+        /// <param name="beginIndex">èµ·å§‹ç´¢å¼•</param>
+        /// <param name="minus">ä»èµ·å§‹ç´¢å¼•å¼€å§‹å‡å»</param>
         /// <returns></returns>
         private int MovePointHorizontal(int beginIndex, bool minus)
         {
@@ -347,29 +347,29 @@ namespace Navigation
                 return index;
             }
 
-            //ÎŞĞ§Ë÷Òı£¬½øĞĞ²¹³¥¡£
-            //Ã¿ÁĞ¿ªÊ¼£¬´ÓÉÏÍùÏÂ£¬²éÕÒÒ»¸öÓĞĞ§µÄ¡£
+            //æ— æ•ˆç´¢å¼•ï¼Œè¿›è¡Œè¡¥å¿ã€‚
+            //æ¯åˆ—å¼€å§‹ï¼Œä»ä¸Šå¾€ä¸‹ï¼ŒæŸ¥æ‰¾ä¸€ä¸ªæœ‰æ•ˆçš„ã€‚
 
             int min = 0;
-            int max = maxIndex / rowCount;  //×î´óĞĞÊı¡£
+            int max = maxIndex / rowCount;  //æœ€å¤§è¡Œæ•°ã€‚
 
-            int b = beginIndex / rowCount;  //´ÓµÚ¼¸ÁĞ¿ªÊ¼
-            int q = index / rowCount;       //µ±Ç°ÎŞĞ§Ë÷ÒıËùÔÚÁĞ
+            int b = beginIndex / rowCount;  //ä»ç¬¬å‡ åˆ—å¼€å§‹
+            int q = index / rowCount;       //å½“å‰æ— æ•ˆç´¢å¼•æ‰€åœ¨åˆ—
 
             do
             {
                 for (int i = 0; i <= rowCount - 1; i++)
                 {
-                    int a = q * rowCount + i;   //Í¬Ò»ĞĞÏàÁÚÃ»ÓĞÔªËØÊ±£¬Ôò´Ó¸ÃÁĞµÄ´ÓÉÏÍùÏÂÑ¡Ôñ¿ÉÓÃµÄ
+                    int a = q * rowCount + i;   //åŒä¸€è¡Œç›¸é‚»æ²¡æœ‰å…ƒç´ æ—¶ï¼Œåˆ™ä»è¯¥åˆ—çš„ä»ä¸Šå¾€ä¸‹é€‰æ‹©å¯ç”¨çš„
                     if (items[a].IsValid)
                     {
                         return a;
                     }
                 }
 
-                if (q == b) //ÒÑ¾­ÅĞ¶ÏÁËÒ»È¦
+                if (q == b) //å·²ç»åˆ¤æ–­äº†ä¸€åœˆ
                 {
-                    Debug.LogError("ÁĞ±íË÷Òı³öÏÖÁËÒì³££¬Ã»ÓĞ¿ÉÓÃÔªËØ¡£index:" + index);
+                    Debug.LogError("åˆ—è¡¨ç´¢å¼•å‡ºç°äº†å¼‚å¸¸ï¼Œæ²¡æœ‰å¯ç”¨å…ƒç´ ã€‚index:" + index);
                     return -1;
                 }
 

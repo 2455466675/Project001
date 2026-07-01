@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace GameFrameworkAOT.Core 
 {
@@ -12,7 +12,7 @@ namespace GameFrameworkAOT.Core
         }
         void IStateNode.OnEnter()
         {
-            Debug.Log("×ÊÔ´ÈÈ¸ü½áÊø£¡");
+            Debug.Log("èµ„æºçƒ­æ›´ç»“æŸï¼");
             m_Owner.SetFinish();
         }
 

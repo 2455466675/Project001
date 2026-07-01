@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GameFramework.Core
 {
@@ -16,10 +16,10 @@ namespace GameFramework.Core
             subCommands = new Stack<GameCommandBase>();
         }
 
-        #region �����ӿ�
+        #region 公共接口
 
         /// <summary>
-        /// �����������������
+        /// 弹出栈顶命令（自内层向外递归，一次只真正弹出最内层的一个命令）
         /// </summary>
         /// <returns>command is clean?</returns>
         public bool Pop()
@@ -31,7 +31,7 @@ namespace GameFramework.Core
 
             if (TryPeek(out GameCommandBase command))
             {
-                bool isOver = command.Pop(); //�����ڲ������ϲ����һ������
+                bool isOver = command.Pop(); // 先递归处理内层，内层弹空后才轮到本层
                 if (!isOver)
                 {
                     return false;
@@ -51,7 +51,7 @@ namespace GameFramework.Core
                         bool success = command.Rise();
                         if (!success)
                         {
-                            return Pop();   //�����һ����������ʧ�ܣ�����Ҳ����
+                            return Pop();   // 新栈顶上浮失败视为不可停留，连带把它也弹出
                         }
                     }
                     return false;
@@ -64,7 +64,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// ��գ�ֱ������һ����̬����
+        /// 连续弹出，直到遇到被锁定的命令为止
         /// </summary>
         public void PopAll()
         {
@@ -87,10 +87,10 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// ѹ��һ��������
+        /// 压入一个子命令
         /// </summary>
         /// <param name="command"></param>
-        /// <returns>�Ƿ�ɹ�</returns>
+        /// <returns>是否成功</returns>
         public bool Push(GameCommandBase command)
         {
             if (command == null)
@@ -112,7 +112,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// �������һ������
+        /// 返回最内层的栈顶命令
         /// </summary>
         /// <returns></returns>
         public GameCommandBase Top()
@@ -127,7 +127,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// TryPeek����
+        /// TryPeek 封装
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -159,12 +159,12 @@ namespace GameFramework.Core
 
         #endregion
 
-        #region
+        #region 私有方法
 
         /// <summary>
-        /// ��������ջ��
+        /// 重新回到栈顶激活状态
         /// </summary>
-        /// <returns>�Ƿ�ɹ�</returns>
+        /// <returns>是否成功</returns>
         private bool Rise()
         {
             bool success = OnRise();
@@ -183,7 +183,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// �����³�
+        /// 被新命令压入后下沉
         /// </summary>
         private void Sink()
         {
@@ -196,36 +196,36 @@ namespace GameFramework.Core
 
         #endregion
 
-        #region ����ʵ��
+        #region 子类可重写
         /// <summary>
-        /// �������ʱ
+        /// 命令被弹出时
         /// </summary>
         protected virtual void OnPop()
         {
         }
         /// <summary>
-        /// ��������ջʱ
+        /// 命令入栈时
         /// </summary>
-        /// <returns>�Ƿ�ɹ�</returns>
+        /// <returns>是否成功</returns>
         protected virtual bool OnPush()
         {
             return true;
         }
         /// <summary>
-        /// ����������ջ��ʱ
+        /// 命令重新回到栈顶时
         /// </summary>
         protected virtual bool OnRise()
         {
             return true;
         }
         /// <summary>
-        /// �������³�ʱ
+        /// 命令下沉时
         /// </summary>
         protected virtual void OnSink()
         {
         }
         /// <summary>
-        /// �Ƿ�����������
+        /// 是否锁定（锁定时不允许被弹出）
         /// </summary>
         /// <returns></returns>
         protected virtual bool CheckLocked()
@@ -235,5 +235,3 @@ namespace GameFramework.Core
         #endregion
     }
 }
-
-

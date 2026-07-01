@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(StringDropdownAttribute))]
@@ -15,15 +15,15 @@ public class StringDropdownDrawer : PropertyDrawer
         StringDropdownAttribute dropdown = (StringDropdownAttribute)attribute;
         string[] options = dropdown.options;
 
-        // ÕÒµ½µ±Ç°ÖµµÄË÷Òı
+        // æ‰¾åˆ°å½“å‰å€¼çš„ç´¢å¼•
         string currentValue = property.stringValue;
         int selectedIndex = System.Array.IndexOf(options, currentValue);
         if (selectedIndex < 0) selectedIndex = 0;
 
-        // ÏÔÊ¾ÏÂÀ­²Ëµ¥
+        // æ˜¾ç¤ºä¸‹æ‹‰èœå•
         selectedIndex = EditorGUI.Popup(position, label.text, selectedIndex, options);
 
-        // ÉèÖÃĞÂÖµ
+        // è®¾ç½®æ–°å€¼
         if (selectedIndex >= 0 && selectedIndex < options.Length)
         {
             property.stringValue = options[selectedIndex];

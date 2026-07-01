@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+ï»¿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using System.Reflection;
@@ -11,7 +11,7 @@ public class ButtonEditor : Editor
     {
         DrawDefaultInspector();
 
-        // »ñÈ¡ËùÓĞ´øÓĞButtonÌØĞÔµÄ·½·¨
+        // è·å–æ‰€æœ‰å¸¦æœ‰Buttonç‰¹æ€§çš„æ–¹æ³•
         var methods = target.GetType()
             .GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
             .Where(m => m.GetCustomAttributes(typeof(ButtonAttribute), false).Length > 0);
@@ -26,12 +26,12 @@ public class ButtonEditor : Editor
 
             GUILayout.Space(5);
 
-            // ÉèÖÃ°´Å¥¸ß¶È
+            // è®¾ç½®æŒ‰é’®é«˜åº¦
             var rect = GUILayoutUtility.GetRect(0, buttonAttribute.ButtonHeight);
 
             if (GUI.Button(rect, buttonText))
             {
-                // ¼ÇÂ¼³·Ïú²Ù×÷
+                // è®°å½•æ’¤é”€æ“ä½œ
                 Undo.RecordObject(target, $"Execute {method.Name}");
 
                 try

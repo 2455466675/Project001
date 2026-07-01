@@ -1,10 +1,10 @@
-using UnityEditor;
+ï»¿using UnityEditor;
 using UnityEngine;
 
 [InitializeOnLoad]
 public static class EditorInitialization
 {
-    // ¾²Ì¬¹¹Ôìº¯Êı½«ÔÚ±à¼­Æ÷¼ÓÔØÊ±×Ô¶¯µ÷ÓÃ
+    // é™æ€æ„é€ å‡½æ•°å°†åœ¨ç¼–è¾‘å™¨åŠ è½½æ—¶è‡ªåŠ¨è°ƒç”¨
     static EditorInitialization()
     {
         Debug.Log("Startup!");

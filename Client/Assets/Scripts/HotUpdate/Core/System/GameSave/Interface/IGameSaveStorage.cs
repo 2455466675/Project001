@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+﻿namespace GameFramework.Core
 {
     /// <summary>
     /// 存档持久化后端抽象。把"数据如何落盘"从存档系统中隔离出来,

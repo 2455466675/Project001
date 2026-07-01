@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+锘縰sing Cysharp.Threading.Tasks;
 using UnityEngine;
 using YooAsset;
 
@@ -15,7 +15,7 @@ namespace GameFrameworkAOT.Core
 
         void IStateNode.OnEnter()
         {
-            Debug.Log("请求资源版本 !");
+            Debug.Log("璇锋眰璧勬簮鐗堟湰 !");
             UpdatePackageVersion().Forget();
         }
 

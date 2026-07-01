@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+﻿namespace GameFramework.Core
 {
     /// <summary>
     /// 可被序列化的存档数据单元。由具体数据对象实现,自行决定字段如何读写,

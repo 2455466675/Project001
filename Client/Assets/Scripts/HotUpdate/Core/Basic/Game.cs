@@ -1,4 +1,4 @@
-using GameFramework.Core;
+﻿using GameFramework.Core;
 
 namespace GameFramework
 {
@@ -12,9 +12,12 @@ namespace GameFramework
         private static GameSystemManager systemManager;
         private static GameplayManager gameplayManager;
 
-        public static async void Start(string packageName)
+        // 入口参数用 string[] 承载，便于后续在不改签名的前提下扩展启动参数；约定 args[0] 为资源包名。
+        public static async void Start(string[] args)
         {
             MDebug.Log("Game Start!");
+
+            string packageName = (args != null && args.Length > 0) ? args[0] : "DefaultPackage";
 
             Assets = new GameAssetsManager(new YooAssetProvider(packageName));
             Config = new GameConfigManager();

@@ -1,4 +1,4 @@
-using MVC;
+ï»¿using MVC;
 using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
 namespace GameFramework.View.UI
@@ -88,7 +88,7 @@ namespace GameFramework.View.UI
             }
         }
 
-        #region ÉúÃüÖÜÆÚ
+        #region ç”Ÿå‘½å‘¨æœŸ
 
         protected virtual void OnShow() { }
         protected virtual void OnHide() { }

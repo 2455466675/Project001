@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+﻿namespace GameFramework.Core
 {
     /// <summary>
     /// 参与整局存档的游戏模块。系统在存/读档时按模块分组回调,

@@ -1,4 +1,4 @@
-using UnityEditor;
+ï»¿using UnityEditor;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -40,12 +40,12 @@ public class GamePriorityEditorWindow : EditorWindow
     {
         classDataList.Clear();
 
-        // ²éÕÒAttributeÀàĞÍ
+        // æŸ¥æ‰¾Attributeç±»å‹
         Type attributeType = FindAttributeType(attributeName);
 
         if (attributeType == null)
         {
-            Debug.LogWarning($"Î´ÕÒµ½AttributeÀàĞÍ: {attributeName}");
+            Debug.LogWarning($"æœªæ‰¾åˆ°Attributeç±»å‹: {attributeName}");
             return;
         }
 
@@ -59,7 +59,7 @@ public class GamePriorityEditorWindow : EditorWindow
 
                 foreach (Type type in types)
                 {
-                    // Ê¹ÓÃÕÒµ½µÄÀàĞÍ½øĞĞ¼ì²é
+                    // ä½¿ç”¨æ‰¾åˆ°çš„ç±»å‹è¿›è¡Œæ£€æŸ¥
                     if (Attribute.IsDefined(type, attributeType))
                     {
                         int priority = 0;
@@ -106,12 +106,12 @@ public class GamePriorityEditorWindow : EditorWindow
             }
             catch (Exception e)
             {
-                Debug.LogError($"´ÓJSONÎÄ¼ş¼ÓÔØÓÅÏÈ¼¶Ê§°Ü: {e.Message}");
+                Debug.LogError($"ä»JSONæ–‡ä»¶åŠ è½½ä¼˜å…ˆçº§å¤±è´¥: {e.Message}");
             }
         }
         else
         {
-            Debug.LogWarning("ÅäÖÃÎÄ¼ş²»´æÔÚ£º" + fullPath);
+            Debug.LogWarning("é…ç½®æ–‡ä»¶ä¸å­˜åœ¨ï¼š" + fullPath);
         }
     }
 
@@ -123,12 +123,12 @@ public class GamePriorityEditorWindow : EditorWindow
         {
             try
             {
-                // ³¢ÊÔÍêÈ«ÏŞ¶¨Ãû
+                // å°è¯•å®Œå…¨é™å®šå
                 Type type = assembly.GetType(typeName);
                 if (type != null && typeof(Attribute).IsAssignableFrom(type))
                     return type;
 
-                // ³¢ÊÔ¼òµ¥Ãû³ÆËÑË÷
+                // å°è¯•ç®€å•åç§°æœç´¢
                 type = assembly.GetTypes()
                     .FirstOrDefault(t => typeof(Attribute).IsAssignableFrom(t) &&
                                        (t.Name == typeName || t.FullName == typeName));
@@ -146,11 +146,11 @@ public class GamePriorityEditorWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("±à¼­ÓÅÏÈ¼¶", EditorStyles.boldLabel);
+        GUILayout.Label("ç¼–è¾‘ä¼˜å…ˆçº§", EditorStyles.boldLabel);
 
         EditorGUILayout.Space(5);
         EditorGUI.BeginChangeCheck();
-        selectedIndex = EditorGUILayout.Popup("Ñ¡ÔñÑ¡Ïî", selectedIndex, options);
+        selectedIndex = EditorGUILayout.Popup("é€‰æ‹©é€‰é¡¹", selectedIndex, options);
         if (EditorGUI.EndChangeCheck())
         {
             attributeName = options[selectedIndex];
@@ -158,12 +158,12 @@ public class GamePriorityEditorWindow : EditorWindow
         }
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("AttributeÀàÃû:", GUILayout.Width(100));
+        EditorGUILayout.LabelField("Attributeç±»å:", GUILayout.Width(100));
         EditorGUILayout.LabelField(attributeName);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("JSONÎÄ¼şÂ·¾¶:", GUILayout.Width(100));
+        EditorGUILayout.LabelField("JSONæ–‡ä»¶è·¯å¾„:", GUILayout.Width(100));
         string path = string.Format(jsonFilePath, attributeName);
         EditorGUILayout.LabelField(path);
 
@@ -173,11 +173,11 @@ public class GamePriorityEditorWindow : EditorWindow
 
         if (classDataList.Count == 0)
         {
-            EditorGUILayout.HelpBox($"Î´ÕÒµ½´øÓĞ '{attributeName}' ÌØĞÔµÄÀà¡£", MessageType.Info);
+            EditorGUILayout.HelpBox($"æœªæ‰¾åˆ°å¸¦æœ‰ '{attributeName}' ç‰¹æ€§çš„ç±»ã€‚", MessageType.Info);
         }
         else
         {
-            EditorGUILayout.LabelField($"ÕÒµ½ {classDataList.Count} ¸öÀà", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"æ‰¾åˆ° {classDataList.Count} ä¸ªç±»", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
 
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
@@ -195,14 +195,14 @@ public class GamePriorityEditorWindow : EditorWindow
 
         EditorGUILayout.Space(10);
 
-        if (GUILayout.Button("±£´æ", GUILayout.Height(30)))
+        if (GUILayout.Button("ä¿å­˜", GUILayout.Height(30)))
         {
             SaveToJson();
         }
 
         EditorGUILayout.Space(5);
 
-        if (GUILayout.Button("Ë¢ĞÂ", GUILayout.Height(25)))
+        if (GUILayout.Button("åˆ·æ–°", GUILayout.Height(25)))
         {
             LoadClassesWithAttribute();
         }
@@ -212,7 +212,7 @@ public class GamePriorityEditorWindow : EditorWindow
     {
         if (classDataList.Count == 0)
         {
-            EditorUtility.DisplayDialog("ÌáÊ¾", "Ã»ÓĞ¿É±£´æµÄÊı¾İ", "È·¶¨");
+            EditorUtility.DisplayDialog("æç¤º", "æ²¡æœ‰å¯ä¿å­˜çš„æ•°æ®", "ç¡®å®š");
             return;
         }
 
@@ -228,15 +228,15 @@ public class GamePriorityEditorWindow : EditorWindow
             fullPath = Path.GetFullPath(fullPath);
             File.WriteAllText(fullPath, json);
 
-            Debug.Log($"ÅäÖÃÒÑ±£´æµ½: {fullPath}");
-            EditorUtility.DisplayDialog("³É¹¦", $"ÅäÖÃÒÑ±£´æµ½:\n{fullPath}", "È·¶¨");
+            Debug.Log($"é…ç½®å·²ä¿å­˜åˆ°: {fullPath}");
+            EditorUtility.DisplayDialog("æˆåŠŸ", $"é…ç½®å·²ä¿å­˜åˆ°:\n{fullPath}", "ç¡®å®š");
             LoadClassesWithAttribute();
             AssetDatabase.Refresh();
         }
         catch (Exception e)
         {
-            Debug.LogError($"±£´æÊ§°Ü: {e.Message}");
-            EditorUtility.DisplayDialog("´íÎó", $"±£´æÊ§°Ü:\n{e.Message}", "È·¶¨");
+            Debug.LogError($"ä¿å­˜å¤±è´¥: {e.Message}");
+            EditorUtility.DisplayDialog("é”™è¯¯", $"ä¿å­˜å¤±è´¥:\n{e.Message}", "ç¡®å®š");
         }
     }
 }

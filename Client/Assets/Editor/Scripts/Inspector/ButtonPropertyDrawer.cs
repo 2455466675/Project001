@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+ï»¿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using System.Reflection;
@@ -10,18 +10,18 @@ public class ButtonPropertyDrawer : PropertyDrawer
     {
         ButtonAttribute buttonAttribute = (ButtonAttribute)attribute;
 
-        // »ñÈ¡°´Å¥ÎÄ±¾
+        // è·å–æŒ‰é’®æ–‡æœ¬
         string buttonText = string.IsNullOrEmpty(buttonAttribute.ButtonText)
             ? ObjectNames.NicifyVariableName(property.name)
             : buttonAttribute.ButtonText;
 
-        // »æÖÆ°´Å¥
+        // ç»˜åˆ¶æŒ‰é’®
         if (GUI.Button(position, buttonText))
         {
-            // »ñÈ¡Ä¿±ê¶ÔÏó
+            // è·å–ç›®æ ‡å¯¹è±¡
             object target = property.serializedObject.targetObject;
 
-            // Í¨¹ı·´Éäµ÷ÓÃ·½·¨
+            // é€šè¿‡åå°„è°ƒç”¨æ–¹æ³•
             MethodInfo method = target.GetType().GetMethod(property.name,
                 BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
@@ -29,7 +29,7 @@ public class ButtonPropertyDrawer : PropertyDrawer
             {
                 method.Invoke(target, null);
 
-                // ±ê¼Ç¶ÔÏóÎªÒÑĞŞ¸Ä£¨ÓÃÓÚ³·ÏúÏµÍ³£©
+                // æ ‡è®°å¯¹è±¡ä¸ºå·²ä¿®æ”¹ï¼ˆç”¨äºæ’¤é”€ç³»ç»Ÿï¼‰
                 if (target is UnityEngine.Object unityObject)
                 {
                     EditorUtility.SetDirty(unityObject);

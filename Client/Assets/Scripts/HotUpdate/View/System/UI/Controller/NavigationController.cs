@@ -1,4 +1,4 @@
-using GameFramework.Logic;
+ï»¿using GameFramework.Logic;
 using MVC;
 using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
@@ -124,7 +124,7 @@ namespace GameFramework.View.UI
             bool result = datas != null && dataIndex >= 0 && dataIndex < datas.Count;
             if (!result)
             {
-                MDebug.Error("Êı¾İÎŞĞ§ : ", dataIndex);
+                MDebug.Error("æ•°æ®æ— æ•ˆ : ", dataIndex);
             }
             return result;
         }
@@ -233,9 +233,9 @@ namespace GameFramework.View.UI
 
         #endregion
 
-        #region ÉúÃüÖÜÆÚ
+        #region ç”Ÿå‘½å‘¨æœŸ
         /// <summary>
-        /// ÔÚÕâÀï»ñÈ¡ÁĞ±íĞèÒªµÄÊı¾İ £¨¸Ã·½·¨ÔÚOnShowÖ®Ç°Ö´ĞĞ£©
+        /// åœ¨è¿™é‡Œè·å–åˆ—è¡¨éœ€è¦çš„æ•°æ® ï¼ˆè¯¥æ–¹æ³•åœ¨OnShowä¹‹å‰æ‰§è¡Œï¼‰
         /// </summary>
         protected virtual void RegisterData() { }
         protected virtual void OnShow() { }
@@ -252,7 +252,7 @@ namespace GameFramework.View.UI
         #endregion
 
         /// <summary>
-        /// ÁĞ±íÏîÊı¾İÊÇ·ñÓĞĞ§
+        /// åˆ—è¡¨é¡¹æ•°æ®æ˜¯å¦æœ‰æ•ˆ
         /// </summary>
         /// <param name="dataModel"></param>
         /// <returns></returns>
@@ -262,7 +262,7 @@ namespace GameFramework.View.UI
         }
 
         /// <summary>
-        /// ÁĞ±íÊÇ·ñËø¶¨
+        /// åˆ—è¡¨æ˜¯å¦é”å®š
         /// </summary>
         /// <returns></returns>
         protected virtual bool CheckIsLocked()

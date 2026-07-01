@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,11 +57,11 @@ namespace Navigation
 
         [SerializeField]
         [Range(0.2f, 1f)]
-        private float pressTime = 0.3f; //³¤°´Ê±¼ä
+        private float pressTime = 0.3f; //é•¿æŒ‰æ—¶é—´
         private float pressTimer;
         [SerializeField]
         [Range(0.1f, 1f)]
-        private float intervalTime = 0.15f; //³¤°´ºóÃ¿´Î¸üÐÂ¼ä¸ô
+        private float intervalTime = 0.15f; //é•¿æŒ‰åŽæ¯æ¬¡æ›´æ–°é—´éš”
         private float intervalTimer;
         private bool isPress;
         private bool CanMove => pressTimer <= 0f && intervalTimer <= 0f;

@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +24,7 @@ namespace GameFrameworkAOT
 
         public async UniTask Start()
         {
-            Debug.Log($"��ʼ������Ϸ:{entryAssemblyName}.{entryClassName}.{entryMethodName}");
+            Debug.Log($"开始启动游戏:{entryAssemblyName}.{entryClassName}.{entryMethodName}");
 
             Assembly assembly;
 #if UNITY_EDITOR
@@ -57,7 +57,9 @@ namespace GameFrameworkAOT
                 return;
             }
 
-            entryMethod.Invoke(null, new object[] { packageName });
+            // 入口方法签名为 Start(string[])，反射调用时需将参数数组作为单个实参包进 object[]。
+            string[] args = new string[] { packageName };
+            entryMethod.Invoke(null, new object[] { args });
         }
     }
 }

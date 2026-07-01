@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -92,7 +92,7 @@ namespace GameFramework.Core
             boolValue = true;
             floatValue = 4.25f;
             doubleValue = 547.65878d;
-            stringValue = "SampleModule stringValue ¹þ¹þ¹þ";
+            stringValue = "SampleModule stringValue å“ˆå“ˆå“ˆ";
 
             sampleData = SampleData.CreateSampleData(-1);
 

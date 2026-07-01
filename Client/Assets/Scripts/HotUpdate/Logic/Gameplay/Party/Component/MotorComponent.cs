@@ -1,4 +1,4 @@
-using ECS;
+﻿using ECS;
 using GameFramework.Core;
 
 namespace GameFramework.Logic

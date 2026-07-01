@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,7 +55,7 @@ namespace GameFramework
         public Image image;
         private void Awake()
         {
-            ES3.Save("test", "ÕâÊÇÒ»¸ö²âÊÔÊı¾İ", "test");
+            ES3.Save("test", "è¿™æ˜¯ä¸€ä¸ªæµ‹è¯•æ•°æ®", "test");
             MyTest test = new MyTest();
             ES3.Save<MyTest>(nameof(MyTest), test, "test");
         }

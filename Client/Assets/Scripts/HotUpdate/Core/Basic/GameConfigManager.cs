@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System;
 using System.IO;
 using Config;
@@ -45,7 +45,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// Í¨¹ıÅäÖÃid²éÕÒÒ»¸öÅäÖÃ
+        /// é€šè¿‡é…ç½®idæŸ¥æ‰¾ä¸€ä¸ªé…ç½®
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
@@ -69,7 +69,7 @@ namespace GameFramework.Core
             return container.Find(id);
         }
         /// <summary>
-        /// ²éÕÒÅäÖÃ
+        /// æŸ¥æ‰¾é…ç½®
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
@@ -85,7 +85,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// »ñÈ¡Ä³ÀàÅäÖÃµÄËùÓĞÔªËØ
+        /// è·å–æŸç±»é…ç½®çš„æ‰€æœ‰å…ƒç´ 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -100,7 +100,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// »ñÈ¡Âú×ãÌõ¼şµÄËùÓĞÔªËØ
+        /// è·å–æ»¡è¶³æ¡ä»¶çš„æ‰€æœ‰å…ƒç´ 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
@@ -116,7 +116,7 @@ namespace GameFramework.Core
         }
 
         /// <summary>
-        /// Í¨¹ıÅäÖÃid»ñÈ¡ÎÄÌå
+        /// é€šè¿‡é…ç½®idè·å–æ–‡ä½“
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
