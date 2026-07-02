@@ -73,7 +73,7 @@ namespace GameFramework.Logic
                 var site = formation.GetFormationSite(buc.Camp, buc.Index);
 
                 var ac = entity.GetComponent<ActorComponent>();
-                ac.SetVisible(false);
+                ac.SetVisible(true);
                 ac.SetPosition(site.Position);
                 await ac.RefreshActor();
             }
