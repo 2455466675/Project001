@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using ECS;
 using GameFramework.Core;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace GameFramework.Logic
     {
         void SetActorType(ActorType actorType);
         void SetActorId(int actorId);
-        void RefreshActor();
+        UniTask RefreshActor();
         void RecycleActor();
         void SetVisible(bool visible);
         void SetPosition(float x, float y, float z);
@@ -21,9 +21,6 @@ namespace GameFramework.Logic
 
     /// <summary>
     /// 实体与表现层 Actor 的桥接组件。
-    /// Actor 的加载时机由外部显式驱动（实体可能先于场景/Actor 就绪而创建），
-    /// 在 Actor 缺席期间用影子状态承接位置与动画控制器，待加载完成后一次性回填，
-    /// 从而让调用方无需感知加载是否完成。
     /// </summary>
     public class ActorComponent : ComponentBase, IActorComponent
     {
@@ -32,13 +29,10 @@ namespace GameFramework.Logic
 
         private Actor actor;
 
-        // Actor 缺席期间的影子状态，加载完成后回填给 Actor
         private Vector3 position;
         private string controllerName;
         private bool visible = true;
 
-        // 加载代际：每次加载/回收自增。异步回调据此判断结果是否已过期，
-        // 防止短时间内的重复加载相互覆盖，导致先返回的 Actor 失去引用而泄漏。
         private int loadToken;
 
         public void SetActorId(int id)
@@ -51,14 +45,13 @@ namespace GameFramework.Logic
             ActorType = actorType;
         }
 
-        public void RefreshActor()
+        public UniTask RefreshActor()
         {
-            LoadAsync().Forget();
+             return LoadAsync();
         }
 
         public void RecycleActor()
         {
-            // 先让在途加载失效，避免其回调把已释放的引用重新挂回来
             loadToken++;
 
             if (actor == null)
@@ -142,7 +135,6 @@ namespace GameFramework.Logic
                 return;
             }
 
-            // 加载期间又发生了新的加载/回收请求，当前结果已过期，直接释放避免泄漏
             if (token != loadToken)
             {
                 Game.GetSystem<GameActorManager>().ReleaseActor(loaded);
@@ -154,7 +146,6 @@ namespace GameFramework.Logic
             ApplyState();
         }
 
-        // Actor 就绪后一次性回填缺席期间累积的影子状态
         private void ApplyState()
         {
             actor.MovePosition(position);

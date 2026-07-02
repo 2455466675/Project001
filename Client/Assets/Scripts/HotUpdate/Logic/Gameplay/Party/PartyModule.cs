@@ -1,4 +1,4 @@
-using ECS;
+﻿using ECS;
 using GameFramework.Core;
 using System.Collections.Generic;
 
@@ -91,6 +91,20 @@ namespace GameFramework.Logic
         public void OnInput(InputContext context)
         {
             Leader?.GetComponent<MotorComponent>().OnInputAction(context);
+        }
+
+        public List<int> GetBattleUnits()
+        {
+            List<int> units = new List<int>();
+
+            for (int i = 0; i < characters.Count; i++)
+            {
+                var entity = characters[i];
+                var ac = entity.GetComponent<ActorComponent>();
+                units.Add(ac.ActorId);
+            }
+
+            return units;
         }
 
         private Entity CreateCharacter()

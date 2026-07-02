@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.ComponentModel;
 using System.Collections;
@@ -8,6 +8,7 @@ namespace MVC
 {
     public class ObservableList<T> : ObservableModel, IList<T>, IList where T : ObservableModel
     {
+        private static readonly PropertyChangedEventArgs AllEventArgs = new PropertyChangedEventArgs(string.Empty);
         private static readonly PropertyChangedEventArgs CountEventArgs = new PropertyChangedEventArgs(nameof(ObservableList<T>.Count));
 
         private static bool IsCompatibleObject(object value)
@@ -213,6 +214,15 @@ namespace MVC
                 throw new ArgumentOutOfRangeException(string.Format("ArgumentOutOfRangeException:{0}", index));
 
             RemoveItem(index);
+        }
+
+        public void Sort(Comparison<T> comparison)
+        {
+            if (IsReadOnly)
+                throw new NotSupportedException("ReadOnlyCollection");
+
+            items.Sort(comparison);
+            OnPropertyChanged(AllEventArgs);
         }
 
         int IList.Add(object value)

@@ -15,11 +15,11 @@ namespace GameFramework.EditorTools
         }
 
         // 用颜色区分有效/无效点位，便于直观校对阵形
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = valid ? new Color(0.2f, 0.9f, 0.3f, 1f) : new Color(0.9f, 0.2f, 0.2f, 1f);
-            Gizmos.DrawWireSphere(transform.position, 0.2f);
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 0.5f);
-        }
+        //private void OnDrawGizmos()
+        //{
+        //    Gizmos.color = valid ? new Color(0.2f, 0.9f, 0.3f, 1f) : new Color(0.9f, 0.2f, 0.2f, 1f);
+        //    Gizmos.DrawWireSphere(transform.position, 0.2f);
+        //    Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 0.5f);
+        //}
     }
 }
