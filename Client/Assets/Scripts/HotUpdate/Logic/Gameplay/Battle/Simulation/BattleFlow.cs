@@ -6,6 +6,7 @@ namespace GameFramework.Logic
     {
         public async UniTask Run(IBattleContext context)
         {
+            MDebug.Log("BattleFlow Start");
             // 战斗开始事件
 
             while (!context.CheckFinish())
@@ -15,6 +16,7 @@ namespace GameFramework.Logic
             }
 
             // 战斗结束事件
+            MDebug.Log("BattleFlow Finish");
         }
     }
 }

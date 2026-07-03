@@ -18,10 +18,13 @@ namespace GameFramework.Logic
         public BattleFormation Formation { get; private set; }
         public BattleUnit Unit { get; private set; }
 
+        public BattleSimulation Simulation { get; private set; }
+
         void IGameplay.OnInit()
         {
             Formation = new BattleFormation();
             Unit = new BattleUnit();
+            Simulation = new BattleSimulation();
         }
 
         void IGameplay.OnExit()
@@ -41,7 +44,9 @@ namespace GameFramework.Logic
 
         private async UniTaskVoid EnterBattleAsync()
         {        
-            await Game.GetSystem<GameTransitionManager>().Transition(Utility.GameDefine.TransitionType.EnterBattleScene, LoadBattle);            
+            await Game.GetSystem<GameTransitionManager>().Transition(Utility.GameDefine.TransitionType.EnterBattleScene, LoadBattle);
+
+            Simulation.Start();
         }
 
         private async UniTaskVoid ExitBattleAsync()

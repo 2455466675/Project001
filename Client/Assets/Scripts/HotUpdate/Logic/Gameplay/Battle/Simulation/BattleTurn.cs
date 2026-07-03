@@ -20,19 +20,28 @@ namespace GameFramework.Logic
 
         public bool IsAlive()
         {
-            //TODO 行动者是否存活
             return true;
         }
 
         public async UniTask Run(IBattleContext context)
         {
-            // TODO 等待选择行动方式 or AI : await Decider.Decide()
+            // TODO await Decider.Decide() 产生BattleAction
+            MDebug.Log($"{battleID} : 等待决策");
+            await UniTask.WaitForSeconds(3f);
+            MDebug.Log($"{battleID} : 做出决策");
 
             //行动开始事件
+            MDebug.Log($"{battleID} : 行动开始");
+            await context.Projector.Flush(); // TODO 播放行动动画
 
             BattleAction action = new BattleAction();
-            await action.Run();
+            action.Execute(context);
 
+            context.Resolver.ResolveAll(context);
+
+            await context.Projector.Flush();
+
+            MDebug.Log($"{battleID} : 行动结束");
             //行动结束事件
         }
     }
