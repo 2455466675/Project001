@@ -12,6 +12,7 @@ namespace GameFramework.Logic
         {
             //回合开始事件
             MDebug.Log("BattleRound Start");
+            context.EventHub.Fire(BattleEventType.RoundStart, context, new BattleEventArgs());
 
             //构建行动队列
             context.Schedule.Rebuild(context);
@@ -35,6 +36,7 @@ namespace GameFramework.Logic
 
             //回合结束事件
             MDebug.Log("BattleRound Finish");
+            context.EventHub.Fire(BattleEventType.RoundFinish, context, new BattleEventArgs());
         }
     }
 }

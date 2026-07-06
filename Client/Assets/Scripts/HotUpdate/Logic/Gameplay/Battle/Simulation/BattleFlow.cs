@@ -8,6 +8,7 @@ namespace GameFramework.Logic
         {
             MDebug.Log("BattleFlow Start");
             // 战斗开始事件
+            context.EventHub.Fire(BattleEventType.BattleStart, context, new BattleEventArgs());
 
             while (!context.CheckFinish())
             {
@@ -17,6 +18,7 @@ namespace GameFramework.Logic
 
             // 战斗结束事件
             MDebug.Log("BattleFlow Finish");
+            context.EventHub.Fire(BattleEventType.BattleFinish, context, new BattleEventArgs());
         }
     }
 }
