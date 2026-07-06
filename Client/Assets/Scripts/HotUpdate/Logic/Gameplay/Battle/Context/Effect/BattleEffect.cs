@@ -1,23 +1,54 @@
 ﻿
 namespace GameFramework.Logic
 {
+    public enum EffectOutcome
+    {
+        None,
+        TakeDamage,
+        RecoverHp,
+        RecoverSp,
+        AddBuff,
+        RemoveBuff,
+    }
+
+    public enum HitType
+    {
+        None,
+        Miss,
+        Critical,
+        Immune,
+    }
+
+    public class EffectResult
+    {
+        public int SourceID;
+        public int TargetID;
+        public int AbilityID;
+        public int Value1;
+        public int Value2;
+        public int Value3;
+        public HitType HitType;
+        public EffectOutcome Outcome;
+    }
+
     public abstract class BattleEffect
     {
         public int SourceID { get; private set; }
         public int TargetID { get; private set; }
-        public abstract void Apply(IBattleContext context);
+        public abstract EffectResult Apply(IBattleContext context);
     }
 
     public class EmptyEffect : BattleEffect
     {
-        public override void Apply(IBattleContext context)
+        public override EffectResult Apply(IBattleContext context)
         {
+            return null;
         }
     }
 
     public class NormalDamageEffect : BattleEffect
     {
-        public override void Apply(IBattleContext context)
+        public override EffectResult Apply(IBattleContext context)
         {
             var agrs = new BattleEventArgs();
             agrs.SourceID = SourceID;
@@ -29,16 +60,15 @@ namespace GameFramework.Logic
 
             if (agrs.Cancel)
             {
-                MDebug.Log("NormalDamageEffect效果取消");
-                return;
+                return null;
             }
 
             // Target hp-=10
-
-            MDebug.Log("NormalDamageEffect Apply");
             context.Projector.Record(new TestViewCommand());
 
             context.EventHub.Fire(BattleEventType.TakeDamageAfter, context, agrs);
+
+            return null;
         }
     }
 }

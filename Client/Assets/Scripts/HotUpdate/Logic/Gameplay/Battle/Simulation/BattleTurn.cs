@@ -40,8 +40,7 @@ namespace GameFramework.Logic
             context.EventHub.Fire(BattleEventType.TurnActionBefor, context, new BattleEventArgs() { SourceID = battleID });
 
             MDebug.Log($"{battleID} : 行动开始");
-            await context.Projector.Flush(); // TODO 播放行动动画
-
+  
             BattleAction action = new BattleAction();
             action.Execute(context);
             context.Resolver.ResolveAll(context);
