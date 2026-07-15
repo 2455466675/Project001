@@ -39,13 +39,13 @@ namespace GameFramework.Logic
             public int effectType; // 效果类型：受伤、回血、护盾、加buff...
             public int hitType; //正常命中、暴击、miss、免疫
 
-            public Dictionary<int, string> extArgs; //额外参数
+            public Dictionary<string, string> extArgs; //额外参数
         }
 
         public int CasterId;
 
         public int ViewActionId; //对应SO资源
         
-        public List<HitResult[]> HitResults; //
+        public List<HitResult[]> HitResults; //多段命中依次添加
     }
 }

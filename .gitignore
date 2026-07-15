@@ -3,3 +3,4 @@ PC/
 ~*.xlsx
 .vs/
 Config/Export/ExcelToolGUI.exe
+.kiro

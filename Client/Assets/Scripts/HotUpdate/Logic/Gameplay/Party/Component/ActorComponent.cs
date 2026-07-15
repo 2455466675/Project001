@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameFramework.Logic
 {
-    public interface IActorComponent : IAnimator
+    public interface IActorComponent : IActor
     {
         void SetActorType(ActorType actorType);
         void SetActorId(int actorId);
@@ -206,14 +206,33 @@ namespace GameFramework.Logic
             }
         }
 
-        public void PlayAnimation(string name)
+        public float PlayAnimation(string name)
         {
             if (actor != null)
             {
-                actor.PlayAnimation(name);
+                return actor.PlayAnimation(name);
+            }
+            else
+            {
+                return 0f;
             }
         }
 
         #endregion
+
+        public void AddWidget(PuppetWidgetArgs args)
+        {
+            if (actor != null)
+            {
+                actor.AddWidget(args);
+            }
+        }
+        public void RemoveWidget(string key)
+        {
+            if (actor != null)
+            {
+                actor.RemoveWidget(key);
+            }
+        }
     }
 }

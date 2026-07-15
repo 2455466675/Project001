@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameFramework.Logic
 {
-    public class Actor : MonoBehaviour, IAnimator
+    public class Actor : MonoBehaviour, IActor
     {
         public int Id { get; set; }
 
@@ -39,16 +39,6 @@ namespace GameFramework.Logic
         }
 
         #region Puppet
-
-        public Transform GetBone(string name)
-        {
-            if (puppet == null)
-            {
-                return null;
-            }
-
-            return puppet.GetBone(name);
-        }
 
         public void SetAnimatorController(string name)
         {
@@ -95,13 +85,31 @@ namespace GameFramework.Logic
             puppet.SetAnimatorValue(name);
         }
 
-        public void PlayAnimation(string name)
+        public float PlayAnimation(string name)
+        {
+            if (puppet == null)
+            {
+                return 0f;
+            }
+            return puppet.PlayAnimation(name);
+        }
+
+        public void AddWidget(PuppetWidgetArgs args)
         {
             if (puppet == null)
             {
                 return;
             }
-            puppet.PlayAnimation(name);
+            puppet.AddWidget(args);
+        }
+
+        public void RemoveWidget(string key)
+        {
+            if (puppet == null)
+            {
+                return;
+            }
+            puppet.RemoveWidget(key);
         }
 
         #endregion

@@ -11,9 +11,9 @@ namespace GameFramework.Logic
     {
         private abstract class AnimatorState : StateBase
         {
-            protected IAnimator Animator { get; }
+            protected IPuppet Animator { get; }
 
-            protected AnimatorState(IAnimator animator)
+            protected AnimatorState(IPuppet animator)
             {
                 Animator = animator;
             }
@@ -63,7 +63,7 @@ namespace GameFramework.Logic
 
         private class IdleState : AnimatorState
         {
-            public IdleState(IAnimator animator) : base(animator)
+            public IdleState(IPuppet animator) : base(animator)
             {
             }
 
@@ -81,7 +81,7 @@ namespace GameFramework.Logic
 
         private class WalkState : AnimatorState
         {
-            public WalkState(IAnimator animator) : base(animator)
+            public WalkState(IPuppet animator) : base(animator)
             {
             }
 
@@ -101,7 +101,7 @@ namespace GameFramework.Logic
 
         private class RunState : AnimatorState
         {
-            public RunState(IAnimator animator) : base(animator)
+            public RunState(IPuppet animator) : base(animator)
             {
             }
 
@@ -122,12 +122,12 @@ namespace GameFramework.Logic
         }
 
         private readonly StateMachine stateMachine;
-        private readonly IAnimator animator;
+        private readonly IPuppet animator;
 
         private float dirX;
         private float dirY;
 
-        public MotorAnimator(IAnimator animator)
+        public MotorAnimator(IPuppet animator)
         {
             this.animator = animator;
             stateMachine = new StateMachine();

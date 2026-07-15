@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace GameFramework.Logic
 {
-    public class ActorAnimator : MonoBehaviour, IAnimator
+    public class ActorAnimator : MonoBehaviour
     {
         public const string Normal = "normal";
         public const string Battle = "battle";
@@ -18,7 +18,7 @@ namespace GameFramework.Logic
         }
 
         [SerializeField]
-        private Animator m_Animator;
+        private Animator mAnimator;
 
         [SerializeField]
         [StringDropdown(Normal, Battle)]
@@ -29,7 +29,7 @@ namespace GameFramework.Logic
 
         public void SetAnimatorController(string controllerName)
         {
-            if (m_Animator == null)
+            if (mAnimator == null)
             {
                 return;
             }
@@ -43,7 +43,7 @@ namespace GameFramework.Logic
             {
                 if (item.name == controllerName)
                 {
-                    m_Animator.runtimeAnimatorController = item.controller;
+                    mAnimator.runtimeAnimatorController = item.controller;
                     return;
                 }
             }
@@ -51,51 +51,63 @@ namespace GameFramework.Logic
 
         public void SetAnimatorValue(string name, float value)
         {
-            if (m_Animator != null)
+            if (mAnimator != null)
             {
-                m_Animator.SetFloat(name, value);
+                mAnimator.SetFloat(name, value);
             }
         }
 
         public void SetAnimatorValue(string name, int value)
         {
-            if (m_Animator != null)
+            if (mAnimator != null)
             {
-                m_Animator.SetInteger(name, value);
+                mAnimator.SetInteger(name, value);
             }
         }
 
         public void SetAnimatorValue(string name, bool value)
         {
-            if (m_Animator != null)
+            if (mAnimator != null)
             {
-                m_Animator.SetBool(name, value);
+                mAnimator.SetBool(name, value);
             }
         }
 
         public void SetAnimatorValue(string name)
         {
-            if (m_Animator != null)
+            if (mAnimator != null)
             {
-                m_Animator.SetTrigger(name);
+                mAnimator.SetTrigger(name);
             }
         }
 
-        public void PlayAnimation(string name)
+        public float PlayAnimation(string name)
         {
-            if (m_Animator != null)
+            float animLength = 0f;
+            if (mAnimator != null)
             {
-                m_Animator.Play(name);
+                AnimationClip[] clips = mAnimator.runtimeAnimatorController.animationClips;
+                foreach (AnimationClip clip in clips)
+                {
+                    if (clip != null && clip.name == name)
+                    {
+
+                        animLength = clip.length;
+                        break;
+                    }
+                }
+                mAnimator.Play(name);
             }
+            return animLength;
         }
 
 #if UNITY_EDITOR
 
         private void OnValidate()
         {
-            if (m_Animator == null)
+            if (mAnimator == null)
             {
-                m_Animator = GetComponentInChildren<Animator>();
+                mAnimator = GetComponentInChildren<Animator>();
             }
         }
 #endif

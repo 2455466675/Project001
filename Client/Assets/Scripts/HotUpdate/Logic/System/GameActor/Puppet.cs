@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameFramework.Logic 
 {
-    public class Puppet : MonoBehaviour, IAnimator
+    public class Puppet : MonoBehaviour, IPuppet
     {
         [SerializeField]
         private SpriteRenderer spriteRenderer;
@@ -10,53 +10,47 @@ namespace GameFramework.Logic
         private ActorAnimator puppetAnimator;
         [SerializeField]
         private Transform[] bones;
+        [SerializeField]
+        private PuppetBone puppetBone;
 
-        public void PlayAnimation(string name)
+        public float PlayAnimation(string name)
         {
-            ((IAnimator)puppetAnimator).PlayAnimation(name);
+            return puppetAnimator.PlayAnimation(name);
         }
 
         public void SetAnimatorController(string controllerName)
         {
-            ((IAnimator)puppetAnimator).SetAnimatorController(controllerName);
+            puppetAnimator.SetAnimatorController(controllerName);
         }
 
         public void SetAnimatorValue(string name, bool value)
         {
-            ((IAnimator)puppetAnimator).SetAnimatorValue(name, value);
+            puppetAnimator.SetAnimatorValue(name, value);
         }
 
         public void SetAnimatorValue(string name, float value)
         {
-            ((IAnimator)puppetAnimator).SetAnimatorValue(name, value);
+            puppetAnimator.SetAnimatorValue(name, value);
         }
 
         public void SetAnimatorValue(string name, int value)
         {
-            ((IAnimator)puppetAnimator).SetAnimatorValue(name, value);
+            puppetAnimator.SetAnimatorValue(name, value);
         }
 
         public void SetAnimatorValue(string name)
         {
-            ((IAnimator)puppetAnimator).SetAnimatorValue(name);
+            puppetAnimator.SetAnimatorValue(name);
         }
 
-        public Transform GetBone(string name)
+        public void AddWidget(PuppetWidgetArgs args)
         {
-            if (bones == null || bones.Length == 0)
-            {
-                return null;
-            }
+            puppetBone.AddWidget(args);
+        }
 
-            foreach (var item in bones)
-            {
-                if (item.gameObject.name == name)
-                {
-                    return item;
-                }
-            }
-
-            return bones[0];
+        public void RemoveWidget(string key)
+        {
+            puppetBone.RemoveWidget(key);
         }
     }
 }

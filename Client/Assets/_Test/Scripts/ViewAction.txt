@@ -1,0 +1,160 @@
+ViewAction
+{
+    abstract async Play()
+    {
+        
+    }
+}
+
+ResolveAction : ViewAction
+{
+
+}
+
+AnimAction : ViewAction
+{
+    animName;
+    async Play()
+    {
+        var animTime = actor.PlayAnim(animName);
+        await WaitTime(animTime);
+    }
+}
+
+ParticleAction : ViewAction
+{
+    assetPath;
+    bone;
+    duration； //-1
+    asset;
+    async Play()
+    {
+        asset = LoadAsset(assetPath);
+        var tf = actor.GetBone(bone);
+        asset.SetParent(tf);
+        Timer().Forget();
+    }
+
+    async Timer()
+    {
+        if (duration < 0) return;
+        await WaitTime(duration);
+        Release();    
+    }
+
+    Release()
+    {
+        ReleaseAsset(asset);        
+        asset = null;
+    }
+}
+
+ViewNode
+{
+    abstract async Play()
+    {
+        
+    }
+}
+
+PresentationView : ViewNode
+{
+    ViewAction action;
+
+    async Play()
+    {
+        await action.Play();    
+    }
+}
+
+SegmentView : ViewNode
+{
+    Segment;
+    ViewRoot subViewNode;
+    async Play()
+    {        
+    }
+}
+
+HitView
+{
+
+}
+
+ParallelSegmentView : SegmentView
+{
+    async Play()
+    {              
+        await WaitAll(Segment[].subViewNode.Play())
+    }
+}
+
+SequenceSegmentView : SegmentView
+{
+    async Play()
+    {
+        foreach (Segment)
+        {
+            await subViewNode.Play();
+        }        
+    }
+}
+
+staggerSegmentView : SegmentView
+{
+    interval;
+    async Play()
+    {
+        foreach (Segment)
+        {
+            await WaitTime(interval);
+            subViewNode.Play();
+        }        
+    }
+}
+
+Track
+{
+    Parallel/Sequence;
+    ViewNodes[];
+
+    async Play()
+    {
+        if (Parallel)
+        {
+            await WaitAll(ViewNodes.Play())    
+        }
+
+        if (Sequence)
+        {
+            foreach(ViewNodes)
+            {
+                await ViewNode.Play()
+            }
+        }
+    }    
+}
+
+ViewRoot : ScriptableObject
+{    
+    Tracks[]
+
+    async Play()
+    {
+        await WaitAll(Tracks.Play())
+    }    
+}
+
+NormalHitView(subViewRoot)
+{
+    Tracks
+    [
+        {
+            Parallel;
+            ViewNodes
+            [
+                PresentationView(ResolveAction)
+            ]
+        }
+    ]
+}

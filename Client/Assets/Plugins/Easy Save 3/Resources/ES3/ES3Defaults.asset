@@ -34,17 +34,17 @@ MonoBehaviour:
     - MCPForUnity.Runtime
     - YooAsset
     - com.qingzheng.object-tree-viewer.Editor
+    - GF_HotUpdate_Logic
     - PPv2URPConverters
     - MCPForUnity.Editor
+    - GF_HotUpdate_View
     - UniTask
     - GF_HotUpdate_Core
     - YooAsset.Editor
     - Assembly-CSharp
     - UniTask.Linq
     - PsdPlugin
-    - GF_HotUpdate_View
     - LITJson
-    - GF_HotUpdate_Logic
     - MVC
     - UniTask.TextMeshPro
     - GF_HotUpdate_Utility

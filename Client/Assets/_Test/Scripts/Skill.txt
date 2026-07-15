@@ -1,0 +1,138 @@
+EffectResult
+{
+    Seq;
+    SegmentIndex;
+    
+    SourceId;
+    TargetId;
+
+    Outcome;
+    Value;
+    AbilityId;
+}
+
+ActionReport
+{
+    AbilityId;
+    CasterId;
+    Targets[];
+    EffectResult[];
+}
+
+new ActionReport
+{
+    AbilityId = 1001;
+    CasterId = 1;
+    Targets = [11, 12, 13];
+    EffectResult = 
+    [
+        {
+            Seq = 1;
+            SegmentIndex = 1;
+            SourceId = 1;
+            TargetId = 11;
+            Outcome = "TakeDamage";
+            Value = 5;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 2;
+            SegmentIndex = 1;
+            SourceId = 1;
+            TargetId = 12;
+            Outcome = "TakeDamage";
+            Value = 4;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 3;
+            SegmentIndex = 1;
+            SourceId = 1;
+            TargetId = 13;
+            Outcome = "TakeDamage";
+            Value = 6;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 4;
+            SegmentIndex = 1;
+            SourceId = 1;
+            TargetId = 11;
+            Outcome = "AddBuff";
+            Value = 2001;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 5;
+            SegmentIndex = 1;
+            SourceId = 1;
+            TargetId = 12;
+            Outcome = "AddBuff";
+            Value = 2001;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 6;
+            SegmentIndex = 1;
+            SourceId = 1;
+            TargetId = 13;
+            Outcome = "AddBuff";
+            Value = 2001;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 7;
+            SegmentIndex = 2;
+            SourceId = 1;
+            TargetId = 11;
+            Outcome = "TakeDamage";
+            Value = 16;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 8;
+            SegmentIndex = 2;
+            SourceId = 1;
+            TargetId = 12;
+            Outcome = "TakeDamage";
+            Value = 15;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 9;
+            SegmentIndex = 2;
+            SourceId = 1;
+            TargetId = 13;
+            Outcome = "TakeDamage";
+            Value = 15;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 10;
+            SegmentIndex = 3;
+            SourceId = 1;
+            TargetId = 1;
+            Outcome = "RecoverHp";
+            Value = 10;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 11;
+            SegmentIndex = 3;
+            SourceId = 1;
+            TargetId = 1;
+            Outcome = "RecoverSp";
+            Value = 5;
+            AbilityId = 1001;
+        },
+        {
+            Seq = 12;
+            SegmentIndex = 3;
+            SourceId = 1;
+            TargetId = 1;
+            Outcome = "AddBuff";
+            Value = 2002;
+            AbilityId = 1001;
+        },
+    ]
+}
