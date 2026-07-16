@@ -17,9 +17,9 @@ namespace GameFramework.Logic
             //构建行动队列
             context.Schedule.Rebuild(context);
 
-            while (context.Schedule.Dequeue(out int battleID))
+            while (context.Schedule.Dequeue(out int battleId))
             {
-                BattleTurn turn = new BattleTurn(battleID);
+                BattleTurn turn = new BattleTurn(battleId);
 
                 if (!turn.IsAlive())
                 {

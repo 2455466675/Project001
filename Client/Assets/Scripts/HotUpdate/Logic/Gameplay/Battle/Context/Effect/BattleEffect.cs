@@ -58,17 +58,23 @@ namespace GameFramework.Logic
 
             context.EventHub.Fire(BattleEventType.TakeDamageBefor, context, agrs);
 
+            var result = new EffectResult();
             if (agrs.Cancel)
             {
-                return null;
+                result.SourceID = SourceID;
+                result.TargetID = TargetID;
+                result.HitType = HitType.Immune;
+                result.Outcome = EffectOutcome.TakeDamage;
+                return result;
             }
-
-            // Target hp-=10
-            context.Projector.Record(new TestViewCommand());
-
             context.EventHub.Fire(BattleEventType.TakeDamageAfter, context, agrs);
 
-            return null;
+            result.SourceID = SourceID;
+            result.TargetID = TargetID;
+            result.HitType = HitType.None;
+            result.Outcome = EffectOutcome.TakeDamage;
+            result.Value1 = 10;
+            return result;
         }
     }
 }
