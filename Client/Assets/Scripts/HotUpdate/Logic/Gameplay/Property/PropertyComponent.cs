@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 namespace GameFramework.Logic
 {
+    public interface IPropertyReader
+    {
+        int GetPropertyValue(PropertyType pType);
+    }
+
     public enum PropertyType
     {
         MaxHp,
@@ -119,7 +124,24 @@ namespace GameFramework.Logic
         public object Source { get; set; }
     }
 
-    public class PropertyComponent : ComponentBase
+    public class PropertySapshoot : IPropertyReader
+    {
+        private Dictionary<PropertyType, int> map;
+
+        public PropertySapshoot(Dictionary<PropertyType, int> map)
+        {
+            this.map = map;
+            this.map ??= new Dictionary<PropertyType, int>();
+        }
+
+        public int GetPropertyValue(PropertyType pType)
+        {
+            map.TryGetValue(pType, out int value);
+            return value;
+        }
+    }
+
+    public class PropertyComponent : ComponentBase, IPropertyReader
     {
         private Dictionary<PropertyType, Property> propertyMap;
 
@@ -148,6 +170,17 @@ namespace GameFramework.Logic
             {
                 return 0;
             }
+        }
+
+        public PropertySapshoot Sapshoot()
+        {
+            Dictionary<PropertyType, int> map = new Dictionary<PropertyType, int>(propertyMap.Count);
+            foreach (var item in propertyMap)
+            {
+                map[item.Key] = item.Value.Value;
+            }
+            PropertySapshoot sapshoot = new PropertySapshoot(map);
+            return sapshoot;
         }
     }
 }

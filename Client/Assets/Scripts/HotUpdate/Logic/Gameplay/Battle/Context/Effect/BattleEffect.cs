@@ -15,26 +15,48 @@ namespace GameFramework.Logic
     {
         None,
         Miss,
+        Immunity,
         Critical,
-        Immune,
+        Absorbed,
+    }
+
+    public enum DamageType
+    {
+        None = 0,
+        Physical = 1 << 0, 
+        True = 1 << 1,
+        Poison = 1 << 2,
+        Metal = 1 << 3,
+        Wood = 1 << 4,
+        Water = 1 << 5,
+        Fire = 1 << 6,
+        Earth = 1 << 7,
     }
 
     public class EffectResult
     {
-        public int SourceID;
-        public int TargetID;
-        public int AbilityID;
+        public int SourceId;
+        public int TargetId;
+        public int AbilityId;
         public int Value1;
         public int Value2;
         public int Value3;
         public HitType HitType;
         public EffectOutcome Outcome;
+        public DamageType DamageType;
     }
 
     public abstract class BattleEffect
     {
-        public int SourceID { get; private set; }
-        public int TargetID { get; private set; }
+        public int SourceId { get; private set; }
+        public int TargetId { get; private set; }
+
+        public void Reset(int sourceId, int targetId)
+        {
+            SourceId = sourceId;
+            TargetId = targetId;
+        }
+
         public abstract EffectResult Apply(IBattleContext context);
     }
 
@@ -51,26 +73,17 @@ namespace GameFramework.Logic
         public override EffectResult Apply(IBattleContext context)
         {
             var agrs = new BattleEventArgs();
-            agrs.SourceID = SourceID;
-            agrs.TargetID = TargetID;
+            agrs.SourceID = SourceId;
+            agrs.TargetID = TargetId;
             agrs.Value = 10;
             agrs.Cancel = false;
 
-            context.EventHub.Fire(BattleEventType.TakeDamageBefor, context, agrs);
-
             var result = new EffectResult();
-            if (agrs.Cancel)
-            {
-                result.SourceID = SourceID;
-                result.TargetID = TargetID;
-                result.HitType = HitType.Immune;
-                result.Outcome = EffectOutcome.TakeDamage;
-                return result;
-            }
+  
             context.EventHub.Fire(BattleEventType.TakeDamageAfter, context, agrs);
 
-            result.SourceID = SourceID;
-            result.TargetID = TargetID;
+            result.SourceId = SourceId;
+            result.TargetId = TargetId;
             result.HitType = HitType.None;
             result.Outcome = EffectOutcome.TakeDamage;
             result.Value1 = 10;

@@ -6,11 +6,19 @@ namespace GameFramework.Logic
     {
         public void Execute(IBattleContext context)
         {
-            //产出BattleEffect
+            int caster = 1;
+            List<int> targets = new List<int>() { 11, 12, 13 };
 
-            List<BattleEffect> effects = new List<BattleEffect>();
-            effects.Add(new NormalDamageEffect());
-            context.Resolver.Append(effects);
+            foreach (var target in targets)
+            {
+                List<BattleEffect> effects = new List<BattleEffect>();
+
+                var effect = new NormalDamageEffect(); // Pool
+                effect.Reset(caster, target);
+
+                effects.Add(effect);
+                context.Resolver.Append(effects);
+            }            
         }
     }
 }
