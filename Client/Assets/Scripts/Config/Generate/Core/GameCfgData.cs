@@ -44,6 +44,22 @@ namespace Config
 			_LoginCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(LoginCfg), _LoginCfgContainer);
 
+			ICfgContainer _SkillCfgContainer = new SkillCfgContainer();
+			_SkillCfgContainer.Deserialize(reader);
+			_cfgDatas.Add(typeof(SkillCfg), _SkillCfgContainer);
+
+			ICfgContainer _AbilityCfgContainer = new AbilityCfgContainer();
+			_AbilityCfgContainer.Deserialize(reader);
+			_cfgDatas.Add(typeof(AbilityCfg), _AbilityCfgContainer);
+
+			ICfgContainer _AbilitySegmentCfgContainer = new AbilitySegmentCfgContainer();
+			_AbilitySegmentCfgContainer.Deserialize(reader);
+			_cfgDatas.Add(typeof(AbilitySegmentCfg), _AbilitySegmentCfgContainer);
+
+			ICfgContainer _AbilitySegmentEffectCfgContainer = new AbilitySegmentEffectCfgContainer();
+			_AbilitySegmentEffectCfgContainer.Deserialize(reader);
+			_cfgDatas.Add(typeof(AbilitySegmentEffectCfg), _AbilitySegmentEffectCfgContainer);
+
 		}
 
 		public void Serialize(BinaryWriter writer)

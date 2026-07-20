@@ -31,6 +31,22 @@
 		{
             "excel":"login.xlsx",
             "type":"LoginCfg",
-        }
+        },
+		{
+            "excel":"skill/skill.xlsx",
+            "type":"SkillCfg",
+        },
+		{
+            "excel":"skill/ability.xlsx",
+            "type":"AbilityCfg",
+        },
+		{
+            "excel":"skill/ability_segment.xlsx",
+            "type":"AbilitySegmentCfg",
+        },
+		{
+            "excel":"skill/ability_segment_effect.xlsx",
+            "type":"AbilitySegmentEffectCfg",
+        },
     ]
 }

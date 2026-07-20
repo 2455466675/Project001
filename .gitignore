@@ -3,4 +3,5 @@ PC/
 ~*.xlsx
 .vs/
 Config/Export/ExcelToolGUI.exe
+Config/Export/settings.json
 .kiro
