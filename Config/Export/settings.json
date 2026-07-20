@@ -1,8 +1,0 @@
-{
-  "JsonPath": "E:\\Workspace\\demo\\Project001\\Config\\Export\\CfgImport.json",
-  "ExcelPath": "E:\\Workspace\\demo\\Project001\\Config\\Excel",
-  "ScriptOutputPath": "E:\\Workspace\\demo\\Project001\\Client\\Assets\\Scripts\\Config\\Generate",
-  "BytesOutputPath": "E:\\Workspace\\demo\\Project001\\Client\\Assets\\Bundles\\Config",
-  "Namespace": "Config",
-  "EncryptAlgorithm": "XOR"
-}
