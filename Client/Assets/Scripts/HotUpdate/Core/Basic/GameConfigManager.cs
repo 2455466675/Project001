@@ -138,9 +138,9 @@ namespace GameFramework.Core
             var cfg = Find<ColorCfg>(colorId);
             if (cfg == null)
             {
-                return Util.Color.DefaultColor;
+                return ColorUtil.DefaultColor;
             }
-            var color = Util.Color.GetColorByHtmlStr(cfg.Color);
+            var color = ColorUtil.GetColorByHtmlStr(cfg.Color);
             return color;
         }
 

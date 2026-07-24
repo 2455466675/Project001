@@ -37,6 +37,10 @@
             "type":"SkillCfg",
         },
 		{
+            "excel":"skill/effect.xlsx",
+            "type":"EffectCfg",
+        },
+		{
             "excel":"skill/ability.xlsx",
             "type":"AbilityCfg",
         },
@@ -45,8 +49,8 @@
             "type":"AbilitySegmentCfg",
         },
 		{
-            "excel":"skill/ability_segment_effect.xlsx",
-            "type":"AbilitySegmentEffectCfg",
+            "excel":"skill/ability_segment_strike.xlsx",
+            "type":"AbilitySegmentStrikeCfg",
         },
     ]
 }

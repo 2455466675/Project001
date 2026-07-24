@@ -8,10 +8,18 @@ namespace GameFramework.Core
     [CreateAssetMenu(menuName = "MyMenu/Create GameTransitionConfig")]
     public class GameTransitionConfig : ScriptableObject
     {
+        public enum TransitionType_Config //TransitionType在Core程序集的定义。直接引用Utility的TransitionType的话[Serializable]会序列化失败
+        {
+            LoadGame,
+            SwitchScene,
+            EnterBattleScene,
+            ExitBattleScene,
+        }
+
         [Serializable]
         public class Config
         {
-            public TransitionType transitionType;
+            public TransitionType_Config transitionType;
             /// <summary>
             /// 淡入时间(ms)
             /// </summary>
@@ -36,7 +44,7 @@ namespace GameFramework.Core
                 return 0;
             }
 
-            var cfg = configList.Find(c => c.transitionType == transitionType);
+            var cfg = configList.Find(c => (TransitionType)c.transitionType == transitionType);
             if (cfg == null)
             {
                 return 0;
@@ -52,7 +60,7 @@ namespace GameFramework.Core
                 return 0;
             }
 
-            var cfg = configList.Find(c => c.transitionType == transitionType);
+            var cfg = configList.Find(c => (TransitionType)c.transitionType == transitionType);
             if (cfg == null)
             {
                 return 0;
@@ -68,7 +76,7 @@ namespace GameFramework.Core
                 return 0;
             }
 
-            var cfg = configList.Find(c => c.transitionType == transitionType);
+            var cfg = configList.Find(c => (TransitionType)c.transitionType == transitionType);
             if (cfg == null)
             {
                 return 0;

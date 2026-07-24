@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GameFramework.Utility.GameDefine;
 using System;
 using UnityEngine;
@@ -43,7 +43,7 @@ namespace GameFramework.Core
                 {
                     t += Time.deltaTime;
                 }
-                progress = Utility.Util.Math.Min(0.9f, t / transitionTime * 0.9f);
+                progress = Utility.GameMath.Min(0.9f, t / transitionTime * 0.9f);
                 Game.Message.SendMessage(new GameTransitionProgressMessage() { transitionType = transitionType, progress = progress });
                 await UniTask.Yield();
             }

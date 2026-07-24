@@ -74,7 +74,7 @@ namespace GameFramework.Logic
                 {
                     throw new NotSupportedException($"{PType} : 资源型属性只能进行加减值的操作！");
                 }
-                currValue = Utility.Util.Math.Max(0, currValue + m.Value);
+                currValue = Utility.GameMath.Max(0, currValue + m.Value);
             }
 
             public override void RemoveModifier(PropertyModifier m)

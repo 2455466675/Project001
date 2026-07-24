@@ -47,7 +47,7 @@ namespace GameFramework.View.UI
             var views = panel.GetNavigationViews();
             var defines = Game.GetSystem<UISystem>().GetNavigationDefines(id);
 
-            int length = Util.Math.Min(views.Length, defines.Length);
+            int length = GameMath.Min(views.Length, defines.Length);
             navigationListEntities = new Dictionary<NavigationDefine, NavigationListEntity>(length);
 
             for (int i = 0; i < length; i++)

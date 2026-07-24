@@ -1,4 +1,4 @@
-namespace GameFramework.Utility
+﻿namespace GameFramework
 {
     public static partial class Util
     {

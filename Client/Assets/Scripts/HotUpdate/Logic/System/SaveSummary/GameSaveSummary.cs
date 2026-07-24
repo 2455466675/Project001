@@ -55,8 +55,8 @@ namespace GameFramework.Logic
         {
             var targetSlot = slots[index];
             targetSlot.State = 1;
-            targetSlot.Level = Utility.Util.Math.Random(5, 27);
-            targetSlot.Money = Utility.Util.Math.Random(783, 2232);
+            targetSlot.Level = Utility.GameMath.Random(5, 27);
+            targetSlot.Money = Utility.GameMath.Random(783, 2232);
             targetSlot.LastTime = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
 

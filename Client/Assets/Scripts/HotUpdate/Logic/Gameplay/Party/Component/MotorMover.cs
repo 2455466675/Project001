@@ -141,8 +141,8 @@ namespace GameFramework.Logic
             var rx = step.X;
             var ry = step.Y;
             var last = step.LastPos;
-            var dx = Util.Math.Abs(pos.x - last.x);
-            var dz = Util.Math.Abs(pos.z - last.z);
+            var dx = GameMath.Abs(pos.x - last.x);
+            var dz = GameMath.Abs(pos.z - last.z);
 
             if (dx < StepDistance && dz < StepDistance)
             {
@@ -160,7 +160,7 @@ namespace GameFramework.Logic
 
             // 以主轴的实际位移估算步数；水平/斜向看 X，垂直看 Z
             float dominant = rx != 0f ? dx : dz;
-            int count = Util.Math.Floor(dominant / unit);
+            int count = GameMath.Floor(dominant / unit);
 
             for (int i = 0; i < count; i++)
             {
@@ -225,7 +225,7 @@ namespace GameFramework.Logic
             int tracesCount = target.traces.Count;
             if (stepCount > 0 && tracesCount > Gap)
             {
-                int i = Util.Math.Min(tracesCount - Gap, stepCount);
+                int i = GameMath.Min(tracesCount - Gap, stepCount);
                 var items = target.PopTraces(i);
                 var trace = items[^1];
 

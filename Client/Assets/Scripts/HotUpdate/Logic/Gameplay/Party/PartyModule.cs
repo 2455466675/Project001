@@ -52,7 +52,7 @@ namespace GameFramework.Logic
             {
                 var entity = characters[i];
                 var ac2 = entity.GetComponent<ActorComponent>();
-                ac2.SetActorId(Utility.Util.Math.Random(1001, 1003));
+                ac2.SetActorId(Utility.GameMath.Random(1001, 1003));
                 ac2.SetActorType(ActorType.Party);
                 ac2.SetPosition(1f, 0f, 1f);
                 ac2.RefreshActor();

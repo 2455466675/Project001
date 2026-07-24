@@ -46,6 +46,31 @@ namespace GameFramework.Logic
         public DamageType DamageType;
     }
 
+    public class BattleEffectGenetator
+    {
+        private Config.EffectCfg cfg;
+        public BattleEffectGenetator(Config.EffectCfg effectCfg)
+        {
+            cfg = effectCfg;
+        }
+
+        public BattleEffect Create(int caster, int target)
+        {
+            BattleEffect battleEffect;
+            if (cfg.FormulaType == 1)
+            {
+                battleEffect = new NormalDamageEffect();
+            }
+            else
+            {
+                battleEffect = new NormalDamageEffect();
+            }
+            battleEffect.Reset(caster, target);
+            return battleEffect;
+        }
+    }
+
+
     public abstract class BattleEffect
     {
         public int SourceId { get; private set; }
