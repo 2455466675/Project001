@@ -5,7 +5,8 @@ using UnityEngine;
 namespace Navigation
 {
     /// <summary>
-    /// 
+    /// 固定导航列表：Item 数量与数据数量一致、元素预先摆放在场景中的列表。
+    /// 支持垂直、水平、网格布局及多选。
     /// </summary>
     public class FixedNavigationList : NavigationList
     {
@@ -44,6 +45,14 @@ namespace Navigation
 
             if (items == null || items.Count == 0)
             {
+                isInit = false;
+                return;
+            }
+
+            //Grid 布局的移动运算依赖 rowCount 做除法/取模，必须为正，否则会除零。
+            if (IsGrid && rowCount <= 0)
+            {
+                Debug.LogError("Grid 布局下 rowCount 必须大于 0。");
                 isInit = false;
                 return;
             }
@@ -246,10 +255,16 @@ namespace Navigation
 
                 //将无效的元素剔除
                 argItems = argItems.Where(item => item.IsValid).ToArray();
-                index = argItems?.Select(item => item.IndexOfData).ToArray();
 
-                isSuccess = argItems != null && argItems.Length > 0;
-                pointer = argItems != null ? items.IndexOf(argItems[0]) : 0;
+                isSuccess = argItems.Length > 0;
+                if (isSuccess)
+                {
+                    //记录选中元素的列表索引，供重聚焦(refocus)时复原选择；
+                    //使用 IndexOfList 而非 IndexOfData，避免数据索引与列表索引语义混用。
+                    index = argItems.Select(item => item.IndexOfList).ToArray();
+                    pointer = argItems[0].IndexOfList;
+                }
+                //全部无效时保持 isSuccess=false，index/pointer 维持原值，避免空数组取 [0] 越界。
             }
 
             if (isSuccess)
@@ -361,6 +376,10 @@ namespace Navigation
                 for (int i = 0; i <= rowCount - 1; i++)
                 {
                     int a = q * rowCount + i;   //同一行相邻没有元素时，则从该列的从上往下选择可用的
+                    if (a > maxIndex)           //最后一列可能不满，跳过不存在的槽位，防止越界
+                    {
+                        break;
+                    }
                     if (items[a].IsValid)
                     {
                         return a;
@@ -376,17 +395,31 @@ namespace Navigation
                 if (minus)
                 {
                     q--;
-                    if (q < min && isLoop)
+                    if (q < min)
                     {
-                        q = max;
+                        if (isLoop)
+                        {
+                            q = max;
+                        }
+                        else
+                        {
+                            return -1;  //非循环且越出边界，终止查找，避免负索引/死循环
+                        }
                     }
                 }
                 else
                 {
                     q++;
-                    if (q > max && isLoop)
+                    if (q > max)
                     {
-                        q = min;
+                        if (isLoop)
+                        {
+                            q = min;
+                        }
+                        else
+                        {
+                            return -1;  //非循环且越出边界，终止查找，避免越界/死循环
+                        }
                     }
                 }
 

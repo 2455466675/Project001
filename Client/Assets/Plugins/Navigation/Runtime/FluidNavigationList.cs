@@ -5,7 +5,8 @@ using UnityEngine;
 namespace Navigation
 {
     /// <summary>
-    /// 
+    /// 流式导航列表：Item 数量固定、通过复用 Item 承载大量数据的虚拟滚动列表。
+    /// 支持垂直、水平、网格三种布局。
     /// </summary>
     public class FluidNavigationList : NavigationList
     {
@@ -24,8 +25,8 @@ namespace Navigation
                 BottomToTop,
             }
 
-            public float horizontalOffest;
-            public float verticalOffest;
+            public float horizontalOffset;
+            public float verticalOffset;
             public float spacing;
             public bool isLoop;
             public Alignment alignment;
@@ -85,8 +86,8 @@ namespace Navigation
                 RightToLeft,
             }
 
-            public float horizontalOffest;
-            public float verticalOffest;
+            public float horizontalOffset;
+            public float verticalOffset;
             public float spacing;
             public bool isLoop;
             public Alignment alignment;
@@ -148,8 +149,8 @@ namespace Navigation
                 LowerRight,
             }
 
-            public float horizontalOffest;
-            public float verticalOffest;
+            public float horizontalOffset;
+            public float verticalOffset;
             public float xSpacing;
             public float ySpacing;
             public Alignment alignment;
@@ -292,6 +293,13 @@ namespace Navigation
                 return;
             }
 
+            //Grid 布局的窗口对齐/移动运算依赖行列数做除法与取模，必须均为正。
+            if (IsGrid && (grid.rowCount <= 0 || grid.columnCount <= 0))
+            {
+                Debug.LogError("Grid 布局下 rowCount 与 columnCount 必须均大于 0。");
+                return;
+            }
+
             isInit = true;
             dataCount = -1;
             minIndex = -1;
@@ -328,9 +336,29 @@ namespace Navigation
 
             if (count == 0)
             {
+                dataCount = 0;
+
+                //隐藏并解绑所有 Item，清空可视内容。
+                if (items != null)
+                {
+                    foreach (var kv in items)
+                    {
+                        SetItemDataIndex(kv.Value, -1);
+                        kv.Value.SetActive(false);
+                    }
+                }
+
+                //列表已空：若正处于聚焦态，释放焦点并清空选中，避免指针指向不存在的数据；
+                //否则仅重置窗口状态。
                 if (state == ListState.InFocused)
                 {
-                    //ListEmpty();
+                    Exit();
+                }
+                else
+                {
+                    minIndex = -1;
+                    maxIndex = -1;
+                    pointer = -1;
                 }
                 return;
             }
@@ -467,53 +495,49 @@ namespace Navigation
                 return true;
             }
 
-            if (index < minIndex)
+            // index 落在当前窗口之外，需要重新对齐窗口，使其可见。
+            if (IsGrid)
             {
-                if (IsGrid)
+                // Grid 以“行”为单位滑动。按目标索引所在行重新计算顶部行，
+                // 保证无论跳跃多少行，pointer 都落在 rowCount 行的可见窗口内，
+                // 从而 pointer - minIndex 始终位于 [0, itemCount) 区间。
+                int cc = grid.columnCount;
+                int rc = grid.rowCount;
+                int topRow = minIndex / cc;
+                int indexRow = index / cc;
+
+                if (indexRow < topRow)
                 {
-                    minIndex -= grid.columnCount;
-                    if ((maxIndex + 1) % grid.columnCount == 0)
-                    {
-                        maxIndex -= grid.columnCount;
-                    }
-                    else
-                    {
-                        maxIndex -= (maxIndex + 1) % grid.columnCount;
-                    }
+                    topRow = indexRow;
                 }
-                else
+                else if (indexRow > topRow + rc - 1)
+                {
+                    topRow = indexRow - (rc - 1);
+                }
+
+                minIndex = topRow * cc;
+                maxIndex = Mathf.Min(dataCount - 1, minIndex + rc * cc - 1);
+            }
+            else
+            {
+                // 线性列表按跳跃距离精确平移整个窗口，使 pointer 落到窗口边缘。
+                if (index < minIndex)
                 {
                     int i = minIndex - index;
                     minIndex -= i;
                     maxIndex -= i;
                 }
-
-                pointer = index;
-                OnListChanged();
-                return true;
-            }
-
-            if (index > maxIndex)
-            {
-                if (IsGrid)
-                {
-                    minIndex += grid.columnCount;
-                    maxIndex += grid.columnCount;
-                    maxIndex = Mathf.Min(dataCount - 1, maxIndex);
-                }
-                else
+                else // index > maxIndex
                 {
                     int i = index - maxIndex;
                     minIndex += i;
                     maxIndex += i;
                 }
-
-                pointer = index;
-                OnListChanged();
-                return true;
             }
 
-            return false;
+            pointer = index;
+            OnListChanged();
+            return true;
         }
 
         private void OnListChanged()
@@ -527,14 +551,7 @@ namespace Navigation
                 if (index < length)
                 {
                     item.SetActive(true);
-                    
-                    int dataIndex = index + minIndex;
-                    if (dataIndex > maxIndex || dataIndex < 0 || dataIndex > dataCount) 
-                    {
-                        continue;
-                    }
-                    
-                    SetItemDataIndex(item, dataIndex);
+                    SetItemDataIndex(item, index + minIndex);
                 }
                 else
                 {
@@ -546,8 +563,14 @@ namespace Navigation
 
         private void OnSelectChanged()
         {
-            NavigationItem[] selectedItems = new NavigationItem[] { items[pointer - minIndex] };
-            SelectChanged(selectedItems);
+            int key = pointer - minIndex;
+            if (items == null || !items.TryGetValue(key, out NavigationItem selected) || selected == null)
+            {
+                Debug.LogError($"[FluidNavigationList] 选中项无对应可见Item。pointer:{pointer} minIndex:{minIndex} key:{key} itemCount:{itemCount}");
+                return;
+            }
+
+            SelectChanged(new NavigationItem[] { selected });
         }
 
         #region
@@ -569,21 +592,23 @@ namespace Navigation
             content.pivot = pivot;
             content.sizeDelta = Vector2.zero;
 
-            float verticalOffest = vertical.verticalOffest;
-            float horizontalOffest = vertical.horizontalOffest;
+            float verticalOffset = vertical.verticalOffset;
+            float horizontalOffset = vertical.horizontalOffset;
 
             float spacing = vertical.spacing;
 
             float vh = viewport.rect.size.y;
             float h = tf.rect.size.y;
-            int c = Mathf.FloorToInt((vh - verticalOffest) / (h + spacing / 2));
+            float denom = h + spacing / 2f;
+            int c = denom > 0f ? Mathf.FloorToInt((vh - verticalOffset) / denom) : 0;
+            c = Mathf.Max(c, 0);   //防止分母非正或视口过小时得到非法数量
 
             for (int i = 0; i < c; i++)
             {
                 NavigationItem lt = Instantiate<NavigationItem>(item, content);
 
-                float x = 0f + horizontalOffest;
-                float y = (h * i + verticalOffest + spacing * i) * (topToBottom ? -1f : 1f);
+                float x = 0f + horizontalOffset;
+                float y = (h * i + verticalOffset + spacing * i) * (topToBottom ? -1f : 1f);
 
                 lt.transform.localPosition = new Vector2(x, y);
                 lt.SetListIndex(i);
@@ -611,20 +636,22 @@ namespace Navigation
             content.pivot = pivot;
             content.sizeDelta = Vector2.zero;
 
-            float verticalOffest = horizontal.verticalOffest;
-            float horizontalOffest = horizontal.horizontalOffest;
+            float verticalOffset = horizontal.verticalOffset;
+            float horizontalOffset = horizontal.horizontalOffset;
             float spacing = horizontal.spacing;
 
             float vw = viewport.rect.size.x;
             float w = tf.rect.size.x;
-            int c = Mathf.FloorToInt((vw - horizontalOffest) / (w + spacing / 2));
+            float denom = w + spacing / 2f;
+            int c = denom > 0f ? Mathf.FloorToInt((vw - horizontalOffset) / denom) : 0;
+            c = Mathf.Max(c, 0);   //防止分母非正或视口过小时得到非法数量
 
             for (int i = 0; i < c; i++)
             {
                 NavigationItem lt = Instantiate<NavigationItem>(item, content);
 
-                float x = (w * i + horizontalOffest + spacing * i) * (leftToRight ? 1f : -1f);
-                float y = 0f + verticalOffest;
+                float x = (w * i + horizontalOffset + spacing * i) * (leftToRight ? 1f : -1f);
+                float y = 0f + verticalOffset;
 
                 lt.transform.localPosition = new Vector2(x, y);
                 lt.SetListIndex(i);
@@ -677,8 +704,8 @@ namespace Navigation
             content.pivot = pivot;
             content.sizeDelta = Vector2.zero;
 
-            float verticalOffest = grid.verticalOffest;
-            float horizontalOffest = grid.horizontalOffest;
+            float verticalOffset = grid.verticalOffset;
+            float horizontalOffset = grid.horizontalOffset;
             float xSpacing = grid.xSpacing;
             float ySpacing = grid.ySpacing;
 
@@ -694,8 +721,8 @@ namespace Navigation
                 {
                     NavigationItem lt = Instantiate<NavigationItem>(item, content);
 
-                    float x = w * j + horizontalOffest + xSpacing * j;
-                    float y = h * i + verticalOffest + ySpacing * i;
+                    float x = w * j + horizontalOffset + xSpacing * j;
+                    float y = h * i + verticalOffset + ySpacing * i;
 
                     if (upperLeft)
                     {

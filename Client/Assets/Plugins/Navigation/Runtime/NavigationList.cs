@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Navigation 
@@ -20,6 +18,10 @@ namespace Navigation
     }
 
 
+    /// <summary>
+    /// 导航列表基类：封装聚焦状态机、长按连续移动的节流，以及选中/移动/提交等事件中枢。
+    /// 具体的元素布局与移动算法由子类实现。
+    /// </summary>
     public abstract class NavigationList : MonoBehaviour
     {
         [SerializeField]
@@ -127,6 +129,16 @@ namespace Navigation
             {
                 isPress = false;
                 return;
+            }
+
+            //导航是离散移动，对角输入时只取主轴，避免 h/v 同时生效导致行为二义。
+            if (Mathf.Abs(h) > Mathf.Abs(v))
+            {
+                v = 0f;
+            }
+            else
+            {
+                h = 0f;
             }
 
             if (!isPress)
