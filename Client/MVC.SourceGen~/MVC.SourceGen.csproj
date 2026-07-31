@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <!-- 只输出生成器自身的 dll，不携带 Roslyn 依赖（Unity 自带 Roslyn 运行 analyzer） -->
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AssemblyName>MVC.SourceGen</AssemblyName>
+    <RootNamespace>MVC.SourceGen</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 版本需 <= Unity 6 内置 Roslyn 版本；4.3.0 对 Unity 6 安全 -->
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

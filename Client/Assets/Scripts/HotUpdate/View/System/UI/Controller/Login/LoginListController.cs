@@ -6,21 +6,10 @@ using UnityEngine;
 
 namespace GameFramework.View.UI
 {
-    public class LoginListItem : DataModel
+    public partial class LoginListItem : DataModel
     {
-        private int id;
-        public int Id
-        {
-            get { return id; } 
-            set { SetValue(ref id, value); }
-        }
-
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set { SetValue(ref name, value); }
-        }
+        [ObservableProperty] private int id;
+        [ObservableProperty] private string name;
     }
 
     [NavigationController(Utility.GameDefine.NavigationDefine.LoginList)]
