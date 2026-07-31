@@ -64,14 +64,7 @@ namespace MVC
 
         protected override void BindingUpdate()
         {
-            try
-            {
-                propertyChangedAction?.Invoke(subject);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            propertyChangedAction?.Invoke(subject);
         }
     }
 
@@ -97,14 +90,7 @@ namespace MVC
 
         protected override void BindingUpdate()
         {
-            try
-            {
-                propertyChangedAction?.Invoke(observer, subject);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            propertyChangedAction?.Invoke(observer, subject);
         }
     }
 }
