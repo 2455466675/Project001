@@ -45,12 +45,12 @@ MonoBehaviour:
     - UniTask.Linq
     - PsdPlugin
     - LITJson
+    - GameConfig
     - MVC
     - UniTask.TextMeshPro
     - GF_HotUpdate_Utility
     - ECS
     - Assembly-CSharp-firstpass
-    - GameConfig
     - Navigation
     - Base
     - HybridCLR.Runtime

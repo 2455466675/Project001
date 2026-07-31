@@ -12,26 +12,32 @@ namespace Config
 	{
 		public int Id { get; private set; }
 		public int TargetRule { get; private set; }
-		public int AbilityId { get; private set; }
 		public int Cost { get; private set; }
 		public string View { get; private set; }
+		public int AbilityId { get; private set; }
+		public int HitFormula { get; private set; }
+		public int HitModification { get; private set; }
 
 		internal void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
 			TargetRule = reader.ReadInt32();
-			AbilityId = reader.ReadInt32();
 			Cost = reader.ReadInt32();
 			View = reader.ReadString();
+			AbilityId = reader.ReadInt32();
+			HitFormula = reader.ReadInt32();
+			HitModification = reader.ReadInt32();
 		}
 
 		internal void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
 			writer.Write(TargetRule);
-			writer.Write(AbilityId);
 			writer.Write(Cost);
 			writer.Write(View);
+			writer.Write(AbilityId);
+			writer.Write(HitFormula);
+			writer.Write(HitModification);
 		}
 	}
 

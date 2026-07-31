@@ -48,10 +48,6 @@ namespace Config
 			_SkillCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(SkillCfg), _SkillCfgContainer);
 
-			ICfgContainer _EffectCfgContainer = new EffectCfgContainer();
-			_EffectCfgContainer.Deserialize(reader);
-			_cfgDatas.Add(typeof(EffectCfg), _EffectCfgContainer);
-
 			ICfgContainer _AbilityCfgContainer = new AbilityCfgContainer();
 			_AbilityCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(AbilityCfg), _AbilityCfgContainer);
@@ -60,9 +56,9 @@ namespace Config
 			_AbilitySegmentCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(AbilitySegmentCfg), _AbilitySegmentCfgContainer);
 
-			ICfgContainer _AbilitySegmentStrikeCfgContainer = new AbilitySegmentStrikeCfgContainer();
-			_AbilitySegmentStrikeCfgContainer.Deserialize(reader);
-			_cfgDatas.Add(typeof(AbilitySegmentStrikeCfg), _AbilitySegmentStrikeCfgContainer);
+			ICfgContainer _AbilityEffectCfgContainer = new AbilityEffectCfgContainer();
+			_AbilityEffectCfgContainer.Deserialize(reader);
+			_cfgDatas.Add(typeof(AbilityEffectCfg), _AbilityEffectCfgContainer);
 
 		}
 

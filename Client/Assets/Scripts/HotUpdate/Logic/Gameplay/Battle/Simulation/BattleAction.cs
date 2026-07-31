@@ -9,56 +9,29 @@ namespace GameFramework.Logic
         {
             int skillId = 100000;
 
-            var skillEffects = ResolveEffect(skillId);
 
             int caster = 1;
             List<int> targets = new List<int>() { 11, 12, 13 };
+
+            ResolveEffect(skillId);
+
             List<BattleEffect> effects = new List<BattleEffect>();
-            for (int i = 0; i < skillEffects.Count; i++)
-            {
-                var genetators = skillEffects[i];
-                for (int j = 0; j < targets.Count; j++)
-                {
-                        
-
-                    for (int k = 0; k < genetators.Count; k++)
-                    {
-                        var targetId = targets[j];
-                        var effect = genetators[k].Create(caster, targetId);
-                        effects.Add(effect);
-                    }
-                }
-            }
-
+            
             context.Resolver.Append(effects);
         }
 
-        private List<List<BattleEffectGenetator>> ResolveEffect(int skillId)
+        private void ResolveEffect(int skillId)
         {
             var skillCfg = Game.Config.Find<SkillCfg>(skillId);
             var abilityCfg = Game.Config.Find<AbilityCfg>(skillCfg.AbilityId);
-
-            List<List<BattleEffectGenetator>> result = new List<List<BattleEffectGenetator>>(abilityCfg.Segments.Length);
-            for (int i = 0; i < abilityCfg.Segments.Length; i++)
-            {
-                var segmentId = abilityCfg.Segments[i];
-                var segmentCfg = Game.Config.Find<AbilitySegmentCfg>(segmentId);
-
-                List<BattleEffectGenetator> effects = new List<BattleEffectGenetator>(segmentCfg.Strikes.Length);
-                for (int j = 0; j < segmentCfg.Strikes.Length; j++)
-                {
-                    var strikeId = segmentCfg.Strikes[j];
-                    var strikeCfg = Game.Config.Find<AbilitySegmentStrikeCfg>(strikeId);
-
-                    var effectCfg = Game.Config.Find<EffectCfg>(strikeCfg.Effect);
-
-                    BattleEffectGenetator genetator = new BattleEffectGenetator(effectCfg);
-                    effects.Add(genetator);
-                }
-                result.Add(effects);
-            }
-
-            return result;
+            var segmentCfg = Game.Config.Find<AbilitySegmentCfg>(abilityCfg.Segments[0]);
+            var effectCfg = Game.Config.Find<AbilityEffectCfg>(segmentCfg.HitEffects[0]);
+            /*
+             * SkillCfg 技能的配置。AbilityId：所具有的能力; TargetRule：决定目标选择，产生targes；HitFormula：命中计算公式；HitModification：命中修正系数
+             * AbilityCfg 能力行为配置。Segments: 能力段数； SegmentType ：能力段生效方式，1 = Segments里都是AbilitySegmentCfg，依次生效。2 = 只有一段，随机生效n次， Segments[0]是AbilitySegmentCfg，随机范围[Segments[1],Segments[2]]
+             * AbilitySegmentCfg 能力段配置。Range:生效范围，1 = 对targes全部生效；2 = 对targes随机一个生效；FixedEffects：固定效果，无论是否命中都对Range生效；HitEffects：命中效果，命中时对Range生效；CasterEffects：对释放者生效（无论是否命中）
+             * AbilityEffectCfg 效果。ElementType：属性；FormulaType：效果公式Id(伤害、回血、buff...)；FormulaValue、BaseValue、Arg1...效果公式参数。
+             */
         }
     }
 }

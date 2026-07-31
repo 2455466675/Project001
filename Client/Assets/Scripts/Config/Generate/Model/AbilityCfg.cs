@@ -11,11 +11,13 @@ namespace Config
 	public partial class AbilityCfg : ICfg
 	{
 		public int Id { get; private set; }
+		public int SegmentType { get; private set; }
 		public int[] Segments { get; private set; }
 
 		internal void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
+			SegmentType = reader.ReadInt32();
 			Segments = new int[reader.ReadInt32()];
 			for (int _i = 0; _i < Segments.Length; _i++) Segments[_i] = reader.ReadInt32();
 		}
@@ -23,6 +25,7 @@ namespace Config
 		internal void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
+			writer.Write(SegmentType);
 			writer.Write(Segments.Length);
 			for (int _i = 0; _i < Segments.Length; _i++) writer.Write(Segments[_i]);
 		}

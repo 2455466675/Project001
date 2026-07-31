@@ -11,23 +11,33 @@ namespace Config
 	public partial class AbilitySegmentCfg : ICfg
 	{
 		public int Id { get; private set; }
-		public int[] Strikes { get; private set; }
-		public int Hit { get; private set; }
+		public int Range { get; private set; }
+		public int[] FixedEffects { get; private set; }
+		public int[] HitEffects { get; private set; }
+		public int[] CasterEffects { get; private set; }
 
 		internal void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
-			Strikes = new int[reader.ReadInt32()];
-			for (int _i = 0; _i < Strikes.Length; _i++) Strikes[_i] = reader.ReadInt32();
-			Hit = reader.ReadInt32();
+			Range = reader.ReadInt32();
+			FixedEffects = new int[reader.ReadInt32()];
+			for (int _i = 0; _i < FixedEffects.Length; _i++) FixedEffects[_i] = reader.ReadInt32();
+			HitEffects = new int[reader.ReadInt32()];
+			for (int _i = 0; _i < HitEffects.Length; _i++) HitEffects[_i] = reader.ReadInt32();
+			CasterEffects = new int[reader.ReadInt32()];
+			for (int _i = 0; _i < CasterEffects.Length; _i++) CasterEffects[_i] = reader.ReadInt32();
 		}
 
 		internal void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
-			writer.Write(Strikes.Length);
-			for (int _i = 0; _i < Strikes.Length; _i++) writer.Write(Strikes[_i]);
-			writer.Write(Hit);
+			writer.Write(Range);
+			writer.Write(FixedEffects.Length);
+			for (int _i = 0; _i < FixedEffects.Length; _i++) writer.Write(FixedEffects[_i]);
+			writer.Write(HitEffects.Length);
+			for (int _i = 0; _i < HitEffects.Length; _i++) writer.Write(HitEffects[_i]);
+			writer.Write(CasterEffects.Length);
+			for (int _i = 0; _i < CasterEffects.Length; _i++) writer.Write(CasterEffects[_i]);
 		}
 	}
 
