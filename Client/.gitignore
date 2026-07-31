@@ -76,3 +76,9 @@ crashlytics-build.properties
 
 /[Hh]ybridCLRData/
 /[Yy]oo/
+
+# MVC Roslyn 源生成器工程：忽略编译产物，保留源码与 csproj
+/MVC.SourceGen~/[Bb]in/
+/MVC.SourceGen~/[Oo]bj/
+# 覆盖上方全局 *.csproj 忽略，确保生成器工程文件入库
+!/MVC.SourceGen~/MVC.SourceGen.csproj

@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using MVC;
 
 namespace GameFramework.Logic
 {
-    public class BattleFormationSite : DataModel
+    public partial class BattleFormationSite : DataModel
     {
+        // 仅 State 需要变更通知驱动 UI 刷新；其余字段为初始化时设置的静态数据，保持普通属性
+        [ObservableProperty] private int state;
+
         private int index;
         public int Index
         {
@@ -18,13 +22,6 @@ namespace GameFramework.Logic
         {
             get { return camp; }
             set { camp = value; }
-        }
-
-        private int state;
-        public int State
-        {
-            get { return state; }
-            set { SetValue(ref state, value); }
         }
 
         private bool valid;

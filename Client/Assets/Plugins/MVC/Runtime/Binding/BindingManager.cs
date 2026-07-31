@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace MVC
@@ -17,6 +18,16 @@ namespace MVC
         }
 
         public Binder CreateBinder(string key)
+        {
+            if (string.Equals(key, Controller.DefaultBinderKey))
+            {
+                throw new ArgumentException(
+                    string.Format("'{0}' 是框架保留的默认 Binder key，禁止业务使用。", key), nameof(key));
+            }
+            return CreateBinderInternal(key);
+        }
+
+        internal Binder CreateBinderInternal(string key)
         {
             Binder binder;
             if (binders.ContainsKey(key))

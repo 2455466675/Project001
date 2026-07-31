@@ -5,7 +5,8 @@ using UnityEngine.Events;
 namespace Navigation
 {
     /// <summary>
-    /// 
+    /// 导航元素事件转发组件：把选中/取消/失焦/提交/移动等事件通过 UnityEvent 暴露到 Inspector，
+    /// 便于在编辑器中无代码挂接回调。
     /// </summary>
     public class NavigationItemEvent : MonoBehaviour
     {

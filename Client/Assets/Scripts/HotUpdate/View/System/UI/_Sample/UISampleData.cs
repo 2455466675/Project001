@@ -1,22 +1,12 @@
 using GameFramework.Logic;
+using MVC;
 
 namespace GameFramework.View.UI
 {
-    public class UISampleData : DataModel
+    public partial class UISampleData : DataModel
     {
-        private int id;
-        public int Id
-        {
-            get { return id; } 
-            set { SetValue(ref id, value); }
-        }
-
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set { SetValue(ref name, value); }
-        }
+        [ObservableProperty] private int id;
+        [ObservableProperty] private string name;
     }
 }
 

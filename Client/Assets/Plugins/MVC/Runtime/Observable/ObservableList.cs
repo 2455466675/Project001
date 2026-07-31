@@ -367,6 +367,8 @@ namespace MVC
         private void SetItem(int index, T item)
         {
             items[index] = item;
+
+            OnPropertyChanged(AllEventArgs);
         }
 
         private void InsertItem(int index, T item)
