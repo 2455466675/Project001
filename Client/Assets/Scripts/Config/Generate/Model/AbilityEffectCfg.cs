@@ -11,8 +11,7 @@ namespace Config
 	public partial class AbilityEffectCfg : ICfg
 	{
 		public int Id { get; private set; }
-		public int ElementType { get; private set; }
-		public int FormulaType { get; private set; }
+		public int Formula { get; private set; }
 		public int FormulaValue { get; private set; }
 		public int BaseValue { get; private set; }
 		public int[] Arg1 { get; private set; }
@@ -24,8 +23,7 @@ namespace Config
 		internal void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
-			ElementType = reader.ReadInt32();
-			FormulaType = reader.ReadInt32();
+			Formula = reader.ReadInt32();
 			FormulaValue = reader.ReadInt32();
 			BaseValue = reader.ReadInt32();
 			Arg1 = new int[reader.ReadInt32()];
@@ -43,8 +41,7 @@ namespace Config
 		internal void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
-			writer.Write(ElementType);
-			writer.Write(FormulaType);
+			writer.Write(Formula);
 			writer.Write(FormulaValue);
 			writer.Write(BaseValue);
 			writer.Write(Arg1.Length);

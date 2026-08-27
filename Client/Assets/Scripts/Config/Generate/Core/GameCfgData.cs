@@ -56,6 +56,10 @@ namespace Config
 			_AbilitySegmentCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(AbilitySegmentCfg), _AbilitySegmentCfgContainer);
 
+			ICfgContainer _AbilityStrikeCfgContainer = new AbilityStrikeCfgContainer();
+			_AbilityStrikeCfgContainer.Deserialize(reader);
+			_cfgDatas.Add(typeof(AbilityStrikeCfg), _AbilityStrikeCfgContainer);
+
 			ICfgContainer _AbilityEffectCfgContainer = new AbilityEffectCfgContainer();
 			_AbilityEffectCfgContainer.Deserialize(reader);
 			_cfgDatas.Add(typeof(AbilityEffectCfg), _AbilityEffectCfgContainer);

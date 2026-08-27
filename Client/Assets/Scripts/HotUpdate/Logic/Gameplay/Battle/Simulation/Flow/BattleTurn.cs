@@ -43,8 +43,7 @@ namespace GameFramework.Logic
   
             BattleAction action = new BattleAction();
             action.Execute(context);
-            context.Resolver.ResolveAll(context);
-
+            
             await context.Projector.Flush();
 
             MDebug.Log($"{battleID} : 行动结束");

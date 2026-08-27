@@ -12,8 +12,5 @@
         TurnDecideAfter,
         TurnActionBefor,
         TurnActionAfter,
-
-        TakeDamageBefor,
-        TakeDamageAfter,
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameFramework.View.Action
 {
-    public class EffectResult
+    public class EffectResult //需要和Logic.EffectResult统一
     {
         public int Seq;
         public int SegmentIndex;
@@ -17,7 +17,7 @@ namespace GameFramework.View.Action
         public int SkillId;
     }
 
-    public class SkillActionReport
+    public class SkillActionReport //战斗产出
     {
         public int SkillId;
         public int Caster;

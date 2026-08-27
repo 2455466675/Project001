@@ -1,4 +1,5 @@
 ﻿using ECS;
+using GameFramework.Utility.GameDefine;
 using System;
 using System.Collections.Generic;
 
@@ -6,17 +7,17 @@ namespace GameFramework.Logic
 {
     public interface IPropertyReader
     {
-        int GetPropertyValue(PropertyType pType);
+        int GetPropertyValue(PropertyDefine pType);
     }
 
-    public enum PropertyType
+    public interface IPropertyWriter
     {
-        MaxHp,
-        CurHp,
-        Attack,
-        Defense,
-        Speed,
-        CritRate,
+        void AddModifier(PropertyModifier m);
+    }
+
+    public interface IPropertyComponent : IPropertyReader, IPropertyWriter
+    {
+
     }
 
     public abstract class Property
@@ -40,7 +41,7 @@ namespace GameFramework.Logic
             private bool isDirty;
             private readonly List<PropertyModifier> modifiers;
 
-            public Attribute(PropertyType pType, int baseValue) : base(pType, baseValue)
+            public Attribute(PropertyDefine pType, int baseValue) : base(pType, baseValue)
             {
                 modifiers = new List<PropertyModifier>();
                 isDirty = true;
@@ -63,7 +64,7 @@ namespace GameFramework.Logic
             public override int Value => currValue;
             private int currValue;
 
-            public Resource(PropertyType pType, int baseValue) : base(pType, baseValue)
+            public Resource(PropertyDefine pType, int baseValue) : base(pType, baseValue)
             {
                 currValue = baseValue;
             }
@@ -83,9 +84,9 @@ namespace GameFramework.Logic
             }
         }
 
-        public static Property CreateProperty(PropertyType pType, int baseValue)
+        public static Property CreateProperty(PropertyDefine pType, int baseValue)
         {
-            if (pType == PropertyType.CurHp)
+            if (pType == PropertyDefine.CurHp)
             {
                 return new Resource(pType, baseValue);
             }
@@ -95,11 +96,11 @@ namespace GameFramework.Logic
             }
         }
 
-        public PropertyType PType { get; private set; }
+        public PropertyDefine PType { get; private set; }
         public int BaseValue { get; private set; }
         public abstract int Value { get; }
 
-        protected Property(PropertyType pType, int baseValue)
+        protected Property(PropertyDefine pType, int baseValue)
         {
             this.PType = pType;
             this.BaseValue = baseValue;
@@ -118,36 +119,29 @@ namespace GameFramework.Logic
 
     public class PropertyModifier
     {
-        public PropertyType Target { get; set; }
+        public PropertyDefine Target { get; set; }
         public ModifierOp Op { get; set; }
         public int Value { get; set; }
         public object Source { get; set; }
     }
 
-    public class PropertySapshoot : IPropertyReader
+    public class PropertyComponent : ComponentBase, IPropertyComponent
     {
-        private Dictionary<PropertyType, int> map;
-
-        public PropertySapshoot(Dictionary<PropertyType, int> map)
-        {
-            this.map = map;
-            this.map ??= new Dictionary<PropertyType, int>();
-        }
-
-        public int GetPropertyValue(PropertyType pType)
-        {
-            map.TryGetValue(pType, out int value);
-            return value;
-        }
-    }
-
-    public class PropertyComponent : ComponentBase, IPropertyReader
-    {
-        private Dictionary<PropertyType, Property> propertyMap;
+        private Dictionary<PropertyDefine, Property> propertyMap;
 
         protected override void Awake()
         {
-            propertyMap = new Dictionary<PropertyType, Property>();
+            propertyMap = new Dictionary<PropertyDefine, Property>();
+        }
+
+        public void CreateProperty(PropertyDefine propertyType, int baseValue)
+        {
+            if (propertyMap.ContainsKey(propertyType))
+            {
+                return;
+            }
+            var property = Property.CreateProperty(propertyType, baseValue);
+            propertyMap[propertyType] = property;
         }
 
         public void AddModifier(PropertyModifier m)
@@ -160,7 +154,7 @@ namespace GameFramework.Logic
             property.AddModifier(m);            
         }
 
-        public int GetPropertyValue(PropertyType pType)
+        public int GetPropertyValue(PropertyDefine pType)
         {
             if (propertyMap.TryGetValue(pType, out var property))
             {
@@ -170,17 +164,6 @@ namespace GameFramework.Logic
             {
                 return 0;
             }
-        }
-
-        public PropertySapshoot Sapshoot()
-        {
-            Dictionary<PropertyType, int> map = new Dictionary<PropertyType, int>(propertyMap.Count);
-            foreach (var item in propertyMap)
-            {
-                map[item.Key] = item.Value.Value;
-            }
-            PropertySapshoot sapshoot = new PropertySapshoot(map);
-            return sapshoot;
         }
     }
 }

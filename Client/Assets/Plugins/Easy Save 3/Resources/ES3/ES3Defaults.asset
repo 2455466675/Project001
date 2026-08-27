@@ -45,8 +45,8 @@ MonoBehaviour:
     - UniTask.Linq
     - PsdPlugin
     - LITJson
-    - GameConfig
     - MVC
+    - GameConfig
     - UniTask.TextMeshPro
     - GF_HotUpdate_Utility
     - ECS

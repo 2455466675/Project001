@@ -11,33 +11,42 @@ namespace Config
 	public partial class SkillCfg : ICfg
 	{
 		public int Id { get; private set; }
+		public string Name { get; private set; }
+		public string Desc { get; private set; }
 		public int TargetRule { get; private set; }
 		public int Cost { get; private set; }
 		public string View { get; private set; }
 		public int AbilityId { get; private set; }
-		public int HitFormula { get; private set; }
-		public int HitModification { get; private set; }
+		public int HitMdf { get; private set; }
+		public int CriticalMdf { get; private set; }
+		public int CriticalDamageMdf { get; private set; }
 
 		internal void Deserialize(BinaryReader reader)
 		{
 			Id = reader.ReadInt32();
+			Name = reader.ReadString();
+			Desc = reader.ReadString();
 			TargetRule = reader.ReadInt32();
 			Cost = reader.ReadInt32();
 			View = reader.ReadString();
 			AbilityId = reader.ReadInt32();
-			HitFormula = reader.ReadInt32();
-			HitModification = reader.ReadInt32();
+			HitMdf = reader.ReadInt32();
+			CriticalMdf = reader.ReadInt32();
+			CriticalDamageMdf = reader.ReadInt32();
 		}
 
 		internal void Serialize(BinaryWriter writer)
 		{
 			writer.Write(Id);
+			writer.Write(Name);
+			writer.Write(Desc);
 			writer.Write(TargetRule);
 			writer.Write(Cost);
 			writer.Write(View);
 			writer.Write(AbilityId);
-			writer.Write(HitFormula);
-			writer.Write(HitModification);
+			writer.Write(HitMdf);
+			writer.Write(CriticalMdf);
+			writer.Write(CriticalDamageMdf);
 		}
 	}
 
