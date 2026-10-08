@@ -44,8 +44,6 @@ namespace GameFramework.Logic
             BattleAction action = new BattleAction();
             action.Execute(context);
             
-            await context.Projector.Flush();
-
             MDebug.Log($"{battleID} : 行动结束");
             //行动结束事件
             context.EventHub.Fire(BattleEventType.TurnActionAfter, context, new BattleEventArgs() { SourceID = battleID });
